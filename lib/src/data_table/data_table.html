@@ -1,0 +1,41 @@
+<div class="dataTables_wrapper no-footer">
+
+    <div class="datatable-header">
+        <div class="dataTables_filter" *ngIf="showFilter">
+            <label>
+                <span>Filtrar:</span>
+                <input #inputSearchElement type="search" class="" placeholder="Digite e tecle enter para buscar...">
+            </label>
+        </div>
+        <div class="dataTables_length" *ngIf="showItemsLimit">
+            <label>
+                <span>Exibir:</span>
+                <select #itemsPerPageElement (change)="onLimitChange()" name="" class="">
+                    <option value="1">1</option>
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <div class="datatable-scroll">
+        <table #tableElement class="table datatable-basic dataTable no-footer" role="grid">
+        </table>
+    </div>
+
+    <div class="datatable-footer">
+        <div class="dataTables_info" role="status" aria-live="polite">
+            Total de registros:<span [innerHtml]="' '+totalRecords.toString()"></span>
+        </div>
+        <div #paginateDiv class="dataTables_paginate paging_simple_numbers">
+            <a #paginatePrevBtn class="paginate_button previous disabled">←</a>
+            <span #paginateContainer></span>
+            <a #paginateNextBtn class="paginate_button next">→</a>
+        </div>
+    </div>
+
+</div>
