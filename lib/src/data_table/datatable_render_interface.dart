@@ -1,4 +1,4 @@
-import 'package:angular/angular.dart';
+
 
 class DataTableData {
   static DataTableData instance;

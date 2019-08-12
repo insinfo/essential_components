@@ -5,11 +5,11 @@ import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
 import 'package:angular_forms/angular_forms.dart';
 
-import '../data_table_component/data_table_component.dart';
-import '../data_table_component/datatable_render_interface.dart';
-import '../data_table_component/response_list.dart';
+import '../data_table/data_table.dart';
+import '../data_table/datatable_render_interface.dart';
+import '../data_table/response_list.dart';
 
-import '../data_table_component/data_table_filter.dart';
+import '../data_table/data_table_filter.dart';
 
 @Component(
   selector: 'select-dialog',
@@ -18,7 +18,7 @@ import '../data_table_component/data_table_filter.dart';
   styleUrls: [
     'select_dialog.css',
   ],
-  directives: [formDirectives, coreDirectives, DataTableComponent],
+  directives: [formDirectives, coreDirectives, DataTable],
 )
 class SelectDialog implements ControlValueAccessor, AfterViewInit, OnDestroy {
   @ViewChild('inputEl')
