@@ -22,7 +22,7 @@ import '../data_table/data_table_filter.dart';
 )
 class SelectDialog implements ControlValueAccessor, AfterViewInit, OnDestroy {
   @ViewChild('inputEl')
-  ElementRef inputEl;
+  InputElement inputEl;
 
   final NgControl ngControl;
   ChangeDetectorRef _changeDetector;
@@ -174,7 +174,7 @@ class SelectDialog implements ControlValueAccessor, AfterViewInit, OnDestroy {
     //onChangeControlValueAccessor((newValue == '' ? null : newValue), rawValue: newValue);
   }
 
-/**************** INICIO FUNÇÔES DO NGMODEL ControlValueAccessor *********************/
+// **************** INICIO FUNÇÔES DO NGMODEL ControlValueAccessor *********************
   void writeValue(value) {}
   void onDisabledChanged(bool isDisabled) {}
   TouchFunction onTouchedControlValueAccessor = () {};
@@ -198,7 +198,7 @@ class SelectDialog implements ControlValueAccessor, AfterViewInit, OnDestroy {
     onChangeControlValueAccessor = fn;
   }
 
-  /**************** /FIM FUNÇÔES DO NGMODEL ControlValueAccessor ****************/
+  //**************** /FIM FUNÇÔES DO NGMODEL ControlValueAccessor ****************
 
   StreamSubscription ssControlValueChanges;
 
@@ -221,7 +221,7 @@ class SelectDialog implements ControlValueAccessor, AfterViewInit, OnDestroy {
     inputEl = null;
   }
 
-  /**************** DataTable Area ****************/
+  //**************** DataTable Area ****************
   IDataTableRender itemSelected;
   void onRowClick(IDataTableRender selected) {
     itemSelected = selected;
@@ -235,8 +235,8 @@ class SelectDialog implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
   fillInputFromIDataTableRender(IDataTableRender selected) {
     if (selected != null) {
-      List<DataTableColSet> cols = selected.toDataTable()?.colsSets;
-      cols.forEach((DataTableColSet element) {
+      List<DataTableColumnData> cols = selected.toDataTable()?.colsSets;
+      cols.forEach((DataTableColumnData element) {
         if (element != null && element.primaryDisplayValue) {
           inputText = element.value;
           return;

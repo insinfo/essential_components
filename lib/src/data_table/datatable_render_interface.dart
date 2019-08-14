@@ -4,12 +4,12 @@ class DataTableData {
   static DataTableData instance;
   List<DataTableColumnData> colsSets;
   DataTableSettings() {
-    colsSets = new List<DataTableColumnData>();
+    colsSets =  List<DataTableColumnData>();
   }
 
   static DataTableData getInstance() {
     if (instance == null) {
-      return new DataTableData();
+      return  DataTableData();
     } else {
       return instance;
     }

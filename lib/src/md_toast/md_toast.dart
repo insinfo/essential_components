@@ -59,7 +59,7 @@ class MdToast implements OnInit {
     toastDiv.classes.remove('mdt--load');
 
     _timer?.cancel();
-    _timer = new Timer(duration, () {
+    _timer =  Timer(duration, () {
       toastDiv.classes.add('mdt--load');
     });
   }

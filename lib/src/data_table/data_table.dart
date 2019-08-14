@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 
-
 import 'datatable_render_interface.dart';
 import 'response_list.dart';
 import 'data_table_filter.dart';
@@ -29,7 +28,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
   @ViewChild("tableElement") //HtmlElement
   TableElement tableElement;
 
-  DataTableFilter dataTableFilter = new DataTableFilter();
+  DataTableFilter dataTableFilter =  DataTableFilter();
 
   @ViewChild("inputSearchElement")
   InputElement inputSearchElement;
@@ -74,7 +73,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
   }
 
   RList<IDataTableRender> _data;
-  RList<IDataTableRender> selectedItems = new RList<IDataTableRender>();
+  RList<IDataTableRender> selectedItems =  RList<IDataTableRender>();
 
   @Input()
   set data(RList<IDataTableRender> data) {
@@ -95,17 +94,17 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
   int _currentPage = 1;
   int _btnQuantity = 5;
   PaginationType paginationType = PaginationType.carousel;
-  StreamSubscription _prevBtnStreamSub;
-  StreamSubscription _nextBtnStreamSub;
+  //StreamSubscription _prevBtnStreamSub;
+  //StreamSubscription _nextBtnStreamSub;
 
-  final NodeValidatorBuilder _htmlValidator = new NodeValidatorBuilder.common()
+  /*final NodeValidatorBuilder _htmlValidator = new NodeValidatorBuilder.common()
     ..allowHtml5()
     ..allowImages()
     ..allowInlineStyles()
     ..allowTextElements()
     ..allowSvg()
     ..allowElement('a', attributes: ['href'])
-    ..allowElement('img', attributes: ['src']);
+    ..allowElement('img', attributes: ['src']);*/
 
   @override
   void ngOnInit() {}
@@ -121,8 +120,10 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
         onSearch();
       }
     });
-    _prevBtnStreamSub = paginatePrevBtn.onClick.listen(prevPage);
-    _nextBtnStreamSub = paginateNextBtn.onClick.listen(nextPage);
+    /*_prevBtnStreamSub = paginatePrevBtn.onClick.listen(prevPage);
+    _nextBtnStreamSub = paginateNextBtn.onClick.listen(nextPage);*/
+    paginatePrevBtn.onClick.listen(prevPage);
+    paginateNextBtn.onClick.listen(nextPage);
   }
 
   @override
@@ -157,18 +158,19 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
 
           if (!_isTitlesRendered) {
             _isTitlesRendered = true;
-            Element tableHead = tableElement.createTHead();
+           // Element tableHead =//
+            tableElement.createTHead();
             TableRowElement tableHeaderRow = tableElement.tHead.insertRow(-1);
             //show checkbox on tableHead to select all rows
             if (_showCheckBoxToSelectRow) {
-              var th = new Element.tag('th');
+              var th =  Element.tag('th');
               th.attributes['class'] = "datatable-first-col";
-              var label = new Element.tag('label');
+              var label =  Element.tag('label');
               label.classes.add("pure-material-checkbox");
-              var input = new CheckboxInputElement();
+              var input =  CheckboxInputElement();
               //input.type = "checkbox";
               input.onClick.listen(onSelectAll);
-              var span = new Element.tag('span');
+              var span =  Element.tag('span');
               label.append(input);
               label.append(span);
               th.append(label);
@@ -178,7 +180,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
             //render colunas de titulo
             DataTableData columnsTitles = _data[0].toDataTable();
             for (DataTableColumnData col in columnsTitles.getSets()) {
-              var th = new Element.tag('th');
+              var th =  Element.tag('th');
               th.attributes['class'] = 'dataTableSorting';
               th.text = col.title;
               //ordenação
@@ -212,20 +214,20 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
             TableRowElement tableRow = tBody.insertRow(-1);
             //show checkbox to select single row
             if (_showCheckBoxToSelectRow) {
-              var tdcb = new Element.tag('td');
+              var tdcb =  Element.tag('td');
               tdcb.attributes['class'] = "datatable-first-col";
-              var label = new Element.tag('label');
+              var label =  Element.tag('label');
               label.onClick.listen((e) {
                 e.stopPropagation();
               });
               label.classes.add("pure-material-checkbox");
-              var input = new CheckboxInputElement();
+              var input =  CheckboxInputElement();
               //input.type = "checkbox";
               input.attributes['cbSelect'] = "true";
               input.onClick.listen((MouseEvent event) {
                 onSelect(event, item);
               });
-              var span = new Element.tag('span');
+              var span =  Element.tag('span');
               span.onClick.listen((e) {
                 e.stopPropagation();
               });
@@ -257,7 +259,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
                 case DataTableColumnType.date:
                   if (colSet.value != null) {
                     var fmt = colSet.format == null ? 'dd/MM/yyyy' : colSet.format;
-                    var formatter = new DateFormat(fmt);
+                    var formatter =  DateFormat(fmt);
                     var date = DateTime.tryParse(colSet.value.toString());
                     if (date != null) {
                       tdContent = formatter.format(date);
@@ -267,7 +269,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
                 case DataTableColumnType.dateTime:
                   if (colSet.value != null) {
                     var fmt = colSet.format == null ? 'dd/MM/yyyy HH:mm:ss' : colSet.format;
-                    var formatter = new DateFormat(fmt);
+                    var formatter =  DateFormat(fmt);
                     var date = DateTime.tryParse(colSet.value.toString());
                     if (date != null) {
                       tdContent = formatter.format(date);
@@ -302,7 +304,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
 
               tdContent = tdContent == "null" ? "-" : tdContent;
 
-              var td = new Element.tag('td');
+              var td =  Element.tag('td');
               td.setInnerHtml(tdContent, treeSanitizer: NodeTreeSanitizer.trusted);
 
               tableRow.insertAdjacentElement('beforeend', td);
@@ -353,7 +355,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
     var loopEnd = 0;
     switch (paginationType) {
       case PaginationType.carousel:
-        idx = currentPage - (btnQuantity / 2).toInt();
+        idx = (currentPage - (btnQuantity / 2)).toInt();
         if (idx <= 0) {
           idx = 1;
         }
@@ -363,7 +365,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
           idx = loopEnd - btnQuantity;
         }
         while (idx < loopEnd) {
-          var link = new Element.tag('a');
+          var link =  Element.tag('a');
           link.classes.add("paginate_button");
           if (idx == currentPage) {
             link.classes.add("current");
@@ -388,7 +390,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
         while (idx < loopEnd) {
           idx++;
           if (idx <= totalPages) {
-            var link = new Element.tag('a');
+            var link =  Element.tag('a');
             link.classes.add("paginate_button");
             if (idx == currentPage) {
               link.classes.add("current");

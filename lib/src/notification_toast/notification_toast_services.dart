@@ -17,13 +17,13 @@ class NotificationToastService {
     void add(String type, String title, String message,
              {String icon, num durationSeconds}) {
 
-        var toast = new Toast(type, title, message, icon, durationSeconds);
+        var toast =  Toast(type, title, message, icon, durationSeconds);
         this.toasts.insert(0, toast);
         var milliseconds = (1000 * toast.durationSeconds + 300).round();
         // How to get size of each toast?
-        new Timer(new Duration(milliseconds: milliseconds), () {
+         Timer( Duration(milliseconds: milliseconds), () {
             toast.toBeDeleted = true;
-            new Timer(new Duration(milliseconds: 300), () {
+             Timer( Duration(milliseconds: 300), () {
                 this.toasts.remove(toast);
             });
         });
