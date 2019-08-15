@@ -1,4 +1,4 @@
-class Utils {
+class DataTableUtils {
   static String truncate(String value, int truncateAt) {
     if (value == null || truncateAt == null) {
       return value;
@@ -17,8 +17,7 @@ class Utils {
 
   static void addEventForChild(parent, eventName, childSelector, cb) {
     parent.addEventListener(eventName, (event) {
-      var clickedElement = event.target,
-          matchingChild = clickedElement.closest(childSelector);
+      var clickedElement = event.target, matchingChild = clickedElement.closest(childSelector);
       if (matchingChild) {
         cb(matchingChild);
       }

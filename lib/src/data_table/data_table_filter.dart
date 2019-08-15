@@ -8,7 +8,7 @@ class DataTableFilter {
 
   DataTableFilter({this.limit = 10, this.offset = 0, this.searchString});
 
-  clear(){
+  clear() {
     stringParams.clear();
   }
 

@@ -1,3 +1,12 @@
-## 1.0.0
+## 0.0.4
 
-- Initial version, created by Stagehand
+- Initial version pre alpha
+
+## 0.0.5
+
+- Fix analysis problems 
+
+## 0.0.6
+
+- Refactoring components names 
+

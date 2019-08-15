@@ -14,9 +14,9 @@ class="form-control">
     <div class="modal-dialog modal-lg" (click)="$event.stopPropagation();">
         <div class="modal-content">
             <div class="modal-body">                
-                <data-table #dataTable [data]="data" (rowClick)="onRowClick($event)" [showCheckboxSelect]="false"
+                <es-data-table #dataTable [data]="data" (rowClick)="onRowClick($event)" [showCheckboxSelect]="false"
                     (dataRequest)="onRequestData($event)">
-                </data-table>
+                </es-data-table>
             </div>
         </div>
     </div>

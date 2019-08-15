@@ -4,14 +4,14 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 @Component(
-  selector: 'md-toast',
-  templateUrl: 'md_toast.html',
+  selector: 'es-toast',
+  templateUrl: 'toast.html',
   styleUrls: [
-    'md_toast.css',
+    'toast.css',
   ],
 )
 //A Material Design Toast component for AngularDart
-class MdToast implements OnInit {
+class EssentialToastComponent implements OnInit {
   @ViewChild('toastDiv')
   DivElement toastDiv;
 
@@ -59,7 +59,7 @@ class MdToast implements OnInit {
     toastDiv.classes.remove('mdt--load');
 
     _timer?.cancel();
-    _timer =  Timer(duration, () {
+    _timer = Timer(duration, () {
       toastDiv.classes.add('mdt--load');
     });
   }

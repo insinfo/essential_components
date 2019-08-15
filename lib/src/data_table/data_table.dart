@@ -10,25 +10,25 @@ import 'response_list.dart';
 import 'data_table_filter.dart';
 
 //utils
-import 'utils.dart';
+import 'data_table_utils.dart';
 
 @Component(
-  selector: 'data-table',
+  selector: 'es-data-table',
   templateUrl: 'data_table.html',
   styleUrls: [
     'data_table.css',
   ],
   directives: [
     formDirectives,
-    coreDirectives,    
+    coreDirectives,
   ],
 )
 //A Material Design Data table component for AngularDart
-class DataTable implements OnInit, AfterChanges, AfterViewInit {
+class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit {
   @ViewChild("tableElement") //HtmlElement
   TableElement tableElement;
 
-  DataTableFilter dataTableFilter =  DataTableFilter();
+  DataTableFilter dataTableFilter = DataTableFilter();
 
   @ViewChild("inputSearchElement")
   InputElement inputSearchElement;
@@ -65,7 +65,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
   @Input()
   set showCheckboxSelect(bool showCBSelect) {
     _showCheckBoxToSelectRow = showCBSelect;
-    draw();    
+    draw();
   }
 
   bool get showCheckboxSelect {
@@ -73,7 +73,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
   }
 
   RList<IDataTableRender> _data;
-  RList<IDataTableRender> selectedItems =  RList<IDataTableRender>();
+  RList<IDataTableRender> selectedItems = RList<IDataTableRender>();
 
   @Input()
   set data(RList<IDataTableRender> data) {
@@ -158,19 +158,19 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
 
           if (!_isTitlesRendered) {
             _isTitlesRendered = true;
-           // Element tableHead =//
+            // Element tableHead =//
             tableElement.createTHead();
             TableRowElement tableHeaderRow = tableElement.tHead.insertRow(-1);
             //show checkbox on tableHead to select all rows
             if (_showCheckBoxToSelectRow) {
-              var th =  Element.tag('th');
+              var th = Element.tag('th');
               th.attributes['class'] = "datatable-first-col";
-              var label =  Element.tag('label');
+              var label = Element.tag('label');
               label.classes.add("pure-material-checkbox");
-              var input =  CheckboxInputElement();
+              var input = CheckboxInputElement();
               //input.type = "checkbox";
               input.onClick.listen(onSelectAll);
-              var span =  Element.tag('span');
+              var span = Element.tag('span');
               label.append(input);
               label.append(span);
               th.append(label);
@@ -178,9 +178,9 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
             }
 
             //render colunas de titulo
-            DataTableData columnsTitles = _data[0].toDataTable();
-            for (DataTableColumnData col in columnsTitles.getSets()) {
-              var th =  Element.tag('th');
+            DataTableRow columnsTitles = _data[0].getRowDefinition();
+            for (DataTableColumn col in columnsTitles.getSets()) {
+              var th = Element.tag('th');
               th.attributes['class'] = 'dataTableSorting';
               th.text = col.title;
               //ordenação
@@ -214,20 +214,20 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
             TableRowElement tableRow = tBody.insertRow(-1);
             //show checkbox to select single row
             if (_showCheckBoxToSelectRow) {
-              var tdcb =  Element.tag('td');
+              var tdcb = Element.tag('td');
               tdcb.attributes['class'] = "datatable-first-col";
-              var label =  Element.tag('label');
+              var label = Element.tag('label');
               label.onClick.listen((e) {
                 e.stopPropagation();
               });
               label.classes.add("pure-material-checkbox");
-              var input =  CheckboxInputElement();
+              var input = CheckboxInputElement();
               //input.type = "checkbox";
               input.attributes['cbSelect'] = "true";
               input.onClick.listen((MouseEvent event) {
                 onSelect(event, item);
               });
-              var span =  Element.tag('span');
+              var span = Element.tag('span');
               span.onClick.listen((e) {
                 e.stopPropagation();
               });
@@ -251,15 +251,15 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
             });
 
             //draw columns
-            DataTableData settings = item.toDataTable();
-            for (DataTableColumnData colSet in settings.getSets()) {
+            DataTableRow settings = item.getRowDefinition();
+            for (DataTableColumn colSet in settings.getSets()) {
               var tdContent = "";
 
               switch (colSet.type) {
                 case DataTableColumnType.date:
                   if (colSet.value != null) {
                     var fmt = colSet.format == null ? 'dd/MM/yyyy' : colSet.format;
-                    var formatter =  DateFormat(fmt);
+                    var formatter = DateFormat(fmt);
                     var date = DateTime.tryParse(colSet.value.toString());
                     if (date != null) {
                       tdContent = formatter.format(date);
@@ -269,7 +269,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
                 case DataTableColumnType.dateTime:
                   if (colSet.value != null) {
                     var fmt = colSet.format == null ? 'dd/MM/yyyy HH:mm:ss' : colSet.format;
-                    var formatter =  DateFormat(fmt);
+                    var formatter = DateFormat(fmt);
                     var date = DateTime.tryParse(colSet.value.toString());
                     if (date != null) {
                       tdContent = formatter.format(date);
@@ -279,7 +279,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
                 case DataTableColumnType.text:
                   var str = colSet.value.toString();
                   if (colSet.limit != null) {
-                    str = Utils.truncate(str, colSet.limit);
+                    str = DataTableUtils.truncate(str, colSet.limit);
                   }
                   tdContent = str;
                   break;
@@ -297,14 +297,14 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
                 default:
                   var str = colSet.value.toString();
                   if (colSet.limit != null) {
-                    str = Utils.truncate(str, colSet.limit);
+                    str = DataTableUtils.truncate(str, colSet.limit);
                   }
                   tdContent = str;
               }
 
               tdContent = tdContent == "null" ? "-" : tdContent;
 
-              var td =  Element.tag('td');
+              var td = Element.tag('td');
               td.setInnerHtml(tdContent, treeSanitizer: NodeTreeSanitizer.trusted);
 
               tableRow.insertAdjacentElement('beforeend', td);
@@ -365,7 +365,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
           idx = loopEnd - btnQuantity;
         }
         while (idx < loopEnd) {
-          var link =  Element.tag('a');
+          var link = Element.tag('a');
           link.classes.add("paginate_button");
           if (idx == currentPage) {
             link.classes.add("current");
@@ -390,7 +390,7 @@ class DataTable implements OnInit, AfterChanges, AfterViewInit {
         while (idx < loopEnd) {
           idx++;
           if (idx <= totalPages) {
-            var link =  Element.tag('a');
+            var link = Element.tag('a');
             link.classes.add("paginate_button");
             if (idx == currentPage) {
               link.classes.add("current");

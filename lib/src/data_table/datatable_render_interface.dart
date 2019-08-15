@@ -1,36 +1,33 @@
-
-
-class DataTableData {
-  static DataTableData instance;
-  List<DataTableColumnData> colsSets;
+class DataTableRow {
+  static DataTableRow instance;
+  List<DataTableColumn> colsSets;
   DataTableSettings() {
-    colsSets =  List<DataTableColumnData>();
+    colsSets = List<DataTableColumn>();
   }
 
-  static DataTableData getInstance() {
+  static DataTableRow getInstance() {
     if (instance == null) {
-      return  DataTableData();
+      return DataTableRow();
     } else {
       return instance;
     }
   }
 
-  addSet(DataTableColumnData colSet) {
+  addSet(DataTableColumn colSet) {
     colsSets.add(colSet);
   }
 
-  getSets(){
+  getSets() {
     return colsSets;
   }
-  
 }
 
 enum DataTableColumnType { img, text, date, dateTime }
 
-//primaryDisplayValue é o Valor de exibição principal 
+//primaryDisplayValue é o Valor de exibição principal
 //a ser exibido quando não for possivel exibir mais de uma coluna
 //primaryDisplayValue também é usado pelo component Select Dialog
-class DataTableColumnData {
+class DataTableColumn {
   dynamic key;
   dynamic value;
   DataTableColumnType type;
@@ -38,9 +35,16 @@ class DataTableColumnData {
   int limit;
   String format;
   bool primaryDisplayValue;
-  DataTableColumnData({this.key,this.value, this.type=DataTableColumnType.text, this.title, this.limit, this.format,this.primaryDisplayValue=false});
+  DataTableColumn(
+      {this.key,
+      this.value,
+      this.type = DataTableColumnType.text,
+      this.title,
+      this.limit,
+      this.format,
+      this.primaryDisplayValue = false});
 }
 
 abstract class IDataTableRender {
-  DataTableData toDataTable();
+  DataTableRow getRowDefinition();
 }

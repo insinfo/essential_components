@@ -15,14 +15,16 @@
 
 <!--
 <div *ngFor='let toast of service?.toasts; let toastIndex=index' id="jGrowl" class="top-right jGrowl">
-    <div class="jGrowl-notification"></div>
-           
+    <div class="jGrowl-notification"></div>           
     <div class="jGrowl-notification alert ui-state-highlight ui-corner-all alert-styled-left bg-danger"
          style="display: block;" 
         [style.animation]='toast.toBeDeleted ? "toast-fade-out 0.3s ease-out" : "toast-fade-in 0.3s ease-in"'
         ><button class="jGrowl-close">×</button>
-        <div class="jGrowl-header">Left icon</div>
-        <div class="jGrowl-message">Solid color notification with left icon</div>
-    </div>
-    
+        <div class="jGrowl-header">
+            <span *ngIf='toast.title != null'>{{toast.title}}</span>
+        </div>
+        <div class="jGrowl-message">
+            <span *ngIf='toast.message != null'>{{toast.message}}</span>
+        </div>
+    </div>    
 </div>-->

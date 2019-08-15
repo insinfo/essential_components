@@ -12,21 +12,26 @@ import '../data_table/response_list.dart';
 import '../data_table/data_table_filter.dart';
 
 @Component(
-  selector: 'select-dialog',
+  selector: 'es-select-dialog',
   //changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'select_dialog.html',
   styleUrls: [
     'select_dialog.css',
   ],
-  directives: [formDirectives, coreDirectives, DataTable],
+  directives: [formDirectives, coreDirectives, EssentialDataTableComponent],
 )
-class SelectDialog implements ControlValueAccessor, AfterViewInit, OnDestroy {
+class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
   @ViewChild('inputEl')
   InputElement inputEl;
 
   final NgControl ngControl;
-  ChangeDetectorRef _changeDetector;
+  /* ChangeDetectorRef _changeDetector;
   String _hintText;
+  @Input()
+  set hintText(value) {
+    _hintText = value;
+  }*/
+
   bool showDialog = false;
 
   bool _required = false;
@@ -43,11 +48,6 @@ class SelectDialog implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
   @Input()
   String label;
-
-  @Input()
-  set hintText(value) {
-    _hintText = value;
-  }
 
   @Input()
   int maxCount;
@@ -116,8 +116,8 @@ class SelectDialog implements ControlValueAccessor, AfterViewInit, OnDestroy {
   }
 
   //contrutor
-  SelectDialog(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
-    _changeDetector = changeDetector;
+  EssentialSelectDialogComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
+    // _changeDetector = changeDetector;
     // Replace the provider from above with this.
     if (this.ngControl != null) {
       // Setting the value accessor directly (instead of using
@@ -126,7 +126,7 @@ class SelectDialog implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
       if (ngControl?.control != null) {
         //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
-        ssControlValueChanges = ngControl.control.valueChanges.listen((value) {          
+        ssControlValueChanges = ngControl.control.valueChanges.listen((value) {
           if (value != null) {
             fillInputFromIDataTableRender(value);
           }
@@ -235,8 +235,8 @@ class SelectDialog implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
   fillInputFromIDataTableRender(IDataTableRender selected) {
     if (selected != null) {
-      List<DataTableColumnData> cols = selected.toDataTable()?.colsSets;
-      cols.forEach((DataTableColumnData element) {
+      List<DataTableColumn> cols = selected.getRowDefinition()?.colsSets;
+      cols.forEach((DataTableColumn element) {
         if (element != null && element.primaryDisplayValue) {
           inputText = element.value;
           return;

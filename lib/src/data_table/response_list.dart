@@ -8,10 +8,15 @@ class RList<E> extends ListBase<E> {
   final List<E> l = [];
   RList();
 
-  set length(int newLength) { l.length = newLength; }
+  set length(int newLength) {
+    l.length = newLength;
+  }
+
   int get length => l.length;
   E operator [](int index) => l[index];
-  void operator []=(int index, E value) { l[index] = value; }
+  void operator []=(int index, E value) {
+    l[index] = value;
+  }
 
   /*bool remove(Object element) {
     for (int i = 0; i < l.length; i++) {

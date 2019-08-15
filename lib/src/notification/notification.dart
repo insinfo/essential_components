@@ -1,14 +1,16 @@
 import 'package:angular/angular.dart';
 import 'package:ng_fontawesome/ng_fontawesome.dart';
 
-import 'notification_toast_services.dart';
+import 'notification_services.dart';
 
 /// Top navigation component.
 @Component(
-  selector: 'notification-toast-outlet', 
-templateUrl: 'notification_toast.html', 
-styleUrls: ['notification_toast.css'],
-    /*styles: [
+  selector: 'es-notification-outlet', 
+  templateUrl: 'notification.html', 
+  styleUrls: [
+  'notification.css',
+],
+   /* styles: [
       ''' 
         @keyframes toast-fade-in {
         from {opacity: 0;}
@@ -25,12 +27,15 @@ styleUrls: ['notification_toast.css'],
         to {width: 100%;}
         }
    '''
-    ]*/
-    directives: [coreDirectives, fontAwesomeDirectives] //FA_DIRECTIVES FaIcon
+    ],*/
+    directives: [
+      coreDirectives,
+      fontAwesomeDirectives
+    ] //FA_DIRECTIVES FaIcon
     )
-class ToastOutlet {
+class EssentialNotificationComponent {
   @Input()
-  NotificationToastService service;
+  EssentialNotificationService service;
 
   /// Produce a CSS style for the `top` property.
   String styleTop(int i) {
