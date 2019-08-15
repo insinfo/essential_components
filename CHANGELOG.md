@@ -10,3 +10,8 @@
 
 - Refactoring components names 
 
+## 0.0.7
+
+- Refactoring API names 
+
+
