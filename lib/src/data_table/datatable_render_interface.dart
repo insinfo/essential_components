@@ -1,7 +1,7 @@
 class DataTableRow {
   static DataTableRow instance;
   List<DataTableColumn> colsSets;
-  DataTableSettings() {
+  DataTableRow() {
     colsSets = List<DataTableColumn>();
   }
 

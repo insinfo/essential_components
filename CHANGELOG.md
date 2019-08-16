@@ -14,4 +14,7 @@
 
 - Refactoring API names 
 
+## 0.0.8
+
+- Fix bug on DataTable component
 
