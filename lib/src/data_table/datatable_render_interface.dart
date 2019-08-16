@@ -17,7 +17,7 @@ class DataTableRow {
     colsSets.add(colSet);
   }
 
-  getSets() {
+  List<DataTableColumn> getSets() {
     return colsSets;
   }
 }
