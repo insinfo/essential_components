@@ -18,3 +18,13 @@
 
 - Fix bug on DataTable component
 
+## 0.1.0
+
+- Fix preventDefault and stopPropagation for form submission on enter key
+
+# 0.1.1
+- implementation of a loading animation in dataTable
+
+# 0.1.2
+
+- implementation directives utils

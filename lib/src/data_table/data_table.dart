@@ -116,9 +116,12 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
 
   ngAfterViewInit() {
     inputSearchElement.onKeyPress.listen((KeyboardEvent e) {
+       //e.preventDefault();
+      e.stopPropagation();
       if (e.keyCode == KeyCode.ENTER) {
         onSearch();
       }
+     
     });
     /*_prevBtnStreamSub = paginatePrevBtn.onClick.listen(prevPage);
     _nextBtnStreamSub = paginateNextBtn.onClick.listen(nextPage);*/
@@ -316,6 +319,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
       print("draw() exception: " + exception.toString());
       print(stackTrace.toString());
     }
+    isLoading = false;
   }
 
   int numPages() {
@@ -476,7 +480,10 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   @Output()
   Stream<DataTableFilter> get dataRequest => _dataRequest.stream;
 
+  bool isLoading = true;
+
   onRequestData() {
+    isLoading = true;
     var currentPage = this._currentPage == 1 ? 0 : this._currentPage - 1;
     dataTableFilter.offset = currentPage * dataTableFilter.limit;
     _dataRequest.add(dataTableFilter);

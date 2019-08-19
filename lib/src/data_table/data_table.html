@@ -1,10 +1,12 @@
 <div class="dataTables_wrapper no-footer">
 
     <div class="datatable-header">
-        <div class="dataTables_filter" *ngIf="showFilter">
+        <div class="dataTables_filter2" *ngIf="showFilter">
             <label>
                 <span>Filtrar:</span>
-                <input #inputSearchElement type="search" class="" placeholder="Digite e tecle enter para buscar...">
+                <input #inputSearchElement type="search" 
+                class="" placeholder="Digite e tecle enter para buscar...">
+                <button type="button" (click)="onSearch()"></button>
             </label>
         </div>
         <div class="dataTables_length" *ngIf="showItemsLimit">
@@ -21,8 +23,15 @@
             </label>
         </div>
     </div>
+    <!--[ngClass]="{'loading': 1 == 1 }"-->
+    <div class="datatable-scroll" >
+        <!-- LOADING -->
+        <div class="slider" *ngIf="isLoading">
+            <div class="line"></div>
+            <div class="subline inc"></div>
+            <div class="subline dec"></div>
+        </div>
 
-    <div class="datatable-scroll">
         <table #tableElement class="table datatable-basic dataTable no-footer" role="grid">            
         </table>
     </div>
