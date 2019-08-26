@@ -28,3 +28,7 @@
 # 0.1.2
 
 - implementation directives utils
+
+# 0.1.3
+
+- fix CSS dataTable
