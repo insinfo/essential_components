@@ -36,3 +36,7 @@
 # 0.1.4
 
 - fix CSS Select Dialog
+
+# 0.1.6
+
+- implementation onchange event in Select Dialog

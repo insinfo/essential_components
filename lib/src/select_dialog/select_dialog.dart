@@ -80,11 +80,11 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   @Output('inputKeyPress')
   Stream<String> get onKeypress => _keypressController.stream;
 
-  final _changeController = StreamController<String>.broadcast(sync: true);
+  final _changeController = StreamController<dynamic>.broadcast(sync: true);
 
   /// Publishes events when a change event is fired. (On enter, or on blur.)
   @Output('change')
-  Stream<String> get onChange => _changeController.stream;
+  Stream<dynamic> get onChange => _changeController.stream;
 
   final _blurController = StreamController<FocusEvent>.broadcast(sync: true);
 
@@ -163,7 +163,7 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
 
   void inputChange(newValue, valid, validationMessage) {
     inputText = newValue;
-    _changeController.add(newValue);
+    _changeController.add(itemSelected);
     // onChangeControlValueAccessor((newValue == '' ? null : newValue), rawValue: newValue);
   }
 
