@@ -225,7 +225,7 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   IDataTableRender itemSelected;
   void onRowClick(IDataTableRender selected) {
     itemSelected = selected;
-
+    _changeController.add(itemSelected);
     //seta o ngModel
     onChangeControlValueAccessor(itemSelected, rawValue: "");
 
