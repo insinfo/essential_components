@@ -32,3 +32,7 @@
 # 0.1.3
 
 - fix CSS dataTable
+
+# 0.1.4
+
+- fix CSS Select Dialog
