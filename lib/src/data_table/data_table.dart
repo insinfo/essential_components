@@ -490,7 +490,12 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   }
 
   reload() {
-    dataTableFilter.clear();
+    /*dataTableFilter.clear();*/   
+    onRequestData();
+  }
+
+  reset() {
+    dataTableFilter.clear(); 
     onRequestData();
   }
 

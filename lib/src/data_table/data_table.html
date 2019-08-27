@@ -1,26 +1,32 @@
 <div class="dataTables_wrapper no-footer">
 
-    <div class="datatable-header">
+    <div class="datatable-header2 flex-justify flex-wrap">
         <div class="dataTables_filter2" *ngIf="showFilter">
             <label>
                 <span>Filtrar:</span>
-                <input #inputSearchElement type="search" 
-                class="" placeholder="Digite e tecle enter para buscar...">
+                <input #inputSearchElement type="search" class="" placeholder="Digite para buscar...">
                 <button type="button" (click)="onSearch()"></button>
             </label>
         </div>
-        <div class="dataTables_length" *ngIf="showItemsLimit">
-            <label>
-                <span>Exibir:</span>
-                <select #itemsPerPageElement (change)="onLimitChange()" name="" class="">
-                    <option value="1">1</option>
-                    <option value="5">5</option>
-                    <option value="10" selected>10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-            </label>
+        <div class="flex" *ngIf="showItemsLimit">
+            <div class="dataTable-actions">
+                <button (click)="reload()" type="button" title="Recarrega o Datatable" alt="Reseta e recarrega o Datatable">
+                    <i class="dataTable-btn-update"></i>
+                </button>
+            </div>
+            <div class="dataTables_length2">
+                <label>
+                    <span>Exibir:</span>
+                    <select #itemsPerPageElement (change)="onLimitChange()" name="" class="">
+                        <option value="1">1</option>
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </label>
+            </div>
         </div>
     </div>
     <!--[ngClass]="{'loading': 1 == 1 }"-->

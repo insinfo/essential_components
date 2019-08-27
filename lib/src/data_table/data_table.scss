@@ -1,19 +1,35 @@
+.flex-justify {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-item-1 {
+  flex: 1;
+}
+.datatable-header2 {
+  border-bottom: 1px solid #ddd;
+  /*TOP RIGHT BOTTOM LEFT*/
+  padding: 1.25rem 1.25rem 5px 1.25rem;
+}
+
+.datatable-footer {
+  padding: 1.25rem 1.25rem 0 1.25rem;
+}
+
 .dataTables_filter2 {
-  position: relative;
-  display: block;
-  float: left;
-  margin: 0 0 1.25rem 1.25rem;
 }
 
 .dataTables_filter2 > label {
   margin-bottom: 0;
   position: relative;
-}
-
-.dataTables_filter2 > label > span {
-  float: left;
-  margin: 0.5625rem 0.83333rem;
-  margin-left: 0;
 }
 
 .dataTables_filter2 input {
@@ -53,6 +69,7 @@
   outline: none;
   cursor: pointer;
 }
+
 .dataTables_filter2 button:after {
   content: "\e98e";
   font-family: icomoon;
@@ -68,6 +85,70 @@
   -moz-osx-font-smoothing: grayscale;
   cursor: pointer;
 }
+
+.dataTables_length2 {
+}
+
+.dataTables_length2 select {
+  height: 2.37503rem;
+  padding: 0.5rem 0;
+  font-size: 0.8125rem;
+  line-height: 1.5385;
+  color: #333;
+  background-color: transparent;
+  border: 1px solid #ddd;
+  outline: 0;
+}
+
+.dataTable-actions {
+  padding-right: 15px; 
+  padding-top: 4px;
+}
+
+.dataTable-actions button {
+  outline: none;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-left: 2px;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.dataTable-actions button i {
+  color: #454545;
+  font-size: 23px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  position: relative;
+  /*top: 4px;*/
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+.dataTable-btn-update::after {
+  font-family: Icomoon;
+  /* font-family: "Material Icons"; */
+  /* content: "refresh"; */
+  font-style: normal;
+  content: "\e9fb";
+  font-size: 19px;
+}
+
+/* @media (max-width: 700px) {
+            .child {
+                min-width: 33.33%;
+            }
+}*/
 
 .loading {
   min-width: 100px;
