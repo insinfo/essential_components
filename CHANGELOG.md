@@ -40,3 +40,7 @@
 # 0.1.6
 
 - implementation onchange event in Select Dialog
+
+# 0.1.9
+
+- implementation of 2 new components "EssentialAccordionComponent" and fontawesome components 

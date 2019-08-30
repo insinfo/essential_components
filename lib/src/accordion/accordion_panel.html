@@ -1,0 +1,21 @@
+<div class="es-card" [ngClass]="panelClass">
+    <div class="" (click)="toggleOpen($event)" style="cursor: pointer">
+        <h5>
+            <!--  -->
+            <span style="speak: none; font-style: normal; font-weight: normal; font-variant: normal;
+    text-transform: none; line-height: 1; min-width: 1em; display: inline-block;
+    text-align: center; font-size: 16px;  vertical-align: middle;
+    position: relative; top: -1px; -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;border: solid 1px #ddd;
+    border-radius: 20px; 
+            " >
+                <fa group="light" size="xs" [name]="icon"></fa>
+            </span>
+            {{heading}}
+        </h5>
+        <ng-content select="header"></ng-content>
+    </div>
+    <div [esCollapse]="!isOpen">
+        <ng-content></ng-content>
+    </div>
+</div>
