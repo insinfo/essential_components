@@ -22,7 +22,7 @@ class DataTableRow {
   }
 }
 
-enum DataTableColumnType { img, text, date, dateTime }
+enum DataTableColumnType { img, text, date, dateTime, boolLabel }
 
 //primaryDisplayValue é o Valor de exibição principal
 //a ser exibido quando não for possivel exibir mais de uma coluna

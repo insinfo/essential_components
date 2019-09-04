@@ -1,6 +1,6 @@
 name: essential_components
 description: A starting point for Dart libraries or applications.
-version: 0.1.9
+version: 0.1.10
 homepage: https://github.com/insinfo/essential_components
 author: Isaque Neves <insinfo2008@gmail.com>
 
@@ -15,6 +15,7 @@ dependencies:
   #ng_fontawesome: ^5.7.2+2
   sass_builder: ^2.1.3
   decimal: ^0.3.4
+  xml:
 
 dev_dependencies:
   pedantic: ^1.7.0

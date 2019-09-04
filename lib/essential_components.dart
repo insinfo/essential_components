@@ -33,3 +33,5 @@ export 'src/directives/collapse.dart';
 
 //fontawesome
 export 'src/fontawesome/fontawesome.dart';
+
+export 'src/feedparser/feedparser.dart';

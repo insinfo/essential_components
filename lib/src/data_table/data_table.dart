@@ -116,12 +116,11 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
 
   ngAfterViewInit() {
     inputSearchElement.onKeyPress.listen((KeyboardEvent e) {
-       //e.preventDefault();
+      //e.preventDefault();
       e.stopPropagation();
       if (e.keyCode == KeyCode.ENTER) {
         onSearch();
       }
-     
     });
     /*_prevBtnStreamSub = paginatePrevBtn.onClick.listen(prevPage);
     _nextBtnStreamSub = paginateNextBtn.onClick.listen(nextPage);*/
@@ -283,6 +282,15 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
                   var str = colSet.value.toString();
                   if (colSet.limit != null) {
                     str = DataTableUtils.truncate(str, colSet.limit);
+                  }
+                  tdContent = str;
+                  break;
+                case DataTableColumnType.boolLabel:
+                  var str = colSet.value.toString();
+                  if (str == 'true') {
+                    str = '<span class="badge badge-success">Sim</span>';
+                  } else {
+                    str = '<span class="badge badge-danger">Não</span>';
                   }
                   tdContent = str;
                   break;
@@ -490,12 +498,12 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   }
 
   reload() {
-    /*dataTableFilter.clear();*/   
+    /*dataTableFilter.clear();*/
     onRequestData();
   }
 
   reset() {
-    dataTableFilter.clear(); 
+    dataTableFilter.clear();
     onRequestData();
   }
 
