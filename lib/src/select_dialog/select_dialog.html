@@ -1,24 +1,10 @@
-<input #inputEl
-[type]="type" 
-(change)="handleChange($event, inputEl)"
-[ngModel]="inputText"
-(input)="inputKeypress(inputEl.value, inputEl.validity.valid, inputEl.validationMessage)"
-[tabindex]="inputTabIndex"
-(focus)="inputFocusAction" 
-(click)="toogleDialog();"
-readonly
-class="form-control">
+<input #inputEl [type]="type" (change)="handleChange($event, inputEl)" [ngModel]="inputText"
+    (input)="inputKeypress(inputEl.value, inputEl.validity.valid, inputEl.validationMessage)" [tabindex]="inputTabIndex"
+    (focus)="inputFocusAction" (click)="openDialog();" readonly class="form-control">
 
-<div class="modal-backdrop fade show" [ngClass]="{showElement: showDialog}"></div>
-<div class="modal fade show" (click)="toogleDialog();" [ngClass]="{showElement: showDialog}" tabindex="-1"
-    style="padding-right: 17px;">
-    <div class="modal-dialog modal-lg" (click)="$event.stopPropagation();">
-        <div class="modal-content">
-            <div class="modal-body">                
-                <es-data-table #dataTable [data]="data" (rowClick)="onRowClick($event)" [showCheckboxSelect]="false"
-                    (dataRequest)="onRequestData($event)">
-                </es-data-table>
-            </div>
-        </div>
-    </div>
-</div>
+
+<es-modal #modal>
+    <es-data-table #dataTable [data]="data" (rowClick)="onRowClick($event)" [showCheckboxSelect]="false"
+        (dataRequest)="onRequestData($event)">
+    </es-data-table>
+</es-modal>

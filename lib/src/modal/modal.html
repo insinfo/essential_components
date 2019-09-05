@@ -1,0 +1,20 @@
+<div class="modal-backdrop fade show" [ngClass]="showDialog ? 'showElement' : 'hideElement'"></div>
+<div class="modal fade show" (click)="closeDialog();" [ngClass]="showDialog ? 'showElement' : 'hideElement'"
+    tabindex="-1" style="padding-right: 17px;">
+    <div class="modal-dialog modal-lg" (click)="$event.stopPropagation();">
+        <div class="modal-content">
+
+            <div *ngIf="showheader" class="modal-header bg-primary">
+                <h6 class="modal-title">{{title}}</h6>
+                <button (click)="closeDialog();" type="button" class="close" data-dismiss="modal">×</button>                
+            </div>            
+
+            <div class="modal-body">
+                <ng-content></ng-content>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--[ngClass]="{showElement: show}"-->

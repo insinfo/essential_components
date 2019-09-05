@@ -10,6 +10,7 @@ import '../data_table/datatable_render_interface.dart';
 import '../data_table/response_list.dart';
 
 import '../data_table/data_table_filter.dart';
+import '../modal/modal.dart';
 
 @Component(
   selector: 'es-select-dialog',
@@ -18,11 +19,15 @@ import '../data_table/data_table_filter.dart';
   styleUrls: [
     'select_dialog.css',
   ],
-  directives: [formDirectives, coreDirectives, EssentialDataTableComponent],
+  directives: [formDirectives, coreDirectives, 
+  EssentialDataTableComponent, EssentialModalComponent],
 )
 class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
   @ViewChild('inputEl')
   InputElement inputEl;
+
+   @ViewChild('modal')
+  EssentialModalComponent modal;
 
   final NgControl ngControl;
   /* ChangeDetectorRef _changeDetector;
@@ -136,8 +141,12 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
     }
   }
 
-  toogleDialog() {
-    showDialog = !showDialog;
+  openDialog() {  
+    modal.openDialog();   
+  }
+
+  closeDialog() {   
+    modal.closeDialog();   
   }
 
   void inputFocusAction(event) {
@@ -229,7 +238,7 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
     //seta o ngModel
     onChangeControlValueAccessor(itemSelected, rawValue: "");
 
-    toogleDialog();
+    closeDialog();
     fillInputFromIDataTableRender(selected);
   }
 

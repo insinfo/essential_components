@@ -43,4 +43,12 @@
 
 # 0.1.9
 
-- implementation of 2 new components "EssentialAccordionComponent" and fontawesome components 
+- implementation 2 new components "EssentialAccordionComponent" and fontawesome components 
+
+# 0.1.11
+
+- implementation 1 new type on datatable col type
+
+# 0.1.12
+
+- implementation 1 new components "EssentialModalComponent"

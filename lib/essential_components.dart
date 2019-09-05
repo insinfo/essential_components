@@ -19,6 +19,8 @@ export 'src/notification/notification_services.dart';
 //Acordion
 export 'src/accordion/accordion.dart';
 
+//modal
+export 'src/modal/modal.dart';
 
 //dectives
 export 'src/directives/ano_validator.dart';
@@ -34,4 +36,4 @@ export 'src/directives/collapse.dart';
 //fontawesome
 export 'src/fontawesome/fontawesome.dart';
 
-export 'src/feedparser/feedparser.dart';
+//export 'src/feedparser/feedparser.dart';

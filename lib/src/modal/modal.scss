@@ -1,0 +1,26 @@
+.modal-backdrop {
+  display: none;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 0;
+}
+
+.modal {
+  overflow: auto;
+  cursor: pointer;
+  /*pointer-events: none;*/
+}
+
+.modal-dialog {
+  cursor: default;
+}
+
+.showElement {
+  display: block !important;
+}
+
+.hideElement {
+  display: none !important;
+}
