@@ -12,6 +12,9 @@ export 'src/toast/toast.dart';
 //select dialog
 export 'src/select_dialog/select_dialog.dart';
 
+//dropdown dialog
+export 'src/dropdown_dialog/dropdown_dialog.dart';
+
 //notification toast
 export 'src/notification/notification.dart';
 export 'src/notification/notification_services.dart';

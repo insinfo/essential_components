@@ -166,6 +166,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
             //show checkbox on tableHead to select all rows
             if (_showCheckBoxToSelectRow) {
               var th = Element.tag('th');
+              th.style.setProperty('text-align', 'left');
               th.attributes['class'] = "datatable-first-col";
               var label = Element.tag('label');
               label.classes.add("pure-material-checkbox");
@@ -183,6 +184,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
             DataTableRow columnsTitles = _data[0].getRowDefinition();
             for (DataTableColumn col in columnsTitles.getSets()) {
               var th = Element.tag('th');
+              th.style.setProperty('text-align', 'left');
               th.attributes['class'] = 'dataTableSorting';
               th.text = col.title;
               //ordenação
@@ -217,6 +219,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
             //show checkbox to select single row
             if (_showCheckBoxToSelectRow) {
               var tdcb = Element.tag('td');
+              tdcb.style.setProperty('text-align', 'left');
               tdcb.attributes['class'] = "datatable-first-col";
               var label = Element.tag('label');
               label.onClick.listen((e) {
@@ -316,6 +319,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
               tdContent = tdContent == "null" ? "-" : tdContent;
 
               var td = Element.tag('td');
+              td.style.setProperty('text-align', 'left');
               td.setInnerHtml(tdContent, treeSanitizer: NodeTreeSanitizer.trusted);
 
               tableRow.insertAdjacentElement('beforeend', td);

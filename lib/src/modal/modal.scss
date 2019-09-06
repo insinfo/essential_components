@@ -1,18 +1,3 @@
-.modal-backdrop {
-  display: none;
-  cursor: pointer;
-}
-
-.modal-body {
-  padding: 0;
-}
-
-.modal {
-  overflow: auto;
-  cursor: pointer;
-  /*pointer-events: none;*/
-}
-
 .modal-dialog {
   cursor: default;
 }
@@ -23,4 +8,98 @@
 
 .hideElement {
   display: none !important;
+}
+
+.modal-backdrop.show {
+  opacity: 0.15;
+}
+/*.modal-backdrop.fade {
+  opacity: 0;
+}*/
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000;
+  display: none;
+  cursor: pointer;
+}
+
+.modal1 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  outline: 0;
+  overflow: auto;
+  cursor: pointer;
+  /*pointer-events: none;*/
+}
+
+.fade {
+  transition: opacity 0.15s linear;
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 0.5rem;
+  pointer-events: none;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 600px;
+    margin: 1.75rem auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .modal-lg {
+    max-width: 900px;
+  }
+}
+
+.modal-content {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  outline: 0;
+}
+
+.modal-header {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.modal-body {
+  position: relative;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  //padding: 1.25rem;
+  padding: 0;
 }

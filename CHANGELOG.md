@@ -52,3 +52,8 @@
 # 0.1.12
 
 - implementation 1 new components "EssentialModalComponent"
+
+# 0.1.13
+
+- implementation 1 new components "EssentialDropdownDialogComponent"
+and fix modal issues

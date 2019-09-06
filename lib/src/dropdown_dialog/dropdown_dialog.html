@@ -1,0 +1,16 @@
+<button #buttonEl class="btn bg-teal" [type]="type" (click)="handleClick();"
+[title]="title" [disabled]="disabled">
+    {{label}} <i class="icon-plus3 ml-2"></i>
+</button>&nbsp;
+
+<es-modal #modal>
+    <es-data-table #dataTable [data]="data" [showCheckboxSelect]="true" (dataRequest)="onRequestData($event)">
+    </es-data-table>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <div class="form-group pr-3">
+                <button class="btn btn-primary" type="button" (click)="selectItems()">Selecionar</button>
+            </div>
+        </div>
+    </div>
+</es-modal>
