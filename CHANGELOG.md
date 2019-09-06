@@ -57,3 +57,7 @@
 
 - implementation 1 new components "EssentialDropdownDialogComponent"
 and fix modal issues
+
+# 0.1.14
+
+- implementation of RestClient a API for consumer web services
