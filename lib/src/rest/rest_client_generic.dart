@@ -14,7 +14,7 @@ class RestClientGeneric<T> {
   //cache duration
   Duration cacheValidDuration = Duration(minutes: 30);
   //disabilita o cache
-  bool _disableAllCache = false;
+  bool _disableAllCache = true;
 
   isQuotaExceeded() {
     try {
@@ -368,6 +368,39 @@ class RestClientGeneric<T> {
           message: '${request.responseText}', status: RestStatus.DANGER, statusCode: request.status);
     } catch (e) {
       print("RestClientGeneric@deleteAll ${e}");
+      return RestResponseGeneric(message: '${e}', status: RestStatus.DANGER, statusCode: 400);
+    }
+  }
+
+  Future<RestResponseGeneric> raw(String url, String method,
+      {Map<String, String> headers, String body, Encoding encoding}) async {
+    try {
+      if (headers == null) {
+        headers = headersDefault;
+      }
+
+      HttpRequest request = HttpRequest();
+      request.open(method, url);
+
+      if (headers != null) {
+        headers.forEach((key, value) {
+          request.setRequestHeader(key, value);
+        });
+      }
+
+      request.send(body);
+
+      await request.onLoadEnd.first;
+      //await request.onReadyStateChange.first;
+
+      if (request.status == 200) {
+        return RestResponseGeneric(
+            message: 'Sucesso', status: RestStatus.SUCCESS, data: request.responseText, statusCode: request.status);
+      }
+      return RestResponseGeneric(
+          data: request.responseText, message: 'Erro', status: RestStatus.DANGER, statusCode: request.status);
+    } catch (e) {
+      print("RestClientGeneric@raw ${e}");
       return RestResponseGeneric(message: '${e}', status: RestStatus.DANGER, statusCode: 400);
     }
   }
