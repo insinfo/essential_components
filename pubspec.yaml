@@ -16,7 +16,7 @@ dependencies:
   #ng_fontawesome: ^5.7.2+2
   sass_builder: ^2.1.3
   decimal: ^0.3.4
-  xml:
+  xml: ^3.5.0
 
 dev_dependencies:
   pedantic: ^1.7.0
