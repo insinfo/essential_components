@@ -1,6 +1,6 @@
 name: essential_components
 description: A starting point for Dart libraries or applications.
-version: 0.1.14
+version: 0.1.15
 homepage: https://github.com/insinfo/essential_components
 author: Isaque Neves <insinfo2008@gmail.com>
 

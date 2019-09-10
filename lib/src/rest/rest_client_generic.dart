@@ -80,7 +80,10 @@ class RestClientGeneric<T> {
   }
 
   Future<RestResponseGeneric<T>> getAll(String apiEndPoint,
-      {bool forceRefresh = false, Map<String, String> headers, Map<String, String> queryParameters}) async {
+      {bool forceRefresh = false,
+      String topNode,
+      Map<String, String> headers,
+      Map<String, String> queryParameters}) async {
     Uri url = UriMuProto.uri(apiEndPoint);
 
     try {
@@ -105,11 +108,16 @@ class RestClientGeneric<T> {
           }
 
           var parsedJson = jsonDecode(resp.body);
-
           RList<T> list = RList<T>();
-          parsedJson.forEach((item) {
-            list.add(factories[T](item));
-          });
+          if (topNode != null) {
+            parsedJson[topNode].forEach((item) {
+              list.add(factories[T](item));
+            });
+          } else {
+            parsedJson.forEach((item) {
+              list.add(factories[T](item));
+            });
+          }
 
           return RestResponseGeneric<T>(
               headers: resp.headers,
@@ -145,7 +153,10 @@ class RestClientGeneric<T> {
   }
 
   Future<RestResponseGeneric<T>> get(String apiEndPoint,
-      {bool forceRefresh = false, Map<String, String> headers, Map<String, String> queryParameters}) async {
+      {bool forceRefresh = false,
+      String topNode,
+      Map<String, String> headers,
+      Map<String, String> queryParameters}) async {
     Uri url = UriMuProto.uri(apiEndPoint);
 
     try {
@@ -169,8 +180,13 @@ class RestClientGeneric<T> {
             _setToLocalStorage(url.toString(), resp.body, headers: resp.headers);
           }
 
+          var result;
           var parsedJson = jsonDecode(resp.body);
-          var result = factories[T](parsedJson); // Empenho.fromJson(json);
+          if (topNode != null) {
+            result = factories[T](parsedJson[topNode]);
+          } else {
+            result = factories[T](parsedJson); // Empenho.fromJson(json);
+          }
 
           return RestResponseGeneric<T>(
               totalRecords: totalRecords,
