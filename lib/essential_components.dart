@@ -25,6 +25,10 @@ export 'src/accordion/accordion.dart';
 //modal
 export 'src/modal/modal.dart';
 
+//simple dialog
+export 'src/simple_dialog/simple_dialog.dart';
+
+
 //dectives
 export 'src/directives/ano_validator.dart';
 export 'src/directives/datetime_value_accessor.dart';
