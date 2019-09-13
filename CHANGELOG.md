@@ -63,5 +63,11 @@ and fix modal issues
 - implementation of RestClient a API for consumer web services
 
 # 0.1.17
+
 - implementation 1 new components SimpleDialogComponent
+and fix issues
+
+# 0.1.18
+
+- implementation 1 new components SimpleLoadingComponent
 and fix issues
