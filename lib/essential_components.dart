@@ -28,6 +28,8 @@ export 'src/modal/modal.dart';
 //simple dialog
 export 'src/simple_dialog/simple_dialog.dart';
 
+//simple loading 
+export 'src/simple_loading/simple_loading.dart';
 
 //dectives
 export 'src/directives/ano_validator.dart';

@@ -16,7 +16,7 @@ class SimpleDialogComponent {
         headerColor = 'danger';
         break;
       case DialogColor.WARNING:
-        headerColor = 'orange-600';
+        headerColor = 'orange-300';
         break;
       case DialogColor.INFO:
         headerColor = 'info';
