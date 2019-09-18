@@ -109,6 +109,7 @@ class RestClientGeneric<T> {
 
           var parsedJson = jsonDecode(resp.body);
           RList<T> list = RList<T>();
+          list.totalRecords = totalRecords;
           if (topNode != null) {
             parsedJson[topNode].forEach((item) {
               list.add(factories[T](item));
