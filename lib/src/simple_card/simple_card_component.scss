@@ -1,0 +1,18 @@
+.displayCard {
+    display: none;
+}
+
+.icon-object {
+    i {
+        font: {
+            size: 32px;
+        }
+    }
+    border-radius: 50%;
+    text-align: center;
+    margin: 10px;
+    border-width: 3px;
+    border-style: solid;
+    padding: 20px;
+    display: inline-block;
+}
