@@ -17,7 +17,7 @@
         </div>
         <h5 class="text-center font-weight-bold" *ngIf="showContentTitle">{{ model.contentTitle }}</h5>
         <div [innerHTML]="model.content" *ngIf="showContent"></div>
-        <div class="link-area text-{{model.alignBtn }}" *ngIf="model.linkUrl != null && model.linkLabel != null && showBtn">
+        <div class="link-area text-{{model.alignBtn }} mt-3" *ngIf="model.linkUrl != null && model.linkLabel != null && showBtn">
             <a class="btn bg-{{model.btnColor}}" (click)="goToUrl()">{{ model.linkLabel }}</a>
         </div>
     </div>

@@ -71,3 +71,7 @@ and fix issues
 
 - implementation 1 new components SimpleLoadingComponent
 and fix issues
+
+# 0.1.19
+
+- implementation 1 new component SimpleCard and fix issues
