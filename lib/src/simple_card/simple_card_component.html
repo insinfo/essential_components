@@ -1,6 +1,6 @@
 <div class="card" [ngClass]="{ 'displayCard': hiddenClose }" *ngIf="data != null">
     <div class="card-header header-elements-inline">
-        <h6 class="card-title" *ngIf="hasTitle() && showHeaderTitle">{{ data.getModel().headerContent }}</h6>
+        <h5 class="card-title center-center" *ngIf="showHeaderTitle">{{ model.headerContent }}</h5>
         <div class="header-elements">
             <div class="list-icons" *ngIf="showActions">
                 <a class="list-icons-item" data-action="collapse" (click)="toogleMinimize()" *ngIf="showMinimizeBtn"></a>
@@ -10,15 +10,15 @@
         </div>
     </div>
     <div class="card-body" [esCollapse]="displayMinimize">
-        <div class="text-center" *ngIf="data.getModel().icon != null && showIcon">
-            <div class="icon-object border-{{data.getModel().iconColor}} text-{{data.getModel().iconColor}}">
-                <i class="icon-{{data.getModel().icon}}"></i>
+        <div class="text-center" *ngIf="model.icon != null && showIcon">
+            <div class="icon-object border-{{model.iconColor}} text-{{model.iconColor}}">
+                <i class="icon-{{model.icon}}"></i>
             </div>
         </div>
-        <div [innerHTML]="data.getModel().contentTitle" *ngIf="showContentTitle"></div>
-        <div [innerHTML]="data.getModel().content" *ngIf="showContent"></div>
-        <div class="link-area text-{{data.getModel().alignBtn }}" *ngIf="data.getModel().linkUrl != null && data.getModel().linkLabel != null && showBtn">
-            <a class="btn bg-{{data.getModel().btnColor}}" (click)="goToUrl()">{{ data.getModel().linkLabel }}</a>
+        <h5 class="text-center font-weight-bold" *ngIf="showContentTitle">{{ model.contentTitle }}</h5>
+        <div [innerHTML]="model.content" *ngIf="showContent"></div>
+        <div class="link-area text-{{model.alignBtn }}" *ngIf="model.linkUrl != null && model.linkLabel != null && showBtn">
+            <a class="btn bg-{{model.btnColor}}" (click)="goToUrl()">{{ model.linkLabel }}</a>
         </div>
     </div>
 </div>

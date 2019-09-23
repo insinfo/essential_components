@@ -1,9 +1,10 @@
 import 'dart:async';
-
+import 'dart:html' as html;
 import 'package:angular/angular.dart';
 import 'package:essential_components/essential_components.dart';
 
 class SimpleCardModel {
+  String guid;
   String headerContent;
   String contentTitle;
   String content;
@@ -14,6 +15,16 @@ class SimpleCardModel {
   TemplateLink templateLink;
   String alignBtn = 'left';
   String btnColor = 'blue';
+
+  /*
+   * Estrutura do Guid ligado ao localstorage
+   * URL_GUID 
+   */
+  String getGuid() {
+    return html.window.location.hostname + '_' + guid;
+  }
+
+  void setHeaderContent (String value) => this.headerContent = value;
 }
 
 enum TemplateLink {
@@ -71,13 +82,41 @@ class EssentialSimpleCardComponent implements AfterContentInit {
   bool displayMinimize = false;
   bool hiddenClose = false;
 
+  var model;
   
   @override
   void ngAfterContentInit() {
+    model = data?.getModel();
+    String isMinimize = html.window.localStorage[this.model.getGuid()];
+    if (isMinimize == 'false') {
+      displayMinimize = false;
+    } else {
+      if (!hasHeaderContent() && model.contentTitle != null) {
+        model.setHeaderContent(model.contentTitle);
+      }
+      displayMinimize = true;
+    }
+  }
+  toogleMinimize() {
+   displayMinimize = !displayMinimize;
+    if (cardIsMinimized()) {
+      showHeaderTitle = true;
+      if (!hasHeaderContent() && model.contentTitle != null) {
+        model.setHeaderContent(model.contentTitle);
+      }
+    } else {
+      model.setHeaderContent(null);
+      showHeaderTitle = true;
+    }
+    html.window.localStorage[this.model.getGuid()] = displayMinimize.toString();
   }
 
-  toogleMinimize() {
-    displayMinimize = !displayMinimize;
+  bool hasHeaderContent() {
+    return model.headerContent != null;
+  }
+
+  bool cardIsMinimized() {
+    return displayMinimize == true;
   }
 
   toggleClose() {
@@ -91,14 +130,11 @@ class EssentialSimpleCardComponent implements AfterContentInit {
   }
 
   goToUrl() {
-    print(this.data.getModel().linkUrl);
+    print(this.model.linkUrl);
   }
 
   bool hasButton() {
-    return data.getModel().templateLink == TemplateLink.BUTTON;
+    return model.templateLink == TemplateLink.BUTTON;
   }
 
-  bool hasTitle() {
-    return data.getModel().contentTitle != null;
-  }
 }
