@@ -1,0 +1,24 @@
+<div class="card" [ngClass]="{ 'displayCard': hiddenClose }" *ngIf="data != null">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title center-center" *ngIf="showHeaderTitle">{{ model.headerContent }}</h5>
+        <div class="header-elements">
+            <div class="list-icons" *ngIf="showActions">
+                <a class="list-icons-item" data-action="collapse" (click)="toogleMinimize()" *ngIf="showMinimizeBtn"></a>
+                <a class="list-icons-item" data-action="reload" (click)="reload()" *ngIf="showRefreshBtn"></a>
+                <a class="list-icons-item" data-action="remove" (click)="toggleClose()" *ngIf="showCloseBtn"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" [esCollapse]="displayMinimize">
+        <div class="text-center" *ngIf="model.icon != null && showIcon">
+            <div class="icon-object border-{{model.iconColor}} text-{{model.iconColor}}">
+                <i class="icon-{{model.icon}}"></i>
+            </div>
+        </div>
+        <h5 class="text-center font-weight-bold" *ngIf="showContentTitle">{{ model.contentTitle }}</h5>
+        <div [innerHTML]="model.content" *ngIf="showContent"></div>
+        <div class="link-area text-{{model.alignBtn }}" *ngIf="model.linkUrl != null && model.linkLabel != null && showBtn">
+            <a class="btn bg-{{model.btnColor}}" (click)="goToUrl()">{{ model.linkLabel }}</a>
+        </div>
+    </div>
+</div>

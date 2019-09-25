@@ -31,6 +31,9 @@ export 'src/simple_dialog/simple_dialog.dart';
 //simple loading 
 export 'src/simple_loading/simple_loading.dart';
 
+//Simple Card Model
+export 'src/simple_card/simple_card_component.dart';
+
 //dectives
 export 'src/directives/ano_validator.dart';
 export 'src/directives/datetime_value_accessor.dart';
