@@ -34,6 +34,18 @@ export 'src/simple_loading/simple_loading.dart';
 //Simple Card Model
 export 'src/simple_card/simple_card_component.dart';
 
+//simple tabs
+export 'src/simple_tabs/simple_tabs.dart';
+
+//dynamic tabs
+export 'src/dynamic_tabs/dynamic_tabs.dart';
+
+//Essential Simple Select
+export 'src/simple_select/simple_select.dart';
+
+//interface padrão para exibição de label na tela a partir de um model
+export 'src/interface_has_ui_display_name.dart';
+
 //dectives
 export 'src/directives/ano_validator.dart';
 export 'src/directives/datetime_value_accessor.dart';

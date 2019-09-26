@@ -5,6 +5,9 @@ import '../directives/collapse.dart';
 
 import '../fontawesome/fontawesome.dart';
 
+/// Directives needed to create a accordion ES_ACCORDION_DIRECTIVES to esAcoordionDirectives
+const esAcoordionDirectives = [EssentialAccordionComponent, EsAccordionPanelComponent];
+
 @Component(
     selector: 'es-accordion',
     template: '<ng-content></ng-content>',
@@ -60,7 +63,7 @@ class EsAccordionPanelComponent implements OnInit {
   }*/
 
   changeIcon() {
-    icon = isOpen ? "angle-double-up" : "angle-double-down";    
+    icon = isOpen ? "angle-double-up" : "angle-double-down";
   }
 
   @Input()

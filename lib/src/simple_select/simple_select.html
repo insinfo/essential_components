@@ -1,0 +1,32 @@
+<input *ngIf="displaytype == 'select'"
+ #inputEl type="text" 
+(change)="handleChange($event, inputEl)" 
+[ngModel]="inputText"
+    (input)="inputKeypress(inputEl.value, inputEl.validity.valid, inputEl.validationMessage)"
+     [tabindex]="inputTabIndex"
+    (focus)="inputFocusAction" 
+    (click)="showDropdown($event);" 
+    readonly class="form-control">
+
+<a *ngIf="displaytype == 'button'" class="btn bg-indigo-400 dropdown-toggle " 
+  (click)="showDropdown($event);" 
+data-toggle="dropdown"
+    aria-expanded="false">{{inputText}}</a>
+
+<!--x-placement="bottom-start" form-control
+        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(60px, 38px, 0px);"-->
+
+  
+<div class="dropdown-menu" *ngIf="options != null">
+    <a class="dropdown-item" *ngFor="let option of options">
+        {{getDisplayName(option)}}
+    </a>  
+    <div class="dropdown-divider"></div>    
+</div>
+
+
+<!--<es-modal #modal>
+    <es-data-table #dataTable [data]="data" (rowClick)="onRowClick($event)" [showCheckboxSelect]="false"
+        (dataRequest)="onRequestData($event)">
+    </es-data-table>
+</es-modal>-->

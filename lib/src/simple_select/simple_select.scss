@@ -1,0 +1,119 @@
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu[x-placement^="bottom"],
+.dropdown-menu[x-placement^="left"],
+.dropdown-menu[x-placement^="right"],
+.dropdown-menu[x-placement^="top"] {
+  right: auto;
+  bottom: auto;
+}
+.dropdown-menu {
+  background-clip: border-box;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 63%;
+  left: 15px;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 11.25rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 0.8125rem;
+  color: #333;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 0 solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.1875rem;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.dropdown-item {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  outline: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  margin-bottom: 0;
+  transition: background-color ease-in-out 0.15s, color ease-in-out 0.15s;
+
+  width: 100%;
+  padding: 0.5rem 1.25rem;
+  clear: both;
+  font-weight: 400;
+  color: #333;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}
+
+.form-control {
+  background-clip: border-box;
+  border-width: 1px 0;
+  border-top-color: transparent !important;
+}
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0;
+  font-size: 0.8125rem;
+  line-height: 1.5385;
+  color: #333;
+  background-color: transparent;
+  background-clip: padding-box;
+  border: 1px solid #ddd;
+  //border-radius: 0;
+  //box-shadow: 0 0 0 0 transparent;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  padding-left: 0;
+  padding-right: 0;
+  border-width: 1px 0;
+  border-color: transparent;
+  border-bottom-color: #dddddd;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+input[type="text"]
+/*input[type="password"],
+input[type="search"],
+input[type="email"],
+input[type="number"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="url"],
+input[type="tel"],*/
+textarea {
+  -webkit-appearance: none;
+}
+
+/* Borda Inferior do Input  */
+.form-control:hover {
+  border-bottom: solid 1px;
+  border-bottom-color: #ff890d;
+}
+
+.form-control:focus {
+  border-bottom: solid 1px;
+  border-bottom-color: #0076af;
+}
+
+.form-control[readonly] {
+  border-bottom-style: solid;
+}

@@ -72,6 +72,10 @@ and fix issues
 - implementation 1 new components SimpleLoadingComponent
 and fix issues
 
-# 0.1.18
+# 0.1.19
+
+- fix issue on RestClientGeneric, not present totalRecords on result list of getAll
+
+# 0.1.20
 
 - fix issue on RestClientGeneric, not present totalRecords on result list of getAll

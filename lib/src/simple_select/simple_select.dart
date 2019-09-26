@@ -1,0 +1,285 @@
+import 'dart:async';
+import 'dart:html';
+
+import 'package:angular/angular.dart';
+import 'package:angular/meta.dart';
+import 'package:angular_forms/angular_forms.dart';
+
+import '../data_table/data_table.dart';
+import '../data_table/datatable_render_interface.dart';
+import '../data_table/response_list.dart';
+
+import '../data_table/data_table_filter.dart';
+import '../modal/modal.dart';
+
+import '../interface_has_ui_display_name.dart';
+
+@Component(
+  selector: 'es-simple-select',
+  //changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: 'simple_select.html',
+  styleUrls: [
+    'simple_select.css',
+  ],
+  directives: [formDirectives, coreDirectives],
+)
+class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterViewInit, OnDestroy, AfterChanges {
+  @ViewChild('inputEl')
+  InputElement inputEl;
+
+  final NgControl ngControl;
+
+  bool _required = false;
+  bool get required => _required;
+  bool focused = false;
+
+  bool _disabled = false;
+  bool get disabled => _disabled;
+
+  @Input()
+  set disabled(bool disabled) {
+    _disabled = disabled;
+  }
+
+  @Input()
+  String label;
+
+  @Input()
+  set required(bool required) {
+    var prev = _required;
+    _required = required;
+    if (prev != _required && ngControl != null) {
+      // Required value changed and we are using a control. Force revalidation
+      // on the control.
+      ngControl.control.updateValueAndValidity();
+    }
+  }
+
+  final _keypressController = StreamController<String>.broadcast(sync: true);
+
+  /// Publishes events whenever input text changes (each keypress).
+  @Output('inputKeyPress')
+  Stream<String> get onKeypress => _keypressController.stream;
+
+  final _changeController = StreamController<dynamic>.broadcast(sync: true);
+
+  /// Publishes events when a change event is fired. (On enter, or on blur.)
+  @Output('change')
+  Stream<dynamic> get onChange => _changeController.stream;
+
+  final _blurController = StreamController<FocusEvent>.broadcast(sync: true);
+
+  /// Publishes events when a blur event is fired.
+  @Output('blur')
+  Stream<FocusEvent> get onBlur => _blurController.stream;
+
+  /// Type of input.
+  ///
+  /// It can be one of the following:
+  /// {"select", "button"}
+  /// displaytype="button"
+  String _displaytype = "select";
+
+  @Input('displaytype')
+  set displaytype(String value) {
+    _displaytype = value;
+  }
+
+  get displaytype {
+    return _displaytype;
+  }
+
+  int get inputTabIndex => disabled ? -1 : 0;
+
+  String _inputText = '';
+
+  @Input('buttonText')
+  set inputText(String value) {
+    _inputText = value;
+  }
+
+  get inputText {
+    return _inputText;
+  }
+
+  //contrutor
+  EssentialSimpleSelectComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
+    // _changeDetector = changeDetector;
+    // Replace the provider from above with this.
+    if (this.ngControl != null) {
+      // Setting the value accessor directly (instead of using
+      // the providers) to avoid running into a circular import.
+      this.ngControl.valueAccessor = this;
+
+      if (ngControl?.control != null) {
+        //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
+        ssControlValueChanges = ngControl.control.valueChanges.listen((value) {
+          if (value != null) {
+            fillInputFromIDataTableRender(value);
+          }
+          //_changeDetector.markForCheck();
+        });
+      }
+    }
+  }
+
+  void inputFocusAction(event) {
+    focused = true;
+  }
+
+  void inputBlurAction(event, valid, validationMessage) {
+    focused = false;
+    _blurController.add(event);
+  }
+
+  //@HostListener('change', ['\$event.target.value'])
+  @visibleForTemplate
+  void handleChange(Event event, InputElement element) {
+    //print("handleChange: ${element.value}");
+    inputChange(
+      element.value,
+      element.validity.valid,
+      element.validationMessage,
+    );
+    event.stopPropagation();
+  }
+
+  void inputChange(newValue, valid, validationMessage) {
+    inputText = newValue;
+    _changeController.add(itemSelected);
+    // onChangeControlValueAccessor((newValue == '' ? null : newValue), rawValue: newValue);
+  }
+
+  void inputKeypress(newValue, valid, validationMessage) {
+    inputText = newValue;
+    _keypressController.add(newValue);
+    //print("inputKeypress: ${inputText}");
+    //onChangeControlValueAccessor((newValue == '' ? null : newValue), rawValue: newValue);
+  }
+
+// **************** INICIO FUNÇÔES DO NGMODEL ControlValueAccessor *********************
+  void writeValue(value) {}
+  void onDisabledChanged(bool isDisabled) {}
+  TouchFunction onTouchedControlValueAccessor = () {};
+  /*@HostListener('blur')
+  void touchHandler() {  
+    print("touchHandler"); 
+    onTouched();
+  }*/
+  /// Set the function to be called when the control receives a touch event.
+  void registerOnTouched(TouchFunction fn) {
+    onTouchedControlValueAccessor = fn;
+  }
+
+  //função a ser chamada para notificar e modificar o modelo vinculado pelo ngmodel
+  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {
+    print("onChangeControlValueAccessor $_");
+  };
+
+  /// Set the function to be called when the control receives a change event.
+  void registerOnChange(ChangeFunction<dynamic> fn) {
+    onChangeControlValueAccessor = fn;
+  }
+
+  //**************** /FIM FUNÇÔES DO NGMODEL ControlValueAccessor ****************
+
+  StreamSubscription ssControlValueChanges;
+
+  @override
+  void ngAfterViewInit() {
+    /* if (ngControl?.control != null) {
+      //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
+      ssControlValueChanges = ngControl.control.valueChanges.listen((value) {
+        print("ngControl.control.valueChanges $value");
+
+        //_changeDetector.markForCheck();
+      });
+    }*/
+  }
+  @override
+  void ngAfterChanges() {
+    //print("$_options");
+  }
+
+  getDisplayName(dynamic val){
+    if(val is String){
+      return val;
+    }else if(val is num){
+       return val.toString();
+    }else if(val is IHasUIDisplayName){
+       return val.getUiDisplayName();
+    }else{
+      return '';
+    }
+  }
+
+  @override
+  void ngOnDestroy() {
+    ssControlValueChanges?.cancel();
+    ssControlValueChanges = null;
+    inputEl = null;
+  }
+
+  //
+  showDropdown(e) {
+    HtmlElement target = e.target;
+    var dropdownmenu = target.nextElementSibling;
+    _toogleDrop(dropdownmenu);
+  }
+
+  _toogleDrop(HtmlElement ele) {
+    if (ele != null) {
+      if (ele.classes.contains('show')) {
+        ele.classes.remove('show');
+      } else {
+        ele.classes.add('show');
+      }
+    }
+  }
+
+  hideDropdown() {}
+
+  //selectedValue selection buttonText="{{selectedValue}}"
+  // [(selection)]="selectedValue"
+
+  //**************** DataTable Area ****************
+  var itemSelected;
+  void onRowClick(IDataTableRender selected) {
+    itemSelected = selected;
+    _changeController.add(itemSelected);
+    //seta o ngModel
+    onChangeControlValueAccessor(itemSelected, rawValue: "");
+    //fillInputFromIDataTableRender(selected);
+  }
+
+  fillInputFromIDataTableRender(dynamic selected) {
+    /*if (selected != null) {
+      List<DataTableColumn> cols = selected.getRowDefinition()?.colsSets;
+      cols.forEach((DataTableColumn element) {
+        if (element != null && element.primaryDisplayValue) {
+          inputText = element.value;
+          return;
+        }
+      });
+    }*/
+  }
+
+  List<dynamic> _options;
+
+  @Input()
+  Map<String, dynamic> firstOption;
+
+  @Input()
+  set options(List<dynamic> opts) {
+    _options = opts;
+  }
+
+  List<dynamic> get options {
+    return _options;
+  }
+}
+
+abstract class ISimpleSelectRender {
+  String getDisplayName();
+  //String getValue();
+}
