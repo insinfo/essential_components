@@ -31,6 +31,9 @@
   border: 0 solid rgba(0, 0, 0, 0.15);
   border-radius: 0.1875rem;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+  max-height: 234px;
+  overflow-y: auto;
 }
 
 .dropdown-item {
@@ -56,55 +59,13 @@
   background-color: transparent;
   border: 0;
 }
-
-.form-control {
-  background-clip: border-box;
-  border-width: 1px 0;
-  border-top-color: transparent !important;
-}
-.form-control {
-  display: block;
-  width: 100%;
-  padding: 0.5rem 0;
-  font-size: 0.8125rem;
-  line-height: 1.5385;
-  color: #333;
-  background-color: transparent;
-  background-clip: padding-box;
-  border: 1px solid #ddd;
-  //border-radius: 0;
-  //box-shadow: 0 0 0 0 transparent;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-
-  padding-left: 0;
-  padding-right: 0;
-  border-width: 1px 0;
-  border-color: transparent;
-  border-bottom-color: #dddddd;
-  border-radius: 0;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-input[type="text"]
-/*input[type="password"],
-input[type="search"],
-input[type="email"],
-input[type="number"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="url"],
-input[type="tel"],*/
-textarea {
-  -webkit-appearance: none;
+.dropdown-item:hover {
+  background: #0076af;
+  color: #fff !important;
 }
 
 /* Borda Inferior do Input  */
-.form-control:hover {
+/*.form-control:hover {
   border-bottom: solid 1px;
   border-bottom-color: #ff890d;
 }
@@ -116,4 +77,59 @@ textarea {
 
 .form-control[readonly] {
   border-bottom-style: solid;
+}
+*/
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+.inputSelect {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0;
+  font-size: 0.8125rem;
+  line-height: 1.5385;
+  color: #333;
+  background-color: transparent;
+  background-clip: padding-box;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0;
+  box-shadow: 0 0 0 0 transparent;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  text-transform: none;
+  margin: 0;
+  box-sizing: border-box;
+  padding-left: 5px;
+  padding-right: 20px;
+  cursor: pointer;
+  outline: none;
+}
+.inputSelect:focus {
+  outline: none;
+  border-bottom: solid 1px;
+  border-bottom-color: rgb(0, 150, 136);
+  box-shadow: 0px 1px 0px #009688;
+}
+.inputSelect:hover {
+  border-bottom: solid 1px;
+  border-bottom-color: rgb(0, 150, 136);
+  box-shadow: 0px 1px 0px #009688;
+}
+.inputIconSelect:after {
+  content: "\e9c5";
+  font-family: "icomoon";
+  position: absolute;
+  top: 35%;
+  right: 10px;
+  font-size: 16px;
+  margin-top: -6px;
+  display: inline-block;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #333333;
 }

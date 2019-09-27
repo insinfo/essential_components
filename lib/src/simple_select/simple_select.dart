@@ -23,9 +23,16 @@ import '../interface_has_ui_display_name.dart';
   ],
   directives: [formDirectives, coreDirectives],
 )
-class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterViewInit, OnDestroy, AfterChanges {
+class EssentialSimpleSelectComponent
+    implements ControlValueAccessor, AfterViewInit, AfterContentInit, OnDestroy, AfterChanges {
   @ViewChild('inputEl')
   InputElement inputEl;
+
+  @ViewChild('dropdownMenu')
+  DivElement dropdownMenu;
+
+  @ContentChildren(EsSimpleSelectOptionComponent)
+  List<EsSimpleSelectOptionComponent> childrenSimpleSelectOptions;
 
   final NgControl ngControl;
 
@@ -54,12 +61,6 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterViewI
       ngControl.control.updateValueAndValidity();
     }
   }
-
-  final _keypressController = StreamController<String>.broadcast(sync: true);
-
-  /// Publishes events whenever input text changes (each keypress).
-  @Output('inputKeyPress')
-  Stream<String> get onKeypress => _keypressController.stream;
 
   final _changeController = StreamController<dynamic>.broadcast(sync: true);
 
@@ -115,11 +116,21 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterViewI
         //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
         ssControlValueChanges = ngControl.control.valueChanges.listen((value) {
           if (value != null) {
-            fillInputFromIDataTableRender(value);
+            inputText = getDisplayName(value);
           }
           //_changeDetector.markForCheck();
         });
       }
+    }
+    //evento global de click
+    streamSubscriptionBodyOnCLick = window.document.querySelector('body').onClick.listen(handleBodyOnCLick);
+  }
+
+  //evento global de click
+  StreamSubscription streamSubscriptionBodyOnCLick;
+  void handleBodyOnCLick(e) {
+    if (isDropdownOpen) {
+      toogleDrop();
     }
   }
 
@@ -132,29 +143,23 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterViewI
     _blurController.add(event);
   }
 
-  //@HostListener('change', ['\$event.target.value'])
-  @visibleForTemplate
-  void handleChange(Event event, InputElement element) {
-    //print("handleChange: ${element.value}");
-    inputChange(
-      element.value,
-      element.validity.valid,
-      element.validationMessage,
-    );
+  ///este metodo é chamado quando clica em uma opção do select
+  dropdownOnSelect(Event event, dynamic option, [String displayText]) {
     event.stopPropagation();
-  }
+    itemSelected = option;
+    //    
+    if(displayText == null){
+      inputText = getDisplayName(itemSelected);
+    }else{
+      inputText = displayText;
+    }
 
-  void inputChange(newValue, valid, validationMessage) {
-    inputText = newValue;
+    ///aciona o evento change
     _changeController.add(itemSelected);
-    // onChangeControlValueAccessor((newValue == '' ? null : newValue), rawValue: newValue);
-  }
-
-  void inputKeypress(newValue, valid, validationMessage) {
-    inputText = newValue;
-    _keypressController.add(newValue);
-    //print("inputKeypress: ${inputText}");
-    //onChangeControlValueAccessor((newValue == '' ? null : newValue), rawValue: newValue);
+    //aciona o NgModel bind
+    onChangeControlValueAccessor(itemSelected, rawValue: itemSelected.toString());
+    //fecha mo dropdown
+    toogleDrop();
   }
 
 // **************** INICIO FUNÇÔES DO NGMODEL ControlValueAccessor *********************
@@ -201,14 +206,14 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterViewI
     //print("$_options");
   }
 
-  getDisplayName(dynamic val){
-    if(val is String){
+  getDisplayName(dynamic val) {
+    if (val is String) {
       return val;
-    }else if(val is num){
-       return val.toString();
-    }else if(val is IHasUIDisplayName){
-       return val.getUiDisplayName();
-    }else{
+    } else if (val is num) {
+      return val.toString();
+    } else if (val is IHasUIDisplayName) {
+      return val.getUiDisplayName();
+    } else {
       return '';
     }
   }
@@ -216,53 +221,38 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterViewI
   @override
   void ngOnDestroy() {
     ssControlValueChanges?.cancel();
+    streamSubscriptionBodyOnCLick?.cancel();
+    streamSubscriptionBodyOnCLick = null;
     ssControlValueChanges = null;
     inputEl = null;
   }
 
-  //
-  showDropdown(e) {
+  showDropdown(Event e) {
     HtmlElement target = e.target;
-    var dropdownmenu = target.nextElementSibling;
-    _toogleDrop(dropdownmenu);
+    e.stopPropagation();
+    //var dropdownmenu = target.nextElementSibling;
+    toogleDrop();
   }
 
-  _toogleDrop(HtmlElement ele) {
-    if (ele != null) {
-      if (ele.classes.contains('show')) {
-        ele.classes.remove('show');
+  bool isDropdownOpen = false;
+  //exibe ou esconde o Dropdown
+  toogleDrop() {    
+    if (dropdownMenu != null) {
+      if (dropdownMenu.classes.contains('show')) {
+        dropdownMenu.classes.remove('show');
+        isDropdownOpen = false;
       } else {
-        ele.classes.add('show');
+        dropdownMenu.classes.add('show');
+        isDropdownOpen = true;
       }
     }
   }
 
-  hideDropdown() {}
-
   //selectedValue selection buttonText="{{selectedValue}}"
   // [(selection)]="selectedValue"
 
-  //**************** DataTable Area ****************
+  //**************** Data Area ****************
   var itemSelected;
-  void onRowClick(IDataTableRender selected) {
-    itemSelected = selected;
-    _changeController.add(itemSelected);
-    //seta o ngModel
-    onChangeControlValueAccessor(itemSelected, rawValue: "");
-    //fillInputFromIDataTableRender(selected);
-  }
-
-  fillInputFromIDataTableRender(dynamic selected) {
-    /*if (selected != null) {
-      List<DataTableColumn> cols = selected.getRowDefinition()?.colsSets;
-      cols.forEach((DataTableColumn element) {
-        if (element != null && element.primaryDisplayValue) {
-          inputText = element.value;
-          return;
-        }
-      });
-    }*/
-  }
 
   List<dynamic> _options;
 
@@ -277,9 +267,42 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterViewI
   List<dynamic> get options {
     return _options;
   }
+
+  @override
+  void ngAfterContentInit() {
+    childrenSimpleSelectOptions.forEach((p) => p.parent = this);
+  }
 }
 
 abstract class ISimpleSelectRender {
   String getDisplayName();
   //String getValue();
+}
+///options do select <es-simple-select-option>
+@Component(
+  selector: 'es-simple-select-option',
+  templateUrl: 'simple_select_option.html',
+  styleUrls: ['simple_select_option.css'],
+  directives: [coreDirectives],
+  //styleUrls: ['accordion.css']
+)
+class EsSimpleSelectOptionComponent implements OnInit {
+  EsSimpleSelectOptionComponent();
+  EssentialSimpleSelectComponent parent;
+  //TemplateRef headingTemplate;
+
+  @ViewChild('item') 
+  HtmlElement item;
+
+  @Input()
+  dynamic value;
+
+  handleOnClick(Event e){
+    e.stopPropagation();  
+    parent.dropdownOnSelect(e,value,item?.firstChild?.text);    
+  }
+
+  /// initialize the default values of the attributes
+  @override
+  ngOnInit() {}
 }

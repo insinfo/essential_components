@@ -1,27 +1,24 @@
-<input *ngIf="displaytype == 'select'"
- #inputEl type="text" 
-(change)="handleChange($event, inputEl)" 
-[ngModel]="inputText"
-    (input)="inputKeypress(inputEl.value, inputEl.validity.valid, inputEl.validationMessage)"
-     [tabindex]="inputTabIndex"
-    (focus)="inputFocusAction" 
-    (click)="showDropdown($event);" 
-    readonly class="form-control">
+<input *ngIf="displaytype == 'select'" #inputEl type="text" [ngModel]="inputText" 
+    (focus)="inputFocusAction" (click)="showDropdown($event);" readonly class=" ellipsis inputSelect">
+<div *ngIf="displaytype == 'select'" class="inputIconSelect"></div>
 
-<a *ngIf="displaytype == 'button'" class="btn bg-indigo-400 dropdown-toggle " 
-  (click)="showDropdown($event);" 
-data-toggle="dropdown"
-    aria-expanded="false">{{inputText}}</a>
+<a *ngIf="displaytype == 'button'" class="btn bg-indigo-400 dropdown-toggle " (click)="showDropdown($event);"
+    data-toggle="dropdown" aria-expanded="false">{{inputText}}</a>
 
-<!--x-placement="bottom-start" form-control
+
+
+<!--x-placement="bottom-start" form-control [tabindex]="inputTabIndex"
         style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(60px, 38px, 0px);"-->
 
-  
-<div class="dropdown-menu" *ngIf="options != null">
-    <a class="dropdown-item" *ngFor="let option of options">
+
+<div #dropdownMenu class="dropdown-menu" *ngIf="options != null">
+    <!-- exibe as es-simple-select-option -->
+    <ng-content></ng-content>
+    <a class="dropdown-item" *ngFor="let option of options" (click)="dropdownOnSelect($event,option)">
         {{getDisplayName(option)}}
-    </a>  
-    <div class="dropdown-divider"></div>    
+    </a>
+    
+    <!--<div class="dropdown-divider"></div> -->
 </div>
 
 
