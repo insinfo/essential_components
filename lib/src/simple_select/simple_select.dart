@@ -116,6 +116,7 @@ class EssentialSimpleSelectComponent
         //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
         ssControlValueChanges = ngControl.control.valueChanges.listen((value) {
           if (value != null) {
+            itemSelected = value;
             inputText = getDisplayName(value);
           }
           //_changeDetector.markForCheck();
@@ -147,10 +148,10 @@ class EssentialSimpleSelectComponent
   dropdownOnSelect(Event event, dynamic option, [String displayText]) {
     event.stopPropagation();
     itemSelected = option;
-    //    
-    if(displayText == null){
+    //
+    if (displayText == null) {
       inputText = getDisplayName(itemSelected);
-    }else{
+    } else {
       inputText = displayText;
     }
 
@@ -236,7 +237,7 @@ class EssentialSimpleSelectComponent
 
   bool isDropdownOpen = false;
   //exibe ou esconde o Dropdown
-  toogleDrop() {    
+  toogleDrop() {
     if (dropdownMenu != null) {
       if (dropdownMenu.classes.contains('show')) {
         dropdownMenu.classes.remove('show');
@@ -278,6 +279,7 @@ abstract class ISimpleSelectRender {
   String getDisplayName();
   //String getValue();
 }
+
 ///options do select <es-simple-select-option>
 @Component(
   selector: 'es-simple-select-option',
@@ -291,15 +293,31 @@ class EsSimpleSelectOptionComponent implements OnInit {
   EssentialSimpleSelectComponent parent;
   //TemplateRef headingTemplate;
 
-  @ViewChild('item') 
+  @ViewChild('item')
   HtmlElement item;
+
+  get text {
+    return item?.firstChild?.text;
+  }
+
+  set text(String inputText) {
+    item?.text = inputText;
+  }
+
+  get innerHtml {
+    return item?.firstChild?.text;
+  }
+
+  set innerHtml(String inputText) {
+    item?.innerHtml = innerHtml;
+  }
 
   @Input()
   dynamic value;
 
-  handleOnClick(Event e){
-    e.stopPropagation();  
-    parent.dropdownOnSelect(e,value,item?.firstChild?.text);    
+  handleOnClick(Event e) {
+    e.stopPropagation();
+    parent.dropdownOnSelect(e, value, item?.firstChild?.text);
   }
 
   /// initialize the default values of the attributes

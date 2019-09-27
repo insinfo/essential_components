@@ -79,3 +79,11 @@ and fix issues
 # 0.1.20
 
 - fix issue on RestClientGeneric, not present totalRecords on result list of getAll
+
+# 0.1.22
+
+- fix bugs on simple select
+
+# 0.1.23
+
+- fix bugs 

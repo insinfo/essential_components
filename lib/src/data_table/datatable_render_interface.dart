@@ -22,7 +22,7 @@ class DataTableRow {
   }
 }
 
-enum DataTableColumnType { img, text, date, dateTime, boolLabel }
+enum DataTableColumnType { img, text, date, dateTime, boolLabel, brasilCurrency, badge }
 
 //primaryDisplayValue é o Valor de exibição principal
 //a ser exibido quando não for possivel exibir mais de uma coluna
@@ -34,7 +34,11 @@ class DataTableColumn {
   String title;
   int limit;
   String format;
+  String textColor;
+  String backgroundColor;
   bool primaryDisplayValue;
+  Function customRender;
+  String badgeColor;
   DataTableColumn(
       {this.key,
       this.value,
@@ -42,6 +46,10 @@ class DataTableColumn {
       this.title,
       this.limit,
       this.format,
+      this.textColor,
+      this.backgroundColor,
+      this.customRender,
+      this.badgeColor,
       this.primaryDisplayValue = false});
 }
 

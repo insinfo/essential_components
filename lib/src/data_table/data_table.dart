@@ -286,7 +286,18 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
                   if (colSet.limit != null) {
                     str = DataTableUtils.truncate(str, colSet.limit);
                   }
+                  str = str == 'null' ? '' : str;
                   tdContent = str;
+                  break;
+                case DataTableColumnType.brasilCurrency:
+                  var str = colSet.value.toString();
+                  if (str != '' && str != 'null') {
+                    final formatCurrency = NumberFormat.simpleCurrency(locale: 'pt_BR');
+                    str = formatCurrency.format(double.tryParse(str));
+                    tdContent = str;
+                  } else {
+                    tdContent = '';
+                  }
                   break;
                 case DataTableColumnType.boolLabel:
                   var str = colSet.value.toString();
@@ -294,6 +305,16 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
                     str = '<span class="badge badge-success">Sim</span>';
                   } else {
                     str = '<span class="badge badge-danger">Não</span>';
+                  }
+                  tdContent = str;
+                  break;
+                case DataTableColumnType.badge:
+                  var str = colSet.value.toString();
+                  if (str != '' && str != 'null') {
+                    var badgeColor = colSet.badgeColor != null ? 'background:${colSet.badgeColor};' : 'background:#e0e0e0;';
+                    str = '<span class="badge" style="font-size:.8125rem;color:#fff;font-weight:400;$badgeColor">$str</span>';
+                  } else {
+                    str = '';
                   }
                   tdContent = str;
                   break;
@@ -320,6 +341,14 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
 
               var td = Element.tag('td');
               td.style.setProperty('text-align', 'left');
+
+              if (colSet.textColor != null) {
+                td.style.setProperty('color', colSet.textColor);
+              }
+              if (colSet.backgroundColor != null) {
+                td.style.setProperty('background', colSet.backgroundColor);
+              }
+
               td.setInnerHtml(tdContent, treeSanitizer: NodeTreeSanitizer.trusted);
 
               tableRow.insertAdjacentElement('beforeend', td);
