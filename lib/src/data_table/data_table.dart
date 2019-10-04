@@ -9,8 +9,12 @@ import 'datatable_render_interface.dart';
 import 'response_list.dart';
 import 'data_table_filter.dart';
 
+import 'dart:convert';
+
 //utils
 import 'data_table_utils.dart';
+
+import '../excel/myexcel.dart';
 
 @Component(
   selector: 'es-data-table',
@@ -132,6 +136,28 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   void ngAfterChanges() {
     draw();
     drawPagination();
+  }
+
+  Future<void> toXLSX() async {
+    if (_data != null || _data.isNotEmpty) {
+      //planilha de excel vazia com apenas a celula 0 com a palavra teste
+      // em base64 de lista de int (List<int> listInt) de um Blob
+
+      /*var blob = Blob([List<int>()], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      var downloadUrl = Url.createObjectUrlFromBlob(blob);
+      //List<int> listInt = data.map((i) => i.first).toList();
+      // String encodedFileContents = Base64Encoder().convert(listInt);//Uri.encodeComponent("Hello World!");
+
+      AnchorElement(href: downloadUrl)
+        ..setAttribute("download", "dados.xlsx")
+        ..click();*/
+      var excel = MyExcel();
+      var sheets = excel.createSheets(); //  Create Excel  sheets
+      var styles = excel.createStyleSheet(); //  Create Styles   sheet
+      sheets["add"]("Sheet 0"); // At least we have a [Sheet 0]
+     
+      
+    }
   }
 
   void draw() {
@@ -311,8 +337,10 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
                 case DataTableColumnType.badge:
                   var str = colSet.value.toString();
                   if (str != '' && str != 'null') {
-                    var badgeColor = colSet.badgeColor != null ? 'background:${colSet.badgeColor};' : 'background:#e0e0e0;';
-                    str = '<span class="badge" style="font-size:.8125rem;color:#fff;font-weight:400;$badgeColor">$str</span>';
+                    var badgeColor =
+                        colSet.badgeColor != null ? 'background:${colSet.badgeColor};' : 'background:#e0e0e0;';
+                    str =
+                        '<span class="badge" style="font-size:.8125rem;color:#fff;font-weight:400;$badgeColor">$str</span>';
                   } else {
                     str = '';
                   }
