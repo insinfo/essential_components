@@ -34,8 +34,17 @@ export 'src/simple_loading/simple_loading.dart';
 //Simple Card Model
 export 'src/simple_card/simple_card_component.dart';
 
-//Simple Card Model
-export 'src/timeline/timeline_component.dart';
+//simple tabs
+export 'src/simple_tabs/simple_tabs.dart';
+
+//dynamic tabs
+export 'src/dynamic_tabs/dynamic_tabs.dart';
+
+//Essential Simple Select
+export 'src/simple_select/simple_select.dart';
+
+//interface padrão para exibição de label na tela a partir de um model
+export 'src/interface_has_ui_display_name.dart';
 
 //dectives
 export 'src/directives/ano_validator.dart';
@@ -58,3 +67,8 @@ export 'src/rest/rest_response.dart';
 export 'src/rest/rest_client.dart';
 export 'src/rest/rest_client_generic.dart';
 export 'src/rest/uri_mu_proto.dart';
+
+// Timeline component
+export 'src/timeline/timeline_component.dart';
+
+

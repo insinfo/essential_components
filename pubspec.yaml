@@ -1,8 +1,10 @@
 name: essential_components
 description: A starting point for Dart libraries or applications.
-version: 0.1.19
+version: 0.1.23
 homepage: https://github.com/insinfo/essential_components
-author: Isaque Neves <insinfo2008@gmail.com>
+author:
+- Isaque Neves <insinfo2008@gmail.com>
+#- Thiago <>
 
 environment:
   sdk: '>=2.4.0 <3.0.0'
@@ -17,6 +19,8 @@ dependencies:
   sass_builder: ^2.1.3
   decimal: ^0.3.4
   xml: ^3.5.0
+  #spreadsheet_decoder: ^1.0.1
+  archive: ^2.0.10
 
 dev_dependencies:
   pedantic: ^1.7.0

@@ -10,6 +10,9 @@
         </div>
         <div class="flex" *ngIf="showItemsLimit">
             <div class="dataTable-actions">
+                <button (click)="toXLSX()" type="button" title="Exportar os dados para xlsx" alt="Exportar os dados para xlsx">
+                    <i class="dataTable-btn-xlsx"></i>
+                </button>
                 <button (click)="reload()" type="button" title="Recarrega o Datatable" alt="Reseta e recarrega o Datatable">
                     <i class="dataTable-btn-update"></i>
                 </button>
@@ -24,6 +27,9 @@
                         <option value="25">25</option>
                         <option value="50">50</option>
                         <option value="100">100</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                        <option value="4000">4000</option>
                     </select>
                 </label>
             </div>

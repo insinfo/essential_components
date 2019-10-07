@@ -78,6 +78,12 @@ class RestClientGeneric<T> {
     UriMuProto.host = host;
     UriMuProto.protoType = protocol;
   }
+  /// Todo implementar
+  Future<RestResponseGeneric<T>> getgetAllT<T>(String apiEndPoint,
+      {bool forceRefresh = false, String topNode, Map<String, String> headers, Map<String, String> queryParameters}) {
+    throw UnimplementedError('This feature is not implemented yet.');
+    return null;
+  }
 
   Future<RestResponseGeneric<T>> getAll(String apiEndPoint,
       {bool forceRefresh = false,
@@ -109,6 +115,7 @@ class RestClientGeneric<T> {
 
           var parsedJson = jsonDecode(resp.body);
           RList<T> list = RList<T>();
+          list.totalRecords = totalRecords;
           if (topNode != null) {
             parsedJson[topNode].forEach((item) {
               list.add(factories[T](item));
