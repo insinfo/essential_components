@@ -1,0 +1,39 @@
+<div class="timeline timeline-left" *ngIf="hasModels()">
+    <div class="timeline-container" *ngFor="let d of data">
+        <div class="timeline-row">
+            <div class="timeline-icon">
+                <div class="bg-blue">
+                    <i class="icon-hammer"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card border-left-3 border-left-primary rounded-left-0">
+                        <div class="card-header">
+                            <h6>{{ getContentTitle(d) }}</h6>
+                        </div>
+                        <div class="card-body" [innerHTML]="getDescription(d)">
+                        </div>
+                        <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
+                            <div>Atualizado: <span class="font-weight-semibold">{{ getUpdate(d) | date : 'dd/MM/y'}}</span></div>
+                            <div class="btn-group">
+                                <button (click)="toggleDropdownOption($event)" type="button" class="btn btn-outline bg-purple-300 text-purple-800 btn-icon dropdown-toggle legitRipple btn-options">
+                                    <i class="icon-cog5"></i>
+                                </button>
+                                <div #dropdown class="dropdown-menu dropdown-menu-right dropdown-options" x-placement="top-end"
+                                    style="position: absolute; will-change: transform; top: 40px; left: -293px; transform: translate3d(161px, -2px, 0px);">
+                                    <a (click)="update(d, $event)" class="dropdown-item"><i class="icon-menu7"></i> Editar</a>
+                                    <a (click)="remove(d, $event)" class="dropdown-item"><i class="icon-trash"></i> Remover</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-danger" *ngIf="!hasModels()">
+    Não existe dados a serem renderizados.
+</div>

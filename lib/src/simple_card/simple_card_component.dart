@@ -47,6 +47,11 @@ class EssentialSimpleCardComponent implements AfterContentInit {
 
   @Output()
   Stream<bool> get dataRequest => _dataRequest.stream;
+
+  final _linkClick = StreamController<html.Event>();
+
+  @Output()
+  Stream<html.Event> get linkClick => _linkClick.stream;
   
   @Input('data')
   SimpleCardRender data;
@@ -71,8 +76,14 @@ class EssentialSimpleCardComponent implements AfterContentInit {
   /*
    * Essas ações estarão disponíveis para o desenvolvedor
    */
+
+  @Input()
   bool showMinimizeBtn = true;
+  
+  @Input()
   bool showRefreshBtn = true;
+  
+  @Input()
   bool showCloseBtn = true;
 
   /*
@@ -136,6 +147,10 @@ class EssentialSimpleCardComponent implements AfterContentInit {
 
   bool hasButton() {
     return model.templateLink == TemplateLink.BUTTON;
+  }
+
+  handleClick(event) {
+    _linkClick.add(event);
   }
 
 }
