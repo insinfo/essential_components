@@ -119,18 +119,19 @@ class EssentialSimpleCardComponent implements AfterContentInit {
     return displayMinimize == true;
   }
 
-  toggleClose() {
+  void toggleClose() {
     hiddenClose = !hiddenClose;
   }
 
   bool isLoading = true;
 
-  reload() {
+  void reload() {
     _dataRequest.add(true);
   }
 
-  goToUrl() {
-    print(this.model.linkUrl);
+  void goToUrl() {
+    html.window.
+    print();
   }
 
   bool hasButton() {
