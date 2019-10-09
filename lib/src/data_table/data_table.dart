@@ -14,7 +14,9 @@ import 'dart:convert';
 //utils
 import 'data_table_utils.dart';
 
-import '../excel/myexcel.dart';
+//import '../excel/myexcel.dart';
+
+import '../excel/simple_xlsx.dart';
 
 @Component(
   selector: 'es-data-table',
@@ -139,7 +141,8 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   }
 
   Future<void> toXLSX() async {
-    if (_data != null || _data.isNotEmpty) {
+    //|| _data?.isNotEmpty
+    if (_data != null ) {
       //planilha de excel vazia com apenas a celula 0 com a palavra teste
       // em base64 de lista de int (List<int> listInt) de um Blob
 
@@ -151,12 +154,13 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
       AnchorElement(href: downloadUrl)
         ..setAttribute("download", "dados.xlsx")
         ..click();*/
-      var excel = MyExcel();
-      var sheets = excel.createSheets(); //  Create Excel  sheets
+      
+     /* var sheets = excel.createSheets(); //  Create Excel  sheets
       var styles = excel.createStyleSheet(); //  Create Styles   sheet
       sheets["add"]("Sheet 0"); // At least we have a [Sheet 0]
+     */
      
-      
+      SimpleXLSX();
     }
   }
 
