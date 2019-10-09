@@ -67,3 +67,8 @@ export 'src/rest/rest_response.dart';
 export 'src/rest/rest_client.dart';
 export 'src/rest/rest_client_generic.dart';
 export 'src/rest/uri_mu_proto.dart';
+
+// Timeline component
+export 'src/timeline/timeline_component.dart';
+
+
