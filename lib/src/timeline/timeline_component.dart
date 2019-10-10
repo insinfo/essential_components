@@ -42,6 +42,9 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
 
   String description;
 
+  @Input()
+  bool showDropdonOptions = false;
+
   @Output()
   Stream<TimelineRender> get onUpdate => _onUpdate.stream;
   

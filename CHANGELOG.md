@@ -94,3 +94,6 @@ and fix issues
 # 0.1.25
 - Timeline Component - Bug em renderização corrigida.
 - InnerHTML Componente com DOMSanitizer desbloqueado.
+
+# 0.1.25
+- bug na exibição do timeline
