@@ -3,7 +3,7 @@ import './models/doc_props/core.dart';
 import './models/rels/relationship.dart';
 import './models/rels/relationships.dart';
 import './models/xl/theme/theme.dart';
-import './models/xl/sharedString.dart';
+import './models/xl/shared_string.dart';
 
 class SimpleXLSX {
   SimpleXLSX() {
