@@ -2,20 +2,20 @@
     <div class="timeline-container" *ngFor="let d of data">
         <div class="timeline-row">
             <div class="timeline-icon">
-                <div class="bg-blue">
-                    <i class="icon-hammer"></i>
+                <div class="bg-{{ d?.getModel?.color  }}">
+                    <i class="{{ d?.getModel?.icon  }}"></i>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="card border-left-3 border-left-primary rounded-left-0">
+                    <div class="card border-left-3 border-left-{{ d?.getModel?.color  }} rounded-left-0">
                         <div class="card-header">
-                            <h6>{{ getContentTitle(d) }}</h6>
+                            <h3>{{ d?.getModel?.contentTitle }}</h3>
+                            <h6>{{ d?.getModel?.contentMutedSubtitle }}</h6>
                         </div>
-                        <div class="card-body" [innerHTML]="getDescription(d)">
-                        </div>
+                        <div class="card-body" [esinnerhtml]="d?.getModel?.description">asdasd</div>
                         <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
-                            <div>Atualizado: <span class="font-weight-semibold">{{ getUpdate(d) | date : 'dd/MM/y'}}</span></div>
+                            <div>Atualizado: <span class="font-weight-semibold">{{ d?.getModel?.update | date : 'dd/MM/y'}}</span></div>
                             <div class="btn-group">
                                 <button (click)="toggleDropdownOption($event)" type="button" class="btn btn-outline bg-purple-300 text-purple-800 btn-icon dropdown-toggle legitRipple btn-options">
                                     <i class="icon-cog5"></i>

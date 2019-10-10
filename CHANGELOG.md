@@ -74,9 +74,6 @@ and fix issues
 
 # 0.1.19
 
-<<<<<<< HEAD
-- implementation 1 new component SimpleCard and fix issues
-=======
 - fix issue on RestClientGeneric, not present totalRecords on result list of getAll
 
 # 0.1.20
@@ -90,4 +87,10 @@ and fix issues
 # 0.1.23
 
 - fix bugs 
->>>>>>> 07c8585d5811645923c2fdcccb6f9d9f9ee1456e
+
+# 0.1.24
+- Timeline Component
+
+# 0.1.25
+- Timeline Component - Bug em renderização corrigida.
+- InnerHTML Componente com DOMSanitizer desbloqueado.
