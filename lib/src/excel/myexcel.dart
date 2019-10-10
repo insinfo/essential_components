@@ -131,9 +131,9 @@ class MyExcel {
     BuiltInFormats[165] = '*********'; // Here we start with non hardcoded formats
 
     formats = BuiltInFormats;
+  }
 
-
-    
+  init() {
     var excel = {};
 
     var sheets = createSheets(); //  Create Excel  sheets
@@ -153,23 +153,28 @@ class MyExcel {
     // 		We can use parameter notation excel.set(sheetValue,columnValue,rowValue,cellValue,styleValue)
     // 		Or object notation excel.set({sheet:sheetValue,column:columnValue,row:rowValue,value:cellValue,style:styleValue })
     // 		null or 0 are used as default values for undefined entries
-    excel["set"] = (s, column, row, value, style, colspan) {
-      if (s is Map) {
-        return excel["set"](s["sheet"], s["column"], s["row"], s["value"], s["style"]);
-      } // If using Object form, expand it
-      if (!s) s = 0; // Use default sheet
-      s = sheets.get(s);
-      if (!isNumeric(column) && !isNumeric(row)) return s.set(value, style); // If this is a sheet operation
-      if (isNumeric(column)) {
+    excel["set"] = (s, int column, int row, value, style, colspan) {
+      // If using Object form, expand it
+      if (s == null) {
+        s = 0;
+      } // Use default sheet
+      s = sheets['get'](s);
+      // If this is a sheet operation
+      /*if (!isNumeric(column) && !isNumeric(row)) {
+        return s['set'](value, style);
+      }*/
+      //if (isNumeric(column)) {
         // If this is a column operation
-        if (isNumeric(row)) {
-          var isstring = style && styles.getStyle(style - 1)["isstring"];
-          return setCell(s.getCell(column, row), value, style, isstring,
+        //if (isNumeric(row)) {
+          var isstring = style != null && styles['getStyle'](style - 1)["isstring"];
+          return setCell(s['getCell'](column, row), value, style, isstring,
               colspan); // and also a ROW operation the this is a CELL operation
-        }
-        return setColumn(s.getColumn(column), value, style); // if not we confirm than this is a COLUMN operation
-      }
-      return setRow(s.getRow(row), value, style); // If got here, thet this is a Row operation
+       // }
+       // return setColumn(s.getColumn(column), value, style); // if not we confirm than this is a COLUMN operation
+      //}
+      //return setRow(s.getRow(row), value, style); // If got here, thet this is a Row operation
+
+
     };
 
     excel["freezePane"] = (s, x, y) {
@@ -189,9 +194,7 @@ class MyExcel {
             zip.generateAsync({ type: "blob",mimeType:"application/vnd.ms-excel" }).then( (content) { saveAs(content, filename); });        // And generate !!!
             */
     };
-    
-  
-
+    return excel;
   }
 
   var templateSheet = '<?xml version="1.0" ?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" ' +
@@ -203,7 +206,7 @@ class MyExcel {
       '<sheetData>{rows}</sheetData>{mergeCells}</worksheet>';
 
   // --------------------- BEGIN of generic UTILS
- 
+
   findOrAdd(List list, dynamic value) {
     var i = list.indexOf(value);
     if (i != -1) return i;
@@ -238,10 +241,10 @@ class MyExcel {
 
   getAsXml(sheet) {
     return templateSheet
-        .replaceAll('{views}', generateViews(sheet.views))
-        .replaceAll('{columns}', generateColums(sheet.columns))
-        .replaceAll("{rows}", generateRows(sheet.rows, sheet.mergeCells))
-        .replaceAll("{mergeCells}", generateMergeCells(sheet.mergeCells));
+        .replaceAll('{views}', generateViews(sheet['views']))
+        .replaceAll('{columns}', generateColums(sheet['columns']))
+        .replaceAll("{rows}", generateRows(sheet['rows'], sheet['mergeCells']))
+        .replaceAll("{mergeCells}", generateMergeCells(sheet['mergeCells']));
   }
 
   String name;
@@ -292,8 +295,8 @@ class MyExcel {
   }
 
   setRow(row, value, style) {
-    if (value && isNumeric(value)) row.ht = value;
-    if (style) row.style = style;
+    if (value && isNumeric(value)) row['ht'] = value;
+    if (style) row['style'] = style;
   }
 
   freezePane(x, y) {
@@ -333,12 +336,12 @@ class MyExcel {
       },
       "get": (index) {
         var sheet = this.sheets[index];
-        if (!sheet) throw "Bad sheet " + index;
+        if (sheet == null) throw Exception("Bad sheet $index");
         return sheet;
       },
       "rows": (i) {
         if (i < 0 || i >= this.sheets.length)
-          throw "Bad sheet number must be [0.." + (this.sheets.length - 1).toString() + "] and is: " + i;
+          throw Exception("Bad sheet number must be [0.." + (this.sheets.length - 1).toString() + "] and is: " + i);
         return this.sheets[i].rows;
       },
       "setWidth": (sheet, column, value, style) {
@@ -505,7 +508,7 @@ class MyExcel {
   //e retorna isto Calibri Light;10;333333;_
   String normalizeFont(String fontDescription) {
     fontDescription = replaceAllMultiple(fontDescription, "  ", " ");
-    var fNormalized = ["_", "_", "_", "_"]; //Name - Size - Color - Style (use NONE as placeholder)   
+    var fNormalized = ["_", "_", "_", "_"]; //Name - Size - Color - Style (use NONE as placeholder)
     List<String> list = fontDescription.split(" "); //Split by " "
     var name = [];
     List<String> list2 = [];
@@ -539,8 +542,8 @@ class MyExcel {
     if (list.isNotEmpty && list[0] != null && list[0].length < 4) {
       fNormalized[3] = list[0].toUpperCase();
       // Finally get the STYLE
-    }    
-    var result = fNormalized.join(";");   
+    }
+    var result = fNormalized.join(";");
     return result;
     //return "Calibri Light;10;333333;_";
   }
@@ -910,6 +913,4 @@ class MyExcel {
     };
     return excel;
   }
-
-
 }
