@@ -1,5 +1,6 @@
 import 'package:xml/xml.dart' as xml;
 import '../interface_xml_serializable.dart';
+import 'dart:convert';
 
 class Properties {
   Map<String, String> namespaces = {
@@ -74,6 +75,10 @@ class Properties {
     var result = relationshipsXml.toXmlString(pretty: true);
     print(result);
     return result;
+  }
+
+   List<int> toFileBytes() {
+    return utf8.encode(toStringXml());
   }
 }
 

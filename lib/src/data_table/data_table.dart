@@ -160,7 +160,8 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
       sheets["add"]("Sheet 0"); // At least we have a [Sheet 0]
      */
      
-      SimpleXLSX();
+      var simplexlsx = SimpleXLSX();
+      simplexlsx.build();
     }
   }
 

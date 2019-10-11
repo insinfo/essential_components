@@ -89,8 +89,18 @@ and fix issues
 - fix bugs 
 
 # 0.1.24
+
 - Timeline Component
 
 # 0.1.25
+
 - Timeline Component - Bug em renderização corrigida.
 - InnerHTML Componente com DOMSanitizer desbloqueado.
+
+# 0.1.26
+
+- fix bugs
+
+# 0.1.31
+
+- implementation of Excel export API

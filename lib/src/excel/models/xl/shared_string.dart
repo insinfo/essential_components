@@ -1,4 +1,5 @@
 import 'package:xml/xml.dart' as xml;
+import 'dart:convert';
 
 class SharedString {
   int count;
@@ -21,6 +22,10 @@ class SharedString {
     var result = sstXml.toXmlString(pretty: true);
     print(result);
     return result;
+  }
+
+   List<int> toFileBytes() {
+    return utf8.encode(toStringXml());
   }
 }
 

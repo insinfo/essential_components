@@ -1,4 +1,5 @@
 import 'package:xml/xml.dart' as xml;
+import 'dart:convert';
 
 //<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
 class CoreProperties {
@@ -44,6 +45,10 @@ class CoreProperties {
     var result = relationshipsXml.toXmlString(pretty: true);
     print(result);
     return result;
+  }
+
+  List<int> toFileBytes() {
+    return utf8.encode(toStringXml());
   }
 }
 

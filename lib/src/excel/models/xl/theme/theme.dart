@@ -20,4 +20,8 @@ class Theme {
     print(result);
     return result;
   }
+
+ List<int> toFileBytes() {
+    return utf8.encode(toStringXml());
+  }
 }
