@@ -16,7 +16,7 @@
                         <div class="card-body" [esinnerhtml]="d?.getModel?.description">asdasd</div>
                         <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
                             <div>Atualizado: <span class="font-weight-semibold">{{ d?.getModel?.update | date : 'dd/MM/y'}}</span></div>
-                            <div class="btn-group">
+                            <div class="btn-group" *ngIf="showDropdonOptions">
                                 <button (click)="toggleDropdownOption($event)" type="button" class="btn btn-outline bg-purple-300 text-purple-800 btn-icon dropdown-toggle legitRipple btn-options">
                                     <i class="icon-cog5"></i>
                                 </button>
