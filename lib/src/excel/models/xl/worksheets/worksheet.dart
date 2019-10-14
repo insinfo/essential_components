@@ -47,7 +47,7 @@ class Worksheet {
     });
     var xmlWorkbook = builder.build();
     var result = xmlWorkbook.toXmlString(pretty: true);
-    print(result);
+    //print(result);
     return result;
   }
 
@@ -93,9 +93,13 @@ class Row {
     this.rowIndex++;
   }
 
-  addCellText(String text) {
-    var col = Cell(Helpers.getInstance().cellName(colIndex, rowIndex), inlineStr: InlineStr(text));
-    col.s = '4';
+  addCellText(String text, {int cellIndex, int styleId}) {
+    var cindex = colIndex;
+    if (cellIndex != null) {
+      cindex = cellIndex;
+    }
+    var col = Cell(Helpers.getInstance().cellName(cindex, rowIndex), inlineStr: InlineStr(text),styleId: styleId);
+    //col.s = '4';
     addCell(col);
     colIndex++;
   }
@@ -156,16 +160,19 @@ class Cell {
   String tagName = "c";
   InlineStr inlineStr;
   String cellName; //A1
-  String s = '4';
+  int style;
   String type = "inlineStr";
   String value;
 
-  Cell(this.cellName, {String type, InlineStr inlineStr}) {
+  Cell(this.cellName, {String type, InlineStr inlineStr, int styleId}) {
     if (type != null) {
       this.type = type;
     }
     if (inlineStr != null) {
       this.inlineStr = inlineStr;
+    }
+    if (styleId != null) {
+      this.style = styleId;
     }
   }
 
@@ -177,8 +184,8 @@ class Cell {
       attribs['t'] = type.toString();
     }
 
-    if (s != null) {
-      attribs['s'] = s.toString();
+    if (style != null) {
+      attribs['s'] = style.toString();
     }
     if (value != null) {
       attribs['v'] = value.toString();

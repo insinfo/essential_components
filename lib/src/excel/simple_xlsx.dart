@@ -17,12 +17,39 @@ import './models/xl/style_sheet.dart';
 import './models/content_types.dart';
 
 class SimpleXLSX {
+  List<List<String>> data = List<List<String>>();
+  String _sheetName = "Sheet 1";
+
   SimpleXLSX() {}
 
+  set sheetName(sheetName) {
+    if (sheetName != null) {
+      _sheetName = sheetName;
+    }
+  }
+
+  get sheetName {
+    return _sheetName;
+  }
+
+  addRow(List<String> row) {
+    data.add(row);
+  }
+
+  setData(data) {
+    if (data != null) {
+      this.data = data;
+    }
+  }
+
   build() {
+    int workbookRelationId = 1;
+    int styleRelationId = 2;
+    int sheetRelationId = 3;
+
     //_rels/.rels
     var rootRels = Relationships();
-    rootRels.addWorkbook();
+    rootRels.addWorkbook(workbookRelationId);
 
     //[Content_Types].xml
     var contentTypes = ContentTypes();
@@ -30,36 +57,39 @@ class SimpleXLSX {
     //xl
     //xl\_rels\workbook.xml.rels
     var xlRels = Relationships();
-    xlRels.addStyle();
-    xlRels.addWorksheet();
+    xlRels.addStyle(styleRelationId);
+    xlRels.addWorksheet(sheetRelationId);
     xlRels.toStringXml();
 
     //xl\workbook.xml
     var workbook = Workbook();
-    workbook.addSheet(Sheet(name: "Sheet 2", id: "rId3"));
+    workbook.addSheet(Sheet(_sheetName, sheetRelationId));
     workbook.toStringXml();
 
     //xl\worksheets\sheet1.xml
     var worksheet = Worksheet();
-    worksheet.addConlSettings(Col());
-    var row = Row.getNew();
-    row.addCellText('teste');
-    worksheet.addRow(row);
+    //worksheet.addConlSettings(Col());
+    //preenche com os dados
+    if (data != null) {
+      int rowIndex = 1;
+      data.forEach((value) {
+        var row = Row(rowIndex);
+        int cellIndex = 0;
+        value.forEach((v) {
+          row.addCellText(v, cellIndex: cellIndex);
+          cellIndex++;
+        });
+
+        worksheet.addRow(row);
+        rowIndex++;
+      });
+    }
+
     worksheet.toStringXml();
 
     //xl\styles.xml
     var styleSheet = StyleSheet();
     styleSheet.toStringXml();
-
-    //
-    /*
-    var file_stream = InputFileStream.file(file);
-    var f = ArchiveFile.stream(
-    filename == null ? path.basename(file.path) : filename,
-    file.lengthSync(),
-    file_stream);
-    */
-    //var file =File(utf8.encode("Some data"), 'teste.xml');
 
     var rootRelsBytes = rootRels.toFileBytes();
     var contentTypesBytes = contentTypes.toFileBytes();
@@ -67,6 +97,7 @@ class SimpleXLSX {
     var worksheetBytes = worksheet.toFileBytes();
     var workbookBytes = workbook.toFileBytes();
     var styleSheetBytes = styleSheet.toFileBytes();
+
     Archive archive = Archive();
     archive.addFile(ArchiveFile('_rels/.rels', rootRelsBytes.length, rootRelsBytes));
     archive.addFile(ArchiveFile('[Content_Types].xml', contentTypesBytes.length, contentTypesBytes));
@@ -76,43 +107,13 @@ class SimpleXLSX {
     archive.addFile(ArchiveFile('xl/styles.xml', styleSheetBytes.length, styleSheetBytes));
     List<int> encodedzipdata = ZipEncoder().encode(archive);
 
-    //encoder.addFile(archiveFile);
-    //encoder.endEncode();
     //application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-    var blob = Blob([encodedzipdata], 'application/zip');
+    //'application/zip'
+    var blob = Blob([encodedzipdata], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     var downloadUrl = Url.createObjectUrlFromBlob(blob);
-    //List<int> listInt = data.map((i) => i.first).toList();
-    // String encodedFileContents = Base64Encoder().convert(listInt);//Uri.encodeComponent("Hello World!");
 
     AnchorElement(href: downloadUrl)
       ..setAttribute("download", "dados.xlsx") //xlsx
       ..click();
-  }
-
-  //_rels\.rels
-  createRelsOfXLSX() {
-    var relationships = Relationships();
-    relationships.addWorkbook();
-    relationships.toStringXml();
-  }
-
-  //xl\_rels\workbook.xml.rels
-  createRelsOfXl() {
-    var relationships = Relationships();
-    relationships.addStyle();
-    relationships.addWorksheet();
-    relationships.toStringXml();
-  }
-
-  //
-  createTheme() {
-    var theme = Theme();
-    theme.toStringXml();
-  }
-
-  //
-  createSharedString() {
-    var sharedString = SharedString();
-    sharedString.toStringXml();
   }
 }

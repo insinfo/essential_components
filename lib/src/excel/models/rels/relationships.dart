@@ -17,46 +17,46 @@ class Relationships {
     relations = List<Relationship>();
   }
 
-  void addWorksheet({String sheetName}) {
+  void addWorksheet(int relationId,{String sheetName}) {
     sheetName = sheetName == null ? "sheet1" : sheetName;
     relations.add(Relationship(
-        id: 'rId3',
+        id: 'rId$relationId',
         type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
         target: "worksheets/${sheetName}.xml"));
     id++;
     sheetindex++;
   }
 
-  void addWorkbook() {
+  void addWorkbook(int relationId) {
     relations.add(Relationship(
-        id: 'rId1',
+        id: 'rId$relationId',
         type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
         target: "xl/workbook.xml"));
     id++;
     workbookindex++;
   }
 
-  void addApp() {
+  void addApp(int relationId) {
     relations.add(Relationship(
-        id: 'rId$id',
+        id: 'rId$relationId',
         type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties",
         target: "docProps/app.xml"));
     id++;
     workbookindex++;
   }
 
-  void addCore() {
+  void addCore(int relationId) {
     relations.add(Relationship(
-        id: 'rId$id',
+        id: 'rId$relationId',
         type: "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties",
         target: "docProps/core.xml"));
     id++;
     workbookindex++;
   }
 
-  void addStyle() {
+  void addStyle(int relationId) {
     relations.add(Relationship(
-        id: 'rId2',
+        id: 'rId$relationId',
         type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles",
         target: "styles.xml"));
 
@@ -64,18 +64,18 @@ class Relationships {
     styleindex++;
   }
 
-  void addTheme() {
+  void addTheme(int relationId) {
     relations.add(Relationship(
-        id: 'rId$id',
+        id: 'rId$relationId',
         type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
         target: "theme/theme$themeindex.xml"));
     id++;
     themeindex++;
   }
 
-  void addSharedStrings() {
+  void addSharedStrings(int relationId) {
     relations.add(Relationship(
-        id: 'rId$id',
+        id: 'rId$relationId',
         type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings",
         target: "sharedStrings.xml"));
     id++;
@@ -92,7 +92,7 @@ class Relationships {
     });
     var relationshipsXml = builder.build();
     var result = relationshipsXml.toXmlString(pretty: true);
-    print(result);
+    //print(result);
     return result;
   }
 

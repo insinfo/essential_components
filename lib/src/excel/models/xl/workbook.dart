@@ -1,6 +1,7 @@
 //workbook.xml
 import 'package:xml/xml.dart' as xml;
 import 'dart:convert';
+
 class Workbook {
   String tagName = "workbook";
   Sheets sheets;
@@ -14,6 +15,7 @@ class Workbook {
     if (sheets == null) {
       sheets = Sheets();
     }
+    sheet?.sheetId = sheets.sheets.length + 1;
     sheets.addSheet(sheet);
   }
 
@@ -28,11 +30,11 @@ class Workbook {
     });
     var xmlWorkbook = builder.build();
     var result = xmlWorkbook.toXmlString(pretty: true);
-    print(result);
+    //print(result);
     return result;
   }
 
-   List<int> toFileBytes() {
+  List<int> toFileBytes() {
     return utf8.encode(toStringXml());
   }
 }
@@ -41,11 +43,15 @@ class Sheets {
   String tagName = 'sheets';
   List<Sheet> sheets;
 
+  Sheets() {
+    sheets = List<Sheet>();
+  }
+
   addSheet(Sheet sheet) {
     if (sheets == null) {
       sheets = List<Sheet>();
     }
-    sheet?.id = 'rId${sheets.length + 1}';
+    sheet?.relationId = sheet?.relationId == null ? 'rId${sheets.length + 1}' : sheet?.relationId;
     sheet?.sheetId = sheets.length + 1;
     sheets.add(sheet);
   }
@@ -63,17 +69,17 @@ class Sheet {
   String tagName = 'sheet';
   String state = 'visible';
   String name = 'Sheet 2';
-  int sheetId;
-  String id = 'rId3';
+  int sheetId = 1;
+  String relationId = 'rId3';
 
-  Sheet({String state, String name, int sheetId, String id}) {
-    this.state = state != null ? state : this.state;
-    this.name = name != null ? name : this.name;
-    this.sheetId = sheetId != null ? sheetId : this.sheetId;
-    //this.id = id != null ? id : this.id;
+  Sheet(String nome, int relatId, {String state}) {
+    this.state = state != null ? state : 'visible';
+    this.name = nome != null ? nome : 'Sheet 2';
+    this.relationId = relatId != null ? 'rId$relatId' : 'rId3';
   }
 
   createXmlElement(xml.XmlBuilder builder) {
-    builder.element(tagName, attributes: {"state": state, "name": name, "sheetId": '1', "r:id": 'rId3'});
+    builder.element(tagName,
+        attributes: {"state": state, "name": name, "sheetId": this.sheetId.toString(), "r:id": this.relationId});
   }
 }

@@ -141,27 +141,32 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   }
 
   Future<void> toXLSX() async {
-    //|| _data?.isNotEmpty
-    if (_data != null ) {
-      //planilha de excel vazia com apenas a celula 0 com a palavra teste
-      // em base64 de lista de int (List<int> listInt) de um Blob
+    if (_data != null) {
+      if (_data.isNotEmpty) {
+        var simplexlsx = SimpleXLSX();
+        simplexlsx.sheetName = "sheet";
 
-      /*var blob = Blob([List<int>()], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      var downloadUrl = Url.createObjectUrlFromBlob(blob);
-      //List<int> listInt = data.map((i) => i.first).toList();
-      // String encodedFileContents = Base64Encoder().convert(listInt);//Uri.encodeComponent("Hello World!");
+        //adiciona os dados
+        var idx = 0;
+        _data.forEach((item) {
+          var col = item.getRowDefinition();
+          if (idx == 0) {
+            //adiciona os titulos
+            simplexlsx.addRow(col.getSets().map((c) {
+              return c.title.toString();
+            }).toList());
+          }
+          {
+            //adiciona os valores
+            simplexlsx.addRow(col.getSets().map((c) {
+              return formatCell(c, disableLimit: true);
+            }).toList());
+          }
+          idx++;
+        });
 
-      AnchorElement(href: downloadUrl)
-        ..setAttribute("download", "dados.xlsx")
-        ..click();*/
-      
-     /* var sheets = excel.createSheets(); //  Create Excel  sheets
-      var styles = excel.createStyleSheet(); //  Create Styles   sheet
-      sheets["add"]("Sheet 0"); // At least we have a [Sheet 0]
-     */
-     
-      var simplexlsx = SimpleXLSX();
-      simplexlsx.build();
+        simplexlsx.build();
+      }
     }
   }
 
@@ -244,7 +249,6 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
           }
 
           //render linhas
-
           for (final item in _data) {
             TableRowElement tableRow = tBody.insertRow(-1);
             //show checkbox to select single row
@@ -291,86 +295,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
             for (DataTableColumn colSet in settings.getSets()) {
               var tdContent = "";
 
-              switch (colSet.type) {
-                case DataTableColumnType.date:
-                  if (colSet.value != null) {
-                    var fmt = colSet.format == null ? 'dd/MM/yyyy' : colSet.format;
-                    var formatter = DateFormat(fmt);
-                    var date = DateTime.tryParse(colSet.value.toString());
-                    if (date != null) {
-                      tdContent = formatter.format(date);
-                    }
-                  }
-                  break;
-                case DataTableColumnType.dateTime:
-                  if (colSet.value != null) {
-                    var fmt = colSet.format == null ? 'dd/MM/yyyy HH:mm:ss' : colSet.format;
-                    var formatter = DateFormat(fmt);
-                    var date = DateTime.tryParse(colSet.value.toString());
-                    if (date != null) {
-                      tdContent = formatter.format(date);
-                    }
-                  }
-                  break;
-                case DataTableColumnType.text:
-                  var str = colSet.value.toString();
-                  if (colSet.limit != null) {
-                    str = DataTableUtils.truncate(str, colSet.limit);
-                  }
-                  str = str == 'null' ? '' : str;
-                  tdContent = str;
-                  break;
-                case DataTableColumnType.brasilCurrency:
-                  var str = colSet.value.toString();
-                  if (str != '' && str != 'null') {
-                    final formatCurrency = NumberFormat.simpleCurrency(locale: 'pt_BR');
-                    str = formatCurrency.format(double.tryParse(str));
-                    tdContent = str;
-                  } else {
-                    tdContent = '';
-                  }
-                  break;
-                case DataTableColumnType.boolLabel:
-                  var str = colSet.value.toString();
-                  if (str == 'true') {
-                    str = '<span class="badge badge-success">Sim</span>';
-                  } else {
-                    str = '<span class="badge badge-danger">Não</span>';
-                  }
-                  tdContent = str;
-                  break;
-                case DataTableColumnType.badge:
-                  var str = colSet.value.toString();
-                  if (str != '' && str != 'null') {
-                    var badgeColor =
-                        colSet.badgeColor != null ? 'background:${colSet.badgeColor};' : 'background:#e0e0e0;';
-                    str =
-                        '<span class="badge" style="font-size:.8125rem;color:#fff;font-weight:400;$badgeColor">$str</span>';
-                  } else {
-                    str = '';
-                  }
-                  tdContent = str;
-                  break;
-                case DataTableColumnType.img:
-                  var src = colSet.value.toString();
-                  if (src != "null") {
-                    var img = ImageElement();
-                    img.src = src;
-                    img.height = 40;
-                    tdContent = img.outerHtml;
-                  } else {
-                    tdContent = "-";
-                  }
-                  break;
-                default:
-                  var str = colSet.value.toString();
-                  if (colSet.limit != null) {
-                    str = DataTableUtils.truncate(str, colSet.limit);
-                  }
-                  tdContent = str;
-              }
-
-              tdContent = tdContent == "null" ? "-" : tdContent;
+              tdContent = formatCell(colSet);
 
               var td = Element.tag('td');
               td.style.setProperty('text-align', 'left');
@@ -394,6 +319,88 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
       print(stackTrace.toString());
     }
     isLoading = false;
+  }
+
+  String formatCell(DataTableColumn colSet, {bool disableLimit = false}) {
+    String tdContent = "";
+    switch (colSet.type) {
+      case DataTableColumnType.date:
+        if (colSet.value != null) {
+          var fmt = colSet.format == null ? 'dd/MM/yyyy' : colSet.format;
+          var formatter = DateFormat(fmt);
+          var date = DateTime.tryParse(colSet.value.toString());
+          if (date != null) {
+            tdContent = formatter.format(date);
+          }
+        }
+        break;
+      case DataTableColumnType.dateTime:
+        if (colSet.value != null) {
+          var fmt = colSet.format == null ? 'dd/MM/yyyy HH:mm:ss' : colSet.format;
+          var formatter = DateFormat(fmt);
+          var date = DateTime.tryParse(colSet.value.toString());
+          if (date != null) {
+            tdContent = formatter.format(date);
+          }
+        }
+        break;
+      case DataTableColumnType.text:
+        var str = colSet.value.toString();
+        if (colSet.limit != null && disableLimit == false) {
+          str = DataTableUtils.truncate(str, colSet.limit);
+        }
+        str = str == 'null' ? '' : str;
+        tdContent = str;
+        break;
+      case DataTableColumnType.brasilCurrency:
+        var str = colSet.value.toString();
+        if (str != '' && str != 'null') {
+          final formatCurrency = NumberFormat.simpleCurrency(locale: 'pt_BR');
+          str = formatCurrency.format(double.tryParse(str));
+          tdContent = str;
+        } else {
+          tdContent = '';
+        }
+        break;
+      case DataTableColumnType.boolLabel:
+        var str = colSet.value.toString();
+        if (str == 'true') {
+          str = '<span class="badge badge-success">Sim</span>';
+        } else {
+          str = '<span class="badge badge-danger">Não</span>';
+        }
+        tdContent = str;
+        break;
+      case DataTableColumnType.badge:
+        var str = colSet.value.toString();
+        if (str != '' && str != 'null') {
+          var badgeColor = colSet.badgeColor != null ? 'background:${colSet.badgeColor};' : 'background:#e0e0e0;';
+          str = '<span class="badge" style="font-size:.8125rem;color:#fff;font-weight:400;$badgeColor">$str</span>';
+        } else {
+          str = '';
+        }
+        tdContent = str;
+        break;
+      case DataTableColumnType.img:
+        var src = colSet.value.toString();
+        if (src != "null") {
+          var img = ImageElement();
+          img.src = src;
+          img.height = 40;
+          tdContent = img.outerHtml;
+        } else {
+          tdContent = "-";
+        }
+        break;
+      default:
+        var str = colSet.value.toString();
+        if (colSet.limit != null) {
+          str = DataTableUtils.truncate(str, colSet.limit);
+        }
+        tdContent = str;
+    }
+    tdContent = tdContent == "null" ? "-" : tdContent;
+    return tdContent;
   }
 
   int numPages() {
