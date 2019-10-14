@@ -109,3 +109,6 @@ and fix issues
 
 - implementation of Excel export API
 
+# 0.1.32
+
+- introduction SimpleXLSX API for Excel export on DataTable

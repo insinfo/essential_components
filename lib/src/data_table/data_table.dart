@@ -159,7 +159,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
           {
             //adiciona os valores
             simplexlsx.addRow(col.getSets().map((c) {
-              return formatCell(c, disableLimit: true);
+              return formatCell(c, disableLimit: true, stripHtml: true);
             }).toList());
           }
           idx++;
@@ -321,7 +321,12 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     isLoading = false;
   }
 
-  String formatCell(DataTableColumn colSet, {bool disableLimit = false}) {
+  String removeAllHtmlTags(String htmlText) {
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+    return htmlText.replaceAll(exp, '');
+  }
+
+  String formatCell(DataTableColumn colSet, {bool disableLimit = false, bool stripHtml = false}) {
     String tdContent = "";
     switch (colSet.type) {
       case DataTableColumnType.date:
@@ -399,6 +404,10 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
         }
         tdContent = str;
     }
+    if (stripHtml) {
+      tdContent = removeAllHtmlTags(tdContent);
+    }
+
     tdContent = tdContent == "null" ? "-" : tdContent;
     return tdContent;
   }
