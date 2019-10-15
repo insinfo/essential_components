@@ -1,8 +1,8 @@
 .dropdown-menu,
 es-dropdown-menu {
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: 63%;
+  left: 11px;
   z-index: 1000;
   display: none;
   float: left;
@@ -15,8 +15,9 @@ es-dropdown-menu {
   list-style: none;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*border: 1px solid rgba(0, 0, 0, 0.15);*/
   border-radius: 0.25rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16);
 }
 
 es-day-picker h6 {

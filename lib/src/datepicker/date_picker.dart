@@ -1,6 +1,7 @@
 import 'dart:html';
 import "package:angular/angular.dart";
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 //import 'package:ng_bootstrap/components/dropdown/index.dart';
 //import 'package:ng_bootstrap/components/button/toggle.dart';
@@ -23,7 +24,7 @@ const String FORMAT_MONTH_TITLE = "MMMM";
 const String DATEPICKER_MODE = "day";
 const String MIN_MODE = "day";
 const String MAX_MODE = "year";
-const bool SHOW_WEEKS = true;
+const bool SHOW_WEEKS = false;
 const num STARTING_DAY = 0;
 const num YEAR_RANGE = 20;
 const DateTime MIN_DATE = null;
@@ -68,6 +69,9 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
   @Input()
   List<String> modes = ["day", "month", "year"];
 
+  @Input()
+  String locale = 'pt_BR'; //en_US
+
   final _now = DateTime.now();
 
   DateTime get initDate => value ?? _now;
@@ -84,7 +88,6 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
   // todo: add formatter value to DateTime object
   /// initializes attributes
   ngOnInit() {
-  
     esDayPickerComponent.datePicker = this;
     esMonthPickerComponent.datePicker = this;
     esYearPickerComponent.datePicker = this;
@@ -95,7 +98,9 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
     formatDayHeader = or(formatDayHeader, FORMAT_DAY_HEADER);
     formatDayTitle = or(formatDayTitle, FORMAT_DAY_TITLE);
     formatMonthTitle = or(formatMonthTitle, FORMAT_MONTH_TITLE);
+   
     showWeeks = or(showWeeks, SHOW_WEEKS);
+      
     startingDay = or(startingDay, STARTING_DAY);
     yearRange = or(yearRange, YEAR_RANGE);
     shortcutPropagation = or(shortcutPropagation, SHORTCUT_PROPAGATION);
@@ -105,14 +110,10 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
   }
 
   @override
-  void ngAfterContentInit() {
-    
-  }
+  void ngAfterContentInit() {}
 
   @override
-  void ngAfterViewInit() {
-    
-  }
+  void ngAfterViewInit() {}
 
   /// writes value from the view
   writeValue(dynamic value) async {
@@ -164,15 +165,21 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
     }
   }
 
+  //isaque
   /// gets the part of the date in dependence of the format, ie: MMMM, DDD, yyy
-  String dateFilter(DateTime date, String format) => DateFormat(format).format(date);
+  String dateFilter(DateTime date, String format) {
+    initializeDateFormatting(locale);
+    return DateFormat(format, locale).format(date);
+  }
 
   ///  checks if date map is active
   bool isActive(DisplayedDate dateObject) => compare(dateObject.date, value) == 0;
 
   /// Creates a date map containing date, label, selected, disabled and current values
-  DisplayedDate createDateObject(DateTime date, String format) => DisplayedDate(
-      date, dateFilter(date, format), compare(date, value) == 0, isDisabled(date), compare(date, DateTime.now()) == 0);
+  DisplayedDate createDateObject(DateTime date, String format) {
+    return DisplayedDate(date, dateFilter(date, format), compare(date, value) == 0, isDisabled(date),
+        compare(date, DateTime.now()) == 0);
+  }
 
   // todo: implement dateDisabled attribute
   /// returns `true` if [date] is before [minDate] or after [maxDate]

@@ -3,6 +3,7 @@ import 'package:angular_forms/angular_forms.dart';
 import 'date_picker.dart';
 import 'dart:html';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import '../core/helper.dart';
 
 import '../dropdown/toggle.dart';
@@ -10,24 +11,27 @@ import '../dropdown/dropdown.dart';
 import '../dropdown/menu.dart';
 import '../button/toggle.dart';
 
+/// Intl.defaultLocale =  'pt_BR';
+
 String defaultFormat = 'yMMMd';
-String _defaultLocale = 'en_US';
+String _defaultLocale = 'en_US'; //pt_BR en_US
 
 /// Creates an [NgEsDatePickerPopup], this is a date-picker component that is popup when user clicks
 /// on the input box or on the button at the right of the input box.
-@Component(selector: "es-date-picker-popup", styleUrls: ['date_picker_popup.css'],
-
-templateUrl: 'date_picker_popup.html', directives: [
-  EsDropdownDirective,
-  EsDropdownMenuDirective,
-  EsDropdownToggleDirective,
-  EsDatePickerComponent,
-  EsToggleButtonDirective,
-  coreDirectives,
-  formDirectives
-], pipes: [
-  commonPipes
-])
+@Component(
+    selector: "es-date-picker-popup",
+    styleUrls: ['date_picker_popup.css'],
+    templateUrl: 'date_picker_popup.html',
+    directives: [
+      EsDropdownDirective,
+      EsDropdownMenuDirective,
+      EsDropdownToggleDirective,
+      EsDatePickerComponent,
+      EsToggleButtonDirective,
+      coreDirectives,
+      formDirectives
+    ],
+    pipes: [commonPipes])
 class EsDatePickerPopupComponent extends EsDatePickerBase {
   /// Constructs a DatePickerPopup
   EsDatePickerPopupComponent(this.ngModel, HtmlElement elementRef) : super(elementRef) {
@@ -65,8 +69,16 @@ class EsDatePickerPopupComponent extends EsDatePickerBase {
   /// locale used to localize the output values
   @Input()
   String locale = _defaultLocale;
+  
+  ///locale used for visualization
+  @Input()
+  String localeRender = 'pt_BR';
+
+  @Input()
+  bool showWeeks = false;
 
   valueChanged(value) {
+    initializeDateFormatting(locale);
     var df = DateFormat(format, locale);
     try {
       ngModel.viewToModelUpdate(df.parse(value));

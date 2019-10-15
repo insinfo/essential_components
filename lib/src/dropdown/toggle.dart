@@ -36,6 +36,6 @@ class EsDropdownToggleDirective {
     event.stopPropagation();
     if (!disabled) {
       dropdown.toggle();
-    }
+    }    
   }
 }

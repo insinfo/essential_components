@@ -16,6 +16,9 @@ class EsYearPickerComponent {
   /// container of the date-picker
   EsDatePickerComponent datePicker;
 
+  @Input()
+  String locale = 'pt_BR';
+
   /// label that appears in the day button which selects the day-picker
   String dayTitle;
 
@@ -36,10 +39,8 @@ class EsYearPickerComponent {
       date = DateTime(start + i, 0, 1);
       years[i] = datePicker.createDateObject(date, datePicker.formatYear);
     }
-    dayTitle = datePicker.dateFilter(initDate, datePicker.formatDay);
-
+    datePicker.dateFilter(initDate, datePicker.formatDay); 
     monthTitle = datePicker.dateFilter(initDate, datePicker.formatMonth);
-
     rows = datePicker.split(years, 5);
   }
 }

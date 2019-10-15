@@ -3,6 +3,7 @@ import 'package:angular_forms/angular_forms.dart';
 import 'date_picker.dart';
 import 'dart:html';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import '../core/helper.dart';
 import '../fontawesome/directives.dart';
 
@@ -13,6 +14,9 @@ import '../fontawesome/directives.dart';
 class EsDayPickerComponent {
   /// provides access to [EsDatePickerComponent] parent container
   EsDatePickerComponent datePicker;
+
+  @Input()
+  String locale = 'pt_BR';
 
   /// labels of the days week
   List<Map<String, String>> labels = [];
@@ -98,15 +102,16 @@ class EsDayPickerComponent {
         'full': datePicker.dateFilter(days[j].date, "EEEE")
       });
     }
-    monthTitle = DateFormat(datePicker.formatMonthTitle).format(initDate);
-    yearTitle = DateFormat(datePicker.formatYear).format(initDate);
+    initializeDateFormatting(locale);
+    monthTitle = DateFormat(datePicker.formatMonthTitle, locale).format(initDate);
+    yearTitle = DateFormat(datePicker.formatYear, locale).format(initDate);
     rows = datePicker.split(days, 7);
-    if (datePicker.showWeeks) {
+    //if (datePicker.showWeeks) {      
       weekNumbers.clear();
       num thursdayIndex = (4 + 7 - datePicker.startingDay) % 7, numWeeks = rows.length;
       for (num curWeek = 0; curWeek < numWeeks; curWeek++) {
         weekNumbers.add(getISO8601WeekNumber(rows[curWeek][thursdayIndex].date) + 1);
       }
-    }
+    //}
   }
 }

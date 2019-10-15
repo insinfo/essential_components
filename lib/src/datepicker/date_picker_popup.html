@@ -1,6 +1,8 @@
 <es-dropdown [(isOpen)]="isOpen" class="d-block">
   <es-dropdown-toggle class="input-group">
-    <input type="text" class="form-control" (change)="valueChanged($event.target.value)" [value]="ngModel.viewModel | date: format">
+    <input type="text" class="form-control"
+     (change)="valueChanged($event.target.value)"
+      [value]="ngModel.viewModel | date: format" readonly>
     <!--<span class="input-group-append">
       <es-toggle-button class="btn btn-secondary" [(ngModel)]="isOpen" (click)="$event.stopPropagation()">
         <i class="fa fa-calendar"></i>
@@ -10,19 +12,21 @@
   <es-dropdown-menu class="p-3">
     <es-date-picker #datePicker
                     [ngModel]="ngModel.viewModel"
-                    [showWeeks]="true"
-                    (ngModelChange)="ngModel.viewToModelUpdate($event)">
+                    [showWeeks]="showWeeks"
+                    (ngModelChange)="ngModel.viewToModelUpdate($event)"
+                    [locale]="localeRender"
+                    >
     </es-date-picker>
     <div *ngIf="showButtonBar" style="padding:10px 9px 2px">
-      <span class="btn-group pull-left">
-        <button type="button" class="btn btn-sm btn-info" (click)="datePicker.selectToday()">
+     <!--<span class="btn-group pull-left"></span>--> 
+        <button type="button" class="btn btn-sm " (click)="datePicker.selectToday()">
           {{currentText}}
         </button>
-        <button type="button" class="btn btn-sm btn-danger" (click)="ngModel.viewToModelUpdate(null)">
+        <button type="button" class="btn btn-sm " (click)="ngModel.viewToModelUpdate(null)">
           {{clearText}}
         </button>
-      </span>
-      <button type="button" class="btn btn-sm btn-success pull-right">{{closeText}}</button>
+     
+      <button type="button" class="btn btn-sm  ">{{closeText}}</button>
     </div>
   </es-dropdown-menu>
 </es-dropdown>
