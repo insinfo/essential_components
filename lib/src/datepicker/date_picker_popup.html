@@ -1,3 +1,4 @@
+<label *ngIf="label != null">{{label}}</label>
 <es-dropdown [(isOpen)]="isOpen" class="d-block">
   <es-dropdown-toggle class="input-group">
     <input type="text" class="form-control"
@@ -6,14 +7,14 @@
     <!--<span class="input-group-append">
       <es-toggle-button class="btn btn-secondary" [(ngModel)]="isOpen" (click)="$event.stopPropagation()">
         <i class="fa fa-calendar"></i>
-      </es-toggle-button>
+      </es-toggle-button>(ngModelChange)="ngModel.viewToModelUpdate($event)"
     </span>-->
   </es-dropdown-toggle>
   <es-dropdown-menu class="p-3">
     <es-date-picker #datePicker
                     [ngModel]="ngModel.viewModel"
                     [showWeeks]="showWeeks"
-                    (ngModelChange)="ngModel.viewToModelUpdate($event)"
+                    (ngModelChange)="handleChange($event)"                    
                     [locale]="localeRender"
                     >
     </es-date-picker>

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'date_picker.dart';
@@ -69,13 +70,26 @@ class EsDatePickerPopupComponent extends EsDatePickerBase {
   /// locale used to localize the output values
   @Input()
   String locale = _defaultLocale;
-  
+
   ///locale used for visualization
   @Input()
   String localeRender = 'pt_BR';
 
   @Input()
   bool showWeeks = false;
+
+  @Input()
+  String label;
+
+  final _changeController = StreamController<DateTime>.broadcast(sync: true);
+  
+  @Output('change')
+  Stream<DateTime> get change => _changeController.stream;
+
+  handleChange(DateTime event) {
+    ngModel.viewToModelUpdate(event);
+    _changeController.add(event);   
+  }
 
   valueChanged(value) {
     initializeDateFormatting(locale);

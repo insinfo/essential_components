@@ -1,29 +1,40 @@
-<input *ngIf="displaytype == 'select'" #inputEl type="text" [ngModel]="inputText" 
-    (focus)="inputFocusAction" (click)="showDropdown($event);" readonly class=" ellipsis inputSelect">
-<div *ngIf="displaytype == 'select'" class="inputIconSelect"></div>
+<!--<label *ngIf="label != null">{{label}}</label>
+<input *ngIf="displaytype == 'select'" #inputEl type="text" [ngModel]="inputText" (focus)="inputFocusAction"
+    (click)="showDropdown($event);" readonly class=" ellipsis inputSelect">
+
+<div *ngIf="displaytype == 'select'" class="inputIconSelect">
+</div>
 
 <a *ngIf="displaytype == 'button'" class="btn bg-indigo-400 dropdown-toggle " (click)="showDropdown($event);"
     data-toggle="dropdown" aria-expanded="false">{{inputText}}</a>
 
-
-
-<!--x-placement="bottom-start" form-control [tabindex]="inputTabIndex"
-        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(60px, 38px, 0px);"-->
-
-
 <div #dropdownMenu class="dropdown-menu" *ngIf="options != null">
-    <!-- exibe as es-simple-select-option -->
+    <-- exibe as es-simple-select-option --
     <ng-content></ng-content>
     <a class="dropdown-item" *ngFor="let option of options" (click)="dropdownOnSelect($event,option)">
         {{getDisplayName(option)}}
     </a>
-    
-    <!--<div class="dropdown-divider"></div> -->
+    <--<div class="dropdown-divider"></div> --
 </div>
-
-
-<!--<es-modal #modal>
-    <es-data-table #dataTable [data]="data" (rowClick)="onRowClick($event)" [showCheckboxSelect]="false"
-        (dataRequest)="onRequestData($event)">
-    </es-data-table>
-</es-modal>-->
+-->
+<div class="btn-group bootstrap-select select open">
+    <button *ngIf="displaytype == 'select'" #inputEl type="button" class="btn2 dropdown-toggle btn-default" (click)="showDropdown($event);"
+        (focus)="inputFocusAction">
+        <span class="filter-option ellipsis">{{inputText}}</span>
+    </button>
+    <a *ngIf="displaytype == 'button'" class="btn bg-indigo-400 dropdown-toggle " (click)="showDropdown($event);"
+        data-toggle="dropdown" aria-expanded="false">{{inputText}}</a>
+    <div #dropdownMenu class="dropdown-menu open" style="max-height: 241px; overflow: hidden; min-height: 180px;">
+        <div class="bs-searchbox" style="display: none;">
+            <input type="text" class="form-control" autocomplete="off">
+        </div>
+        <ul class="dropdown-list">
+            <!-- exibe as es-simple-select-option -->
+            <ng-content></ng-content>
+            <li class="dropdown-item" *ngFor="let option of options" 
+            (click)="dropdownOnSelect($event,option)">
+                {{getDisplayName(option)}}
+            </li>
+        </ul>
+    </div>
+</div>

@@ -26,7 +26,7 @@ import '../interface_has_ui_display_name.dart';
 class EssentialSimpleSelectComponent
     implements ControlValueAccessor, AfterViewInit, AfterContentInit, OnDestroy, AfterChanges {
   @ViewChild('inputEl')
-  InputElement inputEl;
+  ButtonElement inputEl;
 
   @ViewChild('dropdownMenu')
   DivElement dropdownMenu;
@@ -214,6 +214,8 @@ class EssentialSimpleSelectComponent
       return val.toString();
     } else if (val is IHasUIDisplayName) {
       return val.getUiDisplayName();
+    } else if (val is ISimpleSelectRender) {
+      return val.getDisplayName();
     } else {
       return '';
     }
@@ -230,9 +232,45 @@ class EssentialSimpleSelectComponent
 
   showDropdown(Event e) {
     HtmlElement target = e.target;
+    //var rect = target.getBoundingClientRect();
+    //print("${rect.top} ${rect.right} ${rect.bottom}, ${rect.left}");
+    //var parent = getScrollParent(target, false);
+    //print(parent.scrollTop);
+    // var p = (rect.top + parent.scrollTop) - 145;
+    //String position = "${p}px";
+    //print(position);
+    // dropdownMenu.style.top = position;
     e.stopPropagation();
     //var dropdownmenu = target.nextElementSibling;
     toogleDrop();
+  }
+
+  offset(el) {
+    var rect = el.getBoundingClientRect(),
+        /*scrollLeft = window.pageXOffset != null || document.documentElement.scrollLeft != null,
+        scrollTop = window.pageYOffset != null || document.documentElement.scrollTop != null;*/
+        scrollLeft = window.pageXOffset,
+        scrollTop = window.pageYOffset;
+    return {"top": rect.top + scrollTop, "left": rect.left + scrollLeft};
+  }
+
+  //melhorar esta função para ter garantia de pegar o pai que tem rolagem
+  HtmlElement getScrollParent(HtmlElement element, bool includeHidden) {
+    var style = element.getComputedStyle();
+    var excludeStaticParent = style.position == "absolute";
+    var overflowRegex = includeHidden ? RegExp("(auto|scroll|hidden)") : RegExp("(auto|scroll)");
+
+    if (style.position == "fixed") return document.body;
+    for (var pare = element; (pare.parent != null);) {
+      pare = pare.parent;
+      style = pare.getComputedStyle();
+      if (excludeStaticParent && style.position == "static") {
+        continue;
+      }
+      if (overflowRegex.hasMatch(style.overflow + style.overflowY + style.overflowX)) return pare;
+    }
+
+    return document.body;
   }
 
   bool isDropdownOpen = false;

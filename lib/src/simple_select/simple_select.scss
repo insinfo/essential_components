@@ -1,3 +1,4 @@
+/*
 .dropdown-menu.show {
   display: block;
 }
@@ -14,8 +15,8 @@
 }
 .dropdown-menu {
   position: absolute;
-  top: 63%;
-  left: 15px;
+  top: 46px;
+  left: 10px;
   z-index: 1000;
   display: none;
   float: left;
@@ -36,56 +37,7 @@
   overflow-y: auto;
 }
 
-.dropdown-item {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  position: relative;
-  outline: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-  margin-bottom: 0;
-  transition: background-color ease-in-out 0.15s, color ease-in-out 0.15s;
 
-  width: 100%;
-  padding: 0.5rem 1.25rem;
-  clear: both;
-  font-weight: 400;
-  color: #333;
-  text-align: inherit;
-  white-space: nowrap;
-  background-color: transparent;
-  border: 0;
-}
-.dropdown-item:hover {
-  background: #0076af;
-  color: #fff !important;
-}
-
-/* Borda Inferior do Input  */
-/*.form-control:hover {
-  border-bottom: solid 1px;
-  border-bottom-color: #ff890d;
-}
-
-.form-control:focus {
-  border-bottom: solid 1px;
-  border-bottom-color: #0076af;
-}
-
-.form-control[readonly] {
-  border-bottom-style: solid;
-}
-*/
-.ellipsis {
-  white-space: nowrap;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-  -ms-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-}
 .inputSelect {
   display: block;
   width: 100%;
@@ -119,11 +71,15 @@
   border-bottom-color: rgb(0, 150, 136);
   box-shadow: 0px 1px 0px #009688;
 }
+.inputIconSelect {
+  position: relative;
+  top: -19px;
+}
 .inputIconSelect:after {
   content: "\e9c5";
   font-family: "icomoon";
   position: absolute;
-  top: 35%;
+  
   right: 10px;
   font-size: 16px;
   margin-top: -6px;
@@ -132,4 +88,240 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333333;
+}
+*/
+
+/********************************************************************/
+
+$color-teal-500: #009688;
+$btn-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+  box-shadow 0.15s ease-in-out !default;
+$font-weight-normal: 400 !default;
+$border-width: 1px !default;
+$btn-font-weight: $font-weight-normal !default;
+$input-btn-border-width: $border-width !default;
+$btn-border-width: $input-btn-border-width !default;
+
+.dropdown-list {
+  max-height: 171px;
+  overflow-y: auto;
+  min-height: 110px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.dropdown-item {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  outline: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  margin-bottom: 0;
+  transition: background-color ease-in-out 0.15s, color ease-in-out 0.15s;
+
+  width: 100%;
+  padding: 0.5rem 1.25rem;
+  clear: both;
+  font-weight: 400;
+  color: #333;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}
+.dropdown-item:hover {
+  background: #0076af;
+  color: #fff !important;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.dropdown-toggle::after {
+    font-family: icomoon;
+    display: inline-block;
+    border: 0;
+    vertical-align: middle;
+    font-size: .6875rem;
+    margin-left: .46875rem;
+    line-height: 1;
+    position: relative;
+    content: '\e9c9';
+}
+
+// Base
+.bootstrap-select {
+  width: 100%;
+
+  // Button
+  .btn2 {
+    outline: none;
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+
+    font-size: 0.8125rem;
+    line-height: 1.5385;
+    border-radius: 0.1875rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
+    cursor: pointer;
+
+    width: 100%;
+    padding: 5px 5px;
+    padding-right: 26px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-width: 1px 0;
+    font-weight: 400;
+    text-transform: none;
+    border-bottom-color: #ddd;
+    border-radius: 0;
+  }
+
+  // Default light button
+  .btn-default {
+    //@include box-shadow(none);
+
+    // Hover states
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background: none;
+      background-color: white;
+      border-bottom-color: #009688;
+      //@include box-shadow(0 1px 0 #009688);
+    }
+
+    // Disabled
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+      border-bottom-style: dashed;
+      background-color: #fff;
+      border-bottom-color: #ddd;
+      //@include box-shadow(none);
+    }
+  }
+
+  // When dropdown is opened
+  &.btn-group.open > .btn-default.dropdown-toggle {
+    border-bottom-color: #ddd;
+    background-color: #fff;
+    //@include box-shadow(0 1px 0 #ddd);
+  }
+
+  // Form control
+  &.form-control {
+    padding: 0;
+    border: 0;
+
+    // Make it full width
+    &:not([class*="col-"]) {
+      width: 100%;
+    }
+  }
+
+  //
+  // Button group
+  //
+
+  &.btn-group {
+    // Menu container
+    &.bs-container {
+      position: absolute;
+    }
+
+    // Base
+    &:not(.input-group-btn),
+    &[class*="col-"] {
+      float: none;
+      display: inline-block;
+      margin-left: 0;
+    }
+
+    // Button
+    .btn2 {
+      // Filter
+      .filter-option {
+        padding: 0;
+        margin: 0;
+        height: 20px;
+        font-size: 0.8125rem;
+        display: inline-block;
+        //overflow: hidden;
+        width: 100%;
+        text-align: left;
+        text-overflow: ellipsis;
+        //padding-top: 6px;
+        padding-top: 3px;
+      }
+    }
+    &[class*="col-"] .btn2 {
+      width: 100%;
+    }
+
+    // Dropdown menu
+    .dropdown-menu {
+      min-width: 100%;
+    }
+  }
+}
+
+// Inside input group
+.input-group {
+  // Remove border radius
+  .bootstrap-select > .btn2 {
+    border-radius: 0;
+  }
+}
+
+// Search and action boxes
+// ------------------------------
+
+// Set paddings
+.bs-searchbox,
+.bs-actionsbox {
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+// Search box
+.bs-searchbox {
+  position: relative;
+  padding-left: 48px;
+
+  // Search icon
+  &:after {
+    content: "\e98e";
+    font-family: "icomoon";
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    color: inherit;
+    display: block;
+    font-size: 14px;
+    margin-top: -11px;
+    line-height: 1.5385;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }

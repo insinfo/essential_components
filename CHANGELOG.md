@@ -112,3 +112,7 @@ and fix issues
 # 0.1.32
 
 - introduction SimpleXLSX API for Excel export on DataTable
+
+# 0.1.34
+
+- fix bugs in datePicker and simple select components
