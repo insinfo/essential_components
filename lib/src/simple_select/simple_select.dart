@@ -155,10 +155,11 @@ class EssentialSimpleSelectComponent
       inputText = displayText;
     }
 
-    ///aciona o evento change
-    _changeController.add(itemSelected);
+   
     //aciona o NgModel bind
     onChangeControlValueAccessor(itemSelected, rawValue: itemSelected.toString());
+     ///aciona o evento change
+    _changeController.add(itemSelected);
     //fecha mo dropdown
     toogleDrop();
   }

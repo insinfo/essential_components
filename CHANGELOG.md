@@ -116,3 +116,7 @@ and fix issues
 # 0.1.34
 
 - fix bugs in datePicker and simple select components
+
+# 0.1.35
+
+- fix bugs on change event of simple select component
