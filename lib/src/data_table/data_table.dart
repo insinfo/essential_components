@@ -294,22 +294,19 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
             DataTableRow settings = item.getRowDefinition();
             for (DataTableColumn colSet in settings.getSets()) {
               var tdContent = "";
-
-              tdContent = formatCell(colSet);
-
               var td = Element.tag('td');
-              td.style.setProperty('text-align', 'left');
+              tableRow.insertAdjacentElement('beforeend', td);
 
+              tdContent = formatCell(colSet, cellElement: td);
+
+              td.style.setProperty('text-align', 'left');
               if (colSet.textColor != null) {
                 td.style.setProperty('color', colSet.textColor);
               }
               if (colSet.backgroundColor != null) {
                 td.style.setProperty('background', colSet.backgroundColor);
               }
-
               td.setInnerHtml(tdContent, treeSanitizer: NodeTreeSanitizer.trusted);
-
-              tableRow.insertAdjacentElement('beforeend', td);
             }
           }
         }
@@ -326,84 +323,90 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     return htmlText.replaceAll(exp, '');
   }
 
-  String formatCell(DataTableColumn colSet, {bool disableLimit = false, bool stripHtml = false}) {
+  String formatCell(DataTableColumn colSet,
+      {bool disableLimit = false, bool stripHtml = false, TableCellElement cellElement}) {
     String tdContent = "";
-    switch (colSet.type) {
-      case DataTableColumnType.date:
-        if (colSet.value != null) {
-          var fmt = colSet.format == null ? 'dd/MM/yyyy' : colSet.format;
-          var formatter = DateFormat(fmt);
-          var date = DateTime.tryParse(colSet.value.toString());
-          if (date != null) {
-            tdContent = formatter.format(date);
+    if (colSet.customRender == null) {
+      switch (colSet.type) {
+        case DataTableColumnType.date:
+          if (colSet.value != null) {
+            var fmt = colSet.format == null ? 'dd/MM/yyyy' : colSet.format;
+            var formatter = DateFormat(fmt);
+            var date = DateTime.tryParse(colSet.value.toString());
+            if (date != null) {
+              tdContent = formatter.format(date);
+            }
           }
-        }
-        break;
-      case DataTableColumnType.dateTime:
-        if (colSet.value != null) {
-          var fmt = colSet.format == null ? 'dd/MM/yyyy HH:mm:ss' : colSet.format;
-          var formatter = DateFormat(fmt);
-          var date = DateTime.tryParse(colSet.value.toString());
-          if (date != null) {
-            tdContent = formatter.format(date);
+          break;
+        case DataTableColumnType.dateTime:
+          if (colSet.value != null) {
+            var fmt = colSet.format == null ? 'dd/MM/yyyy HH:mm:ss' : colSet.format;
+            var formatter = DateFormat(fmt);
+            var date = DateTime.tryParse(colSet.value.toString());
+            if (date != null) {
+              tdContent = formatter.format(date);
+            }
           }
-        }
-        break;
-      case DataTableColumnType.text:
-        var str = colSet.value.toString();
-        if (colSet.limit != null && disableLimit == false) {
-          str = DataTableUtils.truncate(str, colSet.limit);
-        }
-        str = str == 'null' ? '' : str;
-        tdContent = str;
-        break;
-      case DataTableColumnType.brasilCurrency:
-        var str = colSet.value.toString();
-        if (str != '' && str != 'null') {
-          final formatCurrency = NumberFormat.simpleCurrency(locale: 'pt_BR');
-          str = formatCurrency.format(double.tryParse(str));
+          break;
+        case DataTableColumnType.text:
+          var str = colSet.value.toString();
+          if (colSet.limit != null && disableLimit == false) {
+            str = DataTableUtils.truncate(str, colSet.limit);
+          }
+          str = str == 'null' ? '' : str;
           tdContent = str;
-        } else {
-          tdContent = '';
-        }
-        break;
-      case DataTableColumnType.boolLabel:
-        var str = colSet.value.toString();
-        if (str == 'true') {
-          str = '<span class="badge badge-success">Sim</span>';
-        } else {
-          str = '<span class="badge badge-danger">Não</span>';
-        }
-        tdContent = str;
-        break;
-      case DataTableColumnType.badge:
-        var str = colSet.value.toString();
-        if (str != '' && str != 'null') {
-          var badgeColor = colSet.badgeColor != null ? 'background:${colSet.badgeColor};' : 'background:#e0e0e0;';
-          str = '<span class="badge" style="font-size:.8125rem;color:#fff;font-weight:400;$badgeColor">$str</span>';
-        } else {
-          str = '';
-        }
-        tdContent = str;
-        break;
-      case DataTableColumnType.img:
-        var src = colSet.value.toString();
-        if (src != "null") {
-          var img = ImageElement();
-          img.src = src;
-          img.height = 40;
-          tdContent = img.outerHtml;
-        } else {
-          tdContent = "-";
-        }
-        break;
-      default:
-        var str = colSet.value.toString();
-        if (colSet.limit != null) {
-          str = DataTableUtils.truncate(str, colSet.limit);
-        }
-        tdContent = str;
+          break;
+        case DataTableColumnType.brasilCurrency:
+          var str = colSet.value.toString();
+          if (str != '' && str != 'null') {
+            final formatCurrency = NumberFormat.simpleCurrency(locale: 'pt_BR');
+            str = formatCurrency.format(double.tryParse(str));
+            tdContent = str;
+          } else {
+            tdContent = '';
+          }
+          break;
+        case DataTableColumnType.boolLabel:
+          var str = colSet.value.toString();
+          if (str == 'true') {
+            str = '<span class="badge badge-success">Sim</span>';
+          } else {
+            str = '<span class="badge badge-danger">Não</span>';
+          }
+          tdContent = str;
+          break;
+        case DataTableColumnType.badge:
+          var str = colSet.value.toString();
+          if (str != '' && str != 'null') {
+            var badgeColor = colSet.badgeColor != null ? 'background:${colSet.badgeColor};' : 'background:#e0e0e0;';
+            str = '<span class="badge" style="font-size:.8125rem;color:#fff;font-weight:400;$badgeColor">$str</span>';
+          } else {
+            str = '';
+          }
+          tdContent = str;
+          break;
+        case DataTableColumnType.img:
+          var src = colSet.value.toString();
+          if (src != "null") {
+            var img = ImageElement();
+            img.src = src;
+            img.height = 40;
+            tdContent = img.outerHtml;
+          } else {
+            tdContent = "-";
+          }
+          break;
+        default:
+          var str = colSet.value.toString();
+          if (colSet.limit != null) {
+            str = DataTableUtils.truncate(str, colSet.limit);
+          }
+          tdContent = str;
+      }
+    } else {
+      tdContent = colSet.customRender(cellElement);
     }
+
     if (stripHtml) {
       tdContent = removeAllHtmlTags(tdContent);
     }
