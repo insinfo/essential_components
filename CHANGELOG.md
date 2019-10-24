@@ -120,3 +120,7 @@ and fix issues
 # 0.1.35
 
 - fix bugs on change event of simple select component
+
+# 0.1.36
+
+- implementation of filter on search fielder of simple select

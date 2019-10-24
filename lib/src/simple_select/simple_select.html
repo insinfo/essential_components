@@ -18,15 +18,18 @@
 </div>
 -->
 <div class="btn-group bootstrap-select select open">
-    <button *ngIf="displaytype == 'select'" #inputEl type="button" class="btn2 dropdown-toggle btn-default" (click)="showDropdown($event);"
+    <button *ngIf="displaytype == 'select'" #inputEl type="button" 
+    class="btn2 dropdown-toggle btn-default" (click)="showDropdown($event);"
         (focus)="inputFocusAction">
         <span class="filter-option ellipsis">{{inputText}}</span>
     </button>
     <a *ngIf="displaytype == 'button'" class="btn bg-indigo-400 dropdown-toggle " (click)="showDropdown($event);"
         data-toggle="dropdown" aria-expanded="false">{{inputText}}</a>
     <div #dropdownMenu class="dropdown-menu open" style="max-height: 241px; overflow: hidden; min-height: 180px;">
-        <div class="bs-searchbox" style="display: none;">
-            <input type="text" class="form-control" autocomplete="off">
+        <div class="bs-searchbox" *ngIf="showsearch">
+            <input (click)="handleOnClickSearchbox($event)" 
+            #inputsearch (input)="handleOnInputSearchbox($event)"
+            type="text" class="form-control" autocomplete="off">
         </div>
         <ul class="dropdown-list">
             <!-- exibe as es-simple-select-option -->

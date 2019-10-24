@@ -14,6 +14,8 @@ import '../modal/modal.dart';
 
 import '../interface_has_ui_display_name.dart';
 
+import '../core/replacement_accents.dart';
+
 @Component(
   selector: 'es-simple-select',
   //changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,11 +36,17 @@ class EssentialSimpleSelectComponent
   @ContentChildren(EsSimpleSelectOptionComponent)
   List<EsSimpleSelectOptionComponent> childrenSimpleSelectOptions;
 
+  @ViewChild('inputsearch')
+  InputElement inputsearch;
+
   final NgControl ngControl;
 
   bool _required = false;
   bool get required => _required;
   bool focused = false;
+
+  @Input()
+  bool showsearch = false;
 
   bool _disabled = false;
   bool get disabled => _disabled;
@@ -130,9 +138,11 @@ class EssentialSimpleSelectComponent
   //evento global de click
   StreamSubscription streamSubscriptionBodyOnCLick;
   void handleBodyOnCLick(e) {
-    if (isDropdownOpen) {
+    /*if (isDropdownOpen) {
       toogleDrop();
-    }
+    }*/
+    closeAllSelect();
+    isDropdownOpen = false;
   }
 
   void inputFocusAction(event) {
@@ -155,10 +165,10 @@ class EssentialSimpleSelectComponent
       inputText = displayText;
     }
 
-   
     //aciona o NgModel bind
     onChangeControlValueAccessor(itemSelected, rawValue: itemSelected.toString());
-     ///aciona o evento change
+
+    ///aciona o evento change
     _changeController.add(itemSelected);
     //fecha mo dropdown
     toogleDrop();
@@ -243,7 +253,19 @@ class EssentialSimpleSelectComponent
     // dropdownMenu.style.top = position;
     e.stopPropagation();
     //var dropdownmenu = target.nextElementSibling;
+    closeAllSelect(dropdownMenu);
     toogleDrop();
+  }
+
+  //fecha todos os selects menos o que for passado por parametro
+  closeAllSelect([butThisOne]) {
+    dropdownMenu?.closest('body')?.querySelectorAll('div.dropdown-menu')?.forEach((ele) {
+      if (butThisOne == ele) {
+        //print('igual');
+      } else {
+        ele.classes.remove('show');
+      }
+    });
   }
 
   offset(el) {
@@ -295,6 +317,7 @@ class EssentialSimpleSelectComponent
   var itemSelected;
 
   List<dynamic> _options;
+  List<dynamic> _optionsBkp;
 
   @Input()
   Map<String, dynamic> firstOption;
@@ -302,6 +325,7 @@ class EssentialSimpleSelectComponent
   @Input()
   set options(List<dynamic> opts) {
     _options = opts;
+    _optionsBkp = _options.map((f) => f).toList();
   }
 
   List<dynamic> get options {
@@ -311,6 +335,45 @@ class EssentialSimpleSelectComponent
   @override
   void ngAfterContentInit() {
     childrenSimpleSelectOptions.forEach((p) => p.parent = this);
+  }
+
+  //evento de click no input de busca do select
+  handleOnClickSearchbox(e) {
+    e.stopPropagation();
+  }
+
+  //evento para filtrar as lista
+  String _currentSearchString;
+  handleOnInputSearchbox(e) {
+    _currentSearchString = removeAccents(inputsearch?.value?.toLowerCase());
+    filterOptionList();
+  }
+
+  filterOptionList() {
+    if (_currentSearchString.isNotEmpty) {
+      //filtra as tags options inside select <es-simple-select-option>
+      childrenSimpleSelectOptions.forEach((item) {
+        String value = removeAccents(item.text);
+        item.hidden = true;       
+        if (value.toLowerCase().contains(_currentSearchString)) {
+          item.hidden = false;         
+        }
+      });
+       //filtra as options do atributo options [options]=""
+      var listaFiltrada = List<dynamic>();
+      for (var item in _optionsBkp) {
+        String value = removeAccents(getDisplayName(item));
+        if (value.toLowerCase().contains(_currentSearchString)) {
+          listaFiltrada.add(item);
+        }
+      }
+      _options = listaFiltrada;
+    } else {
+      childrenSimpleSelectOptions.forEach((item) {
+        item.hidden = false;
+      });
+      _options = _optionsBkp;
+    }
   }
 }
 
@@ -334,6 +397,8 @@ class EsSimpleSelectOptionComponent implements OnInit {
 
   @ViewChild('item')
   HtmlElement item;
+
+  bool hidden = false;
 
   get text {
     return item?.firstChild?.text;
