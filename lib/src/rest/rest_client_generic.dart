@@ -74,7 +74,7 @@ class RestClientGeneric<T> {
   static Map<String, String> headersDefault = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
-    "Authorization": "Bearer " + window.localStorage["YWNjZXNzX3Rva2Vu"].toString()
+    "Authorization": "Bearer " + window.sessionStorage["YWNjZXNzX3Rva2Vu"].toString()
   };
 
   RestClientGeneric({this.factories}) {
