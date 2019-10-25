@@ -1,6 +1,6 @@
 import 'dart:html' as html;
 
-enum DialogColor { DANGER, PRIMARY, SUCCESS, WARNING, INFO }
+enum DialogColor { DANGER, PRIMARY, SUCCESS, WARNING, INFO, PINK }
 
 class SimpleDialogComponent {
   static getColor(DialogColor dialogColor) {
@@ -21,8 +21,39 @@ class SimpleDialogComponent {
       case DialogColor.INFO:
         headerColor = 'info';
         break;
+      case DialogColor.PINK:
+        headerColor = 'info';
+        break;
     }
     return headerColor;
+  }
+
+  static showFullScreenDialog(String content) {
+    var template = ''' 
+    <div style="width: 100%;height: 100%;display: block; 
+    position: fixed;top: 0;left: 0;background: rgba(255, 255, 255, 0.5);">
+    $content
+    </div>
+     ''';
+    html.DivElement root = html.DivElement();
+    html.document.querySelector('body').append(root);
+    root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
+  }
+
+  static showFullScreenAlert(String message, {backgroundColor = '#de589d'}) {
+    var template = ''' 
+    <div style="width: 100%;height: 100%;display: block; 
+        position: fixed;top: 0;left: 0;background: rgba(255, 255, 255, 0.5);">
+        <div style="display:flex;align-items:center;justify-content:center;width: 100%;height: 100%;">
+            <h1 style="width:50%;height:77px;text-align:center;background:$backgroundColor;color:#fff;padding:20px;">$message</h1>
+        </div>
+    </div>
+     ''';
+    html.document.querySelector('.FullScreenAlert')?.remove();
+    html.DivElement root = html.DivElement();
+    root.classes.add('FullScreenAlert');
+    html.document.querySelector('body').append(root);
+    root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
   }
 
   static showAlert(String message, {String title = "Alerta", DialogColor dialogColor = DialogColor.PRIMARY}) {

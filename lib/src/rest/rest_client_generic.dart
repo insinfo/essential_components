@@ -7,6 +7,8 @@ import 'uri_mu_proto.dart';
 import 'map_serialization.dart';
 import 'rest_response.dart';
 
+import '../simple_dialog/simple_dialog.dart';
+
 class RestClientGeneric<T> {
   final Map<Type, Function> factories; // = <Type, Function>{};
   //ex: DiskCache<Agenda>(factories: {Agenda: (x) => Agenda.fromJson(x)});
@@ -65,6 +67,9 @@ class RestClientGeneric<T> {
   static UriMuProtoType protocol;
   static String host;
   static String basePath;
+  //unauthorizedAccess
+  static bool showDialogUnauthorizedAccess = false;
+  static String dialogUnauthorizedMessage = 'Acesso não autorizado!';
 
   static Map<String, String> headersDefault = {
     'Content-type': 'application/json',
@@ -78,6 +83,7 @@ class RestClientGeneric<T> {
     UriMuProto.host = host;
     UriMuProto.protoType = protocol;
   }
+
   /// Todo implementar
   Future<RestResponseGeneric<T>> getgetAllT<T>(String apiEndPoint,
       {bool forceRefresh = false, String topNode, Map<String, String> headers, Map<String, String> queryParameters}) {
@@ -106,6 +112,9 @@ class RestClientGeneric<T> {
         var resp = await client.get(url, headers: headers);
         var totalReH = resp.headers.containsKey('total-records') ? resp.headers['total-records'] : null;
         var totalRecords = totalReH != null ? int.tryParse(totalReH) : 0;
+        var message = '${resp.body}';
+        var exception = '${resp.body}';
+        var jsonDecoded = jsonDecode(resp.body);
         // print("from API");
         if (resp.statusCode == 200) {
           //coloca no cache
@@ -113,15 +122,14 @@ class RestClientGeneric<T> {
             _setToLocalStorage(url.toString(), resp.body, headers: resp.headers);
           }
 
-          var parsedJson = jsonDecode(resp.body);
           RList<T> list = RList<T>();
           list.totalRecords = totalRecords;
           if (topNode != null) {
-            parsedJson[topNode].forEach((item) {
+            jsonDecoded[topNode].forEach((item) {
               list.add(factories[T](item));
             });
           } else {
-            parsedJson.forEach((item) {
+            jsonDecoded.forEach((item) {
               list.add(factories[T](item));
             });
           }
@@ -133,6 +141,24 @@ class RestClientGeneric<T> {
               status: RestStatus.SUCCESS,
               dataTypedList: list,
               statusCode: resp.statusCode);
+        }
+        //exibe mensagem se de erro não autorizado
+        if (resp.statusCode == 401) {
+          var jsonDecoded = jsonDecode(resp.body);
+          if (jsonDecoded is Map) {
+            if (jsonDecoded.containsKey('message')) {
+              dialogUnauthorizedMessage = jsonDecoded['message'];
+              message = jsonDecoded['message'];
+            }
+            if (jsonDecoded.containsKey('exception')) {
+              exception = jsonDecoded['exception'];
+            }
+          }
+          if (showDialogUnauthorizedAccess) {
+            SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
+          }
+          return RestResponseGeneric<T>(
+              message: message, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
         }
       }
 
@@ -155,6 +181,7 @@ class RestClientGeneric<T> {
           statusCode: 200);
     } catch (e) {
       print("RestClientGeneric@getAll ${e}");
+
       return RestResponseGeneric(message: 'Erro ${e}', status: RestStatus.DANGER, statusCode: 400);
     }
   }

@@ -6,12 +6,16 @@ import 'package:http/browser_client.dart';
 //import 'package:http/http.dart' as http;
 import 'uri_mu_proto.dart';
 import 'rest_response.dart';
+import '../simple_dialog/simple_dialog.dart';
 
 class RestClient {
   BrowserClient client;
   static UriMuProtoType protocol;
   static String host;
   static String basePath;
+  //unauthorizedAccess
+  static bool showDialogUnauthorizedAccess = false;
+  static String dialogUnauthorizedMessage = 'Acesso não autorizado!';
 
   static Map<String, String> headersDefault = {
     'Content-type': 'application/json',
@@ -42,17 +46,46 @@ class RestClient {
 
     var totalReH = resp.headers.containsKey('total-records') ? resp.headers['total-records'] : null;
     var totalRecords = totalReH != null ? int.tryParse(totalReH) : 0;
+    var jsonDecoded = jsonDecode(resp.body);
 
     if (resp.statusCode == 200) {
       return RestResponse(
           totalRecords: totalRecords,
           message: 'Sucesso',
           status: RestStatus.SUCCESS,
-          data: jsonDecode(resp.body),
+          data: jsonDecoded,
           statusCode: resp.statusCode);
     }
+    var message = '${resp.body}';
+    var exception = '${resp.body}';
 
-    return RestResponse(message: '${resp.body}', status: RestStatus.DANGER, statusCode: resp.statusCode);
+    //exibe mensagem se der erro não autorizado
+    if (resp.statusCode == 401) {
+      if (jsonDecoded is Map) {
+        if (jsonDecoded.containsKey('message')) {
+          dialogUnauthorizedMessage = jsonDecoded['message'];
+          message = jsonDecoded['message'];
+        }
+        if (jsonDecoded.containsKey('exception')) {
+          exception = jsonDecoded['exception'];
+        }
+      }
+      if (showDialogUnauthorizedAccess) {
+        SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
+      }
+      return RestResponse(message: message, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
+    }
+
+    if (jsonDecoded is Map) {
+      if (jsonDecoded.containsKey('message')) {
+        message = jsonDecoded['message'];
+      }
+      if (jsonDecoded.containsKey('exception')) {
+        exception = jsonDecoded['exception'];
+      }
+    }
+
+    return RestResponse(message: message, exception: exception, status: RestStatus.DANGER, statusCode: resp.statusCode);
   }
 
   Future<RestResponse> put(String apiEndPoint,
@@ -76,7 +109,36 @@ class RestClient {
       return RestResponse(
           message: 'Sucesso', status: RestStatus.SUCCESS, data: jsonDecode(resp.body), statusCode: resp.statusCode);
     }
-    return RestResponse(message: '${resp.body}', status: RestStatus.DANGER, statusCode: resp.statusCode);
+    var jsonDecoded = jsonDecode(resp.body);
+    var message = '${resp.body}';
+    var exception = '${resp.body}';
+    //exibe mensagem se der erro não autorizado
+    if (resp.statusCode == 401) {
+      if (jsonDecoded is Map) {
+        if (jsonDecoded.containsKey('message')) {
+          dialogUnauthorizedMessage = jsonDecoded['message'];
+          message = jsonDecoded['message'];
+        }
+        if (jsonDecoded.containsKey('exception')) {
+          exception = jsonDecoded['exception'];
+        }
+      }
+      if (showDialogUnauthorizedAccess) {
+        SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
+      }
+      return RestResponse(message: message, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
+    }
+
+    if (jsonDecoded is Map) {
+      if (jsonDecoded.containsKey('message')) {
+        message = jsonDecoded['message'];
+      }
+      if (jsonDecoded.containsKey('exception')) {
+        exception = jsonDecoded['exception'];
+      }
+    }
+
+    return RestResponse(message: message, exception: exception, status: RestStatus.DANGER, statusCode: resp.statusCode);
   }
 
   Future<RestResponse> post(String apiEndPoint,
@@ -96,7 +158,37 @@ class RestClient {
       return RestResponse(
           message: 'Sucesso', status: RestStatus.SUCCESS, data: jsonDecode(resp.body), statusCode: resp.statusCode);
     }
-    return RestResponse(message: '${resp.body}', status: RestStatus.DANGER, statusCode: resp.statusCode);
+
+    var jsonDecoded = jsonDecode(resp.body);
+    var message = '${resp.body}';
+    var exception = '${resp.body}';
+    //exibe mensagem se der erro não autorizado
+    if (resp.statusCode == 401) {
+      if (jsonDecoded is Map) {
+        if (jsonDecoded.containsKey('message')) {
+          dialogUnauthorizedMessage = jsonDecoded['message'];
+          message = jsonDecoded['message'];
+        }
+        if (jsonDecoded.containsKey('exception')) {
+          exception = jsonDecoded['exception'];
+        }
+      }
+      if (showDialogUnauthorizedAccess) {
+        SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
+      }
+      return RestResponse(message: message, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
+    }
+
+    if (jsonDecoded is Map) {
+      if (jsonDecoded.containsKey('message')) {
+        message = jsonDecoded['message'];
+      }
+      if (jsonDecoded.containsKey('exception')) {
+        exception = jsonDecoded['exception'];
+      }
+    }
+
+    return RestResponse(message: message, exception: exception, status: RestStatus.DANGER, statusCode: resp.statusCode);
   }
 
   Future<RestResponse> deleteAll(String apiEndPoint,
@@ -121,6 +213,7 @@ class RestClient {
     await request.onLoadEnd.first;
     //await request.onReadyStateChange.first;
 
+    var jsonDecoded = jsonDecode(request.responseText);
     if (request.status == 200) {
       return RestResponse(
           message: 'Sucesso',
@@ -128,7 +221,35 @@ class RestClient {
           data: jsonDecode(request.responseText),
           statusCode: request.status);
     }
-    return RestResponse(message: '${request.responseText}', status: RestStatus.DANGER, statusCode: request.status);
+    var message = '${request.responseText}';
+    var exception = '${request.responseText}';
+    //exibe mensagem se der erro não autorizado
+    if (request.status == 401) {
+      if (jsonDecoded is Map) {
+        if (jsonDecoded.containsKey('message')) {
+          dialogUnauthorizedMessage = jsonDecoded['message'];
+          message = jsonDecoded['message'];
+        }
+        if (jsonDecoded.containsKey('exception')) {
+          exception = jsonDecoded['exception'];
+        }
+      }
+      if (showDialogUnauthorizedAccess) {
+        SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
+      }
+      return RestResponse(message: message, status: RestStatus.UNAUTHORIZED, statusCode: request.status);
+    }
+    //
+
+    if (jsonDecoded is Map) {
+      if (jsonDecoded.containsKey('message')) {
+        message = jsonDecoded['message'];
+      }
+      if (jsonDecoded.containsKey('exception')) {
+        exception = jsonDecoded['exception'];
+      }
+    }
+
+    return RestResponse(message: message, exception: exception, status: RestStatus.DANGER, statusCode: request.status);
   }
 }
-
