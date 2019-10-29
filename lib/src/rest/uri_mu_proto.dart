@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 
-
 enum UriMuProtoType { http, https, notDefine }
 
 class UriMuProto {
@@ -10,15 +9,17 @@ class UriMuProto {
   static String basePath = "";
   static UriMuProtoType protoType;
 
-  static Uri uri(String apiEndPoint, [Map<String, String> queryParameters]) {
+  static Uri uri(String apiEndPoint, [Map<String, String> queryParameters,String basePth,String protcol]) {
     if (apiEndPoint == null) {
-      throw Exception("api Endpoint cannot be null or empty");
+      throw Exception("UriMuProto: api Endpoint cannot be null or empty");
     }
-
-    apiEndPoint = basePath + apiEndPoint;
+    basePth = basePth != null ? basePth : basePath;
+    apiEndPoint = basePth + apiEndPoint;
     var proLen = window.location.protocol.length;
     var protocol = "";
-    if (protoType == UriMuProtoType.notDefine) {
+    if (protcol != null) {
+      protocol = protcol;
+    } else if (protoType == UriMuProtoType.notDefine || protoType == null) {
       protocol = window.location.protocol.substring(0, proLen - 1);
     } else if (protoType == UriMuProtoType.https) {
       protocol = "https";
