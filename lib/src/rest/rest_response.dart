@@ -1,7 +1,7 @@
 import '../data_table/response_list.dart';
 
 //Unauthorized
-enum RestStatus { WARNING, SUCCESS, DANGER, INFO, UNAUTHORIZED }
+enum RestStatus { WARNING, SUCCESS, DANGER, INFO, UNAUTHORIZED, NOCONTENT }
 
 class RestResponseGeneric<T> extends RestResponse {
   T dataTyped;

@@ -157,8 +157,11 @@ class RestClientGeneric<T> {
           if (showDialogUnauthorizedAccess) {
             SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
           }
-          return RestResponseGeneric<T>(
-              message: message, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
+          return RestResponseGeneric<T>(message: message, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
+        }else if (resp.statusCode == 204) {          
+          return RestResponseGeneric<T>(message: 'no content found', status: RestStatus.NOCONTENT, statusCode: resp.statusCode);
+        } else {
+          return RestResponseGeneric<T>(message: message, status: RestStatus.DANGER, statusCode: resp.statusCode);
         }
       }
 
@@ -205,9 +208,11 @@ class RestClientGeneric<T> {
       //Obtem da REST API se o cache estivar vazio ou vencido
       if (isShouldRefresh(url.toString()) || forceRefresh || disableAllCache) {
         var resp = await client.get(url, headers: headers);
+        var message = '${resp.body}';
+        var exception = '${resp.body}';
         var totalReH = resp.headers.containsKey('total-records') ? resp.headers['total-records'] : null;
         var totalRecords = totalReH != null ? int.tryParse(totalReH) : 0;
-        //
+        
         if (resp.statusCode == 200) {
           //coloca no cache
           if (disableAllCache) {
@@ -228,9 +233,28 @@ class RestClientGeneric<T> {
               status: RestStatus.SUCCESS,
               dataTyped: result,
               statusCode: resp.statusCode);
+        } 
+        //exibe mensagem se de erro não autorizado
+        else if (resp.statusCode == 401) {
+          var jsonDecoded = jsonDecode(resp.body);
+          if (jsonDecoded is Map) {
+            if (jsonDecoded.containsKey('message')) {
+              dialogUnauthorizedMessage = jsonDecoded['message'];
+              message = jsonDecoded['message'];
+            }
+            if (jsonDecoded.containsKey('exception')) {
+              exception = jsonDecoded['exception'];
+            }
+          }
+          if (showDialogUnauthorizedAccess) {
+            SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
+          }
+          return RestResponseGeneric<T>(message: message, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
+        } else if (resp.statusCode == 204) {          
+          return RestResponseGeneric<T>(message: 'no content found', status: RestStatus.NOCONTENT, statusCode: resp.statusCode);
+        } else {
+          return RestResponseGeneric<T>(message: message, status: RestStatus.DANGER, statusCode: resp.statusCode);
         }
-
-        ///
       }
 
       Map data = _getFromCache(url.toString());

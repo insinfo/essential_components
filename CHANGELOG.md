@@ -124,3 +124,7 @@ and fix issues
 # 0.1.36
 
 - implementation of filter on search fielder of simple select
+
+# 0.1.41
+
+- fix bugs
