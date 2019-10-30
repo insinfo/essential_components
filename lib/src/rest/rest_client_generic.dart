@@ -85,7 +85,7 @@ class RestClientGeneric<T> {
   }
 
   /// Todo implementar
-  Future<RestResponseGeneric<T>> getgetAllT<T>(String apiEndPoint,
+  Future<RestResponseGeneric<T>> getAllT<T>(String apiEndPoint,
       {bool forceRefresh = false, String topNode, Map<String, String> headers, Map<String, String> queryParameters}) {
     throw UnimplementedError('This feature is not implemented yet.');
     return null;
@@ -115,7 +115,7 @@ class RestClientGeneric<T> {
         var message = '${resp.body}';
         var exception = '${resp.body}';
         var jsonDecoded = jsonDecode(resp.body);
-        // print("from API");
+         //print("from API");
         if (resp.statusCode == 200) {
           //coloca no cache
           if (disableAllCache == false) {
