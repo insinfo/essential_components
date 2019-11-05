@@ -204,14 +204,14 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     try {
       //clear tbody if not get data
       if (_data == null || _data.isEmpty) {
-         var tbody = tableElement.querySelector('tbody');
+        var tbody = tableElement.querySelector('tbody');
         if (tbody != null) {
           tbody.innerHtml = "";
         } else {
           TableSectionElement tBody = tableElement.createTBody();
           tBody.innerHtml = "";
         }
-       
+
         isNoContent = true;
         divNoContent.style.display = 'block';
         //print(divNoContent);
@@ -221,6 +221,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
       if (_data != null) {
         error = false;
         isNoContent = false;
+        divNoContent.style.display = 'none';
         if (_data.isNotEmpty) {
           TableSectionElement tBody;
           if (tableElement.querySelector('tbody') == null) {

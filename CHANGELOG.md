@@ -131,4 +131,6 @@ and fix issues
 
 # 0.1.42
 
-- General improvements to DataTable and Rest API
+- general improvements to DataTable and Rest API
+
+

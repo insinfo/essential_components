@@ -1,10 +1,18 @@
 import 'dart:html' as html;
+import 'package:uuid/uuid.dart';
 
 class SimpleLoadingComponent {
-  static html.DivElement _loading;
-  static html.HtmlElement _target;
-  static int requisicoes = 0;
-  static show({html.HtmlElement target}) {
+  List<html.DivElement> loadings = List<html.DivElement>();
+  html.HtmlElement _target;
+  int requisicoes = 0;
+  Uuid uniqueIdGen;
+
+  SimpleLoadingComponent() {
+    uniqueIdGen = Uuid();
+  }
+
+  show({html.HtmlElement target}) {
+    print('show');
     _target = target;
     var template = ''' 
       <div style="z-index: 1000; position: absolute;
@@ -24,37 +32,24 @@ class SimpleLoadingComponent {
           <i class="icon-spinner9 spinner" style="font-size: 57px;"></i>
       </div>
     ''';
-    _loading = html.DivElement();
-    _loading.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
+    var loading = html.DivElement();
+    loading.classes.add('SimpleLoadingComponent');
+    loading.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
 
-    if (requisicoes == 0) {
-      if (_target == null) {
-        html.document.querySelector('body').append(_loading);
-        /*var element = html.document.querySelector('body :first-child');
-        if (element != null) {
-          element.style.filter = "blur(10px)";
-          element.style.transition = "2s filter linear";
-        }*/
-      } else {
-        _target.append(_loading);
-      }
+    if (_target == null) {
+      html.document.querySelector('body').append(loading);     
+    } else {
+      _target.append(loading);
     }
+    loadings.add(loading);
     requisicoes++;
   }
 
-  static hide({html.HtmlElement target}) {
-    _target = target;
-
-    if (requisicoes <= 1) {
-      /*var element = html.document.querySelector('body :first-child');
-      if (element != null) {
-        element.style.filter = "blur(0px)";       
-      }*/
-      _loading.remove();
-    }
-
-    if (requisicoes > 0) {
-      requisicoes--;
+  hide() {    
+    if (loadings.isNotEmpty) {     
+      loadings.last.remove();
+      loadings.removeLast();
+      print(loadings);
     }
   }
 }
