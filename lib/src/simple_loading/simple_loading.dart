@@ -48,8 +48,7 @@ class SimpleLoadingComponent {
   hide() {    
     if (loadings.isNotEmpty) {     
       loadings.last.remove();
-      loadings.removeLast();
-      print(loadings);
+      loadings.removeLast();      
     }
   }
 }
