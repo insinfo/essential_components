@@ -24,15 +24,15 @@ import '../excel/simple_xlsx.dart';
   styleUrls: [
     'data_table.css',
   ],
-  directives: [
-    formDirectives,
-    coreDirectives,
-  ],
+  directives: [formDirectives, coreDirectives, NgIf],
 )
 //A Material Design Data table component for AngularDart
 class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit {
   @ViewChild("tableElement") //HtmlElement
   TableElement tableElement;
+
+  @ViewChild("divNoContent")
+  DivElement divNoContent;
 
   DataTableFilter dataTableFilter = DataTableFilter();
 
@@ -56,6 +56,28 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
 
   String _orderDir = 'asc';
   bool _isTitlesRendered = false;
+
+  @Input()
+  bool error = false;
+
+  @Input()
+  bool isNoContent = false;
+
+  @Input()
+  String noContentMessage = "Dados indisponiveis";
+
+  @Input()
+  String errorMessage =
+      'Ocorreu um erro ao listar, verifique sua conexão de rede ou entre em contato com o suporte técnico.';
+
+  setErrorOccurred() {
+    isLoading = false;
+    error = true;
+  }
+
+  removeErrorOccurred() {
+    error = false;
+  }
 
   @Input()
   bool enableOrdering = true;
@@ -100,6 +122,14 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   int _currentPage = 1;
   int _btnQuantity = 5;
   PaginationType paginationType = PaginationType.carousel;
+
+  EssentialDataTableComponent() {
+    //dataRequest isLoading
+    /* dataRequest.listen((onData){
+      print(onData);
+    });*/
+  }
+
   //StreamSubscription _prevBtnStreamSub;
   //StreamSubscription _nextBtnStreamSub;
 
@@ -174,16 +204,23 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     try {
       //clear tbody if not get data
       if (_data == null || _data.isEmpty) {
-        var tbody = tableElement.querySelector('tbody');
+         var tbody = tableElement.querySelector('tbody');
         if (tbody != null) {
-          tbody.innerHtml = "<tr><td>Dados indisponiveis</td></tr>";
+          tbody.innerHtml = "";
         } else {
           TableSectionElement tBody = tableElement.createTBody();
-          tBody.innerHtml = "<tr><td>Dados indisponiveis</td></tr>";
+          tBody.innerHtml = "";
         }
+       
+        isNoContent = true;
+        divNoContent.style.display = 'block';
+        //print(divNoContent);
+        //print(isNoContent);
       }
 
       if (_data != null) {
+        error = false;
+        isNoContent = false;
         if (_data.isNotEmpty) {
           TableSectionElement tBody;
           if (tableElement.querySelector('tbody') == null) {

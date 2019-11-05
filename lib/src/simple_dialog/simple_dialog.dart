@@ -56,7 +56,11 @@ class SimpleDialogComponent {
     root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
   }
 
-  static showAlert(String message, {String title = "Alerta", DialogColor dialogColor = DialogColor.PRIMARY}) {
+  static showAlert(String message,
+      {String subMessage,
+      String title = "Alerta",
+      String detailLabel = 'Detalhe',
+      DialogColor dialogColor = DialogColor.PRIMARY}) {
     var template = ''' 
       <div class="bootbox modal fade bootbox-alert show" tabindex="-1" role="dialog" style="padding-right: 17px; display: block;">
         <div class="modal-dialog">
@@ -66,7 +70,7 @@ class SimpleDialogComponent {
                   <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
 							  </div>
                 <div class="modal-body">
-                    <div class="bootbox-body">$message</div>
+                    <div class="bootbox-body" style="overflow:hidden;">$message</div>                     
                 </div>
                 <div class="modal-footer">
                     <button data-bb-handler="ok" type="button" class="BtnOk btn btn-primary">OK</button>
@@ -76,9 +80,34 @@ class SimpleDialogComponent {
     </div>
     <div class="modal-backdrop fade show"></div>
     ''';
-    html.DivElement root = html.DivElement();
+    var root = html.DivElement();
     html.document.querySelector('body').append(root);
     root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
+    if (subMessage != null) {
+      var btnEle = html.DivElement();
+      btnEle.attributes['style'] = "padding-top:15px;padding-bottom:5px;cursor: pointer;";
+      var t =
+          '<label class="text-muted" style="cursor: pointer;">$detailLabel  </label> <a class="list-icons-item dropdown-toggle" data-toggle="dropdown" ></a>';
+      btnEle.setInnerHtml(t, treeSanitizer: html.NodeTreeSanitizer.trusted);
+      root.querySelector('.modal-body').append(btnEle);
+
+      var container = html.DivElement();
+      container.classes.add('modal-detail');
+      root.querySelector('.modal-body').append(container);
+
+      btnEle.onClick.listen((e) {
+        var el = e.target as html.HtmlElement;
+        if (el?.closest('.modal-body')?.querySelector('.modal-detail')?.style?.display == 'none') {
+          el?.closest('.modal-body')?.querySelector('.modal-detail')?.style?.display = 'block';
+        } else {
+          el?.closest('.modal-body')?.querySelector('.modal-detail')?.style?.display = 'none';
+        }
+      });
+
+      container.style.overflow = 'hidden';
+      container.style.display = 'none';
+      container.text = subMessage;
+    }
     root.querySelector('button.BtnOk').onClick.listen((e) {
       root.remove();
     });

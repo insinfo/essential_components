@@ -1,7 +1,7 @@
 import '../data_table/response_list.dart';
 
 //Unauthorized
-enum RestStatus { WARNING, SUCCESS, DANGER, INFO, UNAUTHORIZED, NOCONTENT }
+enum RestStatus { WARNING, SUCCESS, DANGER, INFO, UNAUTHORIZED, NOCONTENT, CONFLICT }
 
 class RestResponseGeneric<T> extends RestResponse {
   T dataTyped;
@@ -11,6 +11,7 @@ class RestResponseGeneric<T> extends RestResponse {
       {this.dataTyped,
       this.dataTypedList,
       String message,
+      String exception,
       RestStatus status,
       dynamic data,
       int statusCode,
@@ -18,6 +19,7 @@ class RestResponseGeneric<T> extends RestResponse {
       Map<String, String> headers})
       : super(
             message: message,
+            exception: exception,
             status: status,
             data: data,
             statusCode: statusCode,
@@ -48,6 +50,10 @@ class RestResponse {
       case RestStatus.INFO:
         return 'info';
       case RestStatus.UNAUTHORIZED:
+        return 'info';
+      case RestStatus.NOCONTENT:
+        return 'info';
+      case RestStatus.CONFLICT:
         return 'info';
     }
     return '';

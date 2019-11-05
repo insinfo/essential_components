@@ -128,3 +128,7 @@ and fix issues
 # 0.1.41
 
 - fix bugs
+
+# 0.1.42
+
+- General improvements to DataTable and Rest API

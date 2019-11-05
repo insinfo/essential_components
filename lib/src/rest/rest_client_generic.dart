@@ -115,7 +115,7 @@ class RestClientGeneric<T> {
         var message = '${resp.body}';
         var exception = '${resp.body}';
         var jsonDecoded = jsonDecode(resp.body);
-         //print("from API");
+        //print("from API");
         if (resp.statusCode == 200) {
           //coloca no cache
           if (disableAllCache == false) {
@@ -142,7 +142,7 @@ class RestClientGeneric<T> {
               dataTypedList: list,
               statusCode: resp.statusCode);
         }
-        //exibe mensagem se de erro não autorizado
+        //exibe mensagem se de erro de não autorizado
         if (resp.statusCode == 401) {
           var jsonDecoded = jsonDecode(resp.body);
           if (jsonDecoded is Map) {
@@ -157,11 +157,37 @@ class RestClientGeneric<T> {
           if (showDialogUnauthorizedAccess) {
             SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
           }
-          return RestResponseGeneric<T>(message: message, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
-        }else if (resp.statusCode == 204) {          
-          return RestResponseGeneric<T>(message: 'no content found', status: RestStatus.NOCONTENT, statusCode: resp.statusCode);
-        } else {
-          return RestResponseGeneric<T>(message: message, status: RestStatus.DANGER, statusCode: resp.statusCode);
+          return RestResponseGeneric<T>(
+              message: message, exception: exception, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
+        }
+        //um item ja cadastrado
+        if (resp.statusCode == 409) {
+          var jsonDecoded = jsonDecode(resp.body);
+          if (jsonDecoded is Map) {
+            if (jsonDecoded.containsKey('message')) {
+              dialogUnauthorizedMessage = jsonDecoded['message'];
+              message = jsonDecoded['message'];
+            }
+            if (jsonDecoded.containsKey('exception')) {
+              exception = jsonDecoded['exception'];
+            }
+          }
+          return RestResponseGeneric<T>(
+              message: message, exception: exception, status: RestStatus.CONFLICT, statusCode: resp.statusCode);
+        }
+        //204 no content tabela vazia ou nenhum item correspondente
+        else if (resp.statusCode == 204) {
+          return RestResponseGeneric<T>(
+              message: 'no content found',
+              exception: exception,
+              status: RestStatus.NOCONTENT,
+              statusCode: resp.statusCode);
+        }
+
+        //
+        else {
+          return RestResponseGeneric<T>(
+              message: message, exception: exception, status: RestStatus.DANGER, statusCode: resp.statusCode);
         }
       }
 
@@ -212,7 +238,7 @@ class RestClientGeneric<T> {
         var exception = '${resp.body}';
         var totalReH = resp.headers.containsKey('total-records') ? resp.headers['total-records'] : null;
         var totalRecords = totalReH != null ? int.tryParse(totalReH) : 0;
-        
+        //se ouver sucesso
         if (resp.statusCode == 200) {
           //coloca no cache
           if (disableAllCache) {
@@ -233,7 +259,7 @@ class RestClientGeneric<T> {
               status: RestStatus.SUCCESS,
               dataTyped: result,
               statusCode: resp.statusCode);
-        } 
+        }
         //exibe mensagem se de erro não autorizado
         else if (resp.statusCode == 401) {
           var jsonDecoded = jsonDecode(resp.body);
@@ -249,11 +275,34 @@ class RestClientGeneric<T> {
           if (showDialogUnauthorizedAccess) {
             SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
           }
-          return RestResponseGeneric<T>(message: message, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
-        } else if (resp.statusCode == 204) {          
-          return RestResponseGeneric<T>(message: 'no content found', status: RestStatus.NOCONTENT, statusCode: resp.statusCode);
+          return RestResponseGeneric<T>(
+              message: message, exception: exception, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
+        }
+        //um item ja cadastrado
+        if (resp.statusCode == 409) {
+          var jsonDecoded = jsonDecode(resp.body);
+          if (jsonDecoded is Map) {
+            if (jsonDecoded.containsKey('message')) {
+              dialogUnauthorizedMessage = jsonDecoded['message'];
+              message = jsonDecoded['message'];
+            }
+            if (jsonDecoded.containsKey('exception')) {
+              exception = jsonDecoded['exception'];
+            }
+          }
+          return RestResponseGeneric<T>(
+              message: message, exception: exception, status: RestStatus.CONFLICT, statusCode: resp.statusCode);
+        }
+        //no content
+        else if (resp.statusCode == 204) {
+          return RestResponseGeneric<T>(
+              message: 'no content found',
+              exception: exception,
+              status: RestStatus.NOCONTENT,
+              statusCode: resp.statusCode);
         } else {
-          return RestResponseGeneric<T>(message: message, status: RestStatus.DANGER, statusCode: resp.statusCode);
+          return RestResponseGeneric<T>(
+              message: message, exception: exception, status: RestStatus.DANGER, statusCode: resp.statusCode);
         }
       }
 
@@ -264,7 +313,8 @@ class RestClientGeneric<T> {
           totalRecords: 10, message: 'Sucesso', status: RestStatus.SUCCESS, dataTyped: result, statusCode: 200);
     } catch (e) {
       print("RestClientGeneric@get ${e}");
-      return RestResponseGeneric(message: 'Erro ${e}', status: RestStatus.DANGER, statusCode: 400);
+      return RestResponseGeneric(
+          message: 'Erro ${e}', exception: 'Exception ${e}', status: RestStatus.DANGER, statusCode: 400);
     }
   }
 
@@ -371,15 +421,65 @@ class RestClientGeneric<T> {
       }
 
       var resp = await client.put(url, body: jsonEncode(body), encoding: encoding, headers: headers);
+      var message = '${resp.body}';
+      var exception = '${resp.body}';
 
       if (resp.statusCode == 200) {
         return RestResponseGeneric(
             message: 'Sucesso', status: RestStatus.SUCCESS, data: jsonDecode(resp.body), statusCode: resp.statusCode);
       }
-      return RestResponseGeneric(message: '${resp.body}', status: RestStatus.DANGER, statusCode: resp.statusCode);
+      if (resp.statusCode == 401) {
+        var jsonDecoded = jsonDecode(resp.body);
+        if (jsonDecoded is Map) {
+          if (jsonDecoded.containsKey('message')) {
+            dialogUnauthorizedMessage = jsonDecoded['message'];
+            message = jsonDecoded['message'];
+          }
+          if (jsonDecoded.containsKey('exception')) {
+            exception = jsonDecoded['exception'];
+          }
+        }
+        if (showDialogUnauthorizedAccess) {
+          SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
+        }
+        return RestResponseGeneric<T>(
+            message: message, exception: exception, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
+      }
+      if (resp.statusCode == 400) {
+        var jsonDecoded = jsonDecode(resp.body);
+        if (jsonDecoded is Map) {
+          if (jsonDecoded.containsKey('message')) {
+            dialogUnauthorizedMessage = jsonDecoded['message'];
+            message = jsonDecoded['message'];
+          }
+          if (jsonDecoded.containsKey('exception')) {
+            exception = jsonDecoded['exception'];
+          }
+        }
+        return RestResponseGeneric<T>(
+            message: message, exception: exception, status: RestStatus.DANGER, statusCode: resp.statusCode);
+      }
+      //um item ja cadastrado
+      if (resp.statusCode == 409) {
+        var jsonDecoded = jsonDecode(resp.body);
+        if (jsonDecoded is Map) {
+          if (jsonDecoded.containsKey('message')) {
+            dialogUnauthorizedMessage = jsonDecoded['message'];
+            message = jsonDecoded['message'];
+          }
+          if (jsonDecoded.containsKey('exception')) {
+            exception = jsonDecoded['exception'];
+          }
+        }
+        return RestResponseGeneric<T>(
+            message: message, exception: exception, status: RestStatus.CONFLICT, statusCode: resp.statusCode);
+      }
+
+      return RestResponseGeneric(message: message, status: RestStatus.DANGER, statusCode: resp.statusCode);
     } catch (e) {
       print("RestClientGeneric@put ${e}");
-      return RestResponseGeneric(message: '${e}', status: RestStatus.DANGER, statusCode: 400);
+      return RestResponseGeneric(
+          message: '${e}', exception: 'Exception ${e}', status: RestStatus.DANGER, statusCode: 400);
     }
   }
 
@@ -396,15 +496,66 @@ class RestClientGeneric<T> {
       }
 
       var resp = await client.post(url, body: jsonEncode(body), encoding: Utf8Codec(), headers: headers);
+      var message = '${resp.body}';
+      var exception = '${resp.body}';
 
       if (resp.statusCode == 200) {
         return RestResponseGeneric(
             message: 'Sucesso', status: RestStatus.SUCCESS, data: jsonDecode(resp.body), statusCode: resp.statusCode);
       }
+
+      if (resp.statusCode == 401) {
+        var jsonDecoded = jsonDecode(resp.body);
+        if (jsonDecoded is Map) {
+          if (jsonDecoded.containsKey('message')) {
+            dialogUnauthorizedMessage = jsonDecoded['message'];
+            message = jsonDecoded['message'];
+          }
+          if (jsonDecoded.containsKey('exception')) {
+            exception = jsonDecoded['exception'];
+          }
+        }
+        if (showDialogUnauthorizedAccess) {
+          SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
+        }
+        return RestResponseGeneric<T>(
+            message: message, exception: exception, status: RestStatus.UNAUTHORIZED, statusCode: resp.statusCode);
+      }
+      if (resp.statusCode == 400) {
+        var jsonDecoded = jsonDecode(resp.body);
+        if (jsonDecoded is Map) {
+          if (jsonDecoded.containsKey('message')) {
+            dialogUnauthorizedMessage = jsonDecoded['message'];
+            message = jsonDecoded['message'];
+          }
+          if (jsonDecoded.containsKey('exception')) {
+            exception = jsonDecoded['exception'];
+          }
+        }
+        return RestResponseGeneric<T>(
+            message: message, exception: exception, status: RestStatus.DANGER, statusCode: resp.statusCode);
+      }
+      //um item ja cadastrado
+      if (resp.statusCode == 409) {
+        var jsonDecoded = jsonDecode(resp.body);
+        if (jsonDecoded is Map) {
+          if (jsonDecoded.containsKey('message')) {
+            dialogUnauthorizedMessage = jsonDecoded['message'];
+            message = jsonDecoded['message'];
+          }
+          if (jsonDecoded.containsKey('exception')) {
+            exception = jsonDecoded['exception'];
+          }
+        }
+        return RestResponseGeneric<T>(
+            message: message, exception: exception, status: RestStatus.CONFLICT, statusCode: resp.statusCode);
+      }
+
       return RestResponseGeneric(message: '${resp.body}', status: RestStatus.DANGER, statusCode: resp.statusCode);
     } catch (e) {
       print("RestClientGeneric@post ${e}");
-      return RestResponseGeneric(message: '${e}', status: RestStatus.DANGER, statusCode: 400);
+      return RestResponseGeneric(
+          message: '${e}', exception: 'Exception ${e}', status: RestStatus.DANGER, statusCode: 400);
     }
   }
 
@@ -425,12 +576,21 @@ class RestClientGeneric<T> {
 
       HttpRequest request = HttpRequest();
       request.open("delete", url.toString());
-      request.setRequestHeader('Content-Type', 'application/json');
+      if (headers != null) {
+        headers.forEach((key, value) {
+          request.setRequestHeader(key, value);
+        });
+      } else {
+        request.setRequestHeader('Content-Type', 'application/json');
+      }
+
       request.send(json.encode(body));
 
       await request.onLoadEnd.first;
       //await request.onReadyStateChange.first;
 
+      var message = '${request.responseText}';
+      var exception = '${request.responseText}';
       if (request.status == 200) {
         return RestResponseGeneric(
             message: 'Sucesso',
@@ -438,11 +598,60 @@ class RestClientGeneric<T> {
             data: jsonDecode(request.responseText),
             statusCode: request.status);
       }
+
+      if (request.status == 401) {
+        var jsonDecoded = jsonDecode(request.responseText);
+        if (jsonDecoded is Map) {
+          if (jsonDecoded.containsKey('message')) {
+            dialogUnauthorizedMessage = jsonDecoded['message'];
+            message = jsonDecoded['message'];
+          }
+          if (jsonDecoded.containsKey('exception')) {
+            exception = jsonDecoded['exception'];
+          }
+        }
+        if (showDialogUnauthorizedAccess) {
+          SimpleDialogComponent.showFullScreenAlert(dialogUnauthorizedMessage);
+        }
+        return RestResponseGeneric<T>(
+            message: message, exception: exception, status: RestStatus.UNAUTHORIZED, statusCode: request.status);
+      }
+      if (request.status == 400) {
+        var jsonDecoded = jsonDecode(request.responseText);
+        if (jsonDecoded is Map) {
+          if (jsonDecoded.containsKey('message')) {
+            dialogUnauthorizedMessage = jsonDecoded['message'];
+            message = jsonDecoded['message'];
+          }
+          if (jsonDecoded.containsKey('exception')) {
+            exception = jsonDecoded['exception'];
+          }
+        }
+        return RestResponseGeneric<T>(
+            message: message, exception: exception, status: RestStatus.DANGER, statusCode: request.status);
+      }
+      //um item ja cadastrado
+      if (request.status == 409) {
+        var jsonDecoded = jsonDecode(request.responseText);
+        if (jsonDecoded is Map) {
+          if (jsonDecoded.containsKey('message')) {
+            dialogUnauthorizedMessage = jsonDecoded['message'];
+            message = jsonDecoded['message'];
+          }
+          if (jsonDecoded.containsKey('exception')) {
+            exception = jsonDecoded['exception'];
+          }
+        }
+        return RestResponseGeneric<T>(
+            message: message, exception: exception, status: RestStatus.CONFLICT, statusCode: request.status);
+      }
+
       return RestResponseGeneric(
-          message: '${request.responseText}', status: RestStatus.DANGER, statusCode: request.status);
+          message: message, exception: exception, status: RestStatus.DANGER, statusCode: request.status);
     } catch (e) {
       print("RestClientGeneric@deleteAll ${e}");
-      return RestResponseGeneric(message: '${e}', status: RestStatus.DANGER, statusCode: 400);
+      return RestResponseGeneric(
+          message: '${e}', exception: 'Exception ${e}', status: RestStatus.DANGER, statusCode: 400);
     }
   }
 
@@ -475,7 +684,8 @@ class RestClientGeneric<T> {
           data: request.responseText, message: 'Erro', status: RestStatus.DANGER, statusCode: request.status);
     } catch (e) {
       print("RestClientGeneric@raw ${e}");
-      return RestResponseGeneric(message: '${e}', status: RestStatus.DANGER, statusCode: 400);
+      return RestResponseGeneric(
+          message: '${e}', exception: 'Exception ${e}', status: RestStatus.DANGER, statusCode: 400);
     }
   }
 }
