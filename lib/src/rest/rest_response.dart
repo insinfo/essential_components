@@ -6,7 +6,7 @@ enum RestStatus { WARNING, SUCCESS, DANGER, INFO, UNAUTHORIZED, NOCONTENT, CONFL
 class RestResponseGeneric<T> extends RestResponse {
   T dataTyped;
   RList<T> dataTypedList;
-
+  // asExternalTypedData foi substituído por asTypedList
   RestResponseGeneric(
       {this.dataTyped,
       this.dataTypedList,

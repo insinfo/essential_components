@@ -5,14 +5,22 @@ class SimpleLoadingComponent {
   List<html.DivElement> loadings = List<html.DivElement>();
   html.HtmlElement _target;
   int requisicoes = 0;
-  Uuid uniqueIdGen;
+  //Uuid uniqueIdGen;
+  static SimpleLoadingComponent instance;
 
-  SimpleLoadingComponent() {
-    uniqueIdGen = Uuid();
+  static SimpleLoadingComponent getInstance() {
+    if (instance == null) {
+      return SimpleLoadingComponent();
+    } else {
+      return instance;
+    }
   }
 
-  show({html.HtmlElement target}) {
-    print('show');
+  SimpleLoadingComponent() {
+    // uniqueIdGen = Uuid();
+  }
+
+  show({html.HtmlElement target}) {   
     _target = target;
     var template = ''' 
       <div style="z-index: 1000; position: absolute;
@@ -37,7 +45,7 @@ class SimpleLoadingComponent {
     loading.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
 
     if (_target == null) {
-      html.document.querySelector('body').append(loading);     
+      html.document.querySelector('body').append(loading);
     } else {
       _target.append(loading);
     }
@@ -45,10 +53,10 @@ class SimpleLoadingComponent {
     requisicoes++;
   }
 
-  hide() {    
-    if (loadings.isNotEmpty) {     
+  hide() {
+    if (loadings.isNotEmpty) {
       loadings.last.remove();
-      loadings.removeLast();      
+      loadings.removeLast();
     }
   }
 }

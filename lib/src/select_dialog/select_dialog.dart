@@ -105,7 +105,7 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
 
   int get inputTabIndex => disabled ? -1 : 0;
 
-  String _inputText = '';
+  String _inputText = 'Selecione';
 
   set inputText(String value) {
     _inputText = value;
