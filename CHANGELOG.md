@@ -133,4 +133,8 @@ and fix issues
 
 - general improvements to DataTable and Rest API
 
+# 0.1.46
+
+- Dislabe suport in essential select component
+
 

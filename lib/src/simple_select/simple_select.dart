@@ -94,6 +94,9 @@ class EssentialSimpleSelectComponent
     _displaytype = value;
   }
 
+  @Input('disabledSelect')
+  bool disabledSelect = false;
+
   get displaytype {
     return _displaytype;
   }
