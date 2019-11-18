@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -17,12 +19,18 @@ class EssentialModalComponent implements AfterContentInit {
   @Input()
   String title = "";
 
+  final _closeRequest = StreamController<bool>();
+
+  @Output()
+  Stream<bool> get close => _closeRequest.stream;
+
   openDialog() {
     showDialog = true;
   }
 
   closeDialog() {
     showDialog = false;
+    _closeRequest.add(showDialog);
   }
 
   @override
