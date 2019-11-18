@@ -11,6 +11,7 @@ class EssentialModalComponent implements AfterContentInit {
   @Input()
   bool showheader = false;
 
+  @Input()
   bool showDialog = false;
 
   @Input()
