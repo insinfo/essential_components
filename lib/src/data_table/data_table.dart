@@ -406,18 +406,26 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
           break;
         case DataTableColumnType.boolLabel:
           var str = colSet.value.toString();
-          if (str == 'true') {
-            str = '<span class="badge badge-success">Sim</span>';
+          if (stripHtml) {
+            tdContent = str;
           } else {
-            str = '<span class="badge badge-danger">Não</span>';
+            if (str == 'true') {
+              str = '<span class="badge badge-success">Sim</span>';
+            } else {
+              str = '<span class="badge badge-danger">Não</span>';
+            }
           }
           tdContent = str;
           break;
         case DataTableColumnType.badge:
           var str = colSet.value.toString();
           if (str != '' && str != 'null') {
-            var badgeColor = colSet.badgeColor != null ? 'background:${colSet.badgeColor};' : 'background:#e0e0e0;';
-            str = '<span class="badge" style="font-size:.8125rem;color:#fff;font-weight:400;$badgeColor">$str</span>';
+            if (stripHtml) {
+              tdContent = str;
+            } else {
+              var badgeColor = colSet.badgeColor != null ? 'background:${colSet.badgeColor};' : 'background:#e0e0e0;';
+              str = '<span class="badge" style="font-size:.8125rem;color:#fff;font-weight:400;$badgeColor">$str</span>';
+            }
           } else {
             str = '';
           }
@@ -426,10 +434,14 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
         case DataTableColumnType.img:
           var src = colSet.value.toString();
           if (src != "null") {
-            var img = ImageElement();
-            img.src = src;
-            img.height = 40;
-            tdContent = img.outerHtml;
+            if (stripHtml) {
+              tdContent = src;
+            } else {
+              var img = ImageElement();
+              img.src = src;
+              img.height = 40;
+              tdContent = img.outerHtml;
+            }
           } else {
             tdContent = "-";
           }

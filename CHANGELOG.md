@@ -138,3 +138,6 @@ and fix issues
 - Dislabe suport in essential select component
 
 
+# 0.1.50
+
+- fix DataTable format
