@@ -182,13 +182,13 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
           var col = item.getRowDefinition();
           if (idx == 0) {
             //adiciona os titulos
-            simplexlsx.addRow(col.getSets().map((c) {
+            simplexlsx.addRow(col.getCollsForExport().map((c) {
               return c.title.toString();
             }).toList());
           }
           {
             //adiciona os valores
-            simplexlsx.addRow(col.getSets().map((c) {
+            simplexlsx.addRow(col.getCollsForExport().map((c) {
               return formatCell(c, disableLimit: true, stripHtml: true);
             }).toList());
           }
@@ -256,7 +256,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
 
             //render colunas de titulo
             DataTableRow columnsTitles = _data[0].getRowDefinition();
-            for (DataTableColumn col in columnsTitles.getSets()) {
+            for (DataTableColumn col in columnsTitles.getCollsForDisplay()) {
               var th = Element.tag('th');
               th.style.setProperty('text-align', 'left');
               th.attributes['class'] = 'dataTableSorting';
@@ -330,7 +330,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
 
             //draw columns
             DataTableRow settings = item.getRowDefinition();
-            for (DataTableColumn colSet in settings.getSets()) {
+            for (DataTableColumn colSet in settings.getCollsForDisplay()) {
               var tdContent = "";
               var td = Element.tag('td');
               tableRow.insertAdjacentElement('beforeend', td);
