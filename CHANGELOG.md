@@ -144,3 +144,7 @@ and fix issues
 # 0.1.51
 
 - add to DataTable options "visible" and "export" coll settings
+
+# 0.1.52
+
+- add excel export API
