@@ -75,7 +75,7 @@ A classe implementada sobrescreve um método que retorna um `DataTableRow`, cham
 ```
 Vamos seguir o exemplo da nossa classe de categoria:
 
-````dart
+```dart
 class Categoria implements IDataTableRender {
   int id;
   String nome;
