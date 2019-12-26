@@ -1,0 +1,29 @@
+@import '../../../../variables.scss';
+
+.container-page {
+    background-color: #11A2E0;
+    height: 100vh;
+}
+
+.nav-btns {
+    width: 100%;
+    ul {
+        padding: 7px 7px 7px 9px;
+        margin: 0;
+        li {
+            list-style-type: none;
+            background-color: $blue-200;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            a {
+                img {
+                    width: 100%;
+                }
+            }
+            &:hover {
+                background-color: $blue-100;
+            }
+        }
+    }
+}

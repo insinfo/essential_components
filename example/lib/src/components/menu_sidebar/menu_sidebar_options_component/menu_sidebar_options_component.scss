@@ -1,0 +1,45 @@
+@import '../../../../variables.scss';
+
+.container-page {
+    background-color: #00C2FF;
+    height: 100vh;
+}
+
+.menu-area {
+    overflow: auto;
+    overflow-y: scroll;
+}
+
+.content-sidebar {
+    height: 98vh;
+    overflow-y: scroll;
+    h5 {
+        color: $blue-dark;
+        font-weight: 700;
+        line-height: 1rem;
+        margin-bottom: 2px;
+    }
+    p.credits {
+        font-size: 0.7rem;
+        color: rgb(240,240,240);
+    }
+
+    nav {
+        margin-top: 20px;
+        h6 {
+            color: rgb(240,240,240);
+            font-weight: 900;
+        }
+        ul {
+                margin: 0;
+                padding: 0;
+                li {
+                    list-style-type: none;
+                    a {
+                        color: rgb(240,240,240);
+                    }
+                }
+            }
+    }
+
+}
