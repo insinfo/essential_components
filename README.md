@@ -35,6 +35,7 @@ dependencies:
     type="text/css">
   <link href="packages/essential_components/css/colors.min.css" rel="stylesheet"
     type="text/css">
+  <link href="packages/essential_components/css/fix.css" rel="stylesheet" type="text/css">
   <!--/global stylesheets -->
     ...
 </head>
