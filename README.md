@@ -265,6 +265,7 @@ class AppComponent implements OnInit {
 }
 
 ```
+in template HTML
 
 ```html
 <h1>DataTable Exemple</h1>
