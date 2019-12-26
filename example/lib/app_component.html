@@ -1,3 +1,29 @@
-<h1>My First AngularDart App</h1>
+<h1>DataTable Exemple</h1>
+<div  #card class="card">
+    <div style="padding: 15px;">
+        <div class="row">
+            <div class="col-md-1 text-truncate">
+                <!--<h5 class="card-title">Contratos</h5>-->
+                <span style="font-size: 1.0625rem;">sample example DataTable</span>
+            </div>           
+            <div class="col-md-2 ">
+                <div class="form-group">                 
+                    <es-simple-select  displaytype="select" buttonText="Todos"
+                        [options]="Contrato.listStatus" (change)="reloadTableOnChange($event)">
+                        <es-simple-select-option [value]="null" selected>Todos</es-simple-select-option>
+                    </es-simple-select>
+                </div>
+            </div>
+           
+            <div class="col-md-3 text-right">
+                <button [routerLink]="RoutePaths.contratoNew.toUrl()" type="button"
+                    class="btn btn-primary legitRipple">Add</button>
+                <button (click)="onDelete()" type="button" class="btn bg-pink-400 legitRipple"
+                    [disabled]="!hasSeletedItems()">Delete</button>
+            </div>
+        </div>
+    </div>
 
-<todo-list></todo-list>
+    <es-data-table #dataTable [data]="contratos" (rowClick)="onRowClick($event)" (dataRequest)="onRequestData($event)">
+    </es-data-table>
+</div>
