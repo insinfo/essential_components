@@ -1,7 +1,7 @@
 # en-US
 
 ## essential_components
-A library for AngularDart developers.]
+A library for AngularDart developers.
 This library will implement several key components for the rapid development of web applications with AngularDart.
 
 ## Getting Started
@@ -98,6 +98,206 @@ validator_response
 collapse
 dropdown
 button 
+
+### Example DataTable
+
+ in model class implement interface IDataTableRender to define fields that will be displayed in DataTable
+
+```dart
+import 'package:essential_components/essential_components.dart';
+import 'dart:html' as html;
+
+class User implements IDataTableRender {
+  int id;
+  String name;
+  String username;
+  String email;
+
+  static List<String> status = ['active', 'inactive', 'canceled', 'paused'];
+
+  User.fromJson(Map<String, dynamic> json) {
+    try {
+      id = json.containsKey("id") ? json['id'] : -1;
+      name = json.containsKey("name") ? json['name'] : "";
+    } catch (e) {
+      print('User.fromJson: ${e}');
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = Map<String, dynamic>();
+    if (this.id != null) {
+      json['id'] = this.id;
+    }
+    json['name'] = this.name;
+  }
+
+  @override
+  DataTableRow getRowDefinition() {
+    var settings = DataTableRow();
+    settings.addSet(DataTableColumn(
+        key: "name",
+        value: name,
+        title: "Name",
+        customRender: (html.TableCellElement cellElement) {
+          if (name == "Leanne Graham") {
+            cellElement?.closest('tr')?.style?.background = "#e8fbee";
+            return '''<span style="font-size: .8125rem;
+    padding: 5px 15px; color: #fff; font-weight: 400;    
+    border-radius: 10px; background: #2fa433d9;">
+              $name</span>''';
+          }
+          return name;
+        }));
+
+    settings.addSet(DataTableColumn(key: "username", value: username, title: "username", limit: 20));
+    return settings;
+  }
+}
+```
+In component import essential_components and set 
+and define the methods and properties that will be used for DataTable to get and filter the data.
+
+In this example below I am using the RestClientGeneric API to get the data, and SimpleLoadingComponent to show a loading animation.
+
+```dart
+import 'package:angular/angular.dart';
+import 'package:angular_forms/angular_forms.dart';
+import 'package:angular_router/angular_router.dart';
+
+//components
+import 'package:essential_components/essential_components.dart';
+
+//models
+import 'src/models/user.dart';
+
+import 'dart:html' as html;
+
+@Component(
+    selector: 'my-app',
+    styleUrls: ['app_component.css'],
+    templateUrl: 'app_component.html',
+    directives: [
+      formDirectives,
+      coreDirectives,
+      EssentialToastComponent,
+      routerDirectives,
+      EssentialDataTableComponent,
+      MaxlengthDirective,
+      esDynamicTabsDirectives,
+      EssentialSimpleSelectComponent,
+      EsSimpleSelectOptionComponent,
+      EsDatePickerPopupComponent,
+      EsDatePickerComponent
+    ],
+    exports: [User])
+class AppComponent implements OnInit {
+  RList<User> users;
+  User selected;
+  SimpleLoadingComponent loading;
+  @ViewChild('dataTable')
+  EssentialDataTableComponent dataTable;
+  //rest client for get JSON data from backend
+  RestClientGeneric rest;
+
+  static EssentialNotificationService notificationService = EssentialNotificationService();
+
+  @ViewChild('card')
+  html.DivElement card;
+
+  AppComponent() {
+    loading = SimpleLoadingComponent();
+    //init rest client for get JSON data from backend
+    RestClientGeneric.basePath = ''; //example /api/v1/
+    RestClientGeneric.host = "127.0.0.1";
+    RestClientGeneric.protocol = UriMuProtoType.http;
+    RestClientGeneric.port = 8080;
+    rest = RestClientGeneric<User>(factories: {User: (x) => User.fromJson(x)});
+  }
+
+  @override
+  void ngOnInit() async {
+    //display loading animation on container div card
+    loading.show(target: card);
+    //loading data from server side REST API
+    var resp = await rest.getAll('/mockdata.json', queryParameters: DataTableFilter().getParams());
+    loading.hide();
+    if (resp.status == RestStatus.SUCCESS) {
+      users = resp.dataTypedList;
+    } else {
+      print(resp.message);
+      print(resp.exception);
+    }
+  }
+
+  //on click in row of dataTable
+  void onRowClick(User selected) {
+    this.selected = selected;
+  }
+
+  bool hasSeletedItems() {
+    return dataTable.selectedItems != null && dataTable.selectedItems.isNotEmpty;
+  }
+
+  Future<void> onRequestData(DataTableFilter dataTableFilter) async {
+    var resp = await rest.getAll('/user', queryParameters: dataTableFilter.getParams());
+    if (resp.status == RestStatus.SUCCESS) {
+      this.users = resp.dataTypedList;
+    } else {
+      dataTable.setErrorOccurred();
+    }
+  }
+
+  Future<void> reloadTableOnChange(e) async {
+    dataTable.reload();
+  }
+
+  onDelete() {
+    SimpleDialogComponent.showConfirm("Are you sure you want to remove this item? The operation cannot be undone.",
+        confirmAction: () {
+      if (hasSeletedItems()) {
+        AppComponent.notificationService.add('success', 'App', "Success");
+      } else {
+        AppComponent.notificationService.add('danger', 'App', "Select items");
+      }
+    });
+  }
+}
+
+```
+
+```html
+<h1>DataTable Exemple</h1>
+<div  #card class="card">
+    <div style="padding: 15px;">
+        <div class="row">
+            <div class="col-md-6 text-truncate">              
+                <span style="font-size: 1.0625rem;">Sample example DataTable</span>
+            </div>           
+            <div class="col-md-3 ">
+                <div class="form-group">                 
+                    <es-simple-select  displaytype="select" buttonText="Todos"
+                        [options]="User.status" (change)="reloadTableOnChange($event)">
+                        <es-simple-select-option [value]="null" selected>Todos</es-simple-select-option>
+                    </es-simple-select>
+                </div>
+            </div>
+           
+            <div class="col-md-3 text-right">
+                <button  type="button"
+                    class="btn btn-primary legitRipple">Add</button>
+                <button (click)="onDelete()" type="button" class="btn bg-pink-400 legitRipple"
+                    [disabled]="!hasSeletedItems()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <es-data-table #dataTable [data]="users" (rowClick)="onRowClick($event)" (dataRequest)="onRequestData($event)">
+    </es-data-table>
+</div>
+
+<es-notification-outlet [service]='notificationService'></es-notification-outlet>
+```
 
 # pt-BR
 

@@ -2,11 +2,11 @@
 <div  #card class="card">
     <div style="padding: 15px;">
         <div class="row">
-            <div class="col-md-1 text-truncate">
+            <div class="col-md-6 text-truncate">
                 <!--<h5 class="card-title">Contratos</h5>-->
-                <span style="font-size: 1.0625rem;">sample example DataTable</span>
+                <span style="font-size: 1.0625rem;">Sample example DataTable</span>
             </div>           
-            <div class="col-md-2 ">
+            <div class="col-md-3 ">
                 <div class="form-group">                 
                     <es-simple-select  displaytype="select" buttonText="Todos"
                         [options]="User.status" (change)="reloadTableOnChange($event)">
