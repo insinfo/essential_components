@@ -6,7 +6,7 @@ This library will implement several key components for the rapid development of 
 
 ## Getting Started
 
-1\. Create a new angular2-dart app: https://angular.io/docs/dart/latest/quickstart.html
+1\. Create a new AngularDart app: https://angulardart.dev/guide/setup
 
 2\. Add `essential_components` to `pubspect.yaml`:
 
