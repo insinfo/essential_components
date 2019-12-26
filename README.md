@@ -1,4 +1,106 @@
-# Essencials Components
+# en-US
+
+## essential_components
+A library for AngularDart developers.]
+This library will implement several key components for the rapid development of web applications with AngularDart.
+
+## Getting Started
+
+1\. Create a new angular2-dart app: https://angular.io/docs/dart/latest/quickstart.html
+
+2\. Add `essential_components` to `pubspect.yaml`:
+
+```yaml
+dependencies:
+    ...
+    essential_components: any
+    ...
+```
+
+3\. Add css stylesheet link to `index.html`:
+
+```html
+<head>
+    ...
+     <!-- Global stylesheets-->
+  <link href="packages/essential_components/css/icons/icomoon/styles.css" rel="stylesheet"
+    type="text/css">
+  <link href="packages/essential_components/css/bootstrap.min.css" rel="stylesheet"
+    type="text/css">
+  <link href="packages/essential_components/css/bootstrap_limitless.min.css"
+    rel="stylesheet" type="text/css">
+  <link href="packages/essential_components/css/layout.min.css" rel="stylesheet"
+    type="text/css">
+  <link href="packages/essential_components/css/components.min.css" rel="stylesheet"
+    type="text/css">
+  <link href="packages/essential_components/css/colors.min.css" rel="stylesheet"
+    type="text/css">
+  <!--/global stylesheets -->
+    ...
+</head>
+```
+
+4\. Add needed `essential_components` directives to your components:
+
+```dart
+import 'package:essential_components/essential_components.dart';
+
+@Component(
+    // ...
+    directives: const [
+      EssentialToastComponent,
+    EssentialDataTableComponent,
+    EssentialDataTableComponent,
+    EssentialSelectDialogComponent,
+    MoneyMaskDirective,
+    EssentialAccordionComponent,
+    EsAccordionPanelComponent,
+    EssentialModalComponent,
+    EssentialDropdownDialogComponent,
+    EssentialSimpleSelectComponent,
+    TextMaskDirective,
+    MoneyMaskDirective,
+    AnoValidator,
+    DateTimeValueAccessor,])
+```
+## Components
+
+DataTable
+Toast
+SelectDialog
+DropdownDialog
+NotificationToast
+Acordion
+Modal
+SimpleDialog
+SimpleLoading 
+SimpleCardModel
+SimpleTabs
+DynamicTabs
+SimpleSelect
+fontawesome
+TimelineComponent
+DatePickerComponent
+
+## APIs to help
+RestClient 
+SimpleXlsx
+
+## Dectives
+ano_validator
+datetime_value_accessor
+decimal_value_accessor
+maxlength_directive
+money_mask_directive
+textmask_directive
+validator_response
+collapse
+dropdown
+button 
+
+# pt-BR
+
+## Essencials Components
 Uma biblioteca para desenvolvedores AngularDart.
 <i>Em construção</i>
 
