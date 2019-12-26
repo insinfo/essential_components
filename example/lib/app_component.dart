@@ -11,23 +11,23 @@ import 'src/models/user.dart';
 import 'dart:html' as html;
 
 @Component(
-  selector: 'my-app',
-  styleUrls: ['app_component.css'],
-  templateUrl: 'app_component.html',
-  directives: [
-    formDirectives,
-    coreDirectives,
-    EssentialToastComponent,
-    routerDirectives,
-    EssentialDataTableComponent,
-    MaxlengthDirective,
-    esDynamicTabsDirectives,
-    EssentialSimpleSelectComponent,
-    EsSimpleSelectOptionComponent,
-    EsDatePickerPopupComponent,
-    EsDatePickerComponent
-  ],
-)
+    selector: 'my-app',
+    styleUrls: ['app_component.css'],
+    templateUrl: 'app_component.html',
+    directives: [
+      formDirectives,
+      coreDirectives,
+      EssentialToastComponent,
+      routerDirectives,
+      EssentialDataTableComponent,
+      MaxlengthDirective,
+      esDynamicTabsDirectives,
+      EssentialSimpleSelectComponent,
+      EsSimpleSelectOptionComponent,
+      EsDatePickerPopupComponent,
+      EsDatePickerComponent
+    ],
+    exports: [User])
 class AppComponent implements OnInit {
   RList<User> users;
   User selected;
@@ -37,14 +37,19 @@ class AppComponent implements OnInit {
   //rest client for get JSON data from backend
   RestClientGeneric rest;
 
+  static EssentialNotificationService notificationService = EssentialNotificationService();
+
   @ViewChild('card')
   html.DivElement card;
 
   AppComponent() {
     loading = SimpleLoadingComponent();
     //init rest client for get JSON data from backend
+    RestClientGeneric.basePath = ''; //example /api/v1/
+    RestClientGeneric.host = "127.0.0.1";
+    RestClientGeneric.protocol = UriMuProtoType.http;
+    RestClientGeneric.port = 8080;
     rest = RestClientGeneric<User>(factories: {User: (x) => User.fromJson(x)});
-    RestClient.basePath = '/'; //example /api/v1/
   }
 
   @override
@@ -52,7 +57,7 @@ class AppComponent implements OnInit {
     //display loading animation on container div card
     loading.show(target: card);
     //loading data from server side REST API
-    var resp = await rest.getAll('/user', queryParameters: DataTableFilter().getParams());
+    var resp = await rest.getAll('/mockdata.json', queryParameters: DataTableFilter().getParams());
     loading.hide();
     if (resp.status == RestStatus.SUCCESS) {
       users = resp.dataTypedList;
@@ -67,6 +72,10 @@ class AppComponent implements OnInit {
     this.selected = selected;
   }
 
+  bool hasSeletedItems() {
+    return dataTable.selectedItems != null && dataTable.selectedItems.isNotEmpty;
+  }
+
   Future<void> onRequestData(DataTableFilter dataTableFilter) async {
     var resp = await rest.getAll('/user', queryParameters: dataTableFilter.getParams());
     if (resp.status == RestStatus.SUCCESS) {
@@ -78,5 +87,16 @@ class AppComponent implements OnInit {
 
   Future<void> reloadTableOnChange(e) async {
     dataTable.reload();
+  }
+
+  onDelete() {
+    SimpleDialogComponent.showConfirm("Are you sure you want to remove this item? The operation cannot be undone.",
+        confirmAction: () {
+      if (hasSeletedItems()) {
+        AppComponent.notificationService.add('success', 'App', "Success");
+      } else {
+        AppComponent.notificationService.add('danger', 'App', "Select items");
+      }
+    });
   }
 }

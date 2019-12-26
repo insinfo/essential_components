@@ -66,7 +66,9 @@ class RestClientGeneric<T> {
   BrowserClient client;
   static UriMuProtoType protocol;
   static String host;
-  static String basePath;
+  static int port;
+  static String basePath = "";
+  static String defaultHost = "local.riodasostras.rj.gov.br";
   //unauthorizedAccess
   static bool showDialogUnauthorizedAccess = false;
   static String dialogUnauthorizedMessage = 'Acesso não autorizado!';
@@ -81,7 +83,9 @@ class RestClientGeneric<T> {
     client = BrowserClient();
     UriMuProto.basePath = basePath;
     UriMuProto.host = host;
+    UriMuProto.port = port;
     UriMuProto.protoType = protocol;
+    UriMuProto.defaultHost = defaultHost;
   }
 
   /// Todo implementar

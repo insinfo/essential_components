@@ -7,6 +7,8 @@ class User implements IDataTableRender {
   String username;
   String email;
 
+  static List<String> status = ['active', 'inactive', 'canceled', 'paused'];
+
   User.fromJson(Map<String, dynamic> json) {
     try {
       id = json.containsKey("id") ? json['id'] : -1;
