@@ -23,7 +23,7 @@ dependencies:
 <head>
     ...
      <!-- Global stylesheets-->
-  <link href="packages/essential_components/css/icons/icomoon/styles.css" rel="stylesheet"
+  <link href="packages/essential_components/css/icomoon.css" rel="stylesheet"
     type="text/css">
   <link href="packages/essential_components/css/bootstrap.min.css" rel="stylesheet"
     type="text/css">
