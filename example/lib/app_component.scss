@@ -1,11 +1,18 @@
+aside {
+    position: fixed;
+    width: 100%;
+}
+
 .menu-aside-area {
-    width: 4%;
+    width: 50px;
 }
 
 .menu-sidebar-options-area {
-    width: 15%;
+    width: 200px;
 }
 
-.content-page {
-    width: 81%;
+main {
+    margin: {
+        left: 220px;
+    };
 }
