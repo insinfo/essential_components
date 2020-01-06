@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
         <div class="mb-4">
-            <h1>Datatable</h1>
+            <h1>DataPicker</h1>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt et accusamus reprehenderit error id. Mollitia,
                 minus voluptatibus at quas error pariatur nostrum maiores, praesentium reprehenderit explicabo ex ullam. Impedit,
                 incidunt.</p>
@@ -10,7 +10,9 @@
             <es-tabx header="Example">
                 <div class="row">
                     <div class="col-12">
-                        <es-data-table #dataTable [data]="persons" (dataRequest)="onRequestData($event)" [showCheckboxSelect]="false"></es-data-table>
+                        <div class="card card-body">
+                            <es-date-picker></es-date-picker>
+                        </div>
                     </div>
                 </div>
             </es-tabx>
@@ -27,12 +29,6 @@
                         <pre
                             class="language-html code-toolbar"><code class=" language-html">{{ codeComponent }}</code><div class="toolbar"><div class="toolbar-item"><span>html</span></div></div></pre>
                     </div>
-                </div>
-            </es-tabx>
-            <es-tabx header="Service">
-                <div class="col-12">
-                    <pre
-                        class="language-html code-toolbar"><code class=" language-html">{{ codeService }}</code><div class="toolbar"><div class="toolbar-item"><span>html</span></div></div></pre>
                 </div>
             </es-tabx>
         </es-tabsx>
