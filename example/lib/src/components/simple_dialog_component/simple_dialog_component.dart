@@ -8,10 +8,19 @@ import 'package:essential_components/essential_components.dart';
   directives: [
     coreDirectives,
     esDynamicTabsDirectives,
+    SimpleDialogComponent
   ],
   exports: [],
   providers: []
 )
-class SimpleDialogComponent {
+class ExSimpleDialogComponent {
+
+  SimpleDialogComponent dialog;
+
+  ExSimpleDialogComponent();
+
+  showAlert() {
+    SimpleDialogComponent.showAlert('Legal! Yes shure!', title: 'Success', detailLabel: 'Detail label', dialogColor: DialogColor.SUCCESS, subMessage: 'Estou muito orgulhoso de você!');
+  }
 
 }

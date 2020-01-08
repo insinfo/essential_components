@@ -1,17 +1,22 @@
 <div class="card">
     <div class="card-body">
         <div class="mb-4">
-            <h1>DataPicker</h1>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt et accusamus reprehenderit error id. Mollitia,
-                minus voluptatibus at quas error pariatur nostrum maiores, praesentium reprehenderit explicabo ex ullam. Impedit,
-                incidunt.</p>
+            <h1>DatePicker</h1>
+            <p>This component required formDirective and need initializer date variable for enable datepicker popup.</p>
+            <p>This is temporary resource. In future this is change.</p>
         </div>
+        
         <es-tabsx #tabs1>
             <es-tabx header="Example">
                 <div class="row">
                     <div class="col-12">
                         <div class="card card-body">
-                            <es-date-picker></es-date-picker>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <es-date-picker-popup currentText="Hoje" clearText="Limpar" closeText="Fechar" [(ngModel)]="date"
+                                    [format]="'dd/MM/yyyy'" [localeRender]="'pt_BR'" (change)="reloadData($event)">
+                                </es-date-picker-popup>
+                            </div>
                         </div>
                     </div>
                 </div>

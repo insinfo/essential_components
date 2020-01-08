@@ -1,5 +1,6 @@
 import 'package:angular/angular.dart';
 import 'package:essential_components/essential_components.dart';
+import 'package:example/src/models/person.dart';
 import 'package:example/src/services/person_service.dart';
 
 @Component(
@@ -10,7 +11,8 @@ import 'package:example/src/services/person_service.dart';
     coreDirectives,
     esDynamicTabsDirectives,
     EsRadioButtonDirective,
-    bsDropdownDirectives
+    bsDropdownDirectives,
+    EssentialDropdownDialogComponent
   ],
   exports: [],
   providers: [ClassProvider(PersonService)]
@@ -20,33 +22,34 @@ class DropdownDialogComponent implements OnInit {
   @Input('btnRadio')
   EsRadioButtonDirective btnRadio;
 
-  String codeHtml = '''
-<es-accordion-panel heading="Título do acordeon">
-  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus dignissimos site.</p>
-</es-accordion-panel>''';
-  String codeComponent = '''
-import 'package:angular/angular.dart';
-import 'package:essential_components/essential_components.dart';
-import 'package:example/src/services/person_service.dart';
+  @ViewChild('dropdownDialog')
+  EssentialDropdownDialogComponent dropdownDialog; 
 
-@Component(
-  selector: 'accordeon-component',
-  styleUrls: ['accordeon_component.css'],
-  templateUrl: 'accordeon_component.html',
-  directives: [
-    coreDirectives,
-    EsAccordionPanelComponent
-  ],
-  exports: [],
-  providers: [ClassProvider(PersonService)]
-)
-class AccordeonComponent { }
-  ''';
+  RList<Person> persons;
+  PersonService _service;
 
-  DropdownDialogComponent();
+  DropdownDialogComponent(this._service);
 
   @override
   void ngOnInit() {
+    _service.findAll().then((RestResponseGeneric resp) {
+      if (resp.statusCode == 200) {
+        persons = resp.dataTypedList;
+        print(persons);
+      }
+    });
+  }
+
+  onSelect(dynamic event) {
+    print(event);
+  }
+
+  onRequest(dynamic event) {
+    print(event);
+  }
+
+  addItem(dynamic event) {
+    print(event);
   }
 
 }

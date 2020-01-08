@@ -11,6 +11,8 @@ class Person implements IDataTableRender {
   bool enable;
   String description;
 
+  Person();
+
   String get birthdayAsString {
     var dt = birthday != null ? birthday.toIso8601String().substring(0, 10) : "";
     return dt;
@@ -66,7 +68,8 @@ class Person implements IDataTableRender {
       key: 'name',
       value: name,
       title: 'Name',
-      type: DataTableColumnType.text
+      type: DataTableColumnType.text,
+      primaryDisplayValue: true
     ));
     settings.addSet(DataTableColumn(
       key: 'age',
@@ -103,5 +106,7 @@ class Person implements IDataTableRender {
     
     return settings;
   }
+
+  
 
 }

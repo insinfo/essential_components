@@ -16,6 +16,8 @@ import 'package:example/src/services/person_service.dart';
 )
 class ModalComponent implements OnInit {
 
+  bool show = false;
+
   ModalComponent();
 
   @override

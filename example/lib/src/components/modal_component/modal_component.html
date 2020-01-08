@@ -6,6 +6,43 @@
                 minus voluptatibus at quas error pariatur nostrum maiores, praesentium reprehenderit explicabo ex ullam. Impedit,
                 incidunt.</p>
         </div>
+
+        <es-tabsx #tabs1>
+            <es-tabx header="Example">
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn btn-primary" (click)="show = !show;">Show Modal Example</button>
+                        <es-modal title="Modal Example" [showheader]="true" [showDialog]="show">
+                            <div class="p-3">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis iure optio id. Odio reiciendis saepe fuga ipsa blanditiis beatae, veniam ullam architecto quisquam modi doloremque eveniet delectus facere ducimus. Voluptatem.
+                            </div>
+                        </es-modal>
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="View">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- <pre
+                            class="language-html code-toolbar"><code class=" language-html">{{ codeHtml }}</code><div class="toolbar"><div class="toolbar-item"><span>html</span></div></div></pre> -->
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Component">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- <pre
+                            class="language-html code-toolbar"><code class=" language-html">{{ codeComponent }}</code><div class="toolbar"><div class="toolbar-item"><span>html</span></div></div></pre> -->
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Service">
+                <div class="col-12">
+                    <!-- <pre
+                        class="language-html code-toolbar"><code class=" language-html">{{ codeService }}</code><div class="toolbar"><div class="toolbar-item"><span>html</span></div></div></pre> -->
+                </div>
+            </es-tabx>
+        </es-tabsx>
         
     </div>
 </div>

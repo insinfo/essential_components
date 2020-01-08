@@ -2,9 +2,12 @@
     <div class="card-body">
         <div class="mb-4">
             <h1>Select Dialog</h1>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt et accusamus reprehenderit error id. Mollitia,
-                minus voluptatibus at quas error pariatur nostrum maiores, praesentium reprehenderit explicabo ex ullam. Impedit,
-                incidunt.</p>
+            <p>O componente select dialog precisa, além de ter que importar o componente, ter de implementar uma interface do datatable, e através do campo <strong>primaryDisplayValue</strong> defnido como true, informar o nome que surgirá no select.</p>
+        </div>
+
+        <div class="form-group">
+            <label>Nome</label>
+            <es-select-dialog [data]="persons" [(ngModel)]="person"></es-select-dialog>
         </div>
         
     </div>

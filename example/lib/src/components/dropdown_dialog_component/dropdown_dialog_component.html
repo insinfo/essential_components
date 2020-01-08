@@ -11,9 +11,10 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card card-body">
-                            <button es-dropdown>
-                                <es-dropdown-menu></es-dropdown-menu>
-                            </button>
+                            <es-dropdown-dialog label="Add Item" (change)="onSelect($event)" #dropdownDialog
+                                [data]="persons" (dataRequest)="onRequest($event)" [title]="'Title Dropdown'"
+                                (click)="addItem($event)" [openonclick]="true">
+                            </es-dropdown-dialog>
                         </div>
                     </div>
                 </div>
@@ -21,15 +22,12 @@
             <es-tabx header="View">
                 <div class="row">
                     <div class="col-12">
-                        <pre class="language-html code-toolbar"><code class=" language-html">{{ codeHtml }}</code><div class="toolbar"><div class="toolbar-item"><span>html</span></div></div></pre>
-                    </div>
+                        </div>
                 </div>
             </es-tabx>
             <es-tabx header="Component">
                 <div class="row">
                     <div class="col-12">
-                        <pre
-                            class="language-html code-toolbar"><code class=" language-html">{{ codeComponent }}</code><div class="toolbar"><div class="toolbar-item"><span>html</span></div></div></pre>
                     </div>
                 </div>
             </es-tabx>

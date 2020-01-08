@@ -1,15 +1,24 @@
 import 'package:angular/angular.dart';
+import 'package:angular_router/angular_router.dart';
 import 'package:essential_components/essential_components.dart';
 import 'package:example/src/services/person_service.dart';
+import 'package:angular_forms/angular_forms.dart';
 
 @Component(
   selector: 'datapicker-component',
   styleUrls: ['datapicker_component.css'],
   templateUrl: 'datapicker_component.html',
   directives: [
+    formDirectives,
     coreDirectives,
+    EssentialToastComponent,
+    routerDirectives,
+    EssentialDataTableComponent,
+    MaxlengthDirective,
     esDynamicTabsDirectives,
-    EsRadioButtonDirective,
+    EssentialSimpleSelectComponent,
+    EsSimpleSelectOptionComponent,
+    EsDatePickerPopupComponent,
     EsDatePickerComponent
   ],
   exports: [],
@@ -19,6 +28,8 @@ class DataPickerComponent implements OnInit {
 
   @Input('btnRadio')
   EsRadioButtonDirective btnRadio;
+
+  DateTime date = DateTime.now();
 
   String codeHtml = '''
 <es-accordion-panel heading="Título do acordeon">
@@ -47,6 +58,10 @@ class AccordeonComponent { }
 
   @override
   void ngOnInit() {
+  }
+
+  reloadData(dynamic event) {
+    print(event);
   }
 
 }

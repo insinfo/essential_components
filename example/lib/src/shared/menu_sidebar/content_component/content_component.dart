@@ -37,7 +37,7 @@ import 'package:example/src/components/toast_component/toast_component.dart';
     RestApiExampleComponent,
     SelectDialogComponent,
     SimpleCardComponent,
-    SimpleDialogComponent,
+    ExSimpleDialogComponent,
     SimpleLoadingComponent,
     SimpleSelectComponent,
     SimpleTabsComponent,
