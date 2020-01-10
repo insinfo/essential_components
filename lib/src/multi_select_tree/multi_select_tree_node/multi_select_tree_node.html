@@ -1,0 +1,32 @@
+<div class="node">
+
+    <i class="icon-arrow-right22 small animate" [class.leaf-node]="node.isLeafNode()" (click)="expandNode(node)"
+        [class.expanded]="node.showChildren">
+    </i>
+
+    <!--<iron-icon class="small animate" [class.leaf-node]="node.isLeafNode()" (click)="expandNode(node)"
+        [class.expanded]="node.showChildren" icon="icons:chevron-right"></iron-icon>
+    -->
+
+    <material-checkbox [indeterminate]="node.isIndeterminate" class="tree-checkbox"
+        (indeterminateChange)="handleIndeterminate(node,parent,$event)" (checkedChange)="selectNode(node,parent,$event)"
+        [(ngModel)]="node.isSelected">
+    </material-checkbox>
+
+    <i class="icon-folder-open small" [class.hidden]="node.children.length == 0">
+    </i>
+    <i class="icon-file-empty small" [class.hidden]="node.children.length != 0">
+    </i>
+
+    <!--<iron-icon class="small" [class.hidden]="node.children.length ==0" icon="icons:folder">
+    </iron-icon>
+    <iron-icon class="small" [class.hidden]="node.children.length!=0 " icon="editor:insert-drive-file"
+    ></iron-icon>-->
+
+    <div class="node-name" [class.selected]="node.isSelected" (click)="expandNode(node)">{{node.name}}</div>
+</div>
+<div [class.hidden]="!node.showChildren" class="child">
+    <div *ngFor="let child of node.getChildren()">
+        <tree-node [node]="child" [parent]="node"></tree-node>
+    </div>
+</div>

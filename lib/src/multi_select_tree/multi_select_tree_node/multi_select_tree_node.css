@@ -1,0 +1,62 @@
+.child {
+  margin-left: 10px;
+}
+
+.small {
+  width: 20px;
+  height: 20px;
+}
+
+.animate {
+  transform: rotate(0);
+  transition: all 0.5s;
+}
+
+.expanded {
+  transform: rotate(90deg);
+  transition: all 0.5s;
+}
+
+.node-name {
+  display: inline-block;
+  width: 60%;
+}
+
+.leaf-node {
+  opacity: 0;
+}
+
+.selected {
+  font-style: italic;
+}
+
+.hidden {
+  display: none;
+}
+.node {
+  line-height: 40px;
+}
+
+.tree-checkbox {
+  margin: 0;
+  top: 8px;
+  position: relative;
+}
+
+material-checkbox {
+  transform: scale(0.8);
+}
+.node-properties {
+  display: inline-block;
+  position: relative;
+  width: 30%;
+}
+
+.node-size {
+  display: inline-block;
+  width: 45%;
+}
+.fetch-percent {
+  display: inline-block;
+  width: 45%;
+}

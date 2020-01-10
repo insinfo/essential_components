@@ -1,0 +1,39 @@
+.child {
+  margin-left: 10px;
+}
+
+.small {
+  transform: rotate(0);
+  transition: all 0.5s;
+}
+
+.animate {
+  transform: rotate(0);
+  transition: all 0.5s;
+}
+
+.expanded {
+  transform: rotate(90deg);
+  transition: all 0.5s;
+}
+
+.node-name {
+  display: inline-block;
+}
+.leaf-node {
+  opacity: 0;
+}
+.selected {
+  font-style: italic;
+}
+
+.hidden {
+  display: none;
+}
+.tree-container {
+  border: 1px solid #b9afaf;
+  height: 200px;
+  overflow: scroll;
+  min-height: 100px;
+  width: 400px;
+}
