@@ -35,21 +35,21 @@ class DropdownDialogComponent implements OnInit {
     _service.findAll().then((RestResponseGeneric resp) {
       if (resp.statusCode == 200) {
         persons = resp.dataTypedList;
-        print(persons);
+        //print(persons);
       }
     });
   }
 
   onSelect(dynamic event) {
-    print(event);
+    //print(event);
   }
 
   onRequest(dynamic event) {
-    print(event);
+    //print(event);
   }
 
   addItem(dynamic event) {
-    print(event);
+    //print(event);
   }
 
 }

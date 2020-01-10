@@ -24,6 +24,7 @@ class User implements IDataTableRender {
       json['id'] = this.id;
     }
     json['name'] = this.name;
+    return json;
   }
 
   @override

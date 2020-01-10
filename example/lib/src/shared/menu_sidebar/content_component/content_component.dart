@@ -1,6 +1,6 @@
 import 'package:angular/angular.dart';
 import 'package:example/src/components/accordeon_component/accordeon_component.dart';
-import 'package:example/src/components/button_component/button_component.dart';
+
 import 'package:example/src/components/datapicker_component/datapicker_component.dart';
 import 'package:example/src/components/datatable_component/datatable_component.dart';
 import 'package:example/src/components/dropdown_component/dropdown_component.dart';
@@ -27,7 +27,6 @@ import 'package:example/src/components/toast_component/toast_component.dart';
     coreDirectives,
     DataTableComponent,
     AccordeonComponent,
-    ButtonComponent,
     DataPickerComponent,
     DropdownComponent,
     DropdownDialogComponent,

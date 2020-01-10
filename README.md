@@ -1,8 +1,7 @@
 # en-US
 
 ## essential_components
-A library for AngularDart developers.
-This library will implement several key components for the rapid development of web applications with AngularDart.
+A library for AngularDart developers. This library will implement several key components for the fast development of web applications with AngularDart.
 
 ## Getting Started
 

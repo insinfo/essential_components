@@ -96,7 +96,7 @@ class EsAccordionPanelComponent implements OnInit {
     isOpenTimer = Timer(const Duration(milliseconds: 60), () {
       _isOpen = value;
       if (value) {
-        parentAccordion.closeOtherPanels(this);
+        parentAccordion?.closeOtherPanels(this);
       }
       _isOpenChangeCtrl.add(value);
     });

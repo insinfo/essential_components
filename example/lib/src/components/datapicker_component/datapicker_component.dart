@@ -61,7 +61,7 @@ class AccordeonComponent { }
   }
 
   reloadData(dynamic event) {
-    print(event);
+    //print(event);
   }
 
 }

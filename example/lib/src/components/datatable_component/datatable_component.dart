@@ -3,24 +3,23 @@ import 'package:essential_components/essential_components.dart';
 import 'package:example/src/models/person.dart';
 import 'package:example/src/services/person_service.dart';
 
-@Component(
-  selector: 'datatable-component',
-  styleUrls: ['datatable_component.css'],
-  templateUrl: 'datatable_component.html',
-  directives: [
-    coreDirectives,
-    esDynamicTabsDirectives,
-    EssentialDataTableComponent
-  ],
-  exports: [],
-  providers: [ClassProvider(PersonService)]
-)
-class DataTableComponent implements OnInit {
+import '../../utils/highlighting_js.dart';
 
+import 'package:highlight/highlight.dart';
+
+@Component(
+    selector: 'datatable-component',
+    styleUrls: ['datatable_component.css'],
+    templateUrl: 'datatable_component.html',
+    directives: [coreDirectives, esDynamicTabsDirectives, EssentialDataTableComponent],
+    exports: [],
+    providers: [ClassProvider(PersonService)])
+class DataTableComponent implements OnInit {
   @ViewChild('dataTable')
   EssentialDataTableComponent dataTable;
 
-  String codeHtml = '''<es-data-table #dataTable [data]="persons" (dataRequest)="onRequestData(\$event)" [showCheckboxSelect]="false"></es-data-table>''';
+  String codeHtml =
+      '''<es-data-table #dataTable [data]="persons" (dataRequest)="onRequestData(\$event)" [showCheckboxSelect]="false"></es-data-table>''';
   String codeComponent = '''
     import 'package:angular/angular.dart';
     import 'package:essential_components/essential_components.dart';
@@ -93,8 +92,6 @@ class DataTableComponent implements OnInit {
         }
   ''';
 
-
-
   PersonService _personService;
 
   RList<Person> persons;
@@ -105,6 +102,14 @@ class DataTableComponent implements OnInit {
   @override
   void ngOnInit() async {
     findAll();
+    /*codeHtml = highlight.parse(codeHtml, language: 'html').toHtml();
+    codeService = highlight.parse(codeService, language: 'dart').toHtml();
+    codeComponent = highlight.parse(codeComponent, language: 'dart').toHtml();*/
+    
+    codeHtml = highlightingHtml(codeHtml);
+    codeService = highlightingDart(codeService);
+    codeComponent = highlightingDart(codeComponent);
+    print(highlightingHtml(codeHtml));
   }
 
   findAll() {
@@ -115,7 +120,5 @@ class DataTableComponent implements OnInit {
     });
   }
 
-  onRequestData(DataTableFilter filters) {
-  }
-
+  onRequestData(DataTableFilter filters) {}
 }

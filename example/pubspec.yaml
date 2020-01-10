@@ -1,8 +1,10 @@
 name: example
-description: A web app that uses AngularDart Components
+description: A example of essential_components library for AngularDart developers. This example is gallery of components
 version: 1.0.0
-# homepage: https://www.example.com
-author: insinfo <insinfo2008@gmail.com>
+homepage: https://github.com/insinfo/essential_components
+authors: 
+  - Isaque Neves <insinfo2008@gmail.com> 
+  - Thiago Cunha <thiagosantoscunha@outlook.com>
 
 environment:
   sdk: '>=2.4.0 <3.0.0'
@@ -19,6 +21,7 @@ dependencies:
   decimal: ^0.3.4
   c3: ^0.1.0
   dio: ^3.0.3
+  highlight: ^0.5.0
 
   # essential_components: 0.1.45
   essential_components:

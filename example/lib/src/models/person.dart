@@ -80,7 +80,7 @@ class Person implements IDataTableRender {
     settings.addSet(DataTableColumn(
       key: 'phone',
       value: phone,
-      title: 'Phone Number',
+      title: 'Phone',
       type: DataTableColumnType.text
     ));
     settings.addSet(DataTableColumn(
