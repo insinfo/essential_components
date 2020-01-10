@@ -1,7 +1,7 @@
 import 'dart:math';
-import 'package:intl/intl.dart';
+
 import 'dart:html';
-import 'dart:math' as math;
+
 
 class Utils {
   static String truncate(String value, int truncateAt) {
