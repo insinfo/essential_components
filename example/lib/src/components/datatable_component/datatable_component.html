@@ -1,5 +1,18 @@
 <div class="card">
     <div class="card-body">
+        <form (ngSubmit)="save()" novalidate>
+            <div class="form-group">
+                <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="value"
+                    textvalidator
+                    [minLength]="3"
+                    [maxLength]="6"
+                    >
+            </div>
+            <button class="btn btn-primary" type="submit">Enviar</button>
+        </form>
         <div class="mb-4">
             <h1>EssentialDataTableComponent</h1>
             <p>DataTable is a data visualization component that represents data in two dimensions as an array.

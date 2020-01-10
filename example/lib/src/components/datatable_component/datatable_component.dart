@@ -2,19 +2,29 @@ import 'package:angular/angular.dart';
 import 'package:essential_components/essential_components.dart';
 import 'package:example/src/models/person.dart';
 import 'package:example/src/services/person_service.dart';
+import 'package:angular_forms/angular_forms.dart';
 
 import '../../utils/highlighting_js.dart';
 
 import 'package:highlight/highlight.dart';
 
+
 @Component(
     selector: 'datatable-component',
     styleUrls: ['datatable_component.css'],
     templateUrl: 'datatable_component.html',
-    directives: [coreDirectives, esDynamicTabsDirectives, EssentialDataTableComponent],
+    directives: [
+      coreDirectives,
+      formDirectives,
+      esDynamicTabsDirectives,
+      EssentialDataTableComponent,
+      TextValidator
+      ],
     exports: [],
     providers: [ClassProvider(PersonService)])
 class DataTableComponent implements OnInit {
+
+  String value;
   @ViewChild('dataTable')
   EssentialDataTableComponent dataTable;
 
@@ -118,6 +128,10 @@ class DataTableComponent implements OnInit {
         persons = resp.dataTypedList;
       }
     });
+  }
+
+  save() {
+    print('save: ${value}');
   }
 
   onRequestData(DataTableFilter filters) {}
