@@ -105,11 +105,11 @@ class DataTableComponent implements OnInit {
     /*codeHtml = highlight.parse(codeHtml, language: 'html').toHtml();
     codeService = highlight.parse(codeService, language: 'dart').toHtml();
     codeComponent = highlight.parse(codeComponent, language: 'dart').toHtml();*/
-    
+
     codeHtml = highlightingHtml(codeHtml);
     codeService = highlightingDart(codeService);
     codeComponent = highlightingDart(codeComponent);
-    print(highlightingHtml(codeHtml));
+    
   }
 
   findAll() {
