@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_router/angular_router.dart';
+import 'package:essential_components/essential_components.dart';
 import 'package:example/src/shared/menu_sidebar/content_component/content_component.dart';
 
 //components
@@ -18,7 +19,8 @@ import 'package:example/src/shared/menu_sidebar/menu_sidebar_options_component/m
       routerDirectives,
       MenuAsideComponent,
       MenuSidebarOptionsComponent,
-      ContentComponent
+      ContentComponent,
+      TextValidator
     ],
     exports: [])
 class AppComponent {
