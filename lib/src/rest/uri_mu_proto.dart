@@ -11,34 +11,49 @@ class UriMuProto {
   static UriMuProtoType protoType;
   static String defaultHost = "local.riodasostras.rj.gov.br";
 
-  static Uri uri(String apiEndPoint, [Map<String, String> queryParameters, String basePth, String protcol]) {
+  static Uri uri(String apiEndPoint,
+      [Map<String, String> queryParameters, String basePath, String protocol, String hosting, int hostPort]) {
     if (apiEndPoint == null) {
       throw Exception("UriMuProto: api Endpoint cannot be null or empty");
     }
-    print(basePath);
-    basePth = basePth != null ? basePth : basePath;
-    apiEndPoint = basePth + apiEndPoint;
+
+    basePath = basePath != null ? basePath : UriMuProto.basePath;
+
+    apiEndPoint = basePath + apiEndPoint;
+
     var proLen = window.location.protocol.length;
-    var protocol = "";
-    if (protcol != null) {
-      protocol = protcol;
+
+    var prot = "";
+    if (protocol != null) {
+      prot = protocol;
     } else if (protoType == UriMuProtoType.notDefine || protoType == null) {
-      protocol = window.location.protocol.substring(0, proLen - 1);
+      prot = window.location.protocol.substring(0, proLen - 1);
     } else if (protoType == UriMuProtoType.https) {
-      protocol = "https";
+      prot = "https";
     } else if (protoType == UriMuProtoType.http) {
-      protocol = "http";
+      prot = "http";
+    }
+    var h = UriMuProto.host;
+
+    if (h == null) {
+      h = window.location.host.contains(':') ? defaultHost : window.location.host;
     }
 
-    if (host == null) {
-      host = window.location.host.contains(':') ? defaultHost : window.location.host;
+    if (hosting != null) {
+      h = hosting;
     }
+
+    var prt = UriMuProto.port;
+    if (hostPort != null) {
+      prt = hostPort;
+    }
+    
 
     return Uri(
-        scheme: protocol,
+        scheme: prot,
         userInfo: "",
-        host: host,
-        port: port,
+        host: h,
+        port: prt,
         pathSegments: apiEndPoint.split("/"),
         queryParameters: queryParameters);
   }

@@ -6,6 +6,8 @@ import 'package:http/browser_client.dart';
 import 'uri_mu_proto.dart';
 import 'map_serialization.dart';
 import 'rest_response.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 import '../simple_dialog/simple_dialog.dart';
 
@@ -93,6 +95,67 @@ class RestClientGeneric<T> {
       {bool forceRefresh = false, String topNode, Map<String, String> headers, Map<String, String> queryParameters}) {
     throw UnimplementedError('This feature is not implemented yet.');
     return null;
+  }
+
+  Future<RestResponseGeneric<T>> uploadFiles(String apiEndPoint, List<File> files,
+      {String topNode,
+      Map<String, String> headers,
+      Map<String, String> body,
+      Map<String, String> queryParameters,
+      String protocol,
+      String host,
+      int port,
+      String basePath}) async {
+    Uri url = UriMuProto.uri(apiEndPoint, queryParameters, basePath, protocol, host, port);
+
+    try {
+      if (queryParameters != null) {
+        url = UriMuProto.uri(apiEndPoint, queryParameters, basePath, protocol, host, port);
+      }
+
+      Map<String, String> headersDefault = {
+        //'Content-type': 'application/json',
+        // 'Accept': 'application/json',
+        "Authorization": "Bearer " + window.sessionStorage["YWNjZXNzX3Rva2Vu"].toString()
+      };
+      var request = http.MultipartRequest("POST", url);
+
+      if (headers != null) {
+        request.headers.addAll(headers);
+      } else {
+        request.headers.addAll(headersDefault);
+      }
+
+      if (body != null) {
+        request.fields["data"] = jsonEncode(body);
+      }
+
+      if (files != null) {
+        FileReader reader = FileReader();
+        for (File file in files) {
+          reader.readAsArrayBuffer(file);
+          await reader.onLoadEnd.first;
+          request.files.add(await http.MultipartFile.fromBytes('file', reader.result,
+              contentType: MediaType('application', 'octet-stream'), filename: file.name));
+        }
+      }
+
+      //fields.forEach((k, v) => request.fields[k] = v);
+      var streamedResponse = await request.send();
+      var resp = await http.Response.fromStream(streamedResponse);
+      var respJson = jsonDecode(resp.body);
+
+      return RestResponseGeneric<T>(
+        headers: resp.headers,
+        data: respJson,
+        message: 'Sucesso',
+        status: RestStatus.SUCCESS,
+        statusCode: 200,
+      );
+    } catch (e, stacktrace) {
+      print("RestClientGeneric@upload exception: ${e} stacktrace: ${stacktrace}");
+      return RestResponseGeneric(message: 'Erro ${e}', status: RestStatus.DANGER, statusCode: 400);
+    }
   }
 
   Future<RestResponseGeneric<T>> getAll(String apiEndPoint,
