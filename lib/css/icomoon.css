@@ -12,7 +12,7 @@
 [class^="icon-"], [class*=" icon-"] {
     /* Use !important to prevent issues with browser extensions that change fonts */
 	font-family: 'icomoon' !important;
-	speak: none;
+	/*speak: none;*/
 	font-style: normal;
 	font-weight: normal;
 	font-variant: normal;
@@ -38,11 +38,11 @@
 	font-size: 48px;
 }
 
-.icon-bordered {
-	// padding: 5px;
-	// border: 2px solid;
-	// border-radius: 50%;
-}
+/*.icon-bordered {
+	 padding: 5px;
+	 border: 2px solid;
+	 border-radius: 50%;
+}*/
 
 .icon-home:before{content:"\e900";}
 .icon-home2:before{content:"\e901";}

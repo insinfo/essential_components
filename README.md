@@ -1,7 +1,7 @@
-# en-US
+### en-US
 
 ## essential_components
-A library for AngularDart developers. This library will implement several key components for the fast development of web applications with AngularDart.
+A library to simplify the life of web application developers with AngularDart. This library will implement several key components for the fast development of web applications with AngularDart.
 
 ## Getting Started
 
@@ -65,38 +65,40 @@ import 'package:essential_components/essential_components.dart';
 ```
 ## Components
 
-DataTable
-Toast
-SelectDialog
-DropdownDialog
-NotificationToast
-Acordion
-Modal
-SimpleDialog
-SimpleLoading 
-SimpleCardModel
-SimpleTabs
-DynamicTabs
-SimpleSelect
-fontawesome
-TimelineComponent
-DatePickerComponent
+#### DataTable
+#### Toast
+#### SelectDialog
+#### DropdownDialog
+#### NotificationToast
+#### Acordion
+#### Modal
+#### SimpleDialog
+#### SimpleLoading 
+#### SimpleCardModel
+#### SimpleTabs
+#### DynamicTabs
+#### SimpleSelect
+#### fontawesome
+#### TimelineComponent
+#### DatePickerComponent
 
 ## APIs to help
-RestClient 
-SimpleXlsx
 
-## Dectives
-ano_validator
-datetime_value_accessor
-decimal_value_accessor
-maxlength_directive
-money_mask_directive
-textmask_directive
-validator_response
-collapse
-dropdown
-button 
+#### RestClient 
+#### SimpleXlsx
+
+## Directives
+
+#### ano_validator
+#### datetime_value_accessor
+#### decimal_value_accessor
+#### maxlength_directive
+#### money_mask_directive
+#### textmask_directive
+#### validator_response
+#### collapse
+#### dropdown
+#### button 
 
 ### Example DataTable
 
