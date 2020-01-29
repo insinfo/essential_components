@@ -99,9 +99,9 @@ class RestClientGeneric<T> {
 
   Future<RestResponseGeneric<T>> uploadFiles(String apiEndPoint, List<File> files,
       {String topNode,
-      Map<String, String> headers,
-      Map<String, String> body,
-      Map<String, String> queryParameters,
+      Map<String, dynamic> headers,
+      Map<String, dynamic> body,
+      Map<String, dynamic> queryParameters,
       String protocol,
       String host,
       int port,
