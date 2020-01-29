@@ -1,6 +1,6 @@
 name: example
 description: A example of essential_components library for AngularDart developers. This example is gallery of components
-version: 1.0.0
+version: 1.0.7
 homepage: https://github.com/insinfo/essential_components
 authors: 
   - Isaque Neves <insinfo2008@gmail.com> 
@@ -12,32 +12,29 @@ environment:
 dependencies:
   angular: ^5.3.1
   angular_components: ^0.13.0+1
-  angular_router: ^2.0.0-alpha+19
-  http: ^0.12.0+2
-  stream_transform: ^0.0.19
-  sass_builder: ^2.1.3
+  angular_router: ^2.0.0-alpha+21
+  http: ^0.12.0+4
+  stream_transform: ^1.1.0  
   js: ^0.6.1+1
   money: ^0.2.1
-  decimal: ^0.3.4
+  decimal: ^0.3.5
   c3: ^0.1.0
-  dio: ^3.0.3
+  dio: ^3.0.8
   highlight: ^0.5.0
+  sass_builder: ^2.1.2
 
   # essential_components: 0.1.45
   essential_components:
     path: ../
 
-dev_dependencies:
-  angular_test: ^2.3.0
-  build_runner: ^1.7.2
-  build_test: ^0.10.9+1
-  build_web_compilers: ^2.7.1
-  pedantic: ^1.8.0
-  test: ^1.6.0
-
-
-
-
+dev_dependencies:  
+  angular_test: any
+  build_runner: ^1.7.3
+  build_test: ^0.10.12
+  build_web_compilers: ^2.9.0
+  pedantic: ^1.9.0
+  test: any
+  
 # name: example
 # description: A web app that uses AngularDart Components
 # version: 1.0.1

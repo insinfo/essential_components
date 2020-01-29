@@ -11,7 +11,7 @@ class PersonService {
   PersonService() {
     RestClientGeneric.basePath = '';
     RestClientGeneric.host = html.window.location.hostname;
-    RestClientGeneric.protocol = UriMuProtoType.http;
+    RestClientGeneric.protocol = html.window.location.protocol == 'http' ? UriMuProtoType.http : UriMuProtoType.https;
     RestClientGeneric.port = int.tryParse(html.window.location.port);
     rest = RestClientGeneric<Person>(factories: {Person: (x) => Person.fromJson(x)});
   }
