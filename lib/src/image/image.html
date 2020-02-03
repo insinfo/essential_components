@@ -1,0 +1,21 @@
+<!--
+<div style="width: 80%;height: 150px;display: block;background: #e8e4e4;overflow: hidden;border-radius: 10px;border: solid 5px #fff; box-shadow: 2px 3px 5px #ddd;object-fit: cover;">
+    <img (click)="changeShowMediasDialog(true)" src="{{comercio.imagem}}" style="width: 120%;object-fit: cover;">
+</div>
+-->
+<figure #container (click)="onClickHandle($event)" title="{{title}}">
+    <div class="lds-roller-container" *ngIf="loading" title="loading">
+        <div class="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <img [hidden]="loading" alt="{{alt}}" (error)="onError()" (load)="onLoad()" (click)="onClickHandle($event)" src="{{ url }}"
+        class="img-fluid">
+</figure>
