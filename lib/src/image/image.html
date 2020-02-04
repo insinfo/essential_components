@@ -3,7 +3,7 @@
     <img (click)="changeShowMediasDialog(true)" src="{{comercio.imagem}}" style="width: 120%;object-fit: cover;">
 </div>
 -->
-<figure #container (click)="onClickHandle($event)" title="{{title}}">
+<figure #container [style]="containerStyle" [class]="containerClass" (click)="onClickHandle($event)" title="{{title}}">
     <div class="lds-roller-container" *ngIf="loading" title="loading">
         <div class="lds-roller">
             <div></div>
@@ -16,6 +16,6 @@
             <div></div>
         </div>
     </div>
-    <img [hidden]="loading" alt="{{alt}}" (error)="onError()" (load)="onLoad()" (click)="onClickHandle($event)" src="{{ url }}"
-        class="img-fluid">
+    <img [hidden]="loading" [style]="imgStyle" [class]="imgClass" alt="{{alt}}" (error)="onError()" (load)="onLoad()"
+        (click)="onClickHandle($event)" src="{{ url }}" >
 </figure>

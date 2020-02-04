@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_forms/angular_forms.dart';
-import 'dart:html' as  html;
+import 'dart:html' as html;
 
 @Component(
     selector: 'es-image',
@@ -19,6 +19,18 @@ class EssentialImageComponent implements AfterContentInit {
 
   @Input()
   bool showUrl = false;
+
+  @Input()
+  String containerClass = "";
+
+  @Input()
+  String imgClass = "img-fluid";
+
+  @Input()
+  String containerStyle = "";
+
+  @Input()
+  String imgStyle = "";
 
   @Input()
   String title = "";
@@ -52,12 +64,12 @@ class EssentialImageComponent implements AfterContentInit {
   }
 
   onLoad() {
-    print("EssentialImageComponent@onLoad $loading url: $url");
+    //print("EssentialImageComponent@onLoad $loading url: $url");
     this.loading = false;
   }
 
   onError() {
-    print("EssentialImageComponent@onError $loading url: $url");
+    //print("EssentialImageComponent@onError $loading url: $url");
     this.loading = false;
   }
 
