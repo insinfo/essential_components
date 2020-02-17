@@ -1,0 +1,8 @@
+enum StyleType {
+  DEFAULT,
+  SUCCESS,
+  WARNING,
+  PRIMARY,
+  DANGER,
+  INFO
+}

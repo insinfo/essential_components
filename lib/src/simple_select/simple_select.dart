@@ -16,6 +16,8 @@ import '../interface_has_ui_display_name.dart';
 
 import '../core/replacement_accents.dart';
 
+import '../core/style_type.dart';
+
 @Component(
   selector: 'es-simple-select',
   //changeDetection: ChangeDetectionStrategy.OnPush,
@@ -58,6 +60,9 @@ class EssentialSimpleSelectComponent
 
   @Input()
   String label;
+
+  @Input()
+  StyleType color;
 
   @Input()
   set required(bool required) {
@@ -116,6 +121,7 @@ class EssentialSimpleSelectComponent
 
   //contrutor
   EssentialSimpleSelectComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
+    color = StyleType.DEFAULT;
     // _changeDetector = changeDetector;
     // Replace the provider from above with this.
     if (this.ngControl != null) {
