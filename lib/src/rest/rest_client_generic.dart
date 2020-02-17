@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 import 'package:essential_components/src/data_table/response_list.dart';
-import 'package:http/browser_client.dart';
+//import 'package:http/browser_client.dart';
 import 'uri_mu_proto.dart';
 import 'map_serialization.dart';
 import 'rest_response.dart';
@@ -65,7 +65,7 @@ class RestClientGeneric<T> {
         _getLastFetchTime(key).isBefore(DateTime.now().subtract(cacheValidDuration)));
   }
 
-  BrowserClient client;
+  http.Client client;
   static UriMuProtoType protocol;
   static String host;
   static int port;
@@ -82,7 +82,7 @@ class RestClientGeneric<T> {
   };
 
   RestClientGeneric({this.factories}) {
-    client = BrowserClient();
+    client = http.Client(); //BrowserClient();
     UriMuProto.basePath = basePath;
     UriMuProto.host = host;
     UriMuProto.port = port;
@@ -135,7 +135,7 @@ class RestClientGeneric<T> {
         for (File file in files) {
           reader.readAsArrayBuffer(file);
           await reader.onLoadEnd.first;
-          request.files.add(await http.MultipartFile.fromBytes('file', reader.result,
+          request.files.add(await http.MultipartFile.fromBytes('file[]', reader.result,
               contentType: MediaType('application', 'octet-stream'), filename: file.name));
         }
       }
@@ -158,9 +158,9 @@ class RestClientGeneric<T> {
     }
   }
 
-  Future<RestResponseGeneric<T>> getAll(String apiEndPoint,
+  Future<RestResponseGeneric<T>> getAll(String apiEndPoint, 
       {bool forceRefresh = false,
-      String topNode,
+      String topNode,RestClientMethod method, Map<String, dynamic> body,
       Map<String, String> headers,
       Map<String, String> queryParameters}) async {
     Uri url = UriMuProto.uri(apiEndPoint);
@@ -176,7 +176,16 @@ class RestClientGeneric<T> {
 
       //Obtem da REST API se o cache estiver vazio, vencido ou desativado
       if (isShouldRefresh(url.toString()) || forceRefresh || disableAllCache) {
-        var resp = await client.get(url, headers: headers);
+        //var resp = await client.get(url, headers: headers);
+        http.Response resp;
+        if (method == null) {
+          resp = await client.get(url, headers: headers);
+        } else if (method == RestClientMethod.POST) {
+          resp = await client.post(url, headers: headers, body: jsonEncode(body));
+        } else {
+          resp = await client.get(url, headers: headers);
+        }
+
         var totalReH = resp.headers.containsKey('total-records') ? resp.headers['total-records'] : null;
         var totalRecords = totalReH != null ? int.tryParse(totalReH) : 0;
         var message = '${resp.body}';
@@ -285,6 +294,8 @@ class RestClientGeneric<T> {
   Future<RestResponseGeneric<T>> get(String apiEndPoint,
       {bool forceRefresh = false,
       String topNode,
+      RestClientMethod method,
+      Map<String, dynamic> body,
       Map<String, String> headers,
       Map<String, String> queryParameters}) async {
     Uri url = UriMuProto.uri(apiEndPoint);
@@ -300,7 +311,16 @@ class RestClientGeneric<T> {
 
       //Obtem da REST API se o cache estivar vazio ou vencido
       if (isShouldRefresh(url.toString()) || forceRefresh || disableAllCache) {
-        var resp = await client.get(url, headers: headers);
+        //var resp = await client.get(url, headers: headers);
+        http.Response resp;
+        if (method == null) {
+          resp = await client.get(url, headers: headers);
+        } else if (method == RestClientMethod.POST) {
+          resp = await client.post(url, headers: headers, body: jsonEncode(body));
+        } else {
+          resp = await client.get(url, headers: headers);
+        }
+
         var message = '${resp.body}';
         var exception = '${resp.body}';
         var totalReH = resp.headers.containsKey('total-records') ? resp.headers['total-records'] : null;

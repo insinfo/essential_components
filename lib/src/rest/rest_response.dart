@@ -2,10 +2,23 @@ import '../data_table/response_list.dart';
 
 //Unauthorized
 enum RestStatus { WARNING, SUCCESS, DANGER, INFO, UNAUTHORIZED, NOCONTENT, CONFLICT }
+enum RestClientMethod { GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH }
 
 class RestResponseGeneric<T> extends RestResponse {
   T dataTyped;
+
   RList<T> dataTypedList;
+
+  //alias para dataTyped
+  T get resultT {
+    return dataTyped;
+  }
+
+  //alias para dataTypedList
+  RList<T> get resultListT {
+    return dataTypedList;
+  }
+
   // asExternalTypedData foi substituído por asTypedList
   RestResponseGeneric(
       {this.dataTyped,
@@ -14,6 +27,7 @@ class RestResponseGeneric<T> extends RestResponse {
       String exception,
       RestStatus status,
       dynamic data,
+      dynamic rawData,
       int statusCode,
       int totalRecords,
       Map<String, String> headers})
@@ -22,6 +36,7 @@ class RestResponseGeneric<T> extends RestResponse {
             exception: exception,
             status: status,
             data: data,
+            rawData: rawData,
             statusCode: statusCode,
             totalRecords: totalRecords,
             headers: headers);
@@ -33,11 +48,19 @@ class RestResponse {
   int statusCode;
   RestStatus status;
   dynamic data;
+  dynamic rawData;
   int totalRecords;
   Map<String, String> headers;
 
   RestResponse(
-      {this.message, this.exception, this.status, this.data, this.statusCode, this.totalRecords, this.headers});
+      {this.message,
+      this.exception,
+      this.status,
+      this.data,
+      this.rawData,
+      this.statusCode,
+      this.totalRecords,
+      this.headers});
 
   String get statusClass {
     switch (status) {

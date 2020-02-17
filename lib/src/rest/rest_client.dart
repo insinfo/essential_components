@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 
-import 'package:http/browser_client.dart';
-//import 'package:http/http.dart' as http;
+//import 'package:http/browser_client.dart';
+import 'package:http/http.dart' as http;
 import 'uri_mu_proto.dart';
 import 'rest_response.dart';
 import '../simple_dialog/simple_dialog.dart';
 
 class RestClient {
-  BrowserClient client;
+  http.Client client;
   static UriMuProtoType protocol;
   static String host;
   static String basePath;
@@ -24,14 +24,14 @@ class RestClient {
   };
 
   RestClient() {
-    client = BrowserClient();
+    client = http.Client(); //BrowserClient();
     UriMuProto.basePath = basePath;
     UriMuProto.host = host;
     UriMuProto.protoType = protocol;
   }
 
   Future<RestResponse> get(String apiEndPoint,
-      {Map<String, String> headers, Map<String, String> queryParameters}) async {
+      {RestClientMethod method, Map<String, dynamic> body,Map<String, String> headers, Map<String, String> queryParameters}) async {
     Uri url = UriMuProto.uri(apiEndPoint);
 
     if (queryParameters != null) {
@@ -41,8 +41,14 @@ class RestClient {
     if (headers == null) {
       headers = headersDefault;
     }
-
-    var resp = await client.get(url, headers: headers);
+    http.Response resp;
+    if (method == null) {
+      resp = await client.get(url, headers: headers);
+    } else if (method == RestClientMethod.POST) {
+      resp = await client.post(url, headers: headers, body: jsonEncode(body));
+    } else {
+      resp = await client.get(url, headers: headers);
+    }
 
     var totalReH = resp.headers.containsKey('total-records') ? resp.headers['total-records'] : null;
     var totalRecords = totalReH != null ? int.tryParse(totalReH) : 0;
@@ -89,7 +95,10 @@ class RestClient {
   }
 
   Future<RestResponse> put(String apiEndPoint,
-      {Map<String, String> headers, body, Map<String, String> queryParameters, Encoding encoding}) async {
+      {Map<String, String> headers,
+      Map<String, dynamic> body,
+      Map<String, String> queryParameters,
+      Encoding encoding}) async {
     Uri url = UriMuProto.uri(apiEndPoint);
     if (queryParameters != null) {
       url = UriMuProto.uri(apiEndPoint, queryParameters);
