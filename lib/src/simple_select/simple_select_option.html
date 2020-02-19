@@ -1,3 +1,3 @@
-<li [hidden]="hidden"  #item class="dropdown-item" (click)="handleOnClick($event)">
+<li [hidden]="hidden"  #item class="{{ styleClass }}" (click)="handleOnClick($event)">
     <ng-content></ng-content>
 </li>

@@ -11,7 +11,7 @@ class PersonService {
   PersonService() {
     RestClientGeneric.basePath = '';
     RestClientGeneric.host = html.window.location.hostname;
-    RestClientGeneric.protocol = html.window.location.protocol == 'http' ? UriMuProtoType.http : UriMuProtoType.https;
+    RestClientGeneric.protocol = UriMuProtoType.http;
    
     print("PersonService ${html.window.location.protocol}");
     print("PersonService ${RestClientGeneric.protocol}");
