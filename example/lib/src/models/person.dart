@@ -1,7 +1,7 @@
 import 'package:essential_components/essential_components.dart';
 import 'package:essential_components/src/core/helper.dart';
 
-class Person implements IDataTableRender {
+class Person implements IDataTableRender, ISimpleSelectRender {
   int id;
   String name;
   int age;
@@ -105,6 +105,11 @@ class Person implements IDataTableRender {
     ));
     
     return settings;
+  }
+
+  @override
+  String getDisplayName() {
+    return name;
   }
 
   

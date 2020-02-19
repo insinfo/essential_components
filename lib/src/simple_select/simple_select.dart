@@ -26,6 +26,9 @@ import '../core/style_type.dart';
     'simple_select.css',
   ],
   directives: [formDirectives, coreDirectives],
+  exports: [
+    StyleType
+  ]
 )
 class EssentialSimpleSelectComponent
     implements ControlValueAccessor, AfterViewInit, AfterContentInit, OnDestroy, AfterChanges {
@@ -63,6 +66,39 @@ class EssentialSimpleSelectComponent
 
   @Input()
   StyleType color;
+
+  String _styleClass = 'btn dropdown-toggle';
+
+  @Input()
+  set styleClass(String className) {
+    _styleClass = className;
+  }
+
+  get styleClass {
+    return _styleClass;
+  }
+
+  Map<String, dynamic> get bgColor {
+    var bg = '';
+    switch (color) {
+      case StyleType.SUCCESS:
+        bg = 'bg-success';
+        break;
+      case StyleType.PRIMARY:
+        bg = 'bg-primary';
+        break;
+      case StyleType.WARNING:
+        bg = 'bg-warning';
+        break;
+      case StyleType.DANGER:
+        bg = 'bg-danger';
+        break;
+      case StyleType.DEFAULT:
+      default:
+        bg = 'bg-default';
+    }
+    return { bg: color != null };
+  }
 
   @Input()
   set required(bool required) {
@@ -108,9 +144,15 @@ class EssentialSimpleSelectComponent
 
   int get inputTabIndex => disabled ? -1 : 0;
 
-  String _inputText = '';
+  String _inputText = 'select';
+  String _buttonText = 'select';
 
   @Input('buttonText')
+  set buttonText(String btnText) {
+    _buttonText = btnText;
+    inputText = _buttonText;
+  }
+
   set inputText(String value) {
     _inputText = value;
   }
@@ -135,6 +177,9 @@ class EssentialSimpleSelectComponent
           if (value != null) {
             itemSelected = value;
             inputText = getDisplayName(value);
+          } else {
+            itemSelected = value;
+            setDefaultOptionText();
           }
           //_changeDetector.markForCheck();
         });
@@ -305,6 +350,16 @@ class EssentialSimpleSelectComponent
     return document.body;
   }
 
+  void setDefaultOptionText() {
+    inputText = _buttonText;
+    for (var item in this.childrenSimpleSelectOptions) {
+      if (item.value == null) {
+        inputText = item.text;
+        break;
+      }
+    }
+  }
+
   bool isDropdownOpen = false;
   //exibe ou esconde o Dropdown
   toogleDrop() {
@@ -408,6 +463,24 @@ class EsSimpleSelectOptionComponent implements OnInit {
   HtmlElement item;
 
   bool hidden = false;
+
+  dynamic _disable;
+  String _styleClass = 'dropdown-item';
+
+  @Input()
+  set styleClass(String className) {
+    _styleClass = className;
+  }
+
+  get styleClass {
+    return _styleClass;
+  } 
+
+  @Input()
+  set disable (dynamic ds) {
+    _styleClass = 'dropdown-item disable';
+    print('isdiable ${ds}');
+  }
 
   get text {
     return item?.firstChild?.text;

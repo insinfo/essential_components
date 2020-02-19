@@ -2,9 +2,42 @@
     <div class="card-body">
         <div class="mb-4">
             <h1>Simple Select</h1>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt et accusamus reprehenderit error id. Mollitia,
-                minus voluptatibus at quas error pariatur nostrum maiores, praesentium reprehenderit explicabo ex ullam. Impedit,
-                incidunt.</p>
+            <p>This is a component also known as ComboBox. There are 2 types, the select type, and the Button type. To set the Button type, just add the propert bindo <code>displayType="button | select"</code></p>
+            <p>When viewing the sample code, you must be aware of importing the classes that are requirements for the component to function. They are:</p>
+            <p><code>EssentialSimpleSelectComponent, EsSimpleSelectOptionComponent, formDirectives</code></p>
+
+            <h2>Colors</h2>
+            <p>It is possible to customize the background color if the type is a button type select. Use the color property to perform this process, and the colors are defined by the StyleType type, in which it is an enum that has the following options:</p>
+            <ul>
+                <li>DEFAULT</li>
+                <li>SUCCESS</li>
+                <li>WARNING</li>
+                <li>PRIMARY</li>
+                <li>DANGER</li>
+                <li>INFO</li>
+            </ul>
+
+            <h2>Modo Disable</h2>
+            <p>The disable mode disables the options for a select. Use the poperty bind with a boolean set to true. Look: <code>[disable]="true"</code></p>
+            
+            <h2>Options</h2>
+            <p>This component contains an area for adding the items to be listed. Remembering that the model should implement an
+            interface called <code> ISimpleSelectRender </code>. This interface must override a method that needs to return a
+            String. This String will be mapped in the view as soon as a list of type RList is passed to property bind<code>[options]="list"</code></p>
+
+            <div class="d-flex flex-row">
+                <div>
+                    <es-simple-select [(ngModel)]="person" displaytype="button" buttonText="Selecione"
+                        [options]="persons" [color]="color">
+                    <es-simple-select-option [value]="null" [disable]="true">Abobora</es-simple-select-option>
+                    <es-simple-select-option [value]="null" [disable]="true">Maça</es-simple-select-option>
+                    </es-simple-select>
+    
+                </div>
+                <div class="ml-2">
+                    <button class="btn bg-primary" (click)="person = null">Select Null Option</button>
+                </div>
+            </div>
         </div>
         
     </div>

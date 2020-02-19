@@ -19,11 +19,12 @@
 -->
 <div class="btn-group bootstrap-select select open">
     <button *ngIf="displaytype == 'select'" #inputEl type="button" class="btn2 dropdown-toggle btn-default"
-        [ngClass]="{'btn-primary': color == StyleType.PRIMARY, 'btn-success': color == StyleType.SUCCESS, 'btn-warning': color == StyleType.WARNING, 'btn-default': color == StyleType.DEFAULT, 'btn-danger': color == StyleType.DANGER, 'btn-info': color == StyleType.INFO}"
         (click)="showDropdown($event);" (focus)="inputFocusAction" [disabled]="disabledSelect">
         <span class="filter-option ellipsis">{{inputText}}</span>
     </button>
-    <a *ngIf="displaytype == 'button'" class="btn bg-indigo-400 dropdown-toggle " (click)="showDropdown($event);"
+<a *ngIf="displaytype == 'button'" class="{{ styleClass }}" (click)="showDropdown($event);"
+    [ngClass]="bgColor"
+    
         data-toggle="dropdown" aria-expanded="false">{{inputText}}</a>
     <div #dropdownMenu class="dropdown-menu open" style="max-height: 241px; overflow: hidden; min-height: 125px;">
         <div class="bs-searchbox" *ngIf="showsearch">
