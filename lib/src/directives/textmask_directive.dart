@@ -17,7 +17,7 @@ class TextMaskDirective {
     _textMask = val;
     if (_textMask != null) {
       mask = _textMask.containsKey('mask') ? _textMask['mask'] : "xxx.xxx.xxx-xx";
-      maxLength = _textMask.containsKey('maxLength') ? _textMask['mask'] : mask?.length;
+      maxLength = _textMask.containsKey('maxLength') ? int.tryParse(_textMask['mask'].toString()) : mask?.length;
     }
     print('TextMaskDirective set textMask$_textMask');
   }
@@ -33,7 +33,7 @@ class TextMaskDirective {
   TextMaskDirective(this._el) {
     if (_textMask != null) {
       mask = _textMask.containsKey('mask') ? _textMask['mask'] : "xxx.xxx.xxx-xx";
-      maxLength = _textMask.containsKey('maxLength') ? _textMask['mask'] : mask?.length;
+      maxLength = _textMask.containsKey('maxLength') ? int.tryParse(_textMask['mask'].toString()) : mask?.length;
     }
     lastTextSize = 0;
     inputElement = _el;
