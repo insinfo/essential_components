@@ -148,3 +148,7 @@ and fix issues
 # 0.1.52
 
 - add excel export API
+
+# 0.1.83
+
+- add EssentialRecaptcha component

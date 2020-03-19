@@ -1,13 +1,13 @@
 import 'package:angular/angular.dart';
 import 'package:essential_components/essential_components.dart';
-import 'package:example/src/components/simple_card_component/simple.dart';
-import 'package:example/src/models/person.dart';
-import 'package:example/src/services/person_service.dart';
+import 'simple.dart';
+import '../../models/person.dart';
+import '../../services/person_service.dart';
 
 @Component(
   selector: 'simple-card-component',
-  styleUrls: ['simple_card_component.css'],
-  templateUrl: 'simple_card_component.html',
+  styleUrls: ['simple_card_example.css'],
+  templateUrl: 'simple_card_example.html',
   directives: [
     coreDirectives,
     esDynamicTabsDirectives,

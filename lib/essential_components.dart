@@ -92,3 +92,6 @@ export 'src/excel/simple_xlsx.dart';
 
 // image component
 export 'src/image/image.dart';
+
+// essential_recaptcha component
+export 'src/essential_recaptcha/essential_recaptcha.dart';
