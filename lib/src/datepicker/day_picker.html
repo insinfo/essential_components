@@ -9,15 +9,13 @@
             <fa name='chevron-left' [fw]='true'></fa>
           </button>
           <button type="button" class="btn btn-light btn-sm col-4"
-            (click)="$event.stopPropagation(); datePicker.toggleMode()" [disabled]="false" [ngClass]="disableToggleMode"
-            tabindex="-1" >
+            (click)="$event.stopPropagation(); datePicker.toggleMode()" [disabled]="false" [class.disabled]="false" tabindex="-1" >
               <!-- [hidden]="!datePicker.showWeeks" -->
             <strong>{{monthTitle}}</strong>
           </button>
           <button type="button" class="btn btn-light btn-sm col-4"
             (click)="$event.stopPropagation(); datePicker.toggleMode(2)"
-            [disabled]="datePicker.datePickerMode == maxMode"
-            [ngClass]="isDataPickerMaxMode"
+            [disabled]="isDisabledMaxMode"
              tabindex="-1">
             <!-- [hidden]="!datePicker.showWeeks" -->
             <strong>{{yearTitle}}</strong>
@@ -45,7 +43,7 @@
         <button type="button" class="btn btn-sm"
           [ngClass]="selectColorBtn"
           [disabled]="dt.disabled" (click)="datePicker.select(dt.date)" tabindex="-1">
-          <span [ngClass]="typeTextToButton">{{dt.label}}</span>
+          <span [ngClass]="typeTextToButton(dt)">{{dt.label}}</span>
         </button>
       </td>
     </tr>
