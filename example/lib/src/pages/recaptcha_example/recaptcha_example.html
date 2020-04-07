@@ -1,0 +1,37 @@
+
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="mb-4">
+            <h1>Essential Recaptcha</h1>
+            <p></p>
+        </div>
+        <es-tabsx #tabs1>
+            <es-tabx header="Preview">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-body">
+                            <essential-recaptcha [(ngModel)]="value" [key]="site_key" (verify)="onVerify($event)" [auto-render]="true"></essential-recaptcha>
+                        </div>
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Html">
+                <div class="row">
+                    <div class="col-12">
+                        <pre class="language-html line-numbers"><code class="language-html" [innerHtml]="codeHtml"></code></pre>
+                                                
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Dart">
+                <div class="row">
+                    <div class="col-12">
+                    <pre class="language-dart line-numbers"><code class="language-dart" [innerHtml]="codeDart"></code></pre>
+                    </div>
+                </div>
+            </es-tabx>
+        </es-tabsx>
+    </div>
+</div>

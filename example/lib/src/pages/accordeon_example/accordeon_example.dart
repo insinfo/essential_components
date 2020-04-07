@@ -3,9 +3,9 @@ import 'package:essential_components/essential_components.dart';
 import 'package:example/src/services/person_service.dart';
 
 @Component(
-  selector: 'accordeon-component',
-  styleUrls: ['accordeon_component.css'],
-  templateUrl: 'accordeon_component.html',
+  selector: 'accordeon-example',
+  styleUrls: ['accordeon_example.css'],
+  templateUrl: 'accordeon_example.html',
   directives: [
     coreDirectives,
     esDynamicTabsDirectives,

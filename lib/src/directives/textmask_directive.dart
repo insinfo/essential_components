@@ -9,9 +9,18 @@ class TextMaskConfig {
 }
 
 @Directive(selector: '[textMask]')
-class TextMaskDirective extends OnChanges {
+class TextMaskDirective {
+  Map<String, dynamic> _textMask;
+
   @Input()
-  Map<String, String> textMask;
+  set textMask(Map<String, dynamic> val) {
+    _textMask = val;
+    if (_textMask != null) {
+      mask = _textMask.containsKey('mask') ? _textMask['mask'] : "xxx.xxx.xxx-xx";
+      maxLength = _textMask.containsKey('maxLength') ? int.tryParse(_textMask['mask'].toString()) : mask?.length;
+    }
+    print('TextMaskDirective set textMask$_textMask');
+  }
 
   String mask = "xxx.xxx.xxx-xx";
   int maxLength = 14;
@@ -22,15 +31,15 @@ class TextMaskDirective extends OnChanges {
   var lastTextValue = "";
 
   TextMaskDirective(this._el) {
-    if (textMask != null) {
-      mask = textMask.containsKey('mask') ? textMask['mask'] : null;
-      maxLength = textMask.containsKey('maxLength') && textMask['mask'] != null ? textMask['mask'] : mask?.length;
+    if (_textMask != null) {
+      mask = _textMask.containsKey('mask') ? _textMask['mask'] : "xxx.xxx.xxx-xx";
+      maxLength = _textMask.containsKey('maxLength') ? int.tryParse(_textMask['mask'].toString()) : mask?.length;
     }
     lastTextSize = 0;
     inputElement = _el;
     inputElement.onInput.listen((e) {
       _onChange();
-      print(textMask);
+      print(_textMask);
     });
   }
 
@@ -73,21 +82,6 @@ class TextMaskDirective extends OnChanges {
         inputElement.value = lastTextValue;
       }
     } //mask != null
-  }
-
-  /*@HostListener('mouseenter')
-  void onMouseEnter() {
-    print('mouseenter');
-  }
-
-  @HostListener('onpaste')
-  void onPaste() {
-    print('onpaste');
-  }*/
-
-  @override
-  ngOnChanges(Map<String, SimpleChange> changes) {
-    //print('ngOnChanges');
   }
 
   String _buildText(String text) {
