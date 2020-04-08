@@ -4,7 +4,7 @@ enum DialogColor { DANGER, PRIMARY, SUCCESS, WARNING, INFO, PINK }
 
 class SimpleDialogComponent {
   static getColor(DialogColor dialogColor) {
-    var headerColor = "";
+    var headerColor = '';
     switch (dialogColor) {
       case DialogColor.PRIMARY:
         headerColor = 'primary';
@@ -35,6 +35,7 @@ class SimpleDialogComponent {
     $content
     </div>
      ''';
+    // ignore: omit_local_variable_types
     html.DivElement root = html.DivElement();
     html.document.querySelector('body').append(root);
     root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
@@ -50,6 +51,7 @@ class SimpleDialogComponent {
     </div>
      ''';
     html.document.querySelector('.FullScreenAlert')?.remove();
+    // ignore: omit_local_variable_types
     html.DivElement root = html.DivElement();
     root.classes.add('FullScreenAlert');
     html.document.querySelector('body').append(root);
@@ -58,7 +60,7 @@ class SimpleDialogComponent {
 
   static showAlert(String message,
       {String subMessage,
-      String title = "Alerta",
+      String title = 'Alerta',
       String detailLabel = 'Detalhe',
       DialogColor dialogColor = DialogColor.PRIMARY}) {
     var template = ''' 

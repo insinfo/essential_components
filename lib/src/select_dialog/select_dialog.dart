@@ -100,8 +100,8 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   /// Type of input.
   ///
   /// It can be one of the following:
-  /// {"text", "email", "password", "url", "number", "tel", "search"}
-  String type = "text";
+  /// {'text', 'email', 'password', 'url', 'number', 'tel', 'search'}
+  String type = 'text';
 
   int get inputTabIndex => disabled ? -1 : 0;
 
@@ -116,7 +116,7 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
     //_changeDetector.markForCheck();
   }
 
-  get inputText {
+  String get inputText {
     return _inputText;
   }
 
@@ -161,7 +161,7 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   //@HostListener('change', ['\$event.target.value'])
   @visibleForTemplate
   void handleChange(Event event, InputElement element) {
-    //print("handleChange: ${element.value}");
+    //print('handleChange: ${element.value}');
     inputChange(
       element.value,
       element.validity.valid,
@@ -179,30 +179,35 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   void inputKeypress(newValue, valid, validationMessage) {
     inputText = newValue;
     _keypressController.add(newValue);
-    //print("inputKeypress: ${inputText}");
+    //print('inputKeypress: ${inputText}');
     //onChangeControlValueAccessor((newValue == '' ? null : newValue), rawValue: newValue);
   }
 
 // **************** INICIO FUNÇÔES DO NGMODEL ControlValueAccessor *********************
+  @override
   void writeValue(value) {}
+
+  @override
   void onDisabledChanged(bool isDisabled) {}
   TouchFunction onTouchedControlValueAccessor = () {};
   /*@HostListener('blur')
   void touchHandler() {  
-    print("touchHandler"); 
+    print('touchHandler'); 
     onTouched();
   }*/
   /// Set the function to be called when the control receives a touch event.
+  @override
   void registerOnTouched(TouchFunction fn) {
     onTouchedControlValueAccessor = fn;
   }
 
   //função a ser chamada para notificar e modificar o modelo vinculado pelo ngmodel
   ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {
-    print("onChangeControlValueAccessor $_");
+    print('onChangeControlValueAccessor $_');
   };
 
   /// Set the function to be called when the control receives a change event.
+  @override
   void registerOnChange(ChangeFunction<dynamic> fn) {
     onChangeControlValueAccessor = fn;
   }
@@ -216,7 +221,7 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
     /* if (ngControl?.control != null) {
       //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
       ssControlValueChanges = ngControl.control.valueChanges.listen((value) {
-        print("ngControl.control.valueChanges $value");
+        print('ngControl.control.valueChanges $value');
 
         //_changeDetector.markForCheck();
       });
@@ -236,14 +241,15 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
     itemSelected = selected;
     _changeController.add(itemSelected);
     //seta o ngModel
-    onChangeControlValueAccessor(itemSelected, rawValue: "");
+    onChangeControlValueAccessor(itemSelected, rawValue: '');
 
     closeDialog();
     fillInputFromIDataTableRender(selected);
   }
 
-  fillInputFromIDataTableRender(IDataTableRender selected) {
+  void fillInputFromIDataTableRender(IDataTableRender selected) {
     if (selected != null) {
+      // ignore: omit_local_variable_types
       List<DataTableColumn> cols = selected.getRowDefinition()?.colsSets;
       cols.forEach((DataTableColumn element) {
         if (element != null && element.primaryDisplayValue) {
