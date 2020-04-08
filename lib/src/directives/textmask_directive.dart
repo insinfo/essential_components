@@ -5,7 +5,7 @@ import 'package:angular/angular.dart';
 class TextMaskConfig {
   final String mask;
   final int maxLength;
-  TextMaskConfig({this.mask = "xxx.xxx.xxx-xx", this.maxLength = 14});
+  TextMaskConfig({this.mask = 'xxx.xxx.xxx-xx', this.maxLength = 14});
 }
 
 @Directive(selector: '[textMask]')
@@ -16,23 +16,23 @@ class TextMaskDirective {
   set textMask(Map<String, dynamic> val) {
     _textMask = val;
     if (_textMask != null) {
-      mask = _textMask.containsKey('mask') ? _textMask['mask'] : "xxx.xxx.xxx-xx";
+      mask = _textMask.containsKey('mask') ? _textMask['mask'] : 'xxx.xxx.xxx-xx';
       maxLength = _textMask.containsKey('maxLength') ? int.tryParse(_textMask['mask'].toString()) : mask?.length;
     }
     print('TextMaskDirective set textMask$_textMask');
   }
 
-  String mask = "xxx.xxx.xxx-xx";
+  String mask = 'xxx.xxx.xxx-xx';
   int maxLength = 14;
-  String escapeCharacter = "x";
+  String escapeCharacter = 'x';
   InputElement inputElement;
   final Element _el;
   var lastTextSize = 0;
-  var lastTextValue = "";
+  var lastTextValue = '';
 
   TextMaskDirective(this._el) {
     if (_textMask != null) {
-      mask = _textMask.containsKey('mask') ? _textMask['mask'] : "xxx.xxx.xxx-xx";
+      mask = _textMask.containsKey('mask') ? _textMask['mask'] : 'xxx.xxx.xxx-xx';
       maxLength = _textMask.containsKey('maxLength') ? int.tryParse(_textMask['mask'].toString()) : mask?.length;
     }
     lastTextSize = 0;
@@ -65,7 +65,7 @@ class TextMaskDirective {
                 inputElement.value = _buildText(text);
               }
               if (mask[position] != escapeCharacter) {
-                inputElement.value = "${inputElement.value}${mask[position]}";
+                inputElement.value = '${inputElement.value}${mask[position]}';
               }
             }
           }
@@ -85,8 +85,8 @@ class TextMaskDirective {
   }
 
   String _buildText(String text) {
-    var result = "";
-    for (int i = 0; i < text.length - 1; i++) {
+    var result = '';
+    for (var i = 0; i < text.length - 1; i++) {
       result += text[i];
     }
     result += mask[text.length - 1];
@@ -94,7 +94,7 @@ class TextMaskDirective {
     return result;
   }
 
-  _selectText(int start, int end) {
+  void _selectText(int start, int end) {
     //inputElement.setSelectionRange(start, end);
     if (window.getSelection != null) {
       var selection = window.getSelection();
@@ -103,7 +103,7 @@ class TextMaskDirective {
       selection.removeAllRanges();
       selection.addRange(range);
     } else {
-      print("Could not select text in node: Unsupported browser.");
+      print('Could not select text in node: Unsupported browser.');
     }
   }
 
@@ -111,6 +111,7 @@ class TextMaskDirective {
     if (s == null) {
       return false;
     }
+    // ignore: deprecated_member_use
     return double.parse(s, (e) => null) != null;
   }
 }
