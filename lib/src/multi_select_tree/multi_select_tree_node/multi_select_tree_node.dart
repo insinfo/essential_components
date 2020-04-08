@@ -13,10 +13,11 @@ import '../service/multi_select_tree_service.dart';
   templateUrl: 'multi_select_tree_node.html',
   directives: [coreDirectives, TreeNodeComponent, MaterialCheckboxComponent],
 )
-class TreeNodeComponent implements OnInit {
-  TreeService _treeService;
+class TreeNodeComponent {
+  final TreeService _treeService;
   TreeNodeComponent(this._treeService);
 
+  // ignore: prefer_collection_literals
   List<MultiSelectTreeNode> selectedNodes = List<MultiSelectTreeNode>();
 
   @Input('node')
@@ -25,29 +26,30 @@ class TreeNodeComponent implements OnInit {
   @Input('parent')
   MultiSelectTreeNode parent;
 
-  expandNode(MultiSelectTreeNode n) {
+  void expandNode(MultiSelectTreeNode n) {
     n.showChildren = !n.showChildren;
   }
 
-  handleIndeterminate(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isIndeterminateState) {
+  void handleIndeterminate(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isIndeterminateState) {
     n.isIndeterminate = isIndeterminateState;
     updateParentIndeterminate(parent, isIndeterminateState);
   }
 
-  updateParentIndeterminate(MultiSelectTreeNode node, bool isIndeterminate) {
+  void updateParentIndeterminate(MultiSelectTreeNode node, bool isIndeterminate) {
     if (node == null) return;
     node.isIndeterminate = isIndeterminate;
   }
 
-  selectNode(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
+  void selectNode(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
     n.isSelected = isChecked;
     __updateChildren(n, isChecked);
     __updateParent(n, parent, isChecked);
     __updateSelected(n, isChecked);
   }
 
-  __updateChildren(MultiSelectTreeNode n, bool isChecked) {
+  void __updateChildren(MultiSelectTreeNode n, bool isChecked) {
     if (!n.isIndeterminate) {
+      // ignore: omit_local_variable_types
       for (MultiSelectTreeNode node in n.getChildren()) {
         node.isSelected = isChecked;
         __updateChildren(node, isChecked);
@@ -55,10 +57,13 @@ class TreeNodeComponent implements OnInit {
     }
   }
 
-  __updateParent(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
+  void __updateParent(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
     if (parent != null) {
+      // ignore: omit_local_variable_types
       List<MultiSelectTreeNode> siblings = parent.getChildren();
+      // ignore: omit_local_variable_types
       bool equalSiblingState = true;
+      // ignore: omit_local_variable_types
       for (MultiSelectTreeNode node in siblings) {
         if (node.isSelected != isChecked) {
           equalSiblingState = false;
@@ -79,19 +84,16 @@ class TreeNodeComponent implements OnInit {
     }
   }
 
-  __updateSelected(MultiSelectTreeNode n, bool isChecked) {
+  void __updateSelected(MultiSelectTreeNode n, bool isChecked) {
     if (isChecked) {
-      this._treeService.getSelectedNodes().add(n);
+      _treeService.getSelectedNodes().add(n);
     } else {
-      this._treeService.getSelectedNodes().remove(n);
+      _treeService.getSelectedNodes().remove(n);
     }
-    List<MultiSelectTreeNode> selectedNodes = this._treeService.getSelectedNodes();
+    // ignore: omit_local_variable_types
+    List<MultiSelectTreeNode> selectedNodes = _treeService.getSelectedNodes();
 
-    this._treeService.streamController.add(selectedNodes);
+    _treeService.streamController.add(selectedNodes);
   }
 
-  @override
-  ngOnInit() {
-    // TODO: implement ngOnInit
-  }
 }

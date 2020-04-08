@@ -9,14 +9,16 @@ class MultiSelectTreeNode {
 
   MultiSelectTreeNode(String name, bool otherProperties, List<dynamic> children) {
     this.name = name;
+    // ignore: prefer_collection_literals
     this.children = List<MultiSelectTreeNode>();
-    this.showChildren = false;
-    this.isRoot = false;
-    this.isSelected = false;
-    this.isIndeterminate = false;
-    this.showOtherProperties = otherProperties;
+    showChildren = false;
+    isRoot = false;
+    isSelected = false;
+    isIndeterminate = false;
+    showOtherProperties = otherProperties;
     if (children != null) {
       for (var node in children) {
+        // ignore: omit_local_variable_types
         MultiSelectTreeNode t = MultiSelectTreeNode(node.name, node.showOtherProperties, node.children);
         this.children.add(t);
       }
