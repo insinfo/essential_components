@@ -53,27 +53,25 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
 
   StreamSubscription bodyOnClickSubscription;
 
-  bodyOnClick(e) {
+  void bodyOnClick(e) {
     e.preventDefault();
     e.stopPropagation();
     if (isDropDownOpen) {
-      this.dropdown.classes.remove('show');
+      dropdown.classes.remove('show');
       isDropDownOpen = false; 
     }
   }
 
-  EssentialTimelineComponent() {
-    
-  }
+  EssentialTimelineComponent();
 
-  remove(TimelineRender d, e) {
+  void remove(TimelineRender d, e) {
     e.stopPropagation();
     _onRemove.add(d);
     html.HtmlElement currentDropdown = e.target.closest('.dropdown-options');
     closeDropdown(currentDropdown);
   }
 
-  update(TimelineRender d, e) {
+  void update(TimelineRender d, e) {
     e.stopPropagation();
     _onUpdate.add(d);
     html.HtmlElement currentDropdown = e.target.closest('.dropdown-options');
@@ -83,7 +81,7 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
   @override
   void ngOnInit() {
     print('ngOnInit');
-    this.bodyOnClickSubscription = html.document.querySelector('body').onClick.listen(bodyOnClick);
+    bodyOnClickSubscription = html.document.querySelector('body').onClick.listen(bodyOnClick);
   }
 
   @override
@@ -94,7 +92,7 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
   }
 
   bool hasModels() {
-    return this.data != null && this.data.isNotEmpty;
+    return data != null && data.isNotEmpty;
   }
 
   String getContentTitle(TimelineRender item) {
@@ -128,9 +126,7 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
     return item.getModel?.update;
   }
 
-  
-
-  toggleDropdownOption(e) {
+  void toggleDropdownOption(e) {
     e.stopPropagation();
     html.HtmlElement element = e.target;
     var elementSelected = element.closest('.card-footer').querySelector('.dropdown-options'); 
@@ -149,11 +145,5 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
       isDropDownOpen = false;
     }
   }
-
-  
-
-  
-
-
   
 }

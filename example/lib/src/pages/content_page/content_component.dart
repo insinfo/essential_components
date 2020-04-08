@@ -5,7 +5,6 @@ import 'package:example/src/pages/recaptcha_example/recaptcha_example.dart';
 import '../accordeon_example/accordeon_example.dart';
 import '../datapicker_component/datapicker_component.dart';
 import '../datatable_component/datatable_component.dart';
-import '../dropdown_component/dropdown_component.dart';
 import '../dropdown_dialog_component/dropdown_dialog_component.dart';
 import '../dynamic_tabs_component/dynamic_tabs_component.dart';
 import '../modal_component/modal_component.dart';
@@ -31,7 +30,6 @@ import '../recaptcha_example/recaptcha_example.dart';
     DataTableComponent,
     AccordeonComponent,
     DataPickerComponent,
-    DropdownComponent,
     DropdownDialogComponent,
     DynamicTabsComponent,
     ModalComponent,

@@ -4,7 +4,7 @@ class BadRequestException implements Exception {
   BadRequestException([this.message]);
 
   String toString() {
-    if (message == null) return "BadRequestException";
-    return "BadRequestException: $message";
+    if (message == null) return 'BadRequestException';
+    return 'BadRequestException: $message';
   }
 }

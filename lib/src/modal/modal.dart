@@ -9,7 +9,7 @@ import 'package:angular_forms/angular_forms.dart';
     templateUrl: 'modal.html',
     styleUrls: ['modal.css'],
     directives: [coreDirectives, formDirectives, routerDirectives])
-class EssentialModalComponent implements AfterContentInit {
+class EssentialModalComponent {
   @Input()
   bool showheader = false;
 
@@ -17,22 +17,25 @@ class EssentialModalComponent implements AfterContentInit {
   bool showDialog = false;
 
   @Input()
-  String title = "";
+  String title = '';
 
   final _closeRequest = StreamController<bool>();
+
+  Map<String, bool> get showDialogMap => {
+    'showElement': showDialog,
+    'hideElement': !showDialog
+  };
 
   @Output()
   Stream<bool> get close => _closeRequest.stream;
 
-  openDialog() {
+  void openDialog() {
     showDialog = true;
   }
 
-  closeDialog() {
+  void closeDialog() {
     showDialog = false;
     _closeRequest.add(showDialog);
   }
 
-  @override
-  ngAfterContentInit() {}
 }

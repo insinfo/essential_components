@@ -17,12 +17,12 @@ import 'models.dart';
 /// [FeedEnclosure]: url, length, type
 Feed parse(String feedString, {bool strict = false}) {
   try {
-    xml.XmlDocument document = xml.parse(feedString);
+    var document = xml.parse(feedString);
 
-    xml.XmlElement channelElement =
+    var channelElement =
         document.rootElement.findElements('channel').single;
 
-    Feed feed = new Feed.fromXml(channelElement, strict);
+    var feed = Feed.fromXml(channelElement, strict);
 
     return feed;
   } catch (exception) {

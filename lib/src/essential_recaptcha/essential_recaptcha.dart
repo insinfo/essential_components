@@ -14,10 +14,10 @@ import 'package:angular_forms/angular_forms.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:js/js.dart';
-// import "package:js/js_util.dart";
-import "package:dart_browser_loader/dart_browser_loader.dart" show loadScript;
+// import 'package:js/js_util.dart';
+import 'package:dart_browser_loader/dart_browser_loader.dart' show loadScript;
 
-import "package:dart_browser_loader/src/utils.dart" show waitLoad;
+import 'package:dart_browser_loader/src/utils.dart' show waitLoad;
 
 @JS('grecaptcha.render')
 external num _render(HtmlElement container, EssentialRecaptchaParameters parameters);
@@ -43,7 +43,7 @@ class EssentialRecaptchaParameters {
 
   external String get tabindex;
 
-  @JS("expired-callback")
+  @JS('expired-callback')
   external Function get expiredCallback;
 
   external factory EssentialRecaptchaParameters(
@@ -78,7 +78,7 @@ class EssentialRecaptcha extends ValueAccessor implements AfterViewInit, OnDestr
   @Output()
   Stream<Null> get expire => _onExpireCtrl.stream;
 
-  String _siteverifyUrl = "https://www.google.com/recaptcha/api/siteverify";
+  String _siteverifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
   @Input('siteverify-url')
   set siteverifyUrl(String url) {
     _siteverifyUrl = url;
@@ -88,24 +88,24 @@ class EssentialRecaptcha extends ValueAccessor implements AfterViewInit, OnDestr
   bool siteverify = false;
 
   @Input('tabindex')
-  String tabindex = "0";
+  String tabindex = '0';
 
-  @Input("size")
-  String size = "normal";
+  @Input('size')
+  String size = 'normal';
 
-  @Input("key")
+  @Input('key')
   String key;
 
-  @Input("secret-key")
+  @Input('secret-key')
   String secretKey;
 
-  @Input("theme")
+  @Input('theme')
   String theme = 'light';
 
-  @Input("type")
-  String type = "image";
+  @Input('type')
+  String type = 'image';
 
-  @Input("auto-render")
+  @Input('auto-render')
   set autoRender(val) {
     _autoRender = _parseBool(val);
   }
@@ -119,7 +119,7 @@ class EssentialRecaptcha extends ValueAccessor implements AfterViewInit, OnDestr
     _verifiedStreamController.add(response);
     //print('EssentialRecaptcha@_callbackResponse $response');
     String _token = response;
-    if (_token.contains("verify")) {
+    if (_token.contains('verify')) {
       _token = _token.substring(7);
     }
     // print(_token);
@@ -158,13 +158,14 @@ class EssentialRecaptcha extends ValueAccessor implements AfterViewInit, OnDestr
 
   void verifyToken(String token) async {
     try {
+      // ignore: omit_local_variable_types
       http.Response response = await http.post(_siteverifyUrl, body: {
-        "secret": secretKey,
-        "response": token,
+        'secret': secretKey,
+        'response': token,
       });
 
-      // print("Response status: ${response.statusCode}");
-      // print("Response body: ${response.body}");
+      // print('Response status: ${response.statusCode}');
+      // print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         dynamic json = jsonDecode(response.body);
@@ -211,6 +212,7 @@ class EssentialRecaptcha extends ValueAccessor implements AfterViewInit, OnDestr
   @override
   void onDisabledChanged(bool isDisabled) {}
 
+  @override
   void ngOnDestroy() {
     _onExpireCtrl.close();
   }
@@ -251,19 +253,21 @@ abstract class ValueAccessor<T> implements ControlValueAccessor<T> {
   }
 }
 
+// ignore: prefer_generic_function_type_aliases
 typedef FutureOr<T> _VoidCallback<T>();
 
 Element _script;
 
 FutureOr<T> _safeApiCall<T>(_VoidCallback<T> call) async {
-  var sc = await loadScript("https://www.google.com/recaptcha/api.js?render=explicit",
-      isAsync: true, isDefer: true, id: "grecaptcha-jssdk");
+  var sc = await loadScript('https://www.google.com/recaptcha/api.js?render=explicit',
+      isAsync: true, isDefer: true, id: 'grecaptcha-jssdk');
 
   if (_script == null) {
-    final scripts = document.querySelectorAll("script");
+    final scripts = document.querySelectorAll('script');
+    // ignore: prefer_iterable_wheretype
     _script = scripts.where((s) => s is ScriptElement).firstWhere(
         //isaque corrigi o bug era a URL errada
-        (s) => (s as ScriptElement).src.startsWith("https://www.gstatic.com/recaptcha/"),
+        (s) => (s as ScriptElement).src.startsWith('https://www.gstatic.com/recaptcha/'),
         orElse: () => null);
     if (_script == null) return null;
   }

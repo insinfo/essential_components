@@ -67,7 +67,7 @@ class EsAccordionPanelComponent implements OnInit {
   }
 
   @Input()
-  String panelClass;
+  String panelClass = 'es-card';
 
   /// clickable text in accordion's group header
   @Input()

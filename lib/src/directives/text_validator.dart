@@ -30,8 +30,8 @@ class TextValidator implements Validator {
   String _value;
 
   TextValidator(Element el) {
-    this._el = el;
-    print('TextValidator ${this._el}');
+    _el = el;
+    print('TextValidator ${_el}');
   }
 
   bool _isNodeCreated(DivElement div) {
@@ -42,24 +42,24 @@ class TextValidator implements Validator {
     return _divPai.querySelector('.text-validation') == null;
   }
 
-  _createNode() {
+  void _createNode() {
     _node = DivElement();
     _node.classes.add('text-validation');
     _node.classes.add('text-danger');
   }
 
-  _addFeedbackValidationWithMessageError(String messageError) {
+  void _addFeedbackValidationWithMessageError(String messageError) {
     _node.text = messageError;
     _divPai.append(_node);
   }
 
-  _hasNullOrEmpty() {
+  void _hasNullOrEmpty() {
     if (_value == null || _value.isEmpty) {
       _addFeedbackValidationWithMessageError('Este campo é obrigatório');
     }
   }
 
-  _hasInvalidLength() {
+  void _hasInvalidLength() {
     if (_value.length < minLength || _value.length > maxLength) {
       _addFeedbackValidationWithMessageError('O valor precisa ter entre ${minLength} à ${maxLength} caracteres.');
     } else {

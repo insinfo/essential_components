@@ -21,10 +21,11 @@ class FaStack implements OnInit {
 
   Map<String, bool> classes = {};
 
+  @override
   void ngOnInit() {
-    this.classes['fa-stack'] = true;
-    if (this.size != null) {
-      this.classes['fa-$size'] = true;
+    classes['fa-stack'] = true;
+    if (size != null) {
+      classes['fa-$size'] = true;
     }
   }
 }

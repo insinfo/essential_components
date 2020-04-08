@@ -10,19 +10,19 @@ class EssentialNotificationService {
 
   /// Constructor.
   EssentialNotificationService() {
-    this.toasts = [];
+    toasts = [];
   }
 
   /// Display a toast.
   void add(String type, String title, String message, {String icon, num durationSeconds}) {
     var toast = Toast(type, title, message, icon, durationSeconds);
-    this.toasts.insert(0, toast);
+    toasts.insert(0, toast);
     var milliseconds = (1000 * toast.durationSeconds + 300).round();
     // How to get size of each toast?
     Timer(Duration(milliseconds: milliseconds), () {
       toast.toBeDeleted = true;
       Timer(Duration(milliseconds: 300), () {
-        this.toasts.remove(toast);
+        toasts.remove(toast);
       });
     });
   }
@@ -55,11 +55,9 @@ class Toast {
 
   /// Constructor
   Toast(this.type, this.title, this.message, this.icon, this.durationSeconds) {
-    if (this.durationSeconds == null) {
-      this.durationSeconds = 3;
-    }
+    durationSeconds ??= 3;
 
-    this.cssDuration = '${durationSeconds}s';
+    cssDuration = '${durationSeconds}s';
 
     if (icon == null) {
       if (type == 'success') {

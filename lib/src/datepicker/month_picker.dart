@@ -28,6 +28,11 @@ class EsMonthPickerComponent {
   /// provides the maximum mode
   String maxMode = 'year';
 
+  bool get isDataPickerMaxMode => datePicker.datePickerMode == maxMode;
+  bool isCurrentRowSelected(DisplayedDate dt) => dt.current && !dt.selected;
+
+  Map<String, bool> selectColor(DisplayedDate dt) => {'btn-primary': dt.selected, 'btn-light': !dt.selected, 'active': dt.current, 'disabled': dt.disabled};
+
   void refreshViewHandler() {
     List<DisplayedDate> months = List(12);
     DateTime initDate = datePicker.initDate;

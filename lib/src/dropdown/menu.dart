@@ -7,7 +7,7 @@ import '../core/helper.dart';
 
 /// Creates a dropdown-menu component that will be showed
 /// every time that a [EsDropdownDirective] is open
-@Directive(selector: "es-dropdown-menu, .dropdown-menu")
+@Directive(selector: 'es-dropdown-menu, .dropdown-menu')
 class EsDropdownMenuDirective {
   HtmlElement elementRef;
 

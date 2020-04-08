@@ -24,7 +24,7 @@ class SimpleCardModel {
     return html.window.location.hostname + '_' + guid;
   }
 
-  void setHeaderContent (String value) => this.headerContent = value;
+  void setHeaderContent (String value) => headerContent = value;
 }
 
 enum TemplateLink {
@@ -98,7 +98,8 @@ class EssentialSimpleCardComponent implements AfterContentInit {
   @override
   void ngAfterContentInit() {
     model = data?.getModel();
-    String isMinimize = html.window.localStorage[this.model.getGuid()];
+    // ignore: omit_local_variable_types
+    String isMinimize = html.window.localStorage[model.getGuid()];
     if (isMinimize == 'false') {
       displayMinimize = false;
     } else {
@@ -108,7 +109,8 @@ class EssentialSimpleCardComponent implements AfterContentInit {
       displayMinimize = true;
     }
   }
-  toogleMinimize() {
+
+  void toogleMinimize() {
    displayMinimize = !displayMinimize;
     if (cardIsMinimized()) {
       showHeaderTitle = true;
@@ -119,7 +121,7 @@ class EssentialSimpleCardComponent implements AfterContentInit {
       model.setHeaderContent(null);
       showHeaderTitle = true;
     }
-    html.window.localStorage[this.model.getGuid()] = displayMinimize.toString();
+    html.window.localStorage[model.getGuid()] = displayMinimize.toString();
   }
 
   bool hasHeaderContent() {
@@ -149,7 +151,7 @@ class EssentialSimpleCardComponent implements AfterContentInit {
     return model.templateLink == TemplateLink.BUTTON;
   }
 
-  handleClick(event) {
+  void handleClick(event) {
     _linkClick.add(event);
   }
 

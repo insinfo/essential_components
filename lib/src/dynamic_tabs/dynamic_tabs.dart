@@ -1,10 +1,10 @@
 import 'dart:async';
-import "package:angular/angular.dart";
+import 'package:angular/angular.dart';
 
 /// Directives needed to create a tab-set
 const esDynamicTabsDirectives = [EsTabxDirective, BsTabxHeaderDirective, EsTabsxComponents];
 
-@Component(selector: "es-tabsx", templateUrl: 'dynamic_tabs.html', directives: [coreDirectives])
+@Component(selector: 'es-tabsx', templateUrl: 'dynamic_tabs.html', directives: [coreDirectives])
 class EsTabsxComponents implements OnInit, AfterContentInit {
   /// if `true` tabs will be placed vertically
   bool get vertical => placement == 'left' || placement == 'right';
@@ -30,29 +30,38 @@ class EsTabsxComponents implements OnInit, AfterContentInit {
   @Input()
   String type;
 
+  Map get navTypeMap => {
+    'flex-column': vertical,
+    'nav-justified': justified,
+    'nav-tabs': type == 'tabs',
+    'nav-pills': type == 'pills'
+  };
+
+  Map tabTypeMap(EsTabxDirective tab) => { 'active': tab.active, 'disabled': tab.disabled };
+
   /// List of sub tabs
   @ContentChildren(EsTabxDirective)
   List<EsTabxDirective> tabs = [];
 
   /// initialize attributes
-  ngOnInit() {
-    type ??= "tabs";
+  void ngOnInit() {
+    type ??= 'tabs';
     placement ??= 'top';
   }
 
   @override
-  ngAfterContentInit() {
+  void ngAfterContentInit() {
     activateTab(tabs.firstWhere((tab) => tab.active, orElse: () => tabs[0]));
   }
 
   /// adds a new tab at the end
-  addTab(EsTabxDirective tab) {
+  void addTab(EsTabxDirective tab) {
     tabs.add(tab);
     tab.active = tabs.length == 1 && tab.active != false;
   }
 
   /// removes the specified tab
-  removeTab(EsTabxDirective tab) {
+  void removeTab(EsTabxDirective tab) {
     var index = tabs.indexOf(tab);
     if (index == -1) return;
 
@@ -65,7 +74,7 @@ class EsTabsxComponents implements OnInit, AfterContentInit {
     tabs.remove(tab);
   }
 
-  activateTab(EsTabxDirective tab) {
+  void activateTab(EsTabxDirective tab) {
     if (tab.disabled) return;
 
     tabs.forEach((t) {
@@ -77,13 +86,13 @@ class EsTabsxComponents implements OnInit, AfterContentInit {
 /// Creates a tab which will be inside the [EsTabsxComponents]
 ///
 
-@Directive(selector: "es-tabx")
+@Directive(selector: 'es-tabx')
 class EsTabxDirective {
   EsTabxDirective(this._ref);
 
   final ChangeDetectorRef _ref;
 
-  @HostBinding("class.tab-pane")
+  @HostBinding('class.tab-pane')
   bool tabPane = true;
 
   /// provides the injected parent tabset
@@ -117,7 +126,7 @@ class EsTabxDirective {
 
   /// if tab is active equals true, or set `true` to activate tab
   @HostBinding('class.active')
-  get active => _active;
+  bool get active => _active;
 
   /// if tab is active equals true, or set `true` to activate tab
   @Input()
@@ -136,7 +145,7 @@ class EsTabxDirective {
 }
 
 /// Creates a new tab header template
-@Directive(selector: "template[bs-tabx-header]")
+@Directive(selector: 'template[bs-tabx-header]')
 class BsTabxHeaderDirective {
   /// constructs a [BsTabxHeaderDirective] injecting its own [templateRef] and its parent [tab]
   BsTabxHeaderDirective(this.templateRef);
