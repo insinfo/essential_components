@@ -25,7 +25,8 @@ class FaList implements AfterContentInit {
     List<FaListItem> childIcons;
 
     /// Implementation of AfterContentInit.
-    void ngAfterContentInit() {
+    @override
+  void ngAfterContentInit() {
         if (this.bullet != null) {
             _copyBulletToChildren();
         }
@@ -35,8 +36,8 @@ class FaList implements AfterContentInit {
     void _copyBulletToChildren() {
         for (var childIcon in childIcons) {
             if (childIcon.bullet == null) {
-                childIcon.bullet = this.bullet;
-                childIcon.group = this.group;
+                childIcon.bullet = bullet;
+                childIcon.group = group;
             }
         }
     }

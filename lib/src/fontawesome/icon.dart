@@ -13,9 +13,9 @@ class FaIcon implements OnInit {
 
   @Input()
   set name(String na) {
-    this.classes.remove('fa-$_name');
+    classes.remove('fa-$_name');
     _name = na;
-    this.classes['fa-$_name'] = true;
+    classes['fa-$_name'] = true;
   }
 
   get name {
