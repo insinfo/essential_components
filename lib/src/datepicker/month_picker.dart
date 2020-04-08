@@ -29,7 +29,7 @@ class EsMonthPickerComponent {
   String maxMode = 'year';
 
   bool get isDataPickerMaxMode => datePicker.datePickerMode == maxMode;
-  bool get isCurrentRowSelected => dt.current && !dt.selected;
+  bool isCurrentRowSelected(DisplayedDate dt) => dt.current && !dt.selected;
 
   Map<String, bool> selectColor(DisplayedDate dt) => {'btn-primary': dt.selected, 'btn-light': !dt.selected, 'active': dt.current, 'disabled': dt.disabled};
 

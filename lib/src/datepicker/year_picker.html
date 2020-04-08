@@ -42,7 +42,7 @@
               [ngClass]="selectColor(dt)"
               [disabled]="dt.disabled"
               (click)="$event.stopPropagation(); datePicker.select(dt.date)" tabindex="-1">
-        <span [class.font-weight-bold]="isCurrentRowSelected">{{dt.label}}</span>
+        <span [class.font-weight-bold]="isCurrentRowSelected(dt)">{{dt.label}}</span>
       </button>
 
     </td>
