@@ -8,7 +8,7 @@ class TextValidation {
   int maxLength;
   int fixedLength;
 
-  _withCustomMessageError() {
+  void _withCustomMessageError() {
       if (messageError != null && messageError.isNotEmpty) {
         throw BadRequestException(messageError);
       }
@@ -17,11 +17,11 @@ class TextValidation {
   static TextValidation init({ String value, String messageError, int minLength, int maxLength, int fixedLength }) {
     if (value != null || messageError != null || minLength != null || maxLength != null || fixedLength != null) {
       var textValidation = TextValidation();
-      textValidation.value = value != null ? value : null;
-      textValidation.messageError = messageError != null ? messageError : null;
-      textValidation.minLength = minLength != null ? minLength : null;
-      textValidation.maxLength = maxLength != null ? maxLength : null;
-      textValidation.fixedLength = fixedLength != null ? fixedLength : null;
+      textValidation.value = value ?? value;
+      textValidation.messageError = messageError ?? messageError;
+      textValidation.minLength = minLength ?? minLength;
+      textValidation.maxLength = maxLength ?? maxLength;
+      textValidation.fixedLength = fixedLength ?? fixedLength;
       return textValidation; 
     }
     return TextValidation();
@@ -40,11 +40,11 @@ class TextValidation {
   TextValidation whereSizeRangeIs(int minLength, int maxLength) {
     if (minLength >= maxLength) {
       _withCustomMessageError();
-      throw BadRequestException("The minimum size is less than or equal to the maximum size. If it is the same, use the fixed value method.");
+      throw BadRequestException('The minimum size is less than or equal to the maximum size. If it is the same, use the fixed value method.');
     }
 
     if (minLength < 0 || maxLength < 0) {
-      throw BadRequestException("The minimum size or the maximum size is less of zero.");
+      throw BadRequestException('The minimum size or the maximum size is less of zero.');
     }
 
     this.minLength = minLength;
@@ -56,7 +56,7 @@ class TextValidation {
   TextValidation isNull() {
     if (value == null) {
       _withCustomMessageError();
-      throw BadRequestException("The value is null.");
+      throw BadRequestException('The value is null.');
     }
     return this;
   }
@@ -64,7 +64,7 @@ class TextValidation {
   TextValidation isEmpty() {
     if (value.isEmpty) {
       _withCustomMessageError();
-      throw BadRequestException("The value is null.");
+      throw BadRequestException('The value is null.');
     }
     return this;
   }
@@ -72,7 +72,7 @@ class TextValidation {
   TextValidation isInvalidLength() {
     if (value.length < minLength || value.length > maxLength) {
       _withCustomMessageError();
-      throw BadRequestException("The value size is invalid length");
+      throw BadRequestException('The value size is invalid length');
     }
     return this;
   }
@@ -80,7 +80,7 @@ class TextValidation {
   TextValidation isNotEqualsSize() {
     if (value.length != fixedLength) {
       _withCustomMessageError();
-      throw BadRequestException("Value is not valid with fixed length");
+      throw BadRequestException('Value is not valid with fixed length');
     }
     return this;
   }
@@ -88,7 +88,7 @@ class TextValidation {
   TextValidation isEqualsSize() {
     if (value.length == fixedLength) {
       _withCustomMessageError();
-      throw BadRequestException("Value has equals length");
+      throw BadRequestException('Value has equals length');
     }
     return this;
   }
@@ -96,7 +96,7 @@ class TextValidation {
   TextValidation isEqualsTo(String outherValue) {
     if (value == outherValue) {
       _withCustomMessageError();
-      throw BadRequestException("The values are equals");
+      throw BadRequestException('The values are equals');
     }
     return this;
   }
