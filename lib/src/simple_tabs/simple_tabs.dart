@@ -1,17 +1,17 @@
 import 'dart:async';
-import "package:angular/angular.dart";
+import 'package:angular/angular.dart';
 
 /// Directives needed to create a tab-set
 const esTabsDirectives  =  [
    EsTabComponent,
    EsTabsComponent,
-   EsTabContentComponent, 
+   EsTabContentComponent,
    EsTabPanelDirective
 ];
 
 @Component(
-  selector: "es-tabs", 
-  templateUrl: 'simple_tabs.html', 
+  selector: 'es-tabs',
+  templateUrl: 'simple_tabs.html',
   directives: [coreDirectives]
 )
 class EsTabsComponent implements AfterContentInit {
@@ -31,6 +31,7 @@ class EsTabsComponent implements AfterContentInit {
   /// gets the selected tab
   EsTabComponent get selected => _selected;
 
+  @override
   void ngAfterContentInit() {
     _selected = tabs.firstWhere((EsTabComponent tab) => tab.active, orElse: () {
       final tab = tabs.first;
@@ -51,7 +52,7 @@ class EsTabsComponent implements AfterContentInit {
   String toAnchor(String path) => '#$path';
 }
 
-@Directive(selector: "template[esTab]")
+@Directive(selector: 'template[esTab]')
 class EsTabComponent {
   /// reference to the template
   TemplateRef templateRef;
@@ -86,6 +87,7 @@ class EsTabContentComponent implements AfterContentInit {
   /// Current tab panel
   EsTabPanelDirective get current => _current;
 
+  @override
   void ngAfterContentInit() {
     _setCurrent(target.selected);
     target.onTabChange.listen(_setCurrent);
