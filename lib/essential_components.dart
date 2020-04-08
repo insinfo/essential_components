@@ -4,7 +4,6 @@ library essential_components;
 export 'src/data_table/data_table.dart';
 export 'src/data_table/data_table_filter.dart';
 export 'src/data_table/datatable_render_interface.dart';
-export 'src/data_table/response_list.dart';
 
 //md toast
 export 'src/toast/toast.dart';
@@ -28,7 +27,7 @@ export 'src/modal/modal.dart';
 //simple dialog
 export 'src/simple_dialog/simple_dialog.dart';
 
-//simple loading 
+//simple loading
 export 'src/simple_loading/simple_loading.dart';
 
 //Simple Card Model
@@ -63,12 +62,6 @@ export 'src/directives/collapse.dart';
 export 'src/fontawesome/fontawesome.dart';
 
 //export 'src/feedparser/feedparser.dart';
-
-//REST API
-export 'src/rest/rest_response.dart';
-export 'src/rest/rest_client.dart';
-export 'src/rest/rest_client_generic.dart';
-export 'src/rest/uri_mu_proto.dart';
 
 // Timeline component
 export 'src/timeline/timeline_component.dart';

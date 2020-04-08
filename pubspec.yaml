@@ -1,6 +1,6 @@
 name: essential_components
 description: A library for AngularDart developers. This library will implement several key components for the fast development of web applications with AngularDart.
-version: 0.1.90
+version: 1.0.0
 
 homepage: https://github.com/insinfo/essential_components
 authors: 
@@ -15,6 +15,7 @@ dependencies:
   angular_components: '>=0.13.0 <0.15.0'
   angular_forms: '>=2.1.2 <2.5.0'
   angular_router: '>=2.0.0-alpha <2.5.0'
+  essential_rest: ^1.0.7
   intl: ^0.15.8
   #ng_fontawesome: ^5.7.2+2  
   decimal: ^0.3.5

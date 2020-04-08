@@ -7,6 +7,7 @@ import 'package:angular_forms/angular_forms.dart';
 import '../../utils/highlighting_js.dart';
 
 import 'package:highlight/highlight.dart';
+import 'package:essential_rest/essential_rest.dart';
 
 
 @Component(
