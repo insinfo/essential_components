@@ -1,4 +1,4 @@
-<div class="card" [ngClass]="{ 'displayCard': hiddenClose }" *ngIf="data != null">
+<div class="card" [class.displayCard]="hiddenClose" *ngIf="data != null">
     <div class="card-header header-elements-inline">
         <h5 class="card-title center-center" *ngIf="showHeaderTitle">{{ model.headerContent }}</h5>
         <div class="header-elements">

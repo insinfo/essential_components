@@ -9,12 +9,12 @@ import 'toggle.dart';
 import 'menu.dart';
 
 class AutoClose {
-  static const ALWAYS = "always",
+  static const ALWAYS = 'always',
                DISABLED = 'disabled',
                OUTSIDE_CLICK = 'outsideClick';
 }
 
-@Directive(selector: "es-dropdown, .dropdown")
+@Directive(selector: 'es-dropdown, .dropdown')
 class EsDropdownDirective implements OnInit, OnDestroy, AfterContentInit {
   HtmlElement elementRef;
 
@@ -90,6 +90,7 @@ class EsDropdownDirective implements OnInit, OnDestroy, AfterContentInit {
   EsDropdownToggleDirective dropdownToggle;
 
   /// initializes the dropdown attributes
+  @override
   ngOnInit() {
 //    autoClose ?? ALWAYS;
 //    keyboardNav ?? true;
@@ -98,12 +99,13 @@ class EsDropdownDirective implements OnInit, OnDestroy, AfterContentInit {
   }
 
   @override
-  ngAfterContentInit() {
+  void ngAfterContentInit() {
     dropdownToggle.dropdown = this;
   }
 
   /// removes the dropdown from the DOM
-  ngOnDestroy() {
+  @override
+  void ngOnDestroy() {
     if (dropdownAppendToBody && truthy(menuEl)) {
       menuEl.remove();
     }
@@ -126,12 +128,12 @@ class EsDropdownDirective implements OnInit, OnDestroy, AfterContentInit {
   /// focus the specified entry of dropdown in dependence of the [keyCode]
   focusDropdownEntry(num keyCode) {
     // If append to body is used.
-    Element hostEl = menuEl ?? elementRef.querySelectorAll("ul")[0];
+    var hostEl = menuEl ?? elementRef.querySelectorAll('ul')[0];
     if (hostEl == null) {
       // todo: throw exception?
       return;
     }
-    var elems = hostEl.querySelectorAll("a");
+    var elems = hostEl.querySelectorAll('a');
     if (elems == null || elems.isEmpty) {
       // todo: throw exception?
       return;
@@ -162,11 +164,11 @@ class EsDropdownDirective implements OnInit, OnDestroy, AfterContentInit {
   }
 
   /// focus toggle element
-  _focusToggleElement() {
+  void _focusToggleElement() {
     dropdownToggle.elementRef.focus();
   }
 
-  _keybindFilter(KeyboardEvent event) {
+  void _keybindFilter(KeyboardEvent event) {
     if (event.which == KeyCode.ESC) {
       _focusToggleElement();
       isOpen = false;

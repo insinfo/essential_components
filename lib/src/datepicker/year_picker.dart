@@ -31,6 +31,9 @@ class EsYearPickerComponent {
   /// gets the value of the starting year of the viewed group
   int getStartingYear(num year) => ((year - 1) ~/ datePicker.yearRange) * datePicker.yearRange + 1;
 
+  Map<String, bool> selectColor(DisplayedDate dt) => {'btn-primary': dt.selected, 'btn-light': !dt.selected, 'active': dt.current, 'disabled': dt.disabled};
+  bool isCurrentRowSelected(DisplayedDate dt) => dt.current && !dt.selected;
+
   refreshViewHandler() {
     List<DisplayedDate> years = List(datePicker.yearRange);
     DateTime date;

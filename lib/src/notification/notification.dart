@@ -39,6 +39,6 @@ class EssentialNotificationComponent {
 
   /// Produce a CSS style for the `top` property.
   String styleTop(int i) {
-    return (i * 110).toString() + "px";
+    return (i * 110).toString() + 'px';
   }
 }

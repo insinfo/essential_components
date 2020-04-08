@@ -36,10 +36,10 @@ class EsDayPickerComponent {
   /// provides the maximun mode that can be displayed
   String maxMode = 'year';
 
-  var disableToggleMode = { disabled: false };
-  var isDataPickerMaxMode = { disabled: datePicker.datePickerMode == maxMode };
-  var selectColorBtn = { 'btn-primary': dt.selected, 'btn-light': !dt.selected, active: dt.current, disabled: dt.disabled };
-  var typeTextToButton = {'text-muted': dt.secondary, 'font-weight-bold': dt.current && !dt.selected};
+  Map<String, bool> selectColorBtn(DisplayedDate dt) => { 'btn-primary': dt.selected, 'btn-light': !dt.selected, 'active': dt.current, 'disabled': dt.disabled };
+  Map<String, bool> typeTextToButton(DisplayedDate dt) => {'text-muted': dt.secondary, 'font-weight-bold': dt.current && !dt.selected};
+
+  bool get isDisabledMaxMode => datePicker.datePickerMode == maxMode;
 
   ///
   List<DateTime> getDates(DateTime startDate, num n) {

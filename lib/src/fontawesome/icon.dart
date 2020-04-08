@@ -13,9 +13,9 @@ class FaIcon implements OnInit {
 
   @Input()
   set name(String na) {
-    this.classes.remove('fa-$_name');
+    classes.remove('fa-$_name');
     _name = na;
-    this.classes['fa-$_name'] = true;
+    classes['fa-$_name'] = true;
   }
 
   get name {
@@ -100,37 +100,38 @@ class FaIcon implements OnInit {
 
   Map<String, bool> classes = {};
 
+  @override
   void ngOnInit() {
     render();
   }
 
-  render() {
+  void render() {
     var group = FaIcon.GROUP_CLASSES[this.group];
-    this.classes['fa-$name'] = true;
-    this.classes[group] = true;
-    if (this.size != null) {
-      this.classes['fa-$size'] = true;
+    classes['fa-$name'] = true;
+    classes[group] = true;
+    if (size != null) {
+      classes['fa-$size'] = true;
     }
-    this.classes['fa-fw'] = this.fw;
-    if (this.rotate != null) {
+    classes['fa-fw'] = fw;
+    if (rotate != null) {
       var rotate = FaIcon.ROTATE_CLASSES[this.rotate];
-      this.classes[rotate] = true;
+      classes[rotate] = true;
     }
-    if (this.flip != null) {
+    if (flip != null) {
       var flip = FaIcon.FLIP_CLASSES[this.flip];
-      this.classes[flip] = true;
+      classes[flip] = true;
     }
-    this.classes['fa-spin'] = this.spin;
-    this.classes['fa-pulse'] = this.pulse;
-    if (this.pull != null) {
+    classes['fa-spin'] = spin;
+    classes['fa-pulse'] = pulse;
+    if (pull != null) {
       var pull = FaIcon.PULL_CLASSES[this.pull];
-      this.classes[pull] = true;
+      classes[pull] = true;
     }
-    this.classes['fa-border'] = this.border;
-    this.classes['fa-inverse'] = this.inverse;
-    if (this.stack != null) {
+    classes['fa-border'] = border;
+    classes['fa-inverse'] = inverse;
+    if (stack != null) {
       var stack = FaIcon.STACK_CLASSES[this.stack];
-      this.classes[stack] = true;
+      classes[stack] = true;
     }
   }
 }

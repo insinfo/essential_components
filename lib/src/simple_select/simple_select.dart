@@ -74,7 +74,7 @@ class EssentialSimpleSelectComponent
     _styleClass = className;
   }
 
-  get styleClass {
+  String get styleClass {
     return _styleClass;
   }
 

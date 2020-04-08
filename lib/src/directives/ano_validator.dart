@@ -86,8 +86,12 @@ class MinLengthValidator implements Validator {
 class AnoValidator implements Validator {
   @override
   Map<String, dynamic> validate(AbstractControl control) {
-    int value = int.tryParse(control.value.toString()) != null ? int.tryParse(control.value.toString()) : 0;
-
+    int value;
+    if (int.tryParse(control.value.toString()) != null) {
+      value = int.tryParse(control.value.toString());
+    } else {
+      value = 0;
+    }
     return value < 1000
         ? {
             'anovalidator': {'valid': false}

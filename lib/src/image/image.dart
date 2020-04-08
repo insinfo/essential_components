@@ -9,8 +9,8 @@ import 'dart:html' as html;
     templateUrl: 'image.html',
     styleUrls: ['image.css'],
     directives: [coreDirectives, formDirectives, routerDirectives])
-class EssentialImageComponent implements AfterContentInit {
-  String _url = "";
+class EssentialImageComponent {
+  String _url = '';
   bool loading = true;
   bool isError = false;
 
@@ -21,32 +21,32 @@ class EssentialImageComponent implements AfterContentInit {
   bool showUrl = false;
 
   @Input()
-  String containerClass = "";
+  String containerClass = '';
 
   @Input()
-  String imgClass = "img-fluid";
+  String imgClass = 'img-fluid';
 
   @Input()
-  String containerStyle = "";
+  String containerStyle = '';
 
   @Input()
-  String imgStyle = "";
+  String imgStyle = '';
 
   @Input()
-  String title = "";
+  String title = '';
 
   @Input()
-  String alt = "";
+  String alt = '';
 
   String get url {
-    return this._url;
+    return _url;
   }
 
   @Input()
   set url(String u) {
-    this.isError = false;
-    this.loading = true;
-    this._url = u;
+    isError = false;
+    loading = true;
+    _url = u;
   }
 
   final _onClickStreamController = StreamController<String>();
@@ -54,25 +54,23 @@ class EssentialImageComponent implements AfterContentInit {
   @Output()
   Stream<String> get click => _onClickStreamController.stream;
 
-  onClickHandle(e) {
+  void onClickHandle(e) {
     _onClickStreamController.add(url);
   }
 
   @HostListener('click')
-  onClick() {
+  void onClick() {
     _onClickStreamController.add(url);
   }
 
-  onLoad() {
-    //print("EssentialImageComponent@onLoad $loading url: $url");
-    this.loading = false;
+  void onLoad() {
+    //print('EssentialImageComponent@onLoad $loading url: $url');
+    loading = false;
   }
 
-  onError() {
-    //print("EssentialImageComponent@onError $loading url: $url");
-    this.loading = false;
+  void onError() {
+    //print('EssentialImageComponent@onError $loading url: $url');
+    loading = false;
   }
 
-  @override
-  ngAfterContentInit() {}
 }

@@ -65,7 +65,7 @@ class EssentialDropdownDialogComponent implements ControlValueAccessor, AfterVie
   ///
   /// It can be one of the following:
   /// {"button", "submit", "menu", "reset"}
-  String type = "button";
+  String type = 'button';
 
   //contrutor
   EssentialDropdownDialogComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
