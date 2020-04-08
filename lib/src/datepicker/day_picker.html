@@ -41,7 +41,7 @@
       </td>
       <td *ngFor="let dt of row" class="text-center" role="gridcell">
         <button type="button" class="btn btn-sm"
-          [ngClass]="selectColorBtn"
+          [ngClass]="selectColorBtn(dt)"
           [disabled]="dt.disabled" (click)="datePicker.select(dt.date)" tabindex="-1">
           <span [ngClass]="typeTextToButton(dt)">{{dt.label}}</span>
         </button>
