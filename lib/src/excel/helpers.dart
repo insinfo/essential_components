@@ -16,19 +16,19 @@ class Helpers {
   }
 
   String cellName(int colIndex, int rowIndex) {
-    var r = cellNameH(colIndex) + rowIndex.toString();    
+    var r = cellNameH(colIndex) + rowIndex.toString();
     return r;
   }
 
-  cellNameH(int i) {
+  String cellNameH(int i) {
     var rest = (i / 26).floor() - 1;
     var s = (rest > -1 ? cellNameH(rest) : '');
-    return s + charAt("ABCDEFGHIJKLMNOPQRSTUVWXYZ", (i % 26));
+    return s + charAt('ABCDEFGHIJKLMNOPQRSTUVWXYZ', (i % 26));
   }
 
-  charAt(String value, int index) {
+  String charAt(String value, int index) {
     if ((index < 0) || (index >= value.length)) {
-      throw Exception("StringIndexOutOfBoundsException $index");
+      throw Exception('StringIndexOutOfBoundsException $index');
     }
     return value[index];
   }

@@ -7,25 +7,25 @@ import 'package:intl/intl.dart';
 import 'package:archive/archive.dart';
 
 class MyExcel {
-  List<String> borderKind = ["left", "right", "top", "bottom"];
+  List<String> borderKind = ['left', 'right', 'top', 'bottom'];
   // Not implementing diagonal borders, as they require an additonal attributes: diagonalUp diagonalDown
-  List<String> horAlign = ["LEFT", "CENTER", "RIGHT", "NONE"];
-  List<String> vertAlign = ["TOP", "CENTER", "BOTTOM", "NONE"];
-  Map align = {"L": "left", "C": "center", "R": "right", "T": "top", "B": "bottom", "W": "wrapText"};
+  List<String> horAlign = ['LEFT', 'CENTER', 'RIGHT', 'NONE'];
+  List<String> vertAlign = ['TOP', 'CENTER', 'BOTTOM', 'NONE'];
+  Map align = {'L': 'left', 'C': 'center', 'R': 'right', 'T': 'top', 'B': 'bottom', 'W': 'wrapText'};
 
-  componentToHex(int c) {
-    String hex = c.toRadixString(16);
-    return hex.length == 1 ? "0" + hex : hex;
+  dynamic componentToHex(int c) {
+    var hex = c.toRadixString(16);
+    return hex.length == 1 ? '0' + hex : hex;
   }
 
-  rgbToHex(int r, int g, int b) {
+  String rgbToHex(int r, int g, int b) {
     if (r == null || g == null || b == null) return null;
     return (componentToHex(r) + componentToHex(g) + componentToHex(b)).toUpperCase();
   }
 
-  toExcelUTCTime(DateTime date1) {
+  dynamic toExcelUTCTime(DateTime date1) {
     //javascript = new Date().getTime() = DateTime.now().millisecondsSinceEpoch
-    int d2 = (date1.millisecondsSinceEpoch / 1000).floor(); // Number of seconds since JS epoch
+    var d2 = (date1.millisecondsSinceEpoch / 1000).floor(); // Number of seconds since JS epoch
     d2 = (d2 / 86400).floor() + 25569; // Days since epoch plus difference in days between Excel EPOCH and JS epoch
     //getUTCSeconds
     var utcSeconds = int.tryParse(DateFormat('s').format(date1));
@@ -42,20 +42,20 @@ class MyExcel {
   List<String> BuiltInFormats = [];
   int baseFormats = 166; // Formats below this one are builtInt
   List<String> borderStyles = [
-    "none",
-    "thin",
-    "medium",
-    "dashed",
-    "dotted",
-    "thick",
-    "double",
-    "hair",
-    "mediumDashed",
-    "dashDot",
-    "mediumDashDot",
-    "dashDotDot",
-    "mediumDashDotDot",
-    "slantDashDot"
+    'none',
+    'thin',
+    'medium',
+    'dashed',
+    'dotted',
+    'thick',
+    'double',
+    'hair',
+    'mediumDashed',
+    'dashDot',
+    'mediumDashDot',
+    'dashDotDot',
+    'mediumDashDotDot',
+    'slantDashDot'
   ];
   var formats; //formats = BuiltInFormats
   List<String> borderStylesUpper = [];
@@ -64,7 +64,7 @@ class MyExcel {
   var reHasUnescapedHtml = RegExp("[&<>\"']");
   var htmlEscapes = {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'};
 
-  basePropertyOf(object) {
+  dynamic basePropertyOf(object) {
     return (key) {
       return object == null ? null : object[key];
     };
@@ -133,19 +133,19 @@ class MyExcel {
     formats = BuiltInFormats;
   }
 
-  init() {
+  Map init() {
     var excel = {};
 
     var sheets = createSheets(); //  Create Excel  sheets
     var styles = createStyleSheet(); //  Create Styles   sheet
-    sheets["add"]("Sheet 0"); // At least we have a [Sheet 0]
+    sheets['add']('Sheet 0'); // At least we have a [Sheet 0]
 
-    excel["addSheet"] = (String name) {
-      if (name == null) name = "Sheet " + sheets.length;
+    excel['addSheet'] = (String name) {
+      name ??= 'Sheet ' + sheets.length;
       return sheets.add(name);
     };
 
-    excel["addStyle"] = (a) {
+    excel['addStyle'] = (a) {
       return styles.add(a);
     };
 
@@ -153,11 +153,9 @@ class MyExcel {
     // 		We can use parameter notation excel.set(sheetValue,columnValue,rowValue,cellValue,styleValue)
     // 		Or object notation excel.set({sheet:sheetValue,column:columnValue,row:rowValue,value:cellValue,style:styleValue })
     // 		null or 0 are used as default values for undefined entries
-    excel["set"] = (s, int column, int row, value, style, colspan) {
+    excel['set'] = (s, int column, int row, value, style, colspan) {
       // If using Object form, expand it
-      if (s == null) {
-        s = 0;
-      } // Use default sheet
+      s ??= 0; // Use default sheet
       s = sheets['get'](s);
       // If this is a sheet operation
       /*if (!isNumeric(column) && !isNumeric(row)) {
@@ -166,7 +164,7 @@ class MyExcel {
       //if (isNumeric(column)) {
         // If this is a column operation
         //if (isNumeric(row)) {
-          var isstring = style != null && styles['getStyle'](style - 1)["isstring"];
+          var isstring = style != null && styles['getStyle'](style - 1)['isstring'];
           return setCell(s['getCell'](column, row), value, style, isstring,
               colspan); // and also a ROW operation the this is a CELL operation
        // }
@@ -177,20 +175,20 @@ class MyExcel {
 
     };
 
-    excel["freezePane"] = (s, x, y) {
+    excel['freezePane'] = (s, x, y) {
       sheets.get(s).freezePane(x, y);
     };
 
-    excel["generate"] = (filename) {
+    excel['generate'] = (filename) {
       /*CombineStyles(sheets.sheets, styles);
             var zip =  JSZip();                                                                              // Create a ZIP file
-            zip.file('_rels/.rels', sheets.toRels());                                                           // Add WorkBook RELS   
+            zip.file('_rels/.rels', sheets.toRels());                                                           // Add WorkBook RELS
             var xl = zip.folder('xl');                                                                          // Add a XL folder for sheets
             xl.file('workbook.xml', sheets.toWorkBook());                                                       // And a WorkBook
             xl.file('styles.xml', styles.toStyleSheet());                                                       // Add styles
             xl.file('_rels/workbook.xml.rels', sheets.toWorkBookRels());                                        // Add WorkBook RELs
             zip.file('[Content_Types].xml', sheets.toContentType());                                            // Add content types
-            sheets.fileData(xl);                                                                                // Zip the rest    
+            sheets.fileData(xl);                                                                                // Zip the rest
             zip.generateAsync({ type: "blob",mimeType:"application/vnd.ms-excel" }).then( (content) { saveAs(content, filename); });        // And generate !!!
             */
     };
@@ -207,44 +205,44 @@ class MyExcel {
 
   // --------------------- BEGIN of generic UTILS
 
-  findOrAdd(List list, dynamic value) {
+  int findOrAdd(List list, dynamic value) {
     var i = list.indexOf(value);
     if (i != -1) return i;
     list.add(value);
     return list.length - 1;
   }
 
-  pushV(List list, dynamic value) {
+  dynamic pushV(List list, dynamic value) {
     list.add(value);
     return value;
   }
 
-  pushI(List list, dynamic value) {
+  dynamic pushI(List list, dynamic value) {
     list.add(value);
     return list.length - 1;
   }
 
-  setV(list, int index, dynamic value) {
+  dynamic setV(list, int index, dynamic value) {
     list[index] = value;
     return value;
   }
   // --------------------- END of generic UTILS
 
   // --------------------- BEGIN Handling of sheets
-  toWorkBookSheet(sheet) {
+  String toWorkBookSheet(sheet) {
     return '<sheet state="visible" name="${sheet.name}" sheetId="${sheet.id}" r:id="${sheet.rId}"/>';
   }
 
-  toWorkBookRel(sheet, i) {
+  String toWorkBookRel(sheet, i) {
     return '<Relationship Id="${sheet.rId}" Target="worksheets/sheet${i}.xml" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"/>';
   }
 
-  getAsXml(sheet) {
+  String getAsXml(sheet) {
     return templateSheet
         .replaceAll('{views}', generateViews(sheet['views']))
         .replaceAll('{columns}', generateColums(sheet['columns']))
-        .replaceAll("{rows}", generateRows(sheet['rows'], sheet['mergeCells']))
-        .replaceAll("{mergeCells}", generateMergeCells(sheet['mergeCells']));
+        .replaceAll('{rows}', generateRows(sheet['rows'], sheet['mergeCells']))
+        .replaceAll('{mergeCells}', generateMergeCells(sheet['mergeCells']));
   }
 
   String name;
@@ -254,35 +252,35 @@ class MyExcel {
   List views = [];
 
   // ------------------- BEGIN Sheet DATA Handling
-  setSheet(value, style, size) {
-    this.name = value; // The only think that we can set in a sheet Is the name
+  void setSheet(value, style, size) {
+    name = value; // The only think that we can set in a sheet Is the name
   }
 
-  getRow(y) {
-    return (this.rows[y]
-        ? this.rows[y]
-        : setV(this.rows, y, {"cells": []})); // If there is a row return it, otherwise create it and return it
+  dynamic getRow(y) {
+    return (rows[y]
+        ? rows[y]
+        : setV(rows, y, {'cells': []})); // If there is a row return it, otherwise create it and return it
   }
 
-  getColumn(x) {
-    return (this.columns[x]
-        ? this.columns[x]
-        : setV(this.columns, x, {})); // If there is a column return it, otherwise create it and return it
+  dynamic getColumn(x) {
+    return (columns[x]
+        ? columns[x]
+        : setV(columns, x, {})); // If there is a column return it, otherwise create it and return it
   }
 
-  getCell(x, y) {
-    var row = this.getRow(y).cells; // Get the row a,d its DATA component
+  dynamic getCell(x, y) {
+    var row = getRow(y).cells; // Get the row a,d its DATA component
     return (row[x] ? row[x] : setV(row, x, {}));
   }
 
-  setCell(cell, value, style, isstring, colspan) {
+  void setCell(cell, value, style, isstring, colspan) {
     if (value != null) cell.v = value;
     cell.isstring = isstring;
     if (style) cell.s = style;
     if (colspan) cell.colspan = colspan;
   }
 
-  setColumn(column, value, style) {
+  void setColumn(column, value, style) {
     if (value != null) column.wt = value;
     if (style) column.style = style;
   }
@@ -291,26 +289,27 @@ class MyExcel {
     if (s == null) {
       return false;
     }
+    // ignore: deprecated_member_use
     return double.parse(s, (e) => null) != null;
   }
 
-  setRow(row, value, style) {
+  void setRow(row, value, style) {
     if (value && isNumeric(value)) row['ht'] = value;
     if (style) row['style'] = style;
   }
 
-  freezePane(x, y) {
-    var pane = {"topLeftCell": cellName(x, y)};
+  void freezePane(x, y) {
+    var pane = {'topLeftCell': cellName(x, y)};
     if (x >= 0) {
-      pane["xSplit"] = x;
+      pane['xSplit'] = x;
     }
     if (y >= 0) {
-      pane["ySplit"] = y - 1;
+      pane['ySplit'] = y - 1;
     }
     var view = {
-      "panes": [pane]
+      'panes': [pane]
     };
-    view["workbookViewId"] = pushI(this.views, view);
+    view['workbookViewId'] = pushI(views, view);
   }
   // ------------------- END Sheet DATA Handling
 
@@ -901,13 +900,13 @@ class MyExcel {
     excel["generate"] = (filename) {
       /*CombineStyles(sheets.sheets, styles);
             var zip =  JSZip();                                                                              // Create a ZIP file
-            zip.file('_rels/.rels', sheets.toRels());                                                           // Add WorkBook RELS   
+            zip.file('_rels/.rels', sheets.toRels());                                                           // Add WorkBook RELS
             var xl = zip.folder('xl');                                                                          // Add a XL folder for sheets
             xl.file('workbook.xml', sheets.toWorkBook());                                                       // And a WorkBook
             xl.file('styles.xml', styles.toStyleSheet());                                                       // Add styles
             xl.file('_rels/workbook.xml.rels', sheets.toWorkBookRels());                                        // Add WorkBook RELs
             zip.file('[Content_Types].xml', sheets.toContentType());                                            // Add content types
-            sheets.fileData(xl);                                                                                // Zip the rest    
+            sheets.fileData(xl);                                                                                // Zip the rest
             zip.generateAsync({ type: "blob",mimeType:"application/vnd.ms-excel" }).then( (content) { saveAs(content, filename); });        // And generate !!!
             */
     };

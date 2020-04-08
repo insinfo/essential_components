@@ -18,7 +18,7 @@ import './models/content_types.dart';
 
 class SimpleXLSX {
   List<List<String>> data = List<List<String>>();
-  String _sheetName = "Sheet 1";
+  String _sheetName = 'Sheet 1';
 
   SimpleXLSX() {}
 
@@ -28,24 +28,24 @@ class SimpleXLSX {
     }
   }
 
-  get sheetName {
+  String get sheetName {
     return _sheetName;
   }
 
-  addRow(List<String> row) {
+  void addRow(List<String> row) {
     data.add(row);
   }
 
-  setData(data) {
+  void setData(data) {
     if (data != null) {
       this.data = data;
     }
   }
 
-  build() {
-    int workbookRelationId = 1;
-    int styleRelationId = 2;
-    int sheetRelationId = 3;
+  void build() {
+    var workbookRelationId = 1;
+    var styleRelationId = 2;
+    var sheetRelationId = 3;
 
     //_rels/.rels
     var rootRels = Relationships();
@@ -71,10 +71,10 @@ class SimpleXLSX {
     //worksheet.addConlSettings(Col());
     //preenche com os dados
     if (data != null) {
-      int rowIndex = 1;
+      var rowIndex = 1;
       data.forEach((value) {
         var row = Row(rowIndex);
-        int cellIndex = 0;
+        var cellIndex = 0;
         value.forEach((v) {
           row.addCellText(v, cellIndex: cellIndex);
           cellIndex++;
@@ -98,13 +98,14 @@ class SimpleXLSX {
     var workbookBytes = workbook.toFileBytes();
     var styleSheetBytes = styleSheet.toFileBytes();
 
-    Archive archive = Archive();
+    var archive = Archive();
     archive.addFile(ArchiveFile('_rels/.rels', rootRelsBytes.length, rootRelsBytes));
     archive.addFile(ArchiveFile('[Content_Types].xml', contentTypesBytes.length, contentTypesBytes));
     archive.addFile(ArchiveFile('xl/_rels/workbook.xml.rels', xlRelsBytes.length, xlRelsBytes));
     archive.addFile(ArchiveFile('xl/worksheets/sheet1.xml', worksheetBytes.length, worksheetBytes));
     archive.addFile(ArchiveFile('xl/workbook.xml', workbookBytes.length, workbookBytes));
     archive.addFile(ArchiveFile('xl/styles.xml', styleSheetBytes.length, styleSheetBytes));
+    // ignore: omit_local_variable_types
     List<int> encodedzipdata = ZipEncoder().encode(archive);
 
     //application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
@@ -113,7 +114,7 @@ class SimpleXLSX {
     var downloadUrl = Url.createObjectUrlFromBlob(blob);
 
     AnchorElement(href: downloadUrl)
-      ..setAttribute("download", "dados.xlsx") //xlsx
+      ..setAttribute('download', 'dados.xlsx') //xlsx
       ..click();
   }
 }
