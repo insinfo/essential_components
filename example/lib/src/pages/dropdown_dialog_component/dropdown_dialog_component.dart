@@ -2,6 +2,7 @@ import 'package:angular/angular.dart';
 import 'package:essential_components/essential_components.dart';
 import 'package:example/src/models/person.dart';
 import 'package:example/src/services/person_service.dart';
+import 'package:essential_rest/essential_rest.dart';
 
 @Component(
   selector: 'dropdown-dialog-component',

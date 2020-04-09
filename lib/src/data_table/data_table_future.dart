@@ -6,7 +6,7 @@ import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 
 import 'datatable_render_interface.dart';
-import 'response_list.dart';
+import 'package:essential_rest/essential_rest.dart';
 import 'data_table_filter.dart';
 
 //utils
