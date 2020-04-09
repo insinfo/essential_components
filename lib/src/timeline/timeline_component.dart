@@ -3,9 +3,8 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:essential_components/src/directives/essential_inner_html_directive.dart';
 
-import '../../essential_components.dart';
-
 import 'dart:html' as html;
+import 'package:essential_rest/essential_rest.dart';
 
 class TimelineModel {
   String contentTitle;
@@ -22,12 +21,11 @@ abstract class TimelineRender {
 }
 
 @Component(
-  selector: 'es-timeline',
-  templateUrl: 'timeline_component.html',
-  styleUrls: ['timeline_component.css'],
-  pipes: [ commonPipes ],
-  directives: [coreDirectives, EssentialInnerHTMLDirective]
-)
+    selector: 'es-timeline',
+    templateUrl: 'timeline_component.html',
+    styleUrls: ['timeline_component.css'],
+    pipes: [commonPipes],
+    directives: [coreDirectives, EssentialInnerHTMLDirective])
 class EssentialTimelineComponent implements OnDestroy, OnInit {
   @Input()
   RList<TimelineRender> data = RList<TimelineRender>();
@@ -47,7 +45,7 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
 
   @Output()
   Stream<TimelineRender> get onUpdate => _onUpdate.stream;
-  
+
   @Output()
   Stream<TimelineRender> get onRemove => _onRemove.stream;
 
@@ -58,7 +56,7 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
     e.stopPropagation();
     if (isDropDownOpen) {
       dropdown.classes.remove('show');
-      isDropDownOpen = false; 
+      isDropDownOpen = false;
     }
   }
 
@@ -129,8 +127,8 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
   void toggleDropdownOption(e) {
     e.stopPropagation();
     html.HtmlElement element = e.target;
-    var elementSelected = element.closest('.card-footer').querySelector('.dropdown-options'); 
-    
+    var elementSelected = element.closest('.card-footer').querySelector('.dropdown-options');
+
     if (!elementSelected.classes.contains('show')) {
       elementSelected.classes.add('show');
       isDropDownOpen = true;
@@ -145,5 +143,4 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
       isDropDownOpen = false;
     }
   }
-  
 }

@@ -3,6 +3,7 @@ import 'package:essential_components/essential_components.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:example/src/models/person.dart';
 import 'package:example/src/services/person_service.dart';
+import 'package:essential_rest/essential_rest.dart';
 
 @Component(
   selector: 'simple-select-component',

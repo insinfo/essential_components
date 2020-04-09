@@ -7,7 +7,7 @@ import 'package:angular_forms/angular_forms.dart';
 
 import '../data_table/data_table.dart';
 import '../data_table/datatable_render_interface.dart';
-import '../data_table/response_list.dart';
+import 'package:essential_rest/essential_rest.dart';
 
 import '../data_table/data_table_filter.dart';
 import '../modal/modal.dart';

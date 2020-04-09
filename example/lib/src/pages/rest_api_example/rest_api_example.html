@@ -14,7 +14,7 @@
                 <pre class="language-dart line-numbers"><code class="language-dart" [innerHtml]="codeFileUploadingExample"></code></pre>
             </div>
             <div class="col-12">             
-                <input #fileInput type="file" name="file" multiple>
+                <input #fileInput id="fileInput" type="file" name="file" multiple>
                 <input (click)="upload($event)" type="button" value="Enviar" />
             </div>
         </div>

@@ -7,7 +7,7 @@ import 'package:angular_forms/angular_forms.dart';
 
 import '../data_table/data_table.dart';
 import '../data_table/datatable_render_interface.dart';
-import '../data_table/response_list.dart';
+
 
 import '../data_table/data_table_filter.dart';
 import '../modal/modal.dart';
@@ -128,7 +128,7 @@ class EssentialSimpleSelectComponent
   /// It can be one of the following:
   /// {"select", "button"}
   /// displaytype="button"
-  String _displaytype = "select";
+  String _displaytype = 'select';
 
   @Input('displaytype')
   set displaytype(String value) {
