@@ -1,7 +1,7 @@
 import 'package:essential_components/essential_components.dart';
 import 'package:essential_components/src/core/helper.dart';
 
-class Person implements IDataTableRender, ISimpleSelectRender {
+class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
   int id;
   String name;
   int age;
@@ -11,7 +11,24 @@ class Person implements IDataTableRender, ISimpleSelectRender {
   bool enable;
   String description;
 
-  Person();
+  @override
+  TimelineModel getModel;
+
+  Person() {
+    timelineInit();
+  }
+
+  timelineInit() {
+    getModel = TimelineModel();
+    getModel.contentTitle = this.name;
+    getModel.contentMutedSubtitle = 'Age: ${this.age}';
+    getModel.description = 'Description is Hero';
+    getModel.category = 'Category to Separation';
+    getModel.update = DateTime.now();
+    getModel.icon = 'icon-rocket';
+    getModel.color = 'success-300';
+  }
+
 
   String get birthdayAsString {
     var dt = birthday != null ? birthday.toIso8601String().substring(0, 10) : "";
@@ -89,7 +106,7 @@ class Person implements IDataTableRender, ISimpleSelectRender {
       title: 'Birthday',
       type: DataTableColumnType.date
     ));
-    
+
     settings.addSet(DataTableColumn(
       key: 'enable',
       value: enable,
@@ -103,7 +120,7 @@ class Person implements IDataTableRender, ISimpleSelectRender {
       limit: 100,
       type: DataTableColumnType.text
     ));
-    
+
     return settings;
   }
 
@@ -112,6 +129,8 @@ class Person implements IDataTableRender, ISimpleSelectRender {
     return name;
   }
 
-  
+
+
+
 
 }

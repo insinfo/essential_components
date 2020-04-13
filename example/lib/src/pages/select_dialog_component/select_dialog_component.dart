@@ -37,4 +37,30 @@ class SelectDialogComponent implements OnInit {
     });
   }
 
+  String dartCode = '''
+  Person person = Person();
+  RList<Person> persons = RList<Person>();
+
+  PersonService _service;
+  SelectDialogComponent(this._service);
+
+  @override
+  void ngOnInit() {
+    findAll();
+  }
+
+  findAll() {
+    _service.findAll().then((RestResponseGeneric resp) {
+      if (resp.statusCode == 200) {
+        persons = resp.dataTypedList;
+      }
+    });
+  }
+  ''';
+
+  String htmlCode = '''
+  <es-select-dialog [data]="persons" [(ngModel)]="person"></es-select-dialog>
+  ''';
+
+
 }

@@ -5,7 +5,36 @@
             <p>This component is incredible. It is a card that works as a suspended div as well. The coolest thing is that the instructions are allocated in cache within the browser's storage. And the data passed to it is polymorphic. That is, it is necessary to create specific classes that can implement SimpleCardRender, and in the generated method, the information can be returned to be rendered.</p>
         </div>
 
-        <es-simple-card [data]="simple"></es-simple-card>
+
+
+
+        <es-tabsx #tabs1>
+            <es-tabx header="Preview">
+                <div class="row">
+                    <div class="col-12">
+                        <es-simple-card [data]="simple"></es-simple-card>
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Html">
+                <div class="row">
+                    <div class="col-12">
+                        <pre class="language-markup line-numbers"><code class="language-markup line-numbers" [innerHtml]="htmlCode"></code></pre>
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Dart">
+                <div class="row">
+                    <div class="col-12">
+                        <h6>in component code example</h6>
+                    </div>
+                    <div class="col-12">
+                        <pre class="language-dart line-numbers"><code class="language-dart" [innerHtml]="dartCode"></code></pre>
+                    </div>
+                </div>
+            </es-tabx>
+
+        </es-tabsx>
         
     </div>
 </div>

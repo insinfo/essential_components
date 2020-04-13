@@ -8,10 +8,38 @@ import 'package:essential_components/essential_components.dart';
   directives: [
     coreDirectives,
     esDynamicTabsDirectives,
+    EssentialToastComponent
   ],
   exports: [],
-  providers: []
+  providers: [
+
+  ]
 )
 class ToastExComponent {
+
+  @ViewChild('toast')
+  EssentialToastComponent toast;
+
+  execute() {
+    toast.duration = Duration(seconds: 5);
+    toast.showToast('Hello toast', type: ToastType.success);
+  }
+
+  String dartCode = '''
+  @ViewChild('toast')
+  EssentialToastComponent toast;
+
+  execute() {
+    toast.duration = Duration(seconds: 5);
+    toast.showToast('Hello toast', type: ToastType.success);
+  }
+  ''';
+
+
+  String htmlCode = '''
+  '<button class="btn bg-primary" (click)="execute()">Toast Example</button>
+  <es-toast #toast></es-toast>'
+  ''';
+
 
 }
