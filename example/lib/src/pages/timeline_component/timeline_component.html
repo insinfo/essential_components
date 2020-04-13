@@ -4,7 +4,50 @@
             <h1>Timeline</h1>
             <p>This component creates a timeline based on a list of data. Its implementation is simple. See the example below:</p>
         </div>
-        
+
+
+
+
+
+        <es-tabsx #tabs1>
+            <es-tabx header="Preview">
+                <div class="row">
+                    <div class="col-12">
+                        <es-timeline [data]="persons"></es-timeline>
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Html">
+                <div class="row">
+                    <div class="col-12">
+                        <pre class="language-markup line-numbers"><code class="language-markup line-numbers" [innerHtml]="codeHtml"></code></pre>
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Dart">
+                <div class="row">
+                    <div class="col-12">
+                        <h6>in component code example</h6>
+                    </div>
+                    <div class="col-12">
+                        <pre class="language-dart line-numbers"><code class="language-dart" [innerHtml]="codeComponent"></code></pre>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <br>
+                        <h6>Model Code</h6>
+                    </div>
+
+                    <div class="col-12">
+                        <pre class="language-dart line-numbers"><code class="language-dart" [innerHtml]="modelCode"></code></pre>
+                    </div>
+
+                </div>
+            </es-tabx>
+
+        </es-tabsx>
+
     </div>
 </div>
 

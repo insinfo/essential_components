@@ -13,9 +13,7 @@ import '../rest_api_example/rest_api_example.dart';
 import '../select_dialog_component/select_dialog_component.dart';
 import '../simple_card_example/simple_card_example.dart';
 import '../simple_dialog_component/simple_dialog_component.dart';
-import '../simple_loading_component/simple_loading_component.dart';
 import '../simple_select_component/simple_select_component.dart';
-import '../simple_tabs_component/simple_tabs_component.dart';
 import '../timeline_component/timeline_component.dart';
 import '../toast_component/toast_component.dart';
 import '../recaptcha_example/recaptcha_example.dart';
@@ -39,7 +37,6 @@ import '../recaptcha_example/recaptcha_example.dart';
     SimpleCardComponent,
     ExSimpleDialogComponent,   
     SimpleSelectComponent,
-    SimpleTabsComponent,
     TimelineExComponent,
     ToastExComponent,
     RecaptchaExample
