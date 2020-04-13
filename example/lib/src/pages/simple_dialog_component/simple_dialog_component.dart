@@ -15,9 +15,18 @@ import 'package:essential_components/essential_components.dart';
 )
 class ExSimpleDialogComponent {
 
+  String htmlCode = '''
+  <button class="btn btn-primary" (click)="showAlert()">Execute Alert</button>
+''';
+  String dartCode = '''
   SimpleDialogComponent dialog;
 
-  ExSimpleDialogComponent();
+  showAlert() {
+    SimpleDialogComponent.showAlert('Legal! Yes shure!', title: 'Success', detailLabel: 'Detail label', dialogColor: DialogColor.SUCCESS, subMessage: 'Estou muito orgulhoso de você!');
+  }
+  ''';
+
+  SimpleDialogComponent dialog;
 
   showAlert() {
     SimpleDialogComponent.showAlert('Legal! Yes shure!', title: 'Success', detailLabel: 'Detail label', dialogColor: DialogColor.SUCCESS, subMessage: 'Estou muito orgulhoso de você!');

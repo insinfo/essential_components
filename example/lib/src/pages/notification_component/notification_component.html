@@ -4,7 +4,47 @@
             <h1>Notification Component</h1>
             <p>Notification is an important element in Essential Components. It adds a layer that works as a stack, and that communication works through a service. Although its operation is complex, the implementation of its component is simple, and it will be a little different from the other ways that a component is instantiated. Follow the example below:</p>
         </div>
-        
+
+        <h2>Como usar?</h2>
+        <ul>
+            <li>É preciso importar a classe de serviço no arquivo AppComponent</li>
+            <li>A instância precisa ser estática.</li>
+            <li>Quando for necessário chamar a notificação, não é necessário ter que instanciar o AppComponent. Basta chamar a classe estatica de serviços e chamar o metodo adicionar, para adicionar um toast de notificação na pilha. ceja o exemplo abaixo:</li>
+        </ul>
+
+
+        <es-tabsx #tabs1>
+            <es-tabx header="Preview">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-body">
+                            <button class="btn bg-primary" (click)="execute()">Excute example</button>
+                        </div>
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Html In AppComponent">
+                <div class="row">
+                    <div class="col-12">
+                        <pre class="language-html line-numbers"><code class="language-html" [innerHtml]="codeHtml"></code></pre>
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="AppComponent">
+                <div class="row">
+                    <div class="col-12">
+                        <pre class="language-html line-numbers"><code class="language-html" [innerHtml]="appComponent"></code></pre>
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Dart">
+                <div class="row">
+                    <div class="col-12">
+                        <pre class="language-dart line-numbers"><code class="language-dart" [innerHtml]="codeDart"></code></pre>
+                    </div>
+                </div>
+            </es-tabx>
+        </es-tabsx>
     </div>
 </div>
 

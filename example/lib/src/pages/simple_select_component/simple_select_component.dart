@@ -42,5 +42,46 @@ class SimpleSelectComponent implements OnInit {
     });
   }
 
+
+  String htmlCode = '''
+  <es-simple-select [(ngModel)]="person" displaytype="button" buttonText="Selecione"
+                                                  [options]="persons" [color]="color">
+                                    <es-simple-select-option [value]="null" [disable]="true">Abobora</es-simple-select-option>
+                                    <es-simple-select-option [value]="null" [disable]="true">Maça</es-simple-select-option>
+                                </es-simple-select>
+''';
+
+  String dartCode = '''
+PersonService _personService;
+RList<Person> persons = RList<Person>();
+Person person;
+StyleType color = StyleType.SUCCESS;
+
+SimpleSelectComponent(this._personService);
+
+@override
+void ngOnInit() {
+  findAllPerson();
+}
+
+void findAllPerson() {
+  _personService.findAll().then((RestResponseGeneric resp) {
+    if (resp.status == RestStatus.SUCCESS) {
+      persons = resp.dataTypedList;
+    }
+  });
+}
+''';
+
+  String modelCode = '''
+  class Person implements ISimpleSelectRender {
+  String name;
+  @override
+  String getDisplayName() {
+    return name;
+  }
+} 
+  ''';
+
   
 }
