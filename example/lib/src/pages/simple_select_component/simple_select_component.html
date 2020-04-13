@@ -25,20 +25,60 @@
             interface called <code> ISimpleSelectRender </code>. This interface must override a method that needs to return a
             String. This String will be mapped in the view as soon as a list of type RList is passed to property bind<code>[options]="list"</code></p>
 
-            <div class="d-flex flex-row">
-                <div>
-                    <es-simple-select [(ngModel)]="person" displaytype="button" buttonText="Selecione"
-                        [options]="persons" [color]="color">
-                    <es-simple-select-option [value]="null" [disable]="true">Abobora</es-simple-select-option>
-                    <es-simple-select-option [value]="null" [disable]="true">Maça</es-simple-select-option>
-                    </es-simple-select>
-    
-                </div>
-                <div class="ml-2">
-                    <button class="btn bg-primary" (click)="person = null">Select Null Option</button>
-                </div>
-            </div>
+
         </div>
+
+
+        <es-tabsx #tabs1>
+            <es-tabx header="Preview">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex flex-row">
+                            <div>
+                                <es-simple-select [(ngModel)]="person" displaytype="button" buttonText="Selecione"
+                                                  [options]="persons" [color]="color">
+                                    <es-simple-select-option [value]="null" [disable]="true">Abobora</es-simple-select-option>
+                                    <es-simple-select-option [value]="null" [disable]="true">Maça</es-simple-select-option>
+                                </es-simple-select>
+
+                            </div>
+                            <div class="ml-2">
+                                <button class="btn bg-primary" (click)="person = null">Select Null Option</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Html">
+                <div class="row">
+                    <div class="col-12">
+                        <pre class="language-markup line-numbers"><code class="language-markup line-numbers" [innerHtml]="htmlCode"></code></pre>
+                    </div>
+                </div>
+            </es-tabx>
+            <es-tabx header="Dart">
+                <div class="row">
+                    <div class="col-12">
+                        <h6>in component code example</h6>
+                    </div>
+                    <div class="col-12">
+                        <pre class="language-dart line-numbers"><code class="language-dart" [innerHtml]="dartCode"></code></pre>
+                    </div>
+                </div>
+            </es-tabx>
+
+            <es-tabx header="Model">
+                <div class="row">
+                    <div class="col-12">
+                        <h6>in component code example</h6>
+                    </div>
+                    <div class="col-12">
+                        <pre class="language-dart line-numbers"><code class="language-dart" [innerHtml]="modelCode"></code></pre>
+                    </div>
+                </div>
+            </es-tabx>
+
+        </es-tabsx>
         
     </div>
 </div>

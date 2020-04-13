@@ -20,8 +20,8 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
 
   timelineInit() {
     getModel = TimelineModel();
-    getModel.contentTitle = 'Aqui vai o titulo';
-    getModel.contentMutedSubtitle = 'Aqui vai a idade';
+    getModel.contentTitle = this.name;
+    getModel.contentMutedSubtitle = 'Age: ${this.age}';
     getModel.description = 'Description is Hero';
     getModel.category = 'Category to Separation';
     getModel.update = DateTime.now();
@@ -106,7 +106,7 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
       title: 'Birthday',
       type: DataTableColumnType.date
     ));
-    
+
     settings.addSet(DataTableColumn(
       key: 'enable',
       value: enable,
@@ -120,7 +120,7 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
       limit: 100,
       type: DataTableColumnType.text
     ));
-    
+
     return settings;
   }
 
@@ -131,6 +131,6 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
 
 
 
-  
+
 
 }
