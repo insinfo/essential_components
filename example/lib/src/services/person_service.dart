@@ -15,7 +15,7 @@ class PersonService {
     rest.basePath = '';
     rest.host = html.window.location.hostname;
     rest.protocol = html.window.location.protocol == 'https:' ? ProtocolType.https : ProtocolType.http;
-    print('PersonService ${html.window.location.protocol}');
+    //print('PersonService ${html.window.location.protocol}');
   }
 
   Future<RestResponseGeneric> findAll({DataTableFilter filters}) {

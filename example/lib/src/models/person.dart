@@ -18,17 +18,16 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
     timelineInit();
   }
 
-  timelineInit() {
+  void timelineInit() {
     getModel = TimelineModel();
-    getModel.contentTitle = this.name;
-    getModel.contentMutedSubtitle = 'Age: ${this.age}';
+    getModel.contentTitle = name;
+    getModel.contentMutedSubtitle = 'Age: ${age}';
     getModel.description = 'Description is Hero';
     getModel.category = 'Category to Separation';
     getModel.update = DateTime.now();
     getModel.icon = 'icon-rocket';
     getModel.color = 'success-300';
   }
-
 
   String get birthdayAsString {
     var dt = birthday != null ? birthday.toIso8601String().substring(0, 10) : "";
@@ -43,7 +42,6 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
     }
   }
 
-
   Person.fromJson(Map<String, dynamic> json) {
     try {
       id = Helper.isNotNullOrEmptyAndContain(json, 'id') ? json['id'] : -1;
@@ -54,6 +52,8 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
       avatar = Helper.isNotNullOrEmptyAndContain(json, 'avatar') ? json['avatar'] : '';
       enable = Helper.isNotNullOrEmptyAndContain(json, 'enable') ? json['enable'] : null;
       description = Helper.isNotNullOrEmptyAndContain(json, 'description') ? json['description'] : '';
+
+      timelineInit();
     } catch (e) {
       print('Person.fromJson: ${e}');
     }
@@ -75,51 +75,18 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
   @override
   DataTableRow getRowDefinition() {
     DataTableRow settings = DataTableRow();
+    settings.addSet(DataTableColumn(key: 'avatar', value: avatar, title: 'Avatar', type: DataTableColumnType.img));
     settings.addSet(DataTableColumn(
-      key: 'avatar',
-      value: avatar,
-      title: 'Avatar',
-      type: DataTableColumnType.img
-    ));
-    settings.addSet(DataTableColumn(
-      key: 'name',
-      value: name,
-      title: 'Name',
-      type: DataTableColumnType.text,
-      primaryDisplayValue: true
-    ));
-    settings.addSet(DataTableColumn(
-      key: 'age',
-      value: age,
-      title: 'Age',
-      type: DataTableColumnType.text
-    ));
-    settings.addSet(DataTableColumn(
-      key: 'phone',
-      value: phone,
-      title: 'Phone',
-      type: DataTableColumnType.text
-    ));
-    settings.addSet(DataTableColumn(
-      key: 'birthday',
-      value: birthday,
-      title: 'Birthday',
-      type: DataTableColumnType.date
-    ));
+        key: 'name', value: name, title: 'Name', type: DataTableColumnType.text, primaryDisplayValue: true));
+    settings.addSet(DataTableColumn(key: 'age', value: age, title: 'Age', type: DataTableColumnType.text));
+    settings.addSet(DataTableColumn(key: 'phone', value: phone, title: 'Phone', type: DataTableColumnType.text));
+    settings
+        .addSet(DataTableColumn(key: 'birthday', value: birthday, title: 'Birthday', type: DataTableColumnType.date));
 
+    settings
+        .addSet(DataTableColumn(key: 'enable', value: enable, title: 'Enable', type: DataTableColumnType.boolLabel));
     settings.addSet(DataTableColumn(
-      key: 'enable',
-      value: enable,
-      title: 'Enable',
-      type: DataTableColumnType.boolLabel
-    ));
-    settings.addSet(DataTableColumn(
-      key: 'description',
-      value: description,
-      title: 'Description',
-      limit: 100,
-      type: DataTableColumnType.text
-    ));
+        key: 'description', value: description, title: 'Description', limit: 100, type: DataTableColumnType.text));
 
     return settings;
   }
@@ -128,9 +95,4 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
   String getDisplayName() {
     return name;
   }
-
-
-
-
-
 }
