@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:essential_components/essential_components.dart';
 import 'package:example/src/services/person_service.dart';
+import 'package:example/src/utils/highlighting_js.dart';
 
 @Component(
   selector: 'dynamic-tabs-component',
@@ -13,40 +14,39 @@ import 'package:example/src/services/person_service.dart';
     bsDropdownDirectives
   ],
   exports: [],
-  providers: [ClassProvider(PersonService)]
+  providers: []
 )
 class DynamicTabsComponent implements OnInit {
 
-  @Input('btnRadio')
-  EsRadioButtonDirective btnRadio;
-
   String codeHtml = '''
-<es-accordion-panel heading="Título do acordeon">
-  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus dignissimos site.</p>
-</es-accordion-panel>''';
-  String codeComponent = '''
-import 'package:angular/angular.dart';
-import 'package:essential_components/essential_components.dart';
-import 'package:example/src/services/person_service.dart';
+<es-tabsx #tabs1>
+    <es-tabx header="Example">
+        <div class="row">
+            <div class="col-12">
+            </div>
+        </div>
+    </es-tabx>
+    <es-tabx header="View">
+        <div class="row">
+            <div class="col-12">
+            </div>
+        </div>
+    </es-tabx>
+    <es-tabx header="Component">
+        <div class="row">
+            <div class="col-12">
+            </div>
+        </div>
+    </es-tabx>
+</es-tabsx>
+''';
 
-@Component(
-  selector: 'accordeon-component',
-  styleUrls: ['accordeon_component.css'],
-  templateUrl: 'accordeon_component.html',
-  directives: [
-    coreDirectives,
-    EsAccordionPanelComponent
-  ],
-  exports: [],
-  providers: [ClassProvider(PersonService)]
-)
-class AccordeonComponent { }
-  ''';
 
   DynamicTabsComponent();
 
   @override
   void ngOnInit() {
+    codeHtml = highlightingHtml(codeHtml);
   }
 
 }

@@ -49,6 +49,7 @@ void upload(e) async {
 
   @override
   void ngOnInit() {
+
     codeFileUploadingExample = highlightingDart(codeFileUploadingExample);
   }
 
