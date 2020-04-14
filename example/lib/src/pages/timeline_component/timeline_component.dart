@@ -4,6 +4,8 @@ import 'package:example/src/models/person.dart';
 import 'package:essential_rest/essential_rest.dart';
 import 'dart:html' as html;
 
+import 'package:example/src/utils/highlighting_js.dart';
+
 @Component(
   selector: 'timeline-component',
   styleUrls: ['timeline_component.css'],
@@ -18,7 +20,7 @@ import 'dart:html' as html;
     EssentialTimelineComponent
   ]
 )
-class TimelineExComponent {
+class TimelineExComponent implements OnInit {
 
   var rest;
   RList<Person> persons;
@@ -68,6 +70,13 @@ class TimelineExComponent {
       persons = await resp.resultListT;
     });
   ''';
+
+  @override
+  void ngOnInit() {
+    codeComponent = highlightingHtml(codeComponent);
+    codeHtml = highlightingHtml(codeHtml);
+    modelCode = highlightingHtml(modelCode);
+  }
 
 
 

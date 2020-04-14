@@ -1,5 +1,6 @@
 import 'package:angular/angular.dart';
 import 'package:essential_components/essential_components.dart';
+import 'package:example/src/utils/highlighting_js.dart';
 
 @Component(
   selector: 'toast-ex-component',
@@ -15,7 +16,7 @@ import 'package:essential_components/essential_components.dart';
 
   ]
 )
-class ToastExComponent {
+class ToastExComponent implements OnInit {
 
   @ViewChild('toast')
   EssentialToastComponent toast;
@@ -40,6 +41,12 @@ class ToastExComponent {
   '<button class="btn bg-primary" (click)="execute()">Toast Example</button>
   <es-toast #toast></es-toast>'
   ''';
+
+  @override
+  void ngOnInit() {
+    dartCode = highlightingHtml(dartCode);
+    htmlCode = highlightingHtml(htmlCode);
+  }
 
 
 }

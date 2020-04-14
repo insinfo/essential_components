@@ -1,5 +1,6 @@
 import 'package:angular/angular.dart';
 import 'package:essential_components/essential_components.dart';
+import 'package:example/src/utils/highlighting_js.dart';
 import 'simple.dart';
 import '../../models/person.dart';
 import '../../services/person_service.dart';
@@ -16,7 +17,7 @@ import '../../services/person_service.dart';
   exports: [],
   providers: []
 )
-class SimpleCardComponent {
+class SimpleCardComponent implements OnInit {
 
   Simple simple = Simple();
 
@@ -44,6 +45,12 @@ class SimpleCardComponent {
   ''';
 
   SimpleCardComponent();
+
+  @override
+  void ngOnInit() {
+    dartCode = highlightingHtml(dartCode);
+    htmlCode = highlightingHtml(htmlCode);
+  }
 
 
 
