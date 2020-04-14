@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:essential_components/essential_components.dart';
 import 'package:example/src/services/person_service.dart';
+import 'package:example/src/utils/highlighting_js.dart';
 
 @Component(
   selector: 'accordeon-example',
@@ -45,6 +46,8 @@ class AccordeonComponent { }
 
   @override
   void ngOnInit() {
+    codeHtml = highlightingHtml(codeHtml);
+    codeComponent = highlightingHtml(codeComponent);
   }
 
 }

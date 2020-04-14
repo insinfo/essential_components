@@ -3,6 +3,7 @@ import 'package:angular_router/angular_router.dart';
 import 'package:essential_components/essential_components.dart';
 import 'package:example/src/services/person_service.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:example/src/utils/highlighting_js.dart';
 
 @Component(
   selector: 'datapicker-component',
@@ -58,6 +59,8 @@ class AccordeonComponent { }
 
   @override
   void ngOnInit() {
+    codeHtml = highlightingHtml(codeHtml);
+    codeComponent = highlightingHtml(codeComponent);
   }
 
   reloadData(dynamic event) {

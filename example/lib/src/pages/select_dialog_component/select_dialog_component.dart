@@ -4,6 +4,7 @@ import 'package:essential_components/essential_components.dart';
 import 'package:example/src/models/person.dart';
 import 'package:example/src/services/person_service.dart';
 import 'package:essential_rest/essential_rest.dart';
+import 'package:example/src/utils/highlighting_js.dart';
 
 @Component(
     selector: 'select-dialog-component',
@@ -26,6 +27,8 @@ class SelectDialogComponent implements OnInit {
 
   @override
   void ngOnInit() {
+    dartCode = highlightingHtml(dartCode);
+    htmlCode = highlightingHtml(htmlCode);
     findAll();
   }
 
