@@ -18,6 +18,6 @@ class PersonService {
   }
 
   Future<RestResponseGeneric> findAll({DataTableFilter filters}) {
-    return rest.getAll('/exemple_data.json', queryParameters: filters?.getParams());
+    return rest.getAll('/exemple_data.json', queryParameters: filters?.getParams(),encoding: 'utf8');
   }
 }

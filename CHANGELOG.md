@@ -152,3 +152,7 @@ and fix issues
 # 0.1.83
 
 - add EssentialRecaptcha component
+
+# 1.1.0
+
+- fix documentation and overall bugs
