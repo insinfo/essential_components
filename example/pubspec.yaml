@@ -22,7 +22,8 @@ dependencies:
   dio: ^3.0.8
   highlight: ^0.5.0
   sass_builder: ^2.1.2
-  universal_html: ^1.2.2
+  universal_html: any
+  essential_rest: ^1.0.18
 
   # essential_components: 0.1.45
   essential_components:

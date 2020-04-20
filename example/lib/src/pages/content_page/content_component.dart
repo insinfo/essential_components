@@ -1,6 +1,8 @@
 import 'package:angular/angular.dart';
 import 'package:essential_components/essential_components.dart';
 import 'package:example/src/pages/recaptcha_example/recaptcha_example.dart';
+import 'package:example/src/route_path.dart';
+import 'package:example/src/routes.dart';
 
 import '../accordeon_example/accordeon_example.dart';
 import '../datapicker_component/datapicker_component.dart';

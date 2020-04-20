@@ -1,7 +1,8 @@
 <div class="card">
     <div class="card-body">
         <div class="mb-4">
-            <h1>RestClientGeneric Example</h1>
+            <h1>Essential Rest</h1>
+            <p><a href="https://pub.dev/packages/essential_rest" target="_blank">Click this link to instalation: https://pub.dev/packages/essential_rest</a>.</p>
             <p>RestClientGeneric is a simple API, but under the hood, the API emits a level of complexity in order to maintain satisfying performance for the server side application.</p>
             <p>This API performs the mapping of a JSON to an entity when making a request to the server. This serialization process does not use reflection, which guarantees a performance when compared to the resource. The converse also proceeds, being able to transform an object or a set of objects to receive data from the application's Backend.</p>
             <p>Another way to guarantee performance is that this API works by caching data from the browser, within localstorage, which can also be contracted by the developer.</p>
@@ -18,6 +19,22 @@
             <div class="col-12">             
                 <input #fileInput id="fileInput" type="file" name="file" multiple>
                 <input (click)="upload($event)" type="button" value="Enviar" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <h3>Raw mode</h3>
+                <p>Este método é para fazer requisição que não mapeia para objeto específico</p>
+                <pre class="language-dart line-numbers"><code class="language-dart" [innerHtml]="restRaw"></code></pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>RestClient</h3>
+                <p>Rest Client não mapeia os dados como a RestClientGeneric.</p>
+                <p>Este método é para fazer requisição que não mapeia para objeto específico</p>
+                <pre class="language-dart line-numbers"><code class="language-dart" [innerHtml]="restRaw"></code></pre>
             </div>
         </div>
     </div>

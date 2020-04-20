@@ -1,4 +1,7 @@
 import 'package:angular/angular.dart';
+import 'package:angular_router/angular_router.dart';
+import 'package:example/src/route_path.dart';
+import 'package:example/src/routes.dart';
 
 @Component(
   selector: 'menu-sidebar-options',
@@ -6,10 +9,12 @@ import 'package:angular/angular.dart';
   templateUrl: 'menu_sidebar_options_component.html',
   directives: [
     coreDirectives,
+    routerDirectives
   ],
-  exports: []
+  exports: [RoutePaths]
 )
 class MenuSidebarOptionsComponent implements OnInit {
+
 
   MenuSidebarOptionsComponent();
 

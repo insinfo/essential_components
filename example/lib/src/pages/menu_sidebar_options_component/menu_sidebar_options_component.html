@@ -10,16 +10,25 @@
             <nav>
                 <h6>Components</h6>
                 <ul>
-                    <li><a>Accodion</a></li>
-                    <li><a>Modal</a></li>
-                    <li><a>Select</a></li>
-                    <li><a>Select Dropdown</a></li>
-                    <li><a>Select Dialog</a></li>
-                    <li><a>Toast</a></li>
-                    <li><a>ZaqTable</a></li>
+                    <li><a [routerLink]="RoutePaths.accordeon.toUrl()">Accodion</a></li>
+                    <li><a [routerLink]="RoutePaths.datapicker.toUrl()">DataPicker</a></li>
+                    <li><a [routerLink]="RoutePaths.datatable.toUrl()">DataTable</a></li>
+                    <li><a [routerLink]="RoutePaths.dropdown.toUrl()">Dropdown</a></li>
+                    <li><a [routerLink]="RoutePaths.dynamicTabs.toUrl()">Dynamic Tabs</a></li>
+                    <li><a [routerLink]="RoutePaths.modal.toUrl()">Modal</a></li>
+                    <li><a [routerLink]="RoutePaths.notification.toUrl()">Notification</a></li>
+                    <li><a [routerLink]="RoutePaths.recaptcha.toUrl()">Recaptcha</a></li>
+                    <li><a [routerLink]="RoutePaths.selectDialog.toUrl()">Select Dialog</a></li>
+                    <li><a [routerLink]="RoutePaths.simpleCard.toUrl()">Simple Card</a></li>
+                    <li><a [routerLink]="RoutePaths.simpleDialog.toUrl()">Simple Dialog</a></li>
+                    <li><a [routerLink]="RoutePaths.simpleLoading.toUrl()">Loagind</a></li>
+                    <li><a [routerLink]="RoutePaths.simpleSelect.toUrl()">Simple Select</a></li>
+                    <li><a [routerLink]="RoutePaths.timeline.toUrl()">Timeline</a></li>
+                    <li><a [routerLink]="RoutePaths.toast.toUrl()">Toast</a></li>
+
                 </ul>
             </nav>
-            <nav>
+            <nav *ngIf="false">
                 <h6>Directives</h6>
                 <ul>
                     <li><a>Money Mask</a></li>
@@ -36,10 +45,7 @@
             <nav>
                 <h6>Service/Rest</h6>
                 <ul>
-                    <li><a>RestClient</a></li>
-                    <li><a>RestClientGeneric</a></li>
-                    <li><a>SimpleXlsx</a></li>
-                    <li><a>Validator Response</a></li>
+                    <li><a [routerLink]="RoutePaths.restApi.toUrl()">Rest Client Api</a></li>
                 </ul>
             </nav>
         </div>
