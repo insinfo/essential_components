@@ -1,7 +1,5 @@
 import 'package:angular/angular.dart';
 
-import 'icon.dart';
-
 /// A component that composites Font Awesome icons on top of each other.
 @Component(
     selector: 'fa-stack',

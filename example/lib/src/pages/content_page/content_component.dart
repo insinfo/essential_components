@@ -1,5 +1,5 @@
 import 'package:angular/angular.dart';
-import 'package:essential_components/essential_components.dart';
+
 import 'package:example/src/pages/recaptcha_example/recaptcha_example.dart';
 
 import '../accordeon_example/accordeon_example.dart';
@@ -18,37 +18,32 @@ import '../timeline_component/timeline_component.dart';
 import '../toast_component/toast_component.dart';
 import '../recaptcha_example/recaptcha_example.dart';
 
-
 @Component(
-  selector: 'content-component',
-  styleUrls: ['content_component.css'],
-  templateUrl: 'content_component.html',
-  directives: [
-    coreDirectives,
-    DataTableComponent,
-    AccordeonComponent,
-    DataPickerComponent,
-    DropdownDialogComponent,
-    DynamicTabsComponent,
-    ModalComponent,
-    NotificationComponent,
-    RestApiExampleComponent,
-    SelectDialogComponent,
-    SimpleCardComponent,
-    ExSimpleDialogComponent,   
-    SimpleSelectComponent,
-    TimelineExComponent,
-    ToastExComponent,
-    RecaptchaExample
-  ],
-  exports: []
-)
+    selector: 'content-component',
+    styleUrls: ['content_component.css'],
+    templateUrl: 'content_component.html',
+    directives: [
+      coreDirectives,
+      DataTableComponent,
+      AccordeonComponent,
+      DataPickerComponent,
+      DropdownDialogComponent,
+      DynamicTabsComponent,
+      ModalComponent,
+      NotificationComponent,
+      RestApiExampleComponent,
+      SelectDialogComponent,
+      SimpleCardComponent,
+      ExSimpleDialogComponent,
+      SimpleSelectComponent,
+      TimelineExComponent,
+      ToastExComponent,
+      RecaptchaExample
+    ],
+    exports: [])
 class ContentComponent implements OnInit {
-
   ContentComponent();
 
   @override
-  void ngOnInit() async {
-  }
-
+  void ngOnInit() async {}
 }

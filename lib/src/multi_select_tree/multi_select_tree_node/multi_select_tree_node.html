@@ -6,12 +6,12 @@
 
     <!--<iron-icon class="small animate" [class.leaf-node]="node.isLeafNode()" (click)="expandNode(node)"
         [class.expanded]="node.showChildren" icon="icons:chevron-right"></iron-icon>
-    -->
+   
 
     <material-checkbox [indeterminate]="node.isIndeterminate" class="tree-checkbox"
         (indeterminateChange)="handleIndeterminate(node,parent,$event)" (checkedChange)="selectNode(node,parent,$event)"
         [(ngModel)]="node.isSelected">
-    </material-checkbox>
+    </material-checkbox>-->
 
     <i class="icon-folder-open small" [class.hidden]="node.children.length == 0">
     </i>

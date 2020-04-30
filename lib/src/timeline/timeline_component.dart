@@ -78,13 +78,15 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
 
   @override
   void ngOnInit() {
-    print('ngOnInit');
-    bodyOnClickSubscription = html.document.querySelector('body').onClick.listen(bodyOnClick);
+    //print('ngOnInit');
+    // TODO : corrigir bug que atrapalha outros components
+   /* bodyOnClickSubscription =
+        html.document.onClick.listen(bodyOnClick);*/
   }
 
   @override
   void ngOnDestroy() {
-    print('ngOnDestroy');
+  //  print('ngOnDestroy');
     bodyOnClickSubscription?.cancel();
     bodyOnClickSubscription = null;
   }
@@ -98,7 +100,8 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
   }
 
   String getDescription(TimelineRender item, html.HtmlElement element) {
-    element.setInnerHtml(item?.getModel?.description, treeSanitizer: html.NodeTreeSanitizer.trusted);
+    element.setInnerHtml(item?.getModel?.description,
+        treeSanitizer: html.NodeTreeSanitizer.trusted);
     // description = item?.getModel?.description;
     return '';
   }
@@ -127,7 +130,8 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
   void toggleDropdownOption(e) {
     e.stopPropagation();
     html.HtmlElement element = e.target;
-    var elementSelected = element.closest('.card-footer').querySelector('.dropdown-options');
+    var elementSelected =
+        element.closest('.card-footer').querySelector('.dropdown-options');
 
     if (!elementSelected.classes.contains('show')) {
       elementSelected.classes.add('show');

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
-import 'package:angular_components/angular_components.dart';
 
 import 'service/multi_select_tree_service.dart';
 import 'model/multi_select_tree_model.dart';
@@ -22,7 +21,8 @@ class MultiSelectTreeComponent implements OnInit, OnDestroy {
 
   // ignore: prefer_collection_literals
   List<MultiSelectTreeNode> rootNodeList = List<MultiSelectTreeNode>();
-  StreamController<List<MultiSelectTreeNode>> propagateController = StreamController<List<MultiSelectTreeNode>>();
+  StreamController<List<MultiSelectTreeNode>> propagateController =
+      StreamController<List<MultiSelectTreeNode>>();
 
   @Input('data')
   dynamic treeRootNodes;
@@ -34,7 +34,8 @@ class MultiSelectTreeComponent implements OnInit, OnDestroy {
   void ngOnInit() {
     for (var node in treeRootNodes) {
       MultiSelectTreeNode treeNode;
-      treeNode = MultiSelectTreeNode(node.name, node.showOtherProperties, node.children);
+      treeNode = MultiSelectTreeNode(
+          node.name, node.showOtherProperties, node.children);
       treeNode.isRoot = true;
       rootNodeList.add(treeNode);
     }

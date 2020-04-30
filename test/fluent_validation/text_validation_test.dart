@@ -5,97 +5,80 @@ import 'package:test/test.dart';
 import '../builders/user_builder.dart';
 
 void main() {
-
   group('Tests o método _withCustomMessageError', () {
-    setUp(() {
-    });
+    setUp(() {});
 
     test('validate() is true', () {
-      bool response = TextValidation.init().validate();
+      var response = TextValidation.init().validate();
       expect(response, isTrue);
     });
   });
 
   group('Testa método isNull', () {
-    
-    setUp(() {
-    });
+    setUp(() {});
 
     test('Valida se o valor é nulo e retorna com sucesso', () {
       // Cenário
       var user = UserBuilder.oneUser().now();
-      
+
       // Ação
-      bool result = TextValidation.init()
-        .whereValueIs(user.name)
-        .isNull()
-        .validate();
+      var result =
+          TextValidation.init().whereValueIs(user.name).isNull().validate();
 
       // Resultado esperado
       expect(result, isTrue);
     });
 
-    test('Valida se o valor é nulo e lança uma exceção com mensagem customizada', () {
-      var user = UserBuilder.oneUser().nameIsNull().now();
-
-        expect(
-          () => TextValidation.init()
-          .whereValueIs(user.name)
-          .whereMessageErrorIs('O nome do usuário é nulo')
-          .isNull()
-          .validate(),
-          throwsA(TypeMatcher<BadRequestException>())
-        );
-
-    });
-
-    test('Valida se o valor é nulo e lança uma exceção com mensagem de erro padrão', () {
+    test(
+        'Valida se o valor é nulo e lança uma exceção com mensagem customizada',
+        () {
       var user = UserBuilder.oneUser().nameIsNull().now();
 
       expect(
           () => TextValidation.init()
-          .whereValueIs(user.name)
-          .isNull()
-          .validate(),
-          throwsA(TypeMatcher<BadRequestException>())
-        );
-
+              .whereValueIs(user.name)
+              .whereMessageErrorIs('O nome do usuário é nulo')
+              .isNull()
+              .validate(),
+          throwsA(TypeMatcher<BadRequestException>()));
     });
 
+    test(
+        'Valida se o valor é nulo e lança uma exceção com mensagem de erro padrão',
+        () {
+      var user = UserBuilder.oneUser().nameIsNull().now();
 
-    test('Valida se o valor é nulo e lança uma exceção com mensagem de erro de campo vazio', () {
+      expect(
+          () =>
+              TextValidation.init().whereValueIs(user.name).isNull().validate(),
+          throwsA(TypeMatcher<BadRequestException>()));
+    });
+
+    test(
+        'Valida se o valor é nulo e lança uma exceção com mensagem de erro de campo vazio',
+        () {
       var user = UserBuilder.oneUser().nameIsNull().now();
 
       expect(
           () => TextValidation.init()
-          .whereValueIs(user.name)
-          .whereMessageErrorIs('')
-          .isNull()
-          .validate(),
-          throwsA(TypeMatcher<BadRequestException>())
-        );
-
+              .whereValueIs(user.name)
+              .whereMessageErrorIs('')
+              .isNull()
+              .validate(),
+          throwsA(TypeMatcher<BadRequestException>()));
     });
-      
-
-      
-
   });
 
   group('Testa método WhereValueIs', () {
     test('Test return value with success', () {
-      
       var user = UserBuilder.oneUser().now();
 
-      TextValidation result = TextValidation.init()
-        .whereValueIs(user.name);
+      var result = TextValidation.init().whereValueIs(user.name);
 
-      String actualValue = result.value;
-      String expectedValue = user.name;
+      var actualValue = result.value;
+      var expectedValue = user.name;
 
       expect(actualValue == expectedValue, isTrue);
-
     });
   });
-
 }

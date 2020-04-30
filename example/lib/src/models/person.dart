@@ -30,7 +30,8 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
   }
 
   String get birthdayAsString {
-    var dt = birthday != null ? birthday.toIso8601String().substring(0, 10) : "";
+    var dt =
+        birthday != null ? birthday.toIso8601String().substring(0, 10) : '';
     return dt;
   }
 
@@ -45,13 +46,23 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
   Person.fromJson(Map<String, dynamic> json) {
     try {
       id = Helper.isNotNullOrEmptyAndContain(json, 'id') ? json['id'] : -1;
-      name = Helper.isNotNullOrEmptyAndContain(json, 'name') ? json['name'] : '';
+      name =
+          Helper.isNotNullOrEmptyAndContain(json, 'name') ? json['name'] : '';
       age = Helper.isNotNullOrEmptyAndContain(json, 'age') ? json['age'] : -1;
-      phone = Helper.isNotNullOrEmptyAndContain(json, 'phone') ? json['phone'] : '';
-      birthdayAsString = Helper.isNotNullOrEmptyAndContain(json, 'birthday') ? json['birthday'] : null;
-      avatar = Helper.isNotNullOrEmptyAndContain(json, 'avatar') ? json['avatar'] : '';
-      enable = Helper.isNotNullOrEmptyAndContain(json, 'enable') ? json['enable'] : null;
-      description = Helper.isNotNullOrEmptyAndContain(json, 'description') ? json['description'] : '';
+      phone =
+          Helper.isNotNullOrEmptyAndContain(json, 'phone') ? json['phone'] : '';
+      birthdayAsString = Helper.isNotNullOrEmptyAndContain(json, 'birthday')
+          ? json['birthday']
+          : null;
+      avatar = Helper.isNotNullOrEmptyAndContain(json, 'avatar')
+          ? json['avatar']
+          : '';
+      enable = Helper.isNotNullOrEmptyAndContain(json, 'enable')
+          ? json['enable']
+          : null;
+      description = Helper.isNotNullOrEmptyAndContain(json, 'description')
+          ? json['description']
+          : '';
 
       timelineInit();
     } catch (e) {
@@ -61,7 +72,7 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id != null ? id : null,
+      'id': id,
       'name': name,
       'age': age,
       'phone': phone,
@@ -74,19 +85,42 @@ class Person implements IDataTableRender, ISimpleSelectRender, TimelineRender {
 
   @override
   DataTableRow getRowDefinition() {
-    DataTableRow settings = DataTableRow();
-    settings.addSet(DataTableColumn(key: 'avatar', value: avatar, title: 'Avatar', type: DataTableColumnType.img));
+    var settings = DataTableRow();
     settings.addSet(DataTableColumn(
-        key: 'name', value: name, title: 'Name', type: DataTableColumnType.text, primaryDisplayValue: true));
-    settings.addSet(DataTableColumn(key: 'age', value: age, title: 'Age', type: DataTableColumnType.text));
-    settings.addSet(DataTableColumn(key: 'phone', value: phone, title: 'Phone', type: DataTableColumnType.text));
-    settings
-        .addSet(DataTableColumn(key: 'birthday', value: birthday, title: 'Birthday', type: DataTableColumnType.date));
+        key: 'avatar',
+        value: avatar,
+        title: 'Avatar',
+        type: DataTableColumnType.img));
+    settings.addSet(DataTableColumn(
+        key: 'name',
+        value: name,
+        title: 'Name',
+        type: DataTableColumnType.text,
+        primaryDisplayValue: true));
+    settings.addSet(DataTableColumn(
+        key: 'age', value: age, title: 'Age', type: DataTableColumnType.text));
+    settings.addSet(DataTableColumn(
+        key: 'phone',
+        value: phone,
+        title: 'Phone',
+        type: DataTableColumnType.text));
+    settings.addSet(DataTableColumn(
+        key: 'birthday',
+        value: birthday,
+        title: 'Birthday',
+        type: DataTableColumnType.date));
 
-    settings
-        .addSet(DataTableColumn(key: 'enable', value: enable, title: 'Enable', type: DataTableColumnType.boolLabel));
     settings.addSet(DataTableColumn(
-        key: 'description', value: description, title: 'Description', limit: 100, type: DataTableColumnType.text));
+        key: 'enable',
+        value: enable,
+        title: 'Enable',
+        type: DataTableColumnType.boolLabel));
+    settings.addSet(DataTableColumn(
+        key: 'description',
+        value: description,
+        title: 'Description',
+        limit: 100,
+        type: DataTableColumnType.text));
 
     return settings;
   }

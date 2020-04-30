@@ -34,64 +34,86 @@ class FeedItem {
     String title;
     try {
       title = node.findElements('title').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     String link;
     try {
       link = node.findElements('link').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     String description;
     try {
       description = node.findElements('description').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     String author;
     try {
       author = node.findElements('author').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     String category;
     try {
       category = node.findElements('category').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     String guid;
     try {
       guid = node.findElements('guid').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     String pubDate;
     try {
       pubDate = node.findElements('pubDate').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     xml.XmlElement enclosureElement;
     try {
       enclosureElement = node.findElements('enclosure').single;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     FeedEnclosure enclosure;
     if (enclosureElement != null) {
-      enclosure = new FeedEnclosure.fromXml(enclosureElement, strict);
+      enclosure = FeedEnclosure.fromXml(enclosureElement, strict);
     }
 
     String comments;
     try {
       comments = node.findElements('comments').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     // itunes fields:
     String itunesSummary;
     try {
       itunesSummary = node.findElements('itunes:summary').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     String itunesDuration;
     try {
       itunesDuration = node.findElements('itunes:duration').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
-    return new FeedItem(
+    return FeedItem(
       title: title,
       link: link,
       description: description,
@@ -106,6 +128,7 @@ class FeedItem {
     );
   }
 
+  @override
   String toString() {
     return '''
       title: $title

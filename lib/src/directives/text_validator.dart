@@ -3,7 +3,6 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 
-
 @Directive(
   selector: ''
       '[textvalidator][ngControl],'
@@ -14,7 +13,6 @@ import 'package:angular_forms/angular_forms.dart';
   ],
 )
 class TextValidator implements Validator {
-
   @Input()
   int minLength;
 
@@ -23,7 +21,7 @@ class TextValidator implements Validator {
 
   @Input()
   String locale = 'pt-br';
-  
+
   InputElement _el;
   DivElement _divPai;
   DivElement _node;
@@ -34,9 +32,9 @@ class TextValidator implements Validator {
     print('TextValidator ${_el}');
   }
 
-  bool _isNodeCreated(DivElement div) {
+  /* bool _isNodeCreated(DivElement div) {
     return div.querySelector('.text-validation') != null;
-  }
+  }*/
 
   bool _hasSelectorValidationEl() {
     return _divPai.querySelector('.text-validation') == null;
@@ -61,7 +59,8 @@ class TextValidator implements Validator {
 
   void _hasInvalidLength() {
     if (_value.length < minLength || _value.length > maxLength) {
-      _addFeedbackValidationWithMessageError('O valor precisa ter entre ${minLength} à ${maxLength} caracteres.');
+      _addFeedbackValidationWithMessageError(
+          'O valor precisa ter entre ${minLength} à ${maxLength} caracteres.');
     } else {
       _node.remove();
     }
@@ -69,7 +68,6 @@ class TextValidator implements Validator {
 
   @override
   Map<String, dynamic> validate(AbstractControl control) {
-    
     _divPai = _el.parent as DivElement;
     print('div ${_divPai}');
     if (control != null) {
@@ -79,12 +77,8 @@ class TextValidator implements Validator {
       }
       _hasNullOrEmpty();
       _hasInvalidLength();
-      
     }
 
     return null;
   }
-
-  
-
 }

@@ -1,9 +1,9 @@
 import 'package:xml/xml.dart' as xml;
-import '../interface_xml_serializable.dart';
+
 import 'dart:convert';
 
 class StyleSheet {
-  String tagName = "styleSheet";
+  String tagName = 'styleSheet';
   Fonts fonts;
   Fills fills;
   Borders borders;
@@ -15,14 +15,14 @@ class StyleSheet {
   ExtLst extLst;
   String xmlns;
   String mc;
-  String ignorable = "x14ac x16r2 xr";
+  String ignorable = 'x14ac x16r2 xr';
 
   Map<String, String> namespaces = {
-    "http://schemas.openxmlformats.org/spreadsheetml/2006/main": "",
-    "http://schemas.openxmlformats.org/markup-compatibility/2006": "vt",
-    "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac": "x14ac",
-    "http://schemas.microsoft.com/office/spreadsheetml/2015/02/main": "x16r2",
-    "http://schemas.microsoft.com/office/spreadsheetml/2014/revision": "xr"
+    'http://schemas.openxmlformats.org/spreadsheetml/2006/main': '',
+    'http://schemas.openxmlformats.org/markup-compatibility/2006': 'vt',
+    'http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac': 'x14ac',
+    'http://schemas.microsoft.com/office/spreadsheetml/2015/02/main': 'x16r2',
+    'http://schemas.microsoft.com/office/spreadsheetml/2014/revision': 'xr'
   };
 
   StyleSheet();
@@ -139,15 +139,15 @@ xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
     </cellStyles>
     <dxfs count="0" />
 </styleSheet>
-    ''';   
+    ''';
     return result;
   }
 
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element(tagName,
-        namespace: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+        namespace: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main',
         namespaces: namespaces,
-        attributes: {"mc:Ignorable": ignorable}, nest: () {
+        attributes: {'mc:Ignorable': ignorable}, nest: () {
       fonts.createXmlElement(builder);
     });
   }
@@ -158,7 +158,7 @@ xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
 }
 
 class Fonts {
-  String tagName = "fonts";
+  String tagName = 'fonts';
   int count;
   int knownFonts;
   List<Font> children = [];
@@ -169,9 +169,11 @@ class Fonts {
     }
   }
 
-  createXmlElement(xml.XmlBuilder builder) {
-    builder.element(tagName,
-        attributes: {"count": children?.length?.toString(), "knownFonts": children?.length?.toString()}, nest: () {
+  void createXmlElement(xml.XmlBuilder builder) {
+    builder.element(tagName, attributes: {
+      'count': children?.length?.toString(),
+      'knownFonts': children?.length?.toString()
+    }, nest: () {
       children?.forEach((child) {
         child?.createXmlElement(builder);
       });
@@ -180,20 +182,20 @@ class Fonts {
 }
 
 class Font {
-  String tagName = "font";
+  String tagName = 'font';
   int sz;
   int theme;
   String name;
   int family;
   String scheme;
 
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element(tagName, nest: () {
-      builder.element('sz', attributes: {"val": sz.toString()});
-      builder.element('theme', attributes: {"val": theme.toString()});
-      builder.element('name', attributes: {"val": name});
-      builder.element('family', attributes: {"val": family.toString()});
-      builder.element('scheme', attributes: {"val": scheme});
+      builder.element('sz', attributes: {'val': sz.toString()});
+      builder.element('theme', attributes: {'val': theme.toString()});
+      builder.element('name', attributes: {'val': name});
+      builder.element('family', attributes: {'val': family.toString()});
+      builder.element('scheme', attributes: {'val': scheme});
     });
   }
 }

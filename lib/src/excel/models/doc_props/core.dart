@@ -4,16 +4,17 @@ import 'dart:convert';
 //<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
 class CoreProperties {
   Map<String, String> namespaces = {
-    "http://schemas.openxmlformats.org/package/2006/metadata/core-properties": "cp",
-    "http://purl.org/dc/elements/1.1/": "dc",
-    "http://purl.org/dc/terms/": "dcterms",
-    "http://purl.org/dc/dcmitype/": "dcmitype",
-    "http://www.w3.org/2001/XMLSchema-instance": "xsi",
+    'http://schemas.openxmlformats.org/package/2006/metadata/core-properties':
+        'cp',
+    'http://purl.org/dc/elements/1.1/': 'dc',
+    'http://purl.org/dc/terms/': 'dcterms',
+    'http://purl.org/dc/dcmitype/': 'dcmitype',
+    'http://www.w3.org/2001/XMLSchema-instance': 'xsi',
   };
   // <dc:creator>isaque</dc:creator>
-  String creator = "isaque";
+  String creator = 'isaque';
   //<cp:lastModifiedBy>isaque</cp:lastModifiedBy>
-  String lastModifiedBy = "isaque";
+  String lastModifiedBy = 'isaque';
   //<dcterms:created xsi:type="dcterms:W3CDTF">2019-10-07T17:24:03Z</dcterms:created>
   Created created = Created();
   //<dcterms:modified xsi:type="dcterms:W3CDTF">2019-10-07T17:24:28Z</dcterms:modified>
@@ -21,12 +22,14 @@ class CoreProperties {
 
   CoreProperties();
 
-  toStringXml() {
+  String toStringXml() {
     var builder = xml.XmlBuilder();
-    builder.processing('xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
+    builder.processing(
+        'xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
     //coreProperties
     builder.element('coreProperties',
-        namespace: "http://schemas.openxmlformats.org/package/2006/metadata/core-properties",
+        namespace:
+            'http://schemas.openxmlformats.org/package/2006/metadata/core-properties',
         namespaces: namespaces, nest: () {
       //creator
       builder.element('dc:creator', nest: () {
@@ -55,13 +58,14 @@ class CoreProperties {
 //<dcterms:created xsi:type="dcterms:W3CDTF">2019-10-07T17:24:03Z</dcterms:created>
 class Created {
   String tagName = 'created';
-  String type = "dcterms:W3CDTF";
-  String text = "2019-10-07T17:24:03Z";
-  Map<String, String> namespaces = {"http://purl.org/dc/terms/": "dcterms"};
+  String type = 'dcterms:W3CDTF';
+  String text = '2019-10-07T17:24:03Z';
+  Map<String, String> namespaces = {'http://purl.org/dc/terms/': 'dcterms'};
   Created();
 
-  createXmlElement(xml.XmlBuilder builder) {
-    builder.element('dcterms:created', attributes: {"xsi:type": type}, nest: () {
+  void createXmlElement(xml.XmlBuilder builder) {
+    builder.element('dcterms:created', attributes: {'xsi:type': type},
+        nest: () {
       builder.text(text);
     });
   }
@@ -76,13 +80,14 @@ class Created {
 //<dcterms:modified xsi:type="dcterms:W3CDTF">2019-10-07T17:24:28Z</dcterms:modified>
 class Modified {
   String tagName = 'modified';
-  String type = "dcterms:W3CDTF";
-  String text = "2019-10-07T17:24:28Z";
-  Map<String, String> namespaces = {"http://purl.org/dc/terms/": "dcterms"};
+  String type = 'dcterms:W3CDTF';
+  String text = '2019-10-07T17:24:28Z';
+  Map<String, String> namespaces = {'http://purl.org/dc/terms/': 'dcterms'};
   Modified();
 
-  createXmlElement(xml.XmlBuilder builder) {
-    builder.element('dcterms:modified', attributes: {"xsi:type": type}, nest: () {
+  void createXmlElement(xml.XmlBuilder builder) {
+    builder.element('dcterms:modified', attributes: {'xsi:type': type},
+        nest: () {
       builder.text(text);
     });
   }

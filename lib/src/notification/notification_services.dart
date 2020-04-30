@@ -14,7 +14,8 @@ class EssentialNotificationService {
   }
 
   /// Display a toast.
-  void add(String type, String title, String message, {String icon, num durationSeconds}) {
+  void add(String type, String title, String message,
+      {String icon, num durationSeconds}) {
     var toast = Toast(type, title, message, icon, durationSeconds);
     toasts.insert(0, toast);
     var milliseconds = (1000 * toast.durationSeconds + 300).round();

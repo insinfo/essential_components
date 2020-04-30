@@ -2,23 +2,19 @@ import 'package:angular/angular.dart';
 import 'package:essential_components/essential_components.dart';
 import 'package:example/src/utils/highlighting_js.dart';
 import 'simple.dart';
-import '../../models/person.dart';
-import '../../services/person_service.dart';
 
 @Component(
-  selector: 'simple-card-component',
-  styleUrls: ['simple_card_example.css'],
-  templateUrl: 'simple_card_example.html',
-  directives: [
-    coreDirectives,
-    esDynamicTabsDirectives,
-    EssentialSimpleCardComponent
-  ],
-  exports: [],
-  providers: []
-)
+    selector: 'simple-card-component',
+    styleUrls: ['simple_card_example.css'],
+    templateUrl: 'simple_card_example.html',
+    directives: [
+      coreDirectives,
+      esDynamicTabsDirectives,
+      EssentialSimpleCardComponent
+    ],
+    exports: [],
+    providers: [])
 class SimpleCardComponent implements OnInit {
-
   Simple simple = Simple();
 
   String htmlCode = '''
@@ -51,7 +47,4 @@ class SimpleCardComponent implements OnInit {
     dartCode = highlightingHtml(dartCode);
     htmlCode = highlightingHtml(htmlCode);
   }
-
-
-
 }

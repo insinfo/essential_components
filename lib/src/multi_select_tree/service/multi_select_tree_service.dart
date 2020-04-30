@@ -4,7 +4,8 @@ import '../model/multi_select_tree_model.dart';
 
 @Injectable()
 class TreeService {
-  StreamController<List<MultiSelectTreeNode>> streamController = StreamController<List<MultiSelectTreeNode>>();
+  StreamController<List<MultiSelectTreeNode>> streamController =
+      StreamController<List<MultiSelectTreeNode>>();
   // ignore: prefer_collection_literals
   final List<MultiSelectTreeNode> _selectedNodes = List<MultiSelectTreeNode>();
   List<MultiSelectTreeNode> getSelectedNodes() {

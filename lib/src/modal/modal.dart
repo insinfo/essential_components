@@ -21,10 +21,8 @@ class EssentialModalComponent {
 
   final _closeRequest = StreamController<bool>();
 
-  Map<String, bool> get showDialogMap => {
-    'showElement': showDialog,
-    'hideElement': !showDialog
-  };
+  Map<String, bool> get showDialogMap =>
+      {'showElement': showDialog, 'hideElement': !showDialog};
 
   @Output()
   Stream<bool> get close => _closeRequest.stream;
@@ -37,5 +35,4 @@ class EssentialModalComponent {
     showDialog = false;
     _closeRequest.add(showDialog);
   }
-
 }

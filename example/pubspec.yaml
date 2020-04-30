@@ -11,7 +11,7 @@ environment:
 
 dependencies:
   angular: ^6.0.0-alpha+1
-  angular_components: ^0.14.0-alpha+1
+  #angular_components: ^0.14.0-alpha+1
   angular_router: ^2.0.0-alpha+21
   http: ^0.12.0+4
   stream_transform: ^1.1.0  

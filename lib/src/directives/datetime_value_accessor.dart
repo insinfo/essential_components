@@ -26,7 +26,8 @@ import 'package:angular_forms/angular_forms.dart';
 class DateTimeValueAccessor implements ControlValueAccessor {
   final InputElement _element;
 
-  DateTimeValueAccessor(HtmlElement element) : _element = element as InputElement;
+  DateTimeValueAccessor(HtmlElement element)
+      : _element = element as InputElement;
 
   @HostListener('change', ['\$event.target.value'])
   @HostListener('input', ['\$event.target.value'])
@@ -35,24 +36,26 @@ class DateTimeValueAccessor implements ControlValueAccessor {
     try {
       dec = DateTime.tryParse(value);
     } catch (e) {
-      // TODO: mark feild as invalid
+      //  mark feild as invalid
       return;
     }
     onChange((value == '' ? null : dec), rawValue: value);
   }
 
+  @override
   void writeValue(value) {
     DateTime dec;
     try {
       dec = value as DateTime;
     } catch (e) {
-      //TODO: mark feild as invalid
+      // mark feild as invalid
       return;
     }
-    var r = dec != null ? dec.toIso8601String().substring(0, 10) : "";
+    var r = dec != null ? dec.toIso8601String().substring(0, 10) : '';
     _element.value = '$r';
   }
 
+  @override
   void onDisabledChanged(bool isDisabled) {
     _element.disabled = isDisabled;
   }
@@ -65,6 +68,7 @@ class DateTimeValueAccessor implements ControlValueAccessor {
   }
 
   /// Set the function to be called when the control receives a touch event.
+  @override
   void registerOnTouched(TouchFunction fn) {
     onTouched = fn;
   }
@@ -72,6 +76,7 @@ class DateTimeValueAccessor implements ControlValueAccessor {
   ChangeFunction<DateTime> onChange = (DateTime _, {String rawValue}) {};
 
   /// Set the function to be called when the control receives a change event.
+  @override
   void registerOnChange(ChangeFunction<DateTime> fn) {
     onChange = fn;
   }

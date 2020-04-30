@@ -6,7 +6,10 @@ import '../directives/collapse.dart';
 import '../fontawesome/fontawesome.dart';
 
 /// Directives needed to create a accordion ES_ACCORDION_DIRECTIVES to esAcoordionDirectives
-const esAcoordionDirectives = [EssentialAccordionComponent, EsAccordionPanelComponent];
+const esAcoordionDirectives = [
+  EssentialAccordionComponent,
+  EsAccordionPanelComponent
+];
 
 @Component(
     selector: 'es-accordion',
@@ -20,11 +23,11 @@ class EssentialAccordionComponent implements AfterContentInit {
   List<EsAccordionPanelComponent> panels;
 
   @override
-  ngAfterContentInit() {
+  void ngAfterContentInit() {
     panels.forEach((p) => p.parentAccordion = this);
   }
 
-  closeOtherPanels(EsAccordionPanelComponent openGroup) {
+  void closeOtherPanels(EsAccordionPanelComponent openGroup) {
     if (closeOthers == false) {
       return;
     }
@@ -35,35 +38,39 @@ class EssentialAccordionComponent implements AfterContentInit {
     });
   }
 
-  addPanel(EsAccordionPanelComponent panel) {
+  void addPanel(EsAccordionPanelComponent panel) {
     panels.add(panel);
   }
 
-  removePanel(EsAccordionPanelComponent panel) {
+  void removePanel(EsAccordionPanelComponent panel) {
     panels.remove(panel);
   }
 }
 
-@Component(selector: 'es-accordion-panel', templateUrl: 'accordion_panel.html', directives: [
-  EssentialCollapseDirective,
-  coreDirectives,
-  fontAwesomeDirectives
-], styleUrls: [
-  'accordion.css',
-])
+@Component(
+    selector: 'es-accordion-panel',
+    templateUrl: 'accordion_panel.html',
+    directives: [
+      EssentialCollapseDirective,
+      coreDirectives,
+      fontAwesomeDirectives
+    ],
+    styleUrls: [
+      'accordion.css',
+    ])
 class EsAccordionPanelComponent implements OnInit {
   EsAccordionPanelComponent();
   EssentialAccordionComponent parentAccordion;
   TemplateRef headingTemplate;
 
   @Input()
-  String icon = "angle-double-up";
+  String icon = 'angle-double-up';
   /* get icon {
     return _icon == "angle-double-down" ? "angle-double-up" : "angle-double-down";
   }*/
 
-  changeIcon() {
-    icon = isOpen ? "angle-double-up" : "angle-double-down";
+  void changeIcon() {
+    icon = isOpen ? 'angle-double-up' : 'angle-double-down';
   }
 
   @Input()
@@ -106,12 +113,12 @@ class EsAccordionPanelComponent implements OnInit {
 
   /// initialize the default values of the attributes
   @override
-  ngOnInit() {
+  void ngOnInit() {
     panelClass = '';
   }
 
   /// toggles the [isOpen] state of the panel
-  toggleOpen(MouseEvent event) {
+  void toggleOpen(MouseEvent event) {
     event.preventDefault();
     if (!isDisabled) {
       isOpen = !isOpen;

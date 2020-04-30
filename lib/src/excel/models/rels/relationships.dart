@@ -11,18 +11,21 @@ class Relationships {
   int sharedStringsindex = 1;
   int workbookindex = 1;
 
-  Map<String, String> namespaces = {"http://schemas.openxmlformats.org/package/2006/relationships": ""};
+  Map<String, String> namespaces = {
+    'http://schemas.openxmlformats.org/package/2006/relationships': ''
+  };
 
   Relationships() {
-    relations = List<Relationship>();
+    relations = <Relationship>[];
   }
 
-  void addWorksheet(int relationId,{String sheetName}) {
-    sheetName = sheetName == null ? "sheet1" : sheetName;
+  void addWorksheet(int relationId, {String sheetName}) {
+    sheetName = sheetName ?? 'sheet1';
     relations.add(Relationship(
         id: 'rId$relationId',
-        type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
-        target: "worksheets/${sheetName}.xml"));
+        type:
+            'http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet',
+        target: 'worksheets/${sheetName}.xml'));
     id++;
     sheetindex++;
   }
@@ -30,8 +33,9 @@ class Relationships {
   void addWorkbook(int relationId) {
     relations.add(Relationship(
         id: 'rId$relationId',
-        type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
-        target: "xl/workbook.xml"));
+        type:
+            'http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument',
+        target: 'xl/workbook.xml'));
     id++;
     workbookindex++;
   }
@@ -39,8 +43,9 @@ class Relationships {
   void addApp(int relationId) {
     relations.add(Relationship(
         id: 'rId$relationId',
-        type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties",
-        target: "docProps/app.xml"));
+        type:
+            'http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties',
+        target: 'docProps/app.xml'));
     id++;
     workbookindex++;
   }
@@ -48,8 +53,9 @@ class Relationships {
   void addCore(int relationId) {
     relations.add(Relationship(
         id: 'rId$relationId',
-        type: "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties",
-        target: "docProps/core.xml"));
+        type:
+            'http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties',
+        target: 'docProps/core.xml'));
     id++;
     workbookindex++;
   }
@@ -57,8 +63,9 @@ class Relationships {
   void addStyle(int relationId) {
     relations.add(Relationship(
         id: 'rId$relationId',
-        type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles",
-        target: "styles.xml"));
+        type:
+            'http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles',
+        target: 'styles.xml'));
 
     id++;
     styleindex++;
@@ -67,8 +74,9 @@ class Relationships {
   void addTheme(int relationId) {
     relations.add(Relationship(
         id: 'rId$relationId',
-        type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
-        target: "theme/theme$themeindex.xml"));
+        type:
+            'http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme',
+        target: 'theme/theme$themeindex.xml'));
     id++;
     themeindex++;
   }
@@ -76,15 +84,17 @@ class Relationships {
   void addSharedStrings(int relationId) {
     relations.add(Relationship(
         id: 'rId$relationId',
-        type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings",
-        target: "sharedStrings.xml"));
+        type:
+            'http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings',
+        target: 'sharedStrings.xml'));
     id++;
     sharedStringsindex++;
   }
 
   String toStringXml() {
     var builder = xml.XmlBuilder();
-    builder.processing('xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
+    builder.processing(
+        'xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
     builder.element('Relationships', namespaces: namespaces, nest: () {
       relations?.forEach((i) {
         i.createXmlElement(builder);
@@ -100,7 +110,7 @@ class Relationships {
     if (map.containsKey('Relationships')) {
       var list = map['Relationships'];
       if (list != null && list is List) {
-        var l = List<Relationship>();
+        var l = <Relationship>[];
         list.forEach((v) {
           l.add(Relationship.fromMap(v));
         });
@@ -109,9 +119,9 @@ class Relationships {
   }
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = {};
+    var map = <String, dynamic>{};
     if (relations != null) {
-      map['Relationships'] = this.relations.map((r) {
+      map['Relationships'] = relations.map((r) {
         return r.toMap();
       }).toList();
     }

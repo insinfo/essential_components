@@ -13,30 +13,31 @@ class FeedEnclosure {
 
   factory FeedEnclosure.fromXml(xml.XmlElement node, bool strict) {
     // Mandatory fields:
-    String url = node.getAttribute('url');
+    var url = node.getAttribute('url');
     if (url == null) {
       if (strict) {
-        throw new ArgumentError('Enclosure missing mandatory url attribute');
+        throw ArgumentError('Enclosure missing mandatory url attribute');
       }
     }
 
-    String length = node.getAttribute('length');
+    var length = node.getAttribute('length');
     if (length == null) {
       if (strict) {
-        throw new ArgumentError('Enclosure missing mandatory length attribute');
+        throw ArgumentError('Enclosure missing mandatory length attribute');
       }
     }
 
-    String type = node.getAttribute('type');
+    var type = node.getAttribute('type');
     if (type == null) {
       if (strict) {
-        throw new ArgumentError('Enclosure missing mandatory type attribute');
+        throw ArgumentError('Enclosure missing mandatory type attribute');
       }
     }
 
-    return new FeedEnclosure(url, length, type);
+    return FeedEnclosure(url, length, type);
   }
 
+  @override
   String toString() {
     return '''
       url: $url

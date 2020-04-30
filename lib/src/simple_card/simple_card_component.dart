@@ -24,12 +24,10 @@ class SimpleCardModel {
     return html.window.location.hostname + '_' + guid;
   }
 
-  void setHeaderContent (String value) => headerContent = value;
+  void setHeaderContent(String value) => headerContent = value;
 }
 
-enum TemplateLink {
-  BUTTON, LINK, ANCOR
-}
+enum TemplateLink { BUTTON, LINK, ANCOR }
 
 abstract class SimpleCardRender {
   SimpleCardModel getModel();
@@ -39,10 +37,8 @@ abstract class SimpleCardRender {
     selector: 'es-simple-card',
     templateUrl: 'simple_card_component.html',
     styleUrls: ['simple_card_component.css'],
-    directives: [coreDirectives, EssentialCollapseDirective]
-)
+    directives: [coreDirectives, EssentialCollapseDirective])
 class EssentialSimpleCardComponent implements AfterContentInit {
-
   final _dataRequest = StreamController<bool>();
 
   @Output()
@@ -52,7 +48,7 @@ class EssentialSimpleCardComponent implements AfterContentInit {
 
   @Output()
   Stream<html.Event> get linkClick => _linkClick.stream;
-  
+
   @Input('data')
   SimpleCardRender data;
 
@@ -79,10 +75,10 @@ class EssentialSimpleCardComponent implements AfterContentInit {
 
   @Input()
   bool showMinimizeBtn = true;
-  
+
   @Input()
   bool showRefreshBtn = true;
-  
+
   @Input()
   bool showCloseBtn = true;
 
@@ -94,7 +90,7 @@ class EssentialSimpleCardComponent implements AfterContentInit {
   bool hiddenClose = false;
 
   var model;
-  
+
   @override
   void ngAfterContentInit() {
     model = data?.getModel();
@@ -111,7 +107,7 @@ class EssentialSimpleCardComponent implements AfterContentInit {
   }
 
   void toogleMinimize() {
-   displayMinimize = !displayMinimize;
+    displayMinimize = !displayMinimize;
     if (cardIsMinimized()) {
       showHeaderTitle = true;
       if (!hasHeaderContent() && model.contentTitle != null) {
@@ -143,8 +139,7 @@ class EssentialSimpleCardComponent implements AfterContentInit {
   }
 
   void goToUrl() {
-    html.window.
-    print();
+    html.window.print();
   }
 
   bool hasButton() {
@@ -154,5 +149,4 @@ class EssentialSimpleCardComponent implements AfterContentInit {
   void handleClick(event) {
     _linkClick.add(event);
   }
-
 }

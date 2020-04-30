@@ -2,15 +2,14 @@ import 'dart:math';
 
 import 'dart:html';
 
-
 class Utils {
   static String truncate(String value, int truncateAt) {
     if (value == null) {
       return value;
     }
     //int truncateAt = value.length-1;
-    String elepsis = "..."; //define your variable truncation elipsis here
-    String truncated = "";
+    var elepsis = '...'; //define your variable truncation elipsis here
+    var truncated = '';
 
     if (value.length > truncateAt) {
       truncated = value.substring(0, truncateAt - elepsis.length) + elepsis;
@@ -21,46 +20,51 @@ class Utils {
   }
 
   static List<int> randomizer(int size) {
-    List<int> random = new List<int>();
+    var random = <int>[];
     for (var i = 0; i < size; i++) {
-      random.add(new Random().nextInt(9));
+      random.add(Random().nextInt(9));
     }
     return random;
   }
 
   static String gerarCPF({bool formatted = false}) {
-    List<int> n = randomizer(9);
+    var n = randomizer(9);
     n..add(gerarDigitoVerificador(n))..add(gerarDigitoVerificador(n));
     return formatted ? formatCPF(n) : n.join();
   }
 
   static int gerarDigitoVerificador(List<int> digits) {
-    int baseNumber = 0;
+    var baseNumber = 0;
     for (var i = 0; i < digits.length; i++) {
       baseNumber += digits[i] * ((digits.length + 1) - i);
     }
-    int verificationDigit = baseNumber * 10 % 11;
+    var verificationDigit = (baseNumber * 10 % 11);
     return verificationDigit >= 10 ? 0 : verificationDigit;
   }
 
   static bool validarCPF(String cpf) {
     if (cpf == null) {
       return false;
-    } else if (cpf == "") {
+    } else if (cpf == '') {
       return false;
     } else if (cpf.length < 11) {
       return false;
     }
 
-    List<int> sanitizedCPF =
-        cpf.replaceAll(new RegExp(r'\.|-'), '').split('').map((String digit) => int.parse(digit)).toList();
+    var sanitizedCPF = cpf
+        .replaceAll(RegExp(r'\.|-'), '')
+        .split('')
+        .map((String digit) => int.parse(digit))
+        .toList();
 
     if (blacklistedCPF(sanitizedCPF.join())) {
       return false;
     }
 
-    var result = sanitizedCPF[9] == gerarDigitoVerificador(sanitizedCPF.getRange(0, 9).toList()) &&
-        sanitizedCPF[10] == gerarDigitoVerificador(sanitizedCPF.getRange(0, 10).toList());
+    var result = sanitizedCPF[9] ==
+            gerarDigitoVerificador(sanitizedCPF.getRange(0, 9).toList()) &&
+        sanitizedCPF[10] ==
+            gerarDigitoVerificador(sanitizedCPF.getRange(0, 10).toList());
 
     return result;
   }
@@ -81,7 +85,7 @@ class Utils {
       '${n[0]}${n[1]}${n[2]}.${n[3]}${n[4]}${n[5]}.${n[6]}${n[7]}${n[8]}-${n[9]}${n[10]}';
 
   static String sanitizeCPF(String val) {
-    return val?.replaceAll(new RegExp('[^0-9]'), '');
+    return val?.replaceAll(RegExp('[^0-9]'), '');
   }
 
   static bool isDate(String str) {
@@ -94,7 +98,7 @@ class Utils {
       var regexPattern =
           r'^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$';
 
-      RegExp regExp = new RegExp(
+      var regExp = RegExp(
         regexPattern,
         caseSensitive: false,
         multiLine: false,
@@ -110,7 +114,7 @@ class Utils {
   }
 
   static bool isNotNullOrEmpty(value) {
-    return value != null && value != "null" && value != "";
+    return value != null && value != 'null' && value != '';
   }
 
   static bool isNotNullOrEmptyAndContain(Map<String, dynamic> json, key) {
@@ -118,34 +122,35 @@ class Utils {
   }
 
   static void resizeImage(File file, int maxWidth, int maxHeight, Function func,
-      [ImgResizeType type = ImgResizeType.fitWidthHeight, percentage = 0]) async {
+      [ImgResizeType type = ImgResizeType.fitWidthHeight,
+      percentage = 0]) async {
     final fileName = file.name;
-    FileReader reader = new FileReader();
+    var reader = FileReader();
 
     reader.onLoad.listen((fileEvent) {
       ImageElement img = document.createElement('img');
       img.src = reader.result;
       img.onLoad.listen((data) {
-        Size originalSize = new Size(img.width, img.height);
+        var originalSize = Size(img.width, img.height);
         Size newSize;
 
         switch (type) {
           case ImgResizeType.percentage:
-            newSize = new Size(
-                (originalSize.width * percentage / 100).round(), (originalSize.height * percentage / 100).round());
+            newSize = Size((originalSize.width * percentage / 100).round(),
+                (originalSize.height * percentage / 100).round());
             break;
           case ImgResizeType.fitWidth:
-            newSize = fitIntoDimension(originalSize, new Size(maxWidth, 0));
+            newSize = fitIntoDimension(originalSize, Size(maxWidth, 0));
             break;
           case ImgResizeType.fitHeight:
-            newSize = fitIntoDimension(originalSize, new Size(0, maxHeight));
+            newSize = fitIntoDimension(originalSize, Size(0, maxHeight));
             break;
           case ImgResizeType.fitWidthHeight:
-            var targetSize = new Size(maxWidth, maxHeight);
+            var targetSize = Size(maxWidth, maxHeight);
             newSize = fitIntoDimension(originalSize, targetSize);
             break;
           default:
-            throw Exception("Unknown type $type");
+            throw Exception('Unknown type $type');
         }
 
         /*// calc
@@ -160,10 +165,11 @@ class Utils {
         canvas.width = newSize.width;
         canvas.height = newSize.height;
 
-        CanvasRenderingContext2D ctx = canvas.context2D;
+        var ctx = canvas.context2D;
         ctx.drawImageScaled(img, 0, 0, newSize.width, newSize.height);
-        ctx.canvas.toBlob("image/jpeg", 0.7).then((blob) {
-          var out = new File([blob], fileName, {"type": 'image/jpeg', "lastModified": DateTime.now()});
+        ctx.canvas.toBlob('image/jpeg', 0.7).then((blob) {
+          var out = File([blob], fileName,
+              {'type': 'image/jpeg', 'lastModified': DateTime.now()});
           func(out);
         });
       });
@@ -171,7 +177,8 @@ class Utils {
     reader.readAsDataUrl(file);
   }
 
-  static Size fitIntoDimension(Size originalSize, Size targetSize, [bool round = true]) {
+  static Size fitIntoDimension(Size originalSize, Size targetSize,
+      [bool round = true]) {
     var width, height;
     if (targetSize.width > 0 && targetSize.height > 0) {
       width = targetSize.width;
@@ -187,14 +194,15 @@ class Utils {
       height = targetSize.height;
       width = height * originalSize.width / originalSize.height;
     }
-    if (round == false)
-      return new Size(width, height);
-    else
-      return new Size(width.round(), height.round());
+    if (round == false) {
+      return Size(width, height);
+    } else {
+      return Size(width.round(), height.round());
+    }
   }
 
   static double brazilianMoneyToDouble(input) {
-    if(input == null){
+    if (input == null) {
       return 0;
     }
     var i = input
@@ -203,7 +211,8 @@ class Utils {
         .replaceAll(',', '@')
         .replaceAll('.', '#')
         .replaceAll('@', '.')
-        .replaceAll('#', ',').replaceAll(',','');       
+        .replaceAll('#', ',')
+        .replaceAll(',', '');
     return double.tryParse(i);
   }
 }
@@ -213,12 +222,12 @@ enum ImgResizeType { percentage, fitWidth, fitHeight, fitWidthHeight }
 class Size {
   int width, height;
   Size(w, h) {
-    this.width = w;
-    this.height = h;
+    width = w;
+    height = h;
   }
 
   @override
   String toString() {
-    return "width: $width, height: $height";
+    return 'width: $width, height: $height';
   }
 }

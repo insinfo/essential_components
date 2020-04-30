@@ -1,8 +1,7 @@
 import 'dart:html' as html;
-import 'package:uuid/uuid.dart';
 
 class SimpleLoadingComponent {
-  List<html.DivElement> loadings = List<html.DivElement>();
+  List<html.DivElement> loadings = <html.DivElement>[];
   html.HtmlElement _target;
   int requisicoes = 0;
   //Uuid uniqueIdGen;
@@ -20,7 +19,7 @@ class SimpleLoadingComponent {
     // uniqueIdGen = Uuid();
   }
 
-  show({html.HtmlElement target}) {   
+  void show({html.HtmlElement target}) {
     _target = target;
     var template = ''' 
       <div style="z-index: 1000; position: absolute;
@@ -42,7 +41,8 @@ class SimpleLoadingComponent {
     ''';
     var loading = html.DivElement();
     loading.classes.add('SimpleLoadingComponent');
-    loading.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
+    loading.setInnerHtml(template,
+        treeSanitizer: html.NodeTreeSanitizer.trusted);
 
     if (_target == null) {
       html.document.querySelector('body').append(loading);
@@ -53,7 +53,7 @@ class SimpleLoadingComponent {
     requisicoes++;
   }
 
-  hide() {
+  void hide() {
     if (loadings.isNotEmpty) {
       loadings.last.remove();
       loadings.removeLast();

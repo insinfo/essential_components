@@ -4,19 +4,17 @@ import 'package:example/src/services/person_service.dart';
 import 'package:example/src/utils/highlighting_js.dart';
 
 @Component(
-  selector: 'modal-component',
-  styleUrls: ['modal_component.css'],
-  templateUrl: 'modal_component.html',
-  directives: [
-    coreDirectives,
-    esDynamicTabsDirectives,
-    EssentialModalComponent
-  ],
-  exports: [],
-  providers: [ClassProvider(PersonService)]
-)
+    selector: 'modal-component',
+    styleUrls: ['modal_component.css'],
+    templateUrl: 'modal_component.html',
+    directives: [
+      coreDirectives,
+      esDynamicTabsDirectives,
+      EssentialModalComponent
+    ],
+    exports: [],
+    providers: [ClassProvider(PersonService)])
 class ModalComponent implements OnInit {
-
   bool show = false;
 
   String codeHtml = '''
@@ -39,5 +37,4 @@ bool show = false;
     codeHtml = highlightingHtml(codeHtml);
     codeDart = highlightingHtml(codeDart);
   }
-
 }

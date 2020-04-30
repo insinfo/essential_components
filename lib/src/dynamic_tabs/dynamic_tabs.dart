@@ -1,10 +1,19 @@
-import 'dart:async';
 import 'package:angular/angular.dart';
 
-/// Directives needed to create a tab-set
-const esDynamicTabsDirectives = [EsTabxDirective, BsTabxHeaderDirective, EsTabsxComponents];
+import 'dynamic_tab_directive.dart';
+import 'dynamic_tab_header_directive.dart';
 
-@Component(selector: 'es-tabsx', templateUrl: 'dynamic_tabs.html', directives: [coreDirectives])
+/// Directives needed to create a tab-set
+const esDynamicTabsDirectives = [
+  EsTabxDirective,
+  BsTabxHeaderDirective,
+  EsTabsxComponents
+];
+
+@Component(
+    selector: 'es-tabsx',
+    templateUrl: 'dynamic_tabs.html',
+    directives: [coreDirectives])
 class EsTabsxComponents implements OnInit, AfterContentInit {
   /// if `true` tabs will be placed vertically
   bool get vertical => placement == 'left' || placement == 'right';
@@ -31,19 +40,21 @@ class EsTabsxComponents implements OnInit, AfterContentInit {
   String type;
 
   Map get navTypeMap => {
-    'flex-column': vertical,
-    'nav-justified': justified,
-    'nav-tabs': type == 'tabs',
-    'nav-pills': type == 'pills'
-  };
+        'flex-column': vertical,
+        'nav-justified': justified,
+        'nav-tabs': type == 'tabs',
+        'nav-pills': type == 'pills'
+      };
 
-  Map tabTypeMap(EsTabxDirective tab) => { 'active': tab.active, 'disabled': tab.disabled };
+  Map tabTypeMap(EsTabxDirective tab) =>
+      {'active': tab.active, 'disabled': tab.disabled};
 
   /// List of sub tabs
   @ContentChildren(EsTabxDirective)
   List<EsTabxDirective> tabs = [];
 
   /// initialize attributes
+  @override
   void ngOnInit() {
     type ??= 'tabs';
     placement ??= 'top';
@@ -81,74 +92,4 @@ class EsTabsxComponents implements OnInit, AfterContentInit {
       t.active = t == tab;
     });
   }
-}
-
-/// Creates a tab which will be inside the [EsTabsxComponents]
-///
-
-@Directive(selector: 'es-tabx')
-class EsTabxDirective {
-  EsTabxDirective(this._ref);
-
-  final ChangeDetectorRef _ref;
-
-  @HostBinding('class.tab-pane')
-  bool tabPane = true;
-
-  /// provides the injected parent tabset
-  EsTabsxComponents tabsx;
-
-  /// if `true` tab can not be activated
-  @Input()
-  bool disabled = false;
-
-  /// tab header text
-  @Input()
-  String header;
-
-  /// Template reference to the heading template
-  @ContentChild(BsTabxHeaderDirective)
-  BsTabxHeaderDirective headerTemplate;
-
-  final _selectCtrl = StreamController<EsTabxDirective>.broadcast();
-
-  /// emits the selected element change
-  @Output()
-  Stream<EsTabxDirective> get select => _selectCtrl.stream;
-
-  final _deselectCtrl = StreamController<EsTabxDirective>.broadcast();
-
-  /// emits the deselected element change
-  @Output()
-  Stream get deselect => _deselectCtrl.stream;
-
-  bool _active = false;
-
-  /// if tab is active equals true, or set `true` to activate tab
-  @HostBinding('class.active')
-  bool get active => _active;
-
-  /// if tab is active equals true, or set `true` to activate tab
-  @Input()
-  set active(bool active) {
-    active ??= true;
-    if (_active != active) {
-      _active = active;
-      _ref.detectChanges();
-    }
-    if (active) {
-      _selectCtrl.add(this);
-    } else {
-      _deselectCtrl.add(this);
-    }
-  }
-}
-
-/// Creates a new tab header template
-@Directive(selector: 'template[bs-tabx-header]')
-class BsTabxHeaderDirective {
-  /// constructs a [BsTabxHeaderDirective] injecting its own [templateRef] and its parent [tab]
-  BsTabxHeaderDirective(this.templateRef);
-
-  TemplateRef templateRef;
 }

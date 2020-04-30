@@ -11,19 +11,19 @@ class User implements IDataTableRender {
 
   User.fromJson(Map<String, dynamic> json) {
     try {
-      id = json.containsKey("id") ? json['id'] : -1;
-      name = json.containsKey("name") ? json['name'] : "";
+      id = json.containsKey('id') ? json['id'] : -1;
+      name = json.containsKey('name') ? json['name'] : '';
     } catch (e) {
       print('User.fromJson: ${e}');
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> json = Map<String, dynamic>();
-    if (this.id != null) {
-      json['id'] = this.id;
+    final json = <String, dynamic>{};
+    if (id != null) {
+      json['id'] = id;
     }
-    json['name'] = this.name;
+    json['name'] = name;
     return json;
   }
 
@@ -31,12 +31,12 @@ class User implements IDataTableRender {
   DataTableRow getRowDefinition() {
     var settings = DataTableRow();
     settings.addSet(DataTableColumn(
-        key: "name",
+        key: 'name',
         value: name,
-        title: "Name",
+        title: 'Name',
         customRender: (html.TableCellElement cellElement) {
-          if (name == "Leanne Graham") {
-            cellElement?.closest('tr')?.style?.background = "#e8fbee";
+          if (name == 'Leanne Graham') {
+            cellElement?.closest('tr')?.style?.background = '#e8fbee"';
             return '''<span style="font-size: .8125rem;
     padding: 5px 15px; color: #fff; font-weight: 400;    
     border-radius: 10px; background: #2fa433d9;">
@@ -45,7 +45,8 @@ class User implements IDataTableRender {
           return name;
         }));
 
-    settings.addSet(DataTableColumn(key: "username", value: username, title: "username", limit: 20));
+    settings.addSet(DataTableColumn(
+        key: 'username', value: username, title: 'username', limit: 20));
     return settings;
   }
 }

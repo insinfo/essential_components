@@ -9,11 +9,8 @@ import 'datatable_render_interface.dart';
 import 'package:essential_rest/essential_rest.dart';
 import 'data_table_filter.dart';
 
-import 'dart:convert';
-
 //utils
 import 'data_table_utils.dart';
-
 
 import '../excel/simple_xlsx.dart';
 
@@ -26,31 +23,32 @@ import '../excel/simple_xlsx.dart';
   directives: [formDirectives, coreDirectives, NgIf],
 )
 //A Material Design Data table component for AngularDart
-class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit {
-  @ViewChild("tableElement") //HtmlElement
+class EssentialDataTableComponent
+    implements OnInit, AfterChanges, AfterViewInit {
+  @ViewChild('tableElement') //HtmlElement
   TableElement tableElement;
 
-  @ViewChild("divNoContent")
+  @ViewChild('divNoContent')
   DivElement divNoContent;
 
   DataTableFilter dataTableFilter = DataTableFilter();
 
-  @ViewChild("inputSearchElement")
+  @ViewChild('inputSearchElement')
   InputElement inputSearchElement;
 
-  @ViewChild("itemsPerPageElement")
+  @ViewChild('itemsPerPageElement')
   SelectElement itemsPerPageElement;
 
-  @ViewChild("paginateContainer")
+  @ViewChild('paginateContainer')
   HtmlElement paginateContainer;
 
-  @ViewChild("paginateDiv")
+  @ViewChild('paginateDiv')
   HtmlElement paginateDiv;
 
-  @ViewChild("paginatePrevBtn")
+  @ViewChild('paginatePrevBtn')
   HtmlElement paginatePrevBtn;
 
-  @ViewChild("paginateNextBtn")
+  @ViewChild('paginateNextBtn')
   HtmlElement paginateNextBtn;
 
   String _orderDir = 'asc';
@@ -63,18 +61,18 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   bool isNoContent = false;
 
   @Input()
-  String noContentMessage = "Dados indisponiveis";
+  String noContentMessage = 'Dados indisponiveis';
 
   @Input()
   String errorMessage =
       'Ocorreu um erro ao listar, verifique sua conexão de rede ou entre em contato com o suporte técnico.';
 
-  setErrorOccurred() {
+  void setErrorOccurred() {
     isLoading = false;
     error = true;
   }
 
-  removeErrorOccurred() {
+  void removeErrorOccurred() {
     error = false;
   }
 
@@ -119,7 +117,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   }
 
   int _currentPage = 1;
-  int _btnQuantity = 5;
+  final int _btnQuantity = 5;
   PaginationType paginationType = PaginationType.carousel;
 
   EssentialDataTableComponent() {
@@ -149,7 +147,8 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     draw();
   }*/
 
-  ngAfterViewInit() {
+  @override
+  void ngAfterViewInit() {
     inputSearchElement.onKeyPress.listen((KeyboardEvent e) {
       //e.preventDefault();
       e.stopPropagation();
@@ -173,7 +172,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     if (_data != null) {
       if (_data.isNotEmpty) {
         var simplexlsx = SimpleXLSX();
-        simplexlsx.sheetName = "sheet";
+        simplexlsx.sheetName = 'sheet';
 
         //adiciona os dados
         var idx = 0;
@@ -205,10 +204,10 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
       if (_data == null || _data.isEmpty) {
         var tbody = tableElement.querySelector('tbody');
         if (tbody != null) {
-          tbody.innerHtml = "";
+          tbody.innerHtml = '';
         } else {
-          TableSectionElement tBody = tableElement.createTBody();
-          tBody.innerHtml = "";
+          var tBody = tableElement.createTBody();
+          tBody.innerHtml = '';
         }
 
         isNoContent = true;
@@ -224,10 +223,10 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
         if (_data.isNotEmpty) {
           TableSectionElement tBody;
           if (tableElement.querySelector('tbody') == null) {
-            tableElement.innerHtml = "";
+            tableElement.innerHtml = '';
             tBody = tableElement.createTBody();
           } else {
-            tableElement.querySelector('tbody').innerHtml = "";
+            tableElement.querySelector('tbody').innerHtml = '';
             tBody = tableElement.querySelector('tbody');
           }
 
@@ -235,14 +234,14 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
             _isTitlesRendered = true;
             // Element tableHead =//
             tableElement.createTHead();
-            TableRowElement tableHeaderRow = tableElement.tHead.insertRow(-1);
+            var tableHeaderRow = tableElement.tHead.insertRow(-1);
             //show checkbox on tableHead to select all rows
             if (_showCheckBoxToSelectRow) {
               var th = Element.tag('th');
               th.style.setProperty('text-align', 'left');
-              th.attributes['class'] = "datatable-first-col";
+              th.attributes['class'] = 'datatable-first-col';
               var label = Element.tag('label');
-              label.classes.add("pure-material-checkbox");
+              label.classes.add('pure-material-checkbox');
               var input = CheckboxInputElement();
               //input.type = "checkbox";
               input.onClick.listen(onSelectAll);
@@ -254,25 +253,29 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
             }
 
             //render colunas de titulo
-            DataTableRow columnsTitles = _data[0].getRowDefinition();
-            for (DataTableColumn col in columnsTitles.getCollsForDisplay()) {
+            var columnsTitles = _data[0].getRowDefinition();
+            for (var col in columnsTitles.getCollsForDisplay()) {
               var th = Element.tag('th');
               th.style.setProperty('text-align', 'left');
               th.attributes['class'] = 'dataTableSorting';
               th.text = col.title;
               //ordenação
               th.onClick.listen((e) {
-                if (this.enableOrdering == true) {
-                  tableElement.querySelectorAll('th:not(.datatable-first-col)').forEach((el) {
+                if (enableOrdering == true) {
+                  tableElement
+                      .querySelectorAll('th:not(.datatable-first-col)')
+                      .forEach((el) {
                     el.attributes['class'] = 'dataTableSorting';
                   });
 
                   if (_orderDir == 'asc') {
                     _orderDir = 'desc';
-                    th.attributes['class'] = 'dataTableSorting dataTableSortingDesc';
+                    th.attributes['class'] =
+                        'dataTableSorting dataTableSortingDesc';
                   } else if (_orderDir == 'desc') {
                     _orderDir = 'asc';
-                    th.attributes['class'] = 'dataTableSorting dataTableSortingAsc';
+                    th.attributes['class'] =
+                        'dataTableSorting dataTableSortingAsc';
                   }
 
                   dataTableFilter.orderBy = col.key;
@@ -287,20 +290,20 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
 
           //render linhas
           for (final item in _data) {
-            TableRowElement tableRow = tBody.insertRow(-1);
+            var tableRow = tBody.insertRow(-1);
             //show checkbox to select single row
             if (_showCheckBoxToSelectRow) {
               var tdcb = Element.tag('td');
               tdcb.style.setProperty('text-align', 'left');
-              tdcb.attributes['class'] = "datatable-first-col";
+              tdcb.attributes['class'] = 'datatable-first-col';
               var label = Element.tag('label');
               label.onClick.listen((e) {
                 e.stopPropagation();
               });
-              label.classes.add("pure-material-checkbox");
+              label.classes.add('pure-material-checkbox');
               var input = CheckboxInputElement();
               //input.type = "checkbox";
-              input.attributes['cbSelect'] = "true";
+              input.attributes['cbSelect'] = 'true';
               input.onClick.listen((MouseEvent event) {
                 onSelect(event, item);
               });
@@ -328,9 +331,9 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
             });
 
             //draw columns
-            DataTableRow settings = item.getRowDefinition();
-            for (DataTableColumn colSet in settings.getCollsForDisplay()) {
-              var tdContent = "";
+            var settings = item.getRowDefinition();
+            for (var colSet in settings.getCollsForDisplay()) {
+              var tdContent = '';
               var td = Element.tag('td');
               tableRow.insertAdjacentElement('beforeend', td);
 
@@ -343,31 +346,34 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
               if (colSet.backgroundColor != null) {
                 td.style.setProperty('background', colSet.backgroundColor);
               }
-              td.setInnerHtml(tdContent, treeSanitizer: NodeTreeSanitizer.trusted);
+              td.setInnerHtml(tdContent,
+                  treeSanitizer: NodeTreeSanitizer.trusted);
             }
           }
         }
       }
     } catch (exception, stackTrace) {
-      print("draw() exception: " + exception.toString());
-      print(stackTrace.toString());
+      print('DataTable@draw() exception: $exception');
+      print('DataTable@draw() stackTrace: $stackTrace');
     }
     isLoading = false;
   }
 
   String removeAllHtmlTags(String htmlText) {
-    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+    var exp = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);
     return htmlText.replaceAll(exp, '');
   }
 
   String formatCell(DataTableColumn colSet,
-      {bool disableLimit = false, bool stripHtml = false, TableCellElement cellElement}) {
-    String tdContent = "";
+      {bool disableLimit = false,
+      bool stripHtml = false,
+      TableCellElement cellElement}) {
+    var tdContent = '';
     if (colSet.customRender == null) {
       switch (colSet.type) {
         case DataTableColumnType.date:
           if (colSet.value != null) {
-            var fmt = colSet.format == null ? 'dd/MM/yyyy' : colSet.format;
+            var fmt = colSet.format ?? 'dd/MM/yyyy';
             var formatter = DateFormat(fmt);
             var date = DateTime.tryParse(colSet.value.toString());
             if (date != null) {
@@ -377,7 +383,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
           break;
         case DataTableColumnType.dateTime:
           if (colSet.value != null) {
-            var fmt = colSet.format == null ? 'dd/MM/yyyy HH:mm:ss' : colSet.format;
+            var fmt = colSet.format ?? 'dd/MM/yyyy HH:mm:ss';
             var formatter = DateFormat(fmt);
             var date = DateTime.tryParse(colSet.value.toString());
             if (date != null) {
@@ -422,8 +428,11 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
             if (stripHtml) {
               tdContent = str;
             } else {
-              var badgeColor = colSet.badgeColor != null ? 'background:${colSet.badgeColor};' : 'background:#e0e0e0;';
-              str = '<span class="badge" style="font-size:.8125rem;color:#fff;font-weight:400;$badgeColor">$str</span>';
+              var badgeColor = colSet.badgeColor != null
+                  ? 'background:${colSet.badgeColor};'
+                  : 'background:#e0e0e0;';
+              str =
+                  '<span class="badge" style="font-size:.8125rem;color:#fff;font-weight:400;$badgeColor">$str</span>';
             }
           } else {
             str = '';
@@ -432,7 +441,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
           break;
         case DataTableColumnType.img:
           var src = colSet.value.toString();
-          if (src != "null") {
+          if (src != 'null') {
             if (stripHtml) {
               tdContent = src;
             } else {
@@ -442,7 +451,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
               tdContent = img.outerHtml;
             }
           } else {
-            tdContent = "-";
+            tdContent = '-';
           }
           break;
         default:
@@ -460,12 +469,12 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
       tdContent = removeAllHtmlTags(tdContent);
     }
 
-    tdContent = tdContent == "null" ? "-" : tdContent;
+    tdContent = tdContent == 'null' ? '-' : tdContent;
     return tdContent;
   }
 
   int numPages() {
-    var totalPages = (this.totalRecords / this.dataTableFilter.limit).ceil();
+    var totalPages = (totalRecords / dataTableFilter.limit).ceil();
     return totalPages;
   }
 
@@ -475,10 +484,11 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     var totalPages = numPages();
 
     //quantidade de botões de paginação exibidos
-    var btnQuantity = self._btnQuantity > totalPages ? totalPages : self._btnQuantity;
+    var btnQuantity =
+        self._btnQuantity > totalPages ? totalPages : self._btnQuantity;
     var currentPage = self._currentPage; //pagina atual
     //clear paginateContainer for new draws
-    self.paginateContainer.innerHtml = "";
+    self.paginateContainer.innerHtml = '';
     if (self.totalRecords < self.dataTableFilter.limit) {
       return;
     }
@@ -512,9 +522,9 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
         }
         while (idx < loopEnd) {
           var link = Element.tag('a');
-          link.classes.add("paginate_button");
+          link.classes.add('paginate_button');
           if (idx == currentPage) {
-            link.classes.add("current");
+            link.classes.add('current');
           }
           link.text = idx.toString();
           var liten = (event) {
@@ -530,16 +540,18 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
         }
         break;
       case PaginationType.cube:
-        var facePosition = (currentPage % btnQuantity) == 0 ? btnQuantity : currentPage % btnQuantity;
+        var facePosition = (currentPage % btnQuantity) == 0
+            ? btnQuantity
+            : currentPage % btnQuantity;
         loopEnd = btnQuantity - facePosition + currentPage;
         idx = currentPage - facePosition;
         while (idx < loopEnd) {
           idx++;
           if (idx <= totalPages) {
             var link = Element.tag('a');
-            link.classes.add("paginate_button");
+            link.classes.add('paginate_button');
             if (idx == currentPage) {
-              link.classes.add("current");
+              link.classes.add('current');
             }
             link.text = idx.toString();
             var liten = (event) {
@@ -557,30 +569,30 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     }
   }
 
-  prevPage(Event event) {
-    if (this._currentPage == 0) {
+  void prevPage(Event event) {
+    if (_currentPage == 0) {
       return;
     }
-    if (this._currentPage > 1) {
-      this._currentPage--;
-      changePage(this._currentPage);
+    if (_currentPage > 1) {
+      _currentPage--;
+      changePage(_currentPage);
     }
   }
 
-  nextPage(Event event) {
-    if (this._currentPage == numPages()) {
+  void nextPage(Event event) {
+    if (_currentPage == numPages()) {
       return;
     }
-    if (this._currentPage < this.numPages()) {
-      this._currentPage++;
-      changePage(this._currentPage);
+    if (_currentPage < numPages()) {
+      _currentPage++;
+      changePage(_currentPage);
     }
   }
 
-  changePage(page) {
+  void changePage(page) {
     onRequestData();
-    if (page != this._currentPage) {
-      this._currentPage = page;
+    if (page != _currentPage) {
+      _currentPage = page;
     }
     selectedItems.clear();
   }
@@ -590,7 +602,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   @Output()
   Stream<IDataTableRender> get rowClick => _rowClickRequest.stream;
 
-  onRowClick(IDataTableRender item) {
+  void onRowClick(IDataTableRender item) {
     _rowClickRequest.add(item);
   }
 
@@ -599,7 +611,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   @Output()
   Stream<DataTableFilter> get searchRequest => _searchRequest.stream;
 
-  onSearch() {
+  void onSearch() {
     dataTableFilter.searchString = inputSearchElement.value;
     _searchRequest.add(dataTableFilter);
     onRequestData();
@@ -610,8 +622,8 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   @Output()
   Stream<DataTableFilter> get limitChange => _limitChangeRequest.stream;
 
-  onLimitChange() {
-    this._currentPage = 1;
+  void onLimitChange() {
+    _currentPage = 1;
     dataTableFilter.limit = int.tryParse(itemsPerPageElement.value);
     _limitChangeRequest.add(dataTableFilter);
     onRequestData();
@@ -624,24 +636,24 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
 
   bool isLoading = true;
 
-  onRequestData() {
+  void onRequestData() {
     isLoading = true;
-    var currentPage = this._currentPage == 1 ? 0 : this._currentPage - 1;
+    var currentPage = _currentPage == 1 ? 0 : _currentPage - 1;
     dataTableFilter.offset = currentPage * dataTableFilter.limit;
     _dataRequest.add(dataTableFilter);
   }
 
-  reload() {
+  void reload() {
     /*dataTableFilter.clear();*/
     onRequestData();
   }
 
-  reset() {
+  void reset() {
     dataTableFilter.clear();
     onRequestData();
   }
 
-  onSelectAll(event) {
+  void onSelectAll(event) {
     var cbs = tableElement.querySelectorAll('input[cbselect=true]');
     if (event.target.checked) {
       for (CheckboxInputElement item in cbs) {
@@ -657,7 +669,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     }
   }
 
-  onSelect(MouseEvent event, IDataTableRender item) {
+  void onSelect(MouseEvent event, IDataTableRender item) {
     event.stopPropagation();
     CheckboxInputElement cb = event.target;
     if (cb.checked) {

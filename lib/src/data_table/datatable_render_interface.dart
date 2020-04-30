@@ -2,7 +2,7 @@ class DataTableRow {
   static DataTableRow instance;
   List<DataTableColumn> colsSets;
   DataTableRow() {
-    colsSets = List<DataTableColumn>();
+    colsSets = <DataTableColumn>[];
   }
 
   static DataTableRow getInstance() {
@@ -13,7 +13,7 @@ class DataTableRow {
     }
   }
 
-  addSet(DataTableColumn colSet) {
+  void addSet(DataTableColumn colSet) {
     colsSets.add(colSet);
   }
 
@@ -30,7 +30,16 @@ class DataTableRow {
   }
 }
 
-enum DataTableColumnType { img, text, date, dateTime, boolLabel, brasilCurrency, badge, link }
+enum DataTableColumnType {
+  img,
+  text,
+  date,
+  dateTime,
+  boolLabel,
+  brasilCurrency,
+  badge,
+  link
+}
 
 //primaryDisplayValue é o Valor de exibição principal
 //a ser exibido quando não for possivel exibir mais de uma coluna

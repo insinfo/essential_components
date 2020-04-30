@@ -4,8 +4,8 @@ class DataTableUtils {
       return value;
     }
     //int truncateAt = value.length-1;
-    String elepsis = "..."; //define your variable truncation elipsis here
-    String truncated = "";
+    var elepsis = '...'; //define your variable truncation elipsis here
+    var truncated = '';
 
     if (value.length > truncateAt) {
       truncated = value.substring(0, truncateAt - elepsis.length) + elepsis;
@@ -17,7 +17,8 @@ class DataTableUtils {
 
   static void addEventForChild(parent, eventName, childSelector, cb) {
     parent.addEventListener(eventName, (event) {
-      var clickedElement = event.target, matchingChild = clickedElement.closest(childSelector);
+      var clickedElement = event.target,
+          matchingChild = clickedElement.closest(childSelector);
       if (matchingChild) {
         cb(matchingChild);
       }

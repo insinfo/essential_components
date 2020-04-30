@@ -38,9 +38,12 @@ export 'src/simple_tabs/simple_tabs.dart';
 
 //dynamic tabs
 export 'src/dynamic_tabs/dynamic_tabs.dart';
+export 'src/dynamic_tabs/dynamic_tab_directive.dart';
+export 'src/dynamic_tabs/dynamic_tab_header_directive.dart';
 
 //Essential Simple Select
 export 'src/simple_select/simple_select.dart';
+export 'src/simple_select/simple_select_option.dart';
 export 'src/core/style_type.dart';
 
 //interface padrão para exibição de label na tela a partir de um model

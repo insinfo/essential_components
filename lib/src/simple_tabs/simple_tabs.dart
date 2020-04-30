@@ -2,18 +2,17 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 
 /// Directives needed to create a tab-set
-const esTabsDirectives  =  [
-   EsTabComponent,
-   EsTabsComponent,
-   EsTabContentComponent,
-   EsTabPanelDirective
+const esTabsDirectives = [
+  EsTabComponent,
+  EsTabsComponent,
+  EsTabContentComponent,
+  EsTabPanelDirective
 ];
 
 @Component(
-  selector: 'es-tabs',
-  templateUrl: 'simple_tabs.html',
-  directives: [coreDirectives]
-)
+    selector: 'es-tabs',
+    templateUrl: 'simple_tabs.html',
+    directives: [coreDirectives])
 class EsTabsComponent implements AfterContentInit {
   /// children tabs
   @ContentChildren(EsTabComponent)
@@ -94,7 +93,8 @@ class EsTabContentComponent implements AfterContentInit {
   }
 
   void _setCurrent(EsTabComponent tab) {
-    _current = panels.firstWhere((EsTabPanelDirective panel) => panel.name == tab?.select);
+    _current = panels
+        .firstWhere((EsTabPanelDirective panel) => panel.name == tab?.select);
   }
 }
 

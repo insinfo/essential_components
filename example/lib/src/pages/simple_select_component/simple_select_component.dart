@@ -7,23 +7,20 @@ import 'package:essential_rest/essential_rest.dart';
 import 'package:example/src/utils/highlighting_js.dart';
 
 @Component(
-  selector: 'simple-select-component',
-  styleUrls: ['simple_select_component.css'],
-  templateUrl: 'simple_select_component.html',
-  directives: [
-    coreDirectives,
-    esDynamicTabsDirectives,
-    EssentialSimpleSelectComponent,
-    EsSimpleSelectOptionComponent,
-    formDirectives
-  ],
-  exports: [],
-  providers: [
-    ClassProvider(PersonService)
-  ]
-)
+    selector: 'simple-select-component',
+    styleUrls: ['simple_select_component.css'],
+    templateUrl: 'simple_select_component.html',
+    directives: [
+      coreDirectives,
+      esDynamicTabsDirectives,
+      EssentialSimpleSelectComponent,
+      EsSimpleSelectOptionComponent,
+      formDirectives
+    ],
+    exports: [],
+    providers: [ClassProvider(PersonService)])
 class SimpleSelectComponent implements OnInit {
-  PersonService _personService;
+  final PersonService _personService;
   RList<Person> persons = RList<Person>();
   Person person;
   StyleType color = StyleType.SUCCESS;
@@ -45,7 +42,6 @@ class SimpleSelectComponent implements OnInit {
       }
     });
   }
-
 
   String htmlCode = '''
   <es-simple-select [(ngModel)]="person" displaytype="button" buttonText="Selecione"
@@ -86,6 +82,4 @@ void findAllPerson() {
   }
 } 
   ''';
-
-  
 }

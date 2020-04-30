@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:angular/meta.dart';
+
 import 'package:angular_forms/angular_forms.dart';
 
 import '../data_table/data_table.dart';
@@ -19,9 +19,15 @@ import '../modal/modal.dart';
   styleUrls: [
     'dropdown_dialog.css',
   ],
-  directives: [formDirectives, coreDirectives, EssentialDataTableComponent, EssentialModalComponent],
+  directives: [
+    formDirectives,
+    coreDirectives,
+    EssentialDataTableComponent,
+    EssentialModalComponent
+  ],
 )
-class EssentialDropdownDialogComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
+class EssentialDropdownDialogComponent
+    implements ControlValueAccessor, AfterViewInit, OnDestroy {
   @ViewChild('buttonEl')
   ButtonElement buttonEl;
 
@@ -55,7 +61,8 @@ class EssentialDropdownDialogComponent implements ControlValueAccessor, AfterVie
   @Input()
   int maxCount;
 
-  final _changeController = StreamController<RList<IDataTableRender>>.broadcast(sync: true);
+  final _changeController =
+      StreamController<RList<IDataTableRender>>.broadcast(sync: true);
 
   /// Publishes events when a change event is fired. (On enter, or on blur.)
   @Output('change')
@@ -68,12 +75,13 @@ class EssentialDropdownDialogComponent implements ControlValueAccessor, AfterVie
   String type = 'button';
 
   //contrutor
-  EssentialDropdownDialogComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
+  EssentialDropdownDialogComponent(
+      @Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
     // Replace the provider from above with this.
-    if (this.ngControl != null) {
+    if (ngControl != null) {
       // Setting the value accessor directly (instead of using
       // the providers) to avoid running into a circular import.
-      this.ngControl.valueAccessor = this;
+      ngControl.valueAccessor = this;
 
       if (ngControl?.control != null) {
         //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
@@ -99,28 +107,31 @@ class EssentialDropdownDialogComponent implements ControlValueAccessor, AfterVie
   @Output('click')
   Stream<dynamic> get onClick => _clickController.stream;
 
-  handleClick() {
+  void handleClick() {
     if (openonclick) {
       modal.openDialog();
     }
-    _clickController.add("click");
+    _clickController.add('click');
   }
 
-  openDialog() {
+  void openDialog() {
     _beforeShowController.add('beforeshow');
     modal.openDialog();
   }
 
-  closeDialog() {
+  void closeDialog() {
     modal.closeDialog();
   }
 
 // **************** INICIO FUNÇÔES DO NGMODEL ControlValueAccessor *********************
+  @override
   void writeValue(value) {}
+  @override
   void onDisabledChanged(bool isDisabled) {}
   TouchFunction onTouchedControlValueAccessor = () {};
 
   /// Set the function to be called when the control receives a touch event.
+  @override
   void registerOnTouched(TouchFunction fn) {
     onTouchedControlValueAccessor = fn;
   }
@@ -130,6 +141,7 @@ class EssentialDropdownDialogComponent implements ControlValueAccessor, AfterVie
       (RList<IDataTableRender> _, {String rawValue}) {};
 
   /// Set the function to be called when the control receives a change event.
+  @override
   void registerOnChange(ChangeFunction<RList<IDataTableRender>> fn) {
     onChangeControlValueAccessor = fn;
   }
@@ -153,8 +165,8 @@ class EssentialDropdownDialogComponent implements ControlValueAccessor, AfterVie
   DataTableFilter getDataTableFilter() {
     return dataTable.dataTableFilter;
   }
-  
-  selectItems() {
+
+  void selectItems() {
     closeDialog();
     _changeController.add(dataTable.selectedItems);
   }

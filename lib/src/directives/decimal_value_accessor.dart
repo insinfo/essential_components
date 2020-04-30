@@ -19,7 +19,8 @@ import 'package:decimal/decimal.dart';
 class DecimalValueAccessor implements ControlValueAccessor {
   final InputElement _element;
 
-  DecimalValueAccessor(HtmlElement element) : _element = element as InputElement;
+  DecimalValueAccessor(HtmlElement element)
+      : _element = element as InputElement;
 
   @HostListener('change', ['\$event.target.value'])
   @HostListener('input', ['\$event.target.value'])
@@ -27,19 +28,21 @@ class DecimalValueAccessor implements ControlValueAccessor {
     print('About to parse decimal');
     Decimal dec;
     try {
-      dec = new Decimal.parse(value);
+      dec = Decimal.parse(value);
     } catch (e) {
-      //TODO: mark feild as invalid
+      // mark feild as invalid
       return;
     }
     print('Got $dec with type ${dec.runtimeType}');
     onChange((value == '' ? null : dec), rawValue: value);
   }
 
+  @override
   void writeValue(value) {
     _element.value = '$value';
   }
 
+  @override
   void onDisabledChanged(bool isDisabled) {
     _element.disabled = isDisabled;
   }
@@ -52,6 +55,7 @@ class DecimalValueAccessor implements ControlValueAccessor {
   }
 
   /// Set the function to be called when the control receives a touch event.
+  @override
   void registerOnTouched(TouchFunction fn) {
     onTouched = fn;
   }
@@ -59,6 +63,7 @@ class DecimalValueAccessor implements ControlValueAccessor {
   ChangeFunction<Decimal> onChange = (Decimal _, {String rawValue}) {};
 
   /// Set the function to be called when the control receives a change event.
+  @override
   void registerOnChange(ChangeFunction<Decimal> fn) {
     onChange = fn;
   }

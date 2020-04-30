@@ -18,9 +18,9 @@ class RecaptchaExample implements OnInit {
   var site_key = '6Leab-IUAAAAAG-gOiCC2bSa2LVUJRYTYUCxlJ6G';
   var secret_key = '6Leab-IUAAAAAKHraCk_tfi5XqpoUNI8CMx7TFcC';
   String value;
- 
-  onVerify(e) {
-     print('onVerify $e');
+
+  void onVerify(e) {
+    print('onVerify $e');
   }
 
   String codeHtml = '''

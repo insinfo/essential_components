@@ -4,10 +4,12 @@ import 'dart:convert';
 
 class Properties {
   Map<String, String> namespaces = {
-    "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties": "",
-    "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes": "vt",
+    'http://schemas.openxmlformats.org/officeDocument/2006/extended-properties':
+        '',
+    'http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes':
+        'vt',
   };
-  String application = "Microsoft Excel";
+  String application = 'Microsoft Excel';
   int docSecurity = 0;
   bool scaleCrop = false;
   HeadingPairs headingPairs;
@@ -17,21 +19,25 @@ class Properties {
   bool sharedDoc = false;
   bool hyperlinksChanged = false;
   String appVersion = '16.0300';
-  String xmlns = "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties";
-  String xmlnsVt = "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes";
+  String xmlns =
+      'http://schemas.openxmlformats.org/officeDocument/2006/extended-properties';
+  String xmlnsVt =
+      'http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes';
 
-  toStringXml() {
-    this.headingPairs = HeadingPairs();
-    this.headingPairs.vector = Vector("variant");
-    this.headingPairs.vector.children.add(Variant(children: [Lpstr(text: 'Planilhas')]));
-    this.headingPairs.vector.children.add(Variant(children: [I4(text: '1')]));
+  String toStringXml() {
+    headingPairs = HeadingPairs();
+    headingPairs.vector = Vector('variant');
+    headingPairs.vector.children
+        .add(Variant(children: [Lpstr(text: 'Planilhas')]));
+    headingPairs.vector.children.add(Variant(children: [I4(text: '1')]));
 
-    this.titlesOfParts = TitlesOfParts();
-    this.titlesOfParts.vector = Vector("lpstr");
-    this.titlesOfParts.vector.children.add(Lpstr(text: 'Planilha1'));
+    titlesOfParts = TitlesOfParts();
+    titlesOfParts.vector = Vector('lpstr');
+    titlesOfParts.vector.children.add(Lpstr(text: 'Planilha1'));
 
     var builder = xml.XmlBuilder();
-    builder.processing('xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
+    builder.processing(
+        'xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
     //Properties
     builder.element('Properties', namespaces: namespaces, nest: () {
       //Application
@@ -47,9 +53,9 @@ class Properties {
         builder.text(scaleCrop);
       });
       //HeadingPairs
-      this.headingPairs?.createXmlElement(builder);
+      headingPairs?.createXmlElement(builder);
       //titlesOfParts
-      this.titlesOfParts?.createXmlElement(builder);
+      titlesOfParts?.createXmlElement(builder);
       //Company
       builder.element('Company', nest: () {
         builder.text(company);
@@ -77,12 +83,10 @@ class Properties {
     return result;
   }
 
-   List<int> toFileBytes() {
+  List<int> toFileBytes() {
     return utf8.encode(toStringXml());
   }
 }
-
-
 
 class Lpstr implements IXmlSerializable {
   String text;
@@ -114,7 +118,7 @@ class Variant implements IXmlSerializable {
     }
   }
   @override
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element('vt:variant', nest: () {
       children?.forEach((child) {
         child?.createXmlElement(builder);
@@ -134,8 +138,11 @@ class Vector {
     }
   }
 
-  createXmlElement(xml.XmlBuilder builder) {
-    builder.element('vt:vector', attributes: {"size": children?.length?.toString(), "baseType": baseType}, nest: () {
+  void createXmlElement(xml.XmlBuilder builder) {
+    builder.element('vt:vector', attributes: {
+      'size': children?.length?.toString(),
+      'baseType': baseType
+    }, nest: () {
       children?.forEach((child) {
         child?.createXmlElement(builder);
       });
@@ -145,7 +152,7 @@ class Vector {
 
 class HeadingPairs {
   Vector vector;
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element('HeadingPairs', nest: () {
       if (vector != null) {
         vector.createXmlElement(builder);
@@ -157,7 +164,7 @@ class HeadingPairs {
 class TitlesOfParts {
   Vector vector;
 
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element('TitlesOfParts', nest: () {
       if (vector != null) {
         vector.createXmlElement(builder);

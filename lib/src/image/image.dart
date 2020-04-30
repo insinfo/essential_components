@@ -72,5 +72,4 @@ class EssentialImageComponent {
     //print('EssentialImageComponent@onError $loading url: $url');
     loading = false;
   }
-
 }

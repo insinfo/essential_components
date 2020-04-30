@@ -1,7 +1,6 @@
 import 'package:essential_components/src/handlers/exceptions/bad_request_exception.dart';
 
 class TextValidation {
-
   String value;
   String messageError;
   int minLength;
@@ -9,20 +8,29 @@ class TextValidation {
   int fixedLength;
 
   void _withCustomMessageError() {
-      if (messageError != null && messageError.isNotEmpty) {
-        throw BadRequestException(messageError);
-      }
+    if (messageError != null && messageError.isNotEmpty) {
+      throw BadRequestException(messageError);
+    }
   }
 
-  static TextValidation init({ String value, String messageError, int minLength, int maxLength, int fixedLength }) {
-    if (value != null || messageError != null || minLength != null || maxLength != null || fixedLength != null) {
+  static TextValidation init(
+      {String value,
+      String messageError,
+      int minLength,
+      int maxLength,
+      int fixedLength}) {
+    if (value != null ||
+        messageError != null ||
+        minLength != null ||
+        maxLength != null ||
+        fixedLength != null) {
       var textValidation = TextValidation();
       textValidation.value = value ?? value;
       textValidation.messageError = messageError ?? messageError;
       textValidation.minLength = minLength ?? minLength;
       textValidation.maxLength = maxLength ?? maxLength;
       textValidation.fixedLength = fixedLength ?? fixedLength;
-      return textValidation; 
+      return textValidation;
     }
     return TextValidation();
   }
@@ -40,16 +48,18 @@ class TextValidation {
   TextValidation whereSizeRangeIs(int minLength, int maxLength) {
     if (minLength >= maxLength) {
       _withCustomMessageError();
-      throw BadRequestException('The minimum size is less than or equal to the maximum size. If it is the same, use the fixed value method.');
+      throw BadRequestException(
+          'The minimum size is less than or equal to the maximum size. If it is the same, use the fixed value method.');
     }
 
     if (minLength < 0 || maxLength < 0) {
-      throw BadRequestException('The minimum size or the maximum size is less of zero.');
+      throw BadRequestException(
+          'The minimum size or the maximum size is less of zero.');
     }
 
     this.minLength = minLength;
     this.maxLength = maxLength;
-    
+
     return this;
   }
 

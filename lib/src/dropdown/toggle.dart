@@ -1,9 +1,5 @@
 import 'package:angular/angular.dart';
-import 'package:angular_forms/angular_forms.dart';
 import 'dart:html';
-import 'package:intl/intl.dart';
-import 'dart:async';
-import '../core/helper.dart';
 import 'dropdown.dart';
 
 /// Creates a component that will toggle the state of a dropdown-menu,
@@ -36,6 +32,6 @@ class EsDropdownToggleDirective {
     event.stopPropagation();
     if (!disabled) {
       dropdown.toggle();
-    }    
+    }
   }
 }

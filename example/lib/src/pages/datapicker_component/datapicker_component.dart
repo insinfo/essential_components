@@ -6,27 +6,25 @@ import 'package:angular_forms/angular_forms.dart';
 import 'package:example/src/utils/highlighting_js.dart';
 
 @Component(
-  selector: 'datapicker-component',
-  styleUrls: ['datapicker_component.css'],
-  templateUrl: 'datapicker_component.html',
-  directives: [
-    formDirectives,
-    coreDirectives,
-    EssentialToastComponent,
-    routerDirectives,
-    EssentialDataTableComponent,
-    MaxlengthDirective,
-    esDynamicTabsDirectives,
-    EssentialSimpleSelectComponent,
-    EsSimpleSelectOptionComponent,
-    EsDatePickerPopupComponent,
-    EsDatePickerComponent
-  ],
-  exports: [],
-  providers: [ClassProvider(PersonService)]
-)
+    selector: 'datapicker-component',
+    styleUrls: ['datapicker_component.css'],
+    templateUrl: 'datapicker_component.html',
+    directives: [
+      formDirectives,
+      coreDirectives,
+      EssentialToastComponent,
+      routerDirectives,
+      EssentialDataTableComponent,
+      MaxlengthDirective,
+      esDynamicTabsDirectives,
+      EssentialSimpleSelectComponent,
+      EsSimpleSelectOptionComponent,
+      EsDatePickerPopupComponent,
+      EsDatePickerComponent
+    ],
+    exports: [],
+    providers: [ClassProvider(PersonService)])
 class DataPickerComponent implements OnInit {
-
   @Input('btnRadio')
   EsRadioButtonDirective btnRadio;
 
@@ -63,8 +61,7 @@ class AccordeonComponent { }
     codeComponent = highlightingHtml(codeComponent);
   }
 
-  reloadData(dynamic event) {
+  void reloadData(dynamic event) {
     //print(event);
   }
-
 }

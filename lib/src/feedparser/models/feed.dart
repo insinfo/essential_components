@@ -33,7 +33,7 @@ class Feed {
       title = node.findElements('title').single.text;
     } catch (e) {
       if (strict) {
-        throw new ArgumentError('Feed missing mandatory title element');
+        throw ArgumentError('Feed missing mandatory title element');
       }
     }
 
@@ -42,7 +42,7 @@ class Feed {
       link = node.findElements('link').single.text;
     } catch (e) {
       if (strict) {
-        throw new ArgumentError('Feed missing mandatory link element');
+        throw ArgumentError('Feed missing mandatory link element');
       }
     }
 
@@ -51,7 +51,7 @@ class Feed {
       description = node.findElements('description').single.text;
     } catch (e) {
       if (strict) {
-        throw new ArgumentError('Feed missing mandatory description element');
+        throw ArgumentError('Feed missing mandatory description element');
       }
     }
 
@@ -59,38 +59,48 @@ class Feed {
     String language;
     try {
       language = node.findElements('language').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     String copyright;
     try {
       copyright = node.findElements('copyright').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     String pubDate;
     try {
       pubDate = node.findElements('pubDate').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     String lastBuildDate;
     try {
       lastBuildDate = node.findElements('lastBuildDate').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     xml.XmlElement imageElement;
     try {
       imageElement = node.findElements('image').single;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     FeedImage image;
     if (imageElement != null) {
-      image = new FeedImage.fromXml(imageElement);
+      image = FeedImage.fromXml(imageElement);
     }
 
-    List<FeedItem> items = node
+    var items = node
         .findElements('item')
-        .map((itemElement) => new FeedItem.fromXml(itemElement, strict))
+        .map((itemElement) => FeedItem.fromXml(itemElement, strict))
         .toList();
 
-    return new Feed(
+    return Feed(
       title,
       link,
       description,
@@ -103,6 +113,7 @@ class Feed {
     );
   }
 
+  @override
   String toString() {
     return '''
       title: $title

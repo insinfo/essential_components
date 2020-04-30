@@ -3,7 +3,6 @@ import 'package:essential_components/essential_components.dart';
 import 'package:example/src/models/person.dart';
 import 'package:essential_rest/essential_rest.dart';
 import 'package:example/src/services/person_service.dart';
-import 'dart:html' as html;
 
 import 'package:example/src/utils/highlighting_js.dart';
 
@@ -11,7 +10,11 @@ import 'package:example/src/utils/highlighting_js.dart';
     selector: 'timeline-component',
     styleUrls: ['timeline_component.css'],
     templateUrl: 'timeline_component.html',
-    directives: [coreDirectives, esDynamicTabsDirectives, EssentialTimelineComponent],
+    directives: [
+      coreDirectives,
+      esDynamicTabsDirectives,
+      EssentialTimelineComponent
+    ],
     exports: [],
     providers: [EssentialTimelineComponent])
 class TimelineExComponent implements OnInit {

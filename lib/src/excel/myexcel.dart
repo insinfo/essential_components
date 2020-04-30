@@ -1,10 +1,6 @@
-import 'dart:html';
-import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
-import 'package:intl/intl.dart';
+/*import 'dart:convert';
 
-import 'package:archive/archive.dart';
+import 'package:intl/intl.dart';
 
 class MyExcel {
   List<String> borderKind = ['left', 'right', 'top', 'bottom'];
@@ -162,17 +158,15 @@ class MyExcel {
         return s['set'](value, style);
       }*/
       //if (isNumeric(column)) {
-        // If this is a column operation
-        //if (isNumeric(row)) {
-          var isstring = style != null && styles['getStyle'](style - 1)['isstring'];
-          return setCell(s['getCell'](column, row), value, style, isstring,
-              colspan); // and also a ROW operation the this is a CELL operation
-       // }
-       // return setColumn(s.getColumn(column), value, style); // if not we confirm than this is a COLUMN operation
+      // If this is a column operation
+      //if (isNumeric(row)) {
+      var isstring = style != null && styles['getStyle'](style - 1)['isstring'];
+      return setCell(s['getCell'](column, row), value, style, isstring,
+          colspan); // and also a ROW operation the this is a CELL operation
+      // }
+      // return setColumn(s.getColumn(column), value, style); // if not we confirm than this is a COLUMN operation
       //}
       //return setRow(s.getRow(row), value, style); // If got here, thet this is a Row operation
-
-
     };
 
     excel['freezePane'] = (s, x, y) {
@@ -195,13 +189,14 @@ class MyExcel {
     return excel;
   }
 
-  var templateSheet = '<?xml version="1.0" ?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" ' +
-      'xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mv="urn:schemas-microsoft-com:mac:vml" ' +
-      'xmlns:mx="http://schemas.microsoft.com/office/mac/excel/2008/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" ' +
-      'xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac" ' +
-      'xmlns:xm="http://schemas.microsoft.com/office/excel/2006/main">' +
-      '{views}{columns}' +
-      '<sheetData>{rows}</sheetData>{mergeCells}</worksheet>';
+  var templateSheet =
+      '''<?xml version="1.0" ?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mv="urn:schemas-microsoft-com:mac:vml" 
+      xmlns:mx="http://schemas.microsoft.com/office/mac/excel/2008/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" 
+      xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac" 
+      xmlns:xm="http://schemas.microsoft.com/office/excel/2006/main"> 
+      {views}{columns}
+      <sheetData>{rows}</sheetData>{mergeCells}</worksheet>''';
 
   // --------------------- BEGIN of generic UTILS
 
@@ -315,62 +310,67 @@ class MyExcel {
 
   createSheets() {
     var oSheets = {
-      "sheets": [],
-      "add": (name) {
+      'sheets': [],
+      'add': (name) {
         var sheet = {
-          "id": this.sheets.length + 1,
-          "rId": "rId" + (3 + this.sheets.length).toString(),
-          "name": name,
-          "rows": [],
-          "columns": [],
-          "getColumn": getColumn,
-          "set": setSheet,
-          "getRow": getRow,
-          "getCell": getCell,
-          "mergeCells": [],
-          "views": [],
-          "freezePane": freezePane
+          'id': sheets.length + 1,
+          'rId': 'rId' + (3 + sheets.length).toString(),
+          'name': name,
+          'rows': [],
+          'columns': [],
+          'getColumn': getColumn,
+          'set': setSheet,
+          'getRow': getRow,
+          'getCell': getCell,
+          'mergeCells': [],
+          'views': [],
+          'freezePane': freezePane
         };
-        return pushI(this.sheets, sheet);
+        return pushI(sheets, sheet);
       },
-      "get": (index) {
-        var sheet = this.sheets[index];
-        if (sheet == null) throw Exception("Bad sheet $index");
+      'get': (index) {
+        var sheet = sheets[index];
+        if (sheet == null) throw Exception('Bad sheet $index');
         return sheet;
       },
-      "rows": (i) {
-        if (i < 0 || i >= this.sheets.length)
-          throw Exception("Bad sheet number must be [0.." + (this.sheets.length - 1).toString() + "] and is: " + i);
-        return this.sheets[i].rows;
+      'rows': (i) {
+        if (i < 0 || i >= sheets.length) {
+          throw Exception('Bad sheet number must be [0..' + (sheets.length - 1).toString() + '] and is: ' + i);
+        }
+        return sheets[i].rows;
       },
-      "setWidth": (sheet, column, value, style) {
+      'setWidth': (sheet, column, value, style) {
         // See 3.3.1.12 col (Column Width & Formatting
-        if (value) this.sheets[sheet].colWidths[column] = !isNumeric(value) ? value.toString().toLowerCase() : value;
-        if (style) this.sheets[sheet].colStyles[column] = style;
+        if (value) sheets[sheet].colWidths[column] = !isNumeric(value) ? value.toString().toLowerCase() : value;
+        if (style) sheets[sheet].colStyles[column] = style;
       },
-      "toWorkBook": () {
-        var s = '<?xml version="1.0" standalone="yes"?>' +
-            '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
-            '<sheets>';
-        for (var i = 0; i < this.sheets.length; i++) s = s + toWorkBookSheet(this.sheets[i]);
+      'toWorkBook': () {
+        var s = '''<?xml version="1.0" standalone="yes"?>
+            <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+            <sheets>''';
+        for (var i = 0; i < sheets.length; i++) {
+          s = s + toWorkBookSheet(sheets[i]);
+        }
         return s + '</sheets><calcPr/></workbook>';
       },
-      "toWorkBookRels": () {
+      'toWorkBookRels': () {
         var s =
             '<?xml version="1.0" ?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">';
         s = s +
             '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'; // rId2 is hardcoded and reserved for STYLES
-        for (var i = 0; i < this.sheets.length; i++) s = s + toWorkBookRel(this.sheets[i], i + 1);
+        for (var i = 0; i < sheets.length; i++) {
+          s = s + toWorkBookRel(sheets[i], i + 1);
+        }
         return s + '</Relationships>';
       },
-      "toRels": () {
+      'toRels': () {
         var s =
             '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">';
         s = s +
             '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>'; // rId1 is reserverd for WorkBook
         return s + '</Relationships>';
       },
-      "toContentType": () {
+      'toContentType': () {
         var s =
             '<?xml version="1.0" standalone="yes" ?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default ContentType="application/xml" Extension="xml"/>';
         s = s + '<Default ContentType="application/vnd.openxmlformats-package.relationships+xml" Extension="rels"/>';
@@ -378,15 +378,15 @@ class MyExcel {
             '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml" PartName="/xl/workbook.xml"/>';
         s = s +
             '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml" PartName="/xl/styles.xml" />';
-        for (var i = 1; i <= this.sheets.length; i++) {
+        for (var i = 1; i <= sheets.length; i++) {
           s = s +
               '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml" PartName="/xl/worksheets/sheet$i.xml"/>';
         }
         return s + '</Types>';
       },
-      "fileData": (xl) {
-        for (var i = 0; i < this.sheets.length; i++) {
-          xl.file('worksheets/sheet${(i + 1)}.xml', getAsXml(this.sheets[i]));
+      'fileData': (xl) {
+        for (var i = 0; i < sheets.length; i++) {
+          xl.file('worksheets/sheet${(i + 1)}.xml', getAsXml(sheets[i]));
         }
       }
     };
@@ -913,3 +913,4 @@ class MyExcel {
     return excel;
   }
 }
+*/

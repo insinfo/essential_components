@@ -24,10 +24,10 @@ class MoneyMaskDirective {
     inputElement.onInput.listen((e) {
       updateValue(numberValue);
     });
-    
+
     updateValue(initialValue);
   }
-  
+
   void updateValue(double value) {
     var valueToUse = value;
 
@@ -50,7 +50,8 @@ class MoneyMaskDirective {
     if (masked != inputElement.value) {
       inputElement.value = masked;
       //var cursorPosition = this.inputElement.value.length - this.rightSymbol.length;
-      inputElement.setSelectionRange(inputElement.value.length, inputElement.value.length);
+      inputElement.setSelectionRange(
+          inputElement.value.length, inputElement.value.length);
     }
   }
 
@@ -65,13 +66,13 @@ class MoneyMaskDirective {
     return double.parse(parts.join());
   }
 
-  _validateConfig() {
+  /* void _validateConfig() {
     var rightSymbolHasNumbers = _getOnlyNumbers(rightSymbol).isNotEmpty;
 
     if (rightSymbolHasNumbers) {
       throw ArgumentError('rightSymbol must not have numbers.');
     }
-  }
+  }*/
 
   String _getOnlyNumbers(String text) {
     var cleanedText = text;
@@ -122,5 +123,6 @@ class MoneyMaskDirective {
 
 class StringIndexOutOfBoundsException implements Exception {
   String cause;
-  StringIndexOutOfBoundsException({this.cause = 'String Index Out Of Bounds Exception'});
+  StringIndexOutOfBoundsException(
+      {this.cause = 'String Index Out Of Bounds Exception'});
 }

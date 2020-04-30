@@ -4,12 +4,11 @@ class UserBuilder {
   User user;
 
   static UserBuilder oneUser() {
-    UserBuilder ub = UserBuilder();
+    var ub = UserBuilder();
     ub.user = User(
-      name: 'Thiago Cunha',
-      email: 'thiago.cunha@riodasostras.rj.gov.br',
-      password: '123123'
-    );
+        name: 'Thiago Cunha',
+        email: 'thiago.cunha@riodasostras.rj.gov.br',
+        password: '123123');
     return ub;
   }
 
@@ -26,5 +25,4 @@ class UserBuilder {
   User now() {
     return user;
   }
-
 }

@@ -12,6 +12,7 @@ class MaxlengthDirective {
         e.preventDefault();
         return false;
       }
+      return true;
     });
   }
 }

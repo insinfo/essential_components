@@ -5,7 +5,6 @@ import 'date_picker.dart';
 import 'dart:html';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import '../core/helper.dart';
 
 import '../dropdown/toggle.dart';
 import '../dropdown/dropdown.dart';
@@ -20,7 +19,7 @@ String _defaultLocale = 'en_US'; //pt_BR en_US
 /// Creates an [NgEsDatePickerPopup], this is a date-picker component that is popup when user clicks
 /// on the input box or on the button at the right of the input box.
 @Component(
-    selector: "es-date-picker-popup",
+    selector: 'es-date-picker-popup',
     styleUrls: ['date_picker_popup.css'],
     templateUrl: 'date_picker_popup.html',
     directives: [
@@ -35,7 +34,8 @@ String _defaultLocale = 'en_US'; //pt_BR en_US
     pipes: [commonPipes])
 class EsDatePickerPopupComponent extends EsDatePickerBase {
   /// Constructs a DatePickerPopup
-  EsDatePickerPopupComponent(this.ngModel, HtmlElement elementRef) : super(elementRef) {
+  EsDatePickerPopupComponent(this.ngModel, HtmlElement elementRef)
+      : super(elementRef) {
     ngModel.valueAccessor = this;
   }
 
@@ -75,6 +75,7 @@ class EsDatePickerPopupComponent extends EsDatePickerBase {
   @Input()
   String localeRender = 'pt_BR';
 
+  @override
   @Input()
   bool showWeeks = false;
 
@@ -82,16 +83,16 @@ class EsDatePickerPopupComponent extends EsDatePickerBase {
   String label;
 
   final _changeController = StreamController<DateTime>.broadcast(sync: true);
-  
+
   @Output('change')
   Stream<DateTime> get change => _changeController.stream;
 
-  handleChange(DateTime event) {
+  void handleChange(DateTime event) {
     ngModel.viewToModelUpdate(event);
-    _changeController.add(event);   
+    _changeController.add(event);
   }
 
-  valueChanged(value) {
+  void valueChanged(value) {
     initializeDateFormatting(locale);
     var df = DateFormat(format, locale);
     try {

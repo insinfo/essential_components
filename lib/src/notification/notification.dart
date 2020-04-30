@@ -5,12 +5,12 @@ import 'notification_services.dart';
 
 /// Top navigation component.
 @Component(
-  selector: 'es-notification-outlet', 
-  templateUrl: 'notification.html', 
-  styleUrls: [
-  'notification.css',
-],
-   /* styles: [
+    selector: 'es-notification-outlet',
+    templateUrl: 'notification.html',
+    styleUrls: [
+      'notification.css',
+    ],
+    /* styles: [
       ''' 
         @keyframes toast-fade-in {
         from {opacity: 0;}

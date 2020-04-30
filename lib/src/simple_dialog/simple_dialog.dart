@@ -3,7 +3,7 @@ import 'dart:html' as html;
 enum DialogColor { DANGER, PRIMARY, SUCCESS, WARNING, INFO, PINK }
 
 class SimpleDialogComponent {
-  static getColor(DialogColor dialogColor) {
+  static String getColor(DialogColor dialogColor) {
     var headerColor = '';
     switch (dialogColor) {
       case DialogColor.PRIMARY:
@@ -28,7 +28,7 @@ class SimpleDialogComponent {
     return headerColor;
   }
 
-  static showFullScreenDialog(String content) {
+  static void showFullScreenDialog(String content) {
     var template = ''' 
     <div style="width: 100%;height: 100%;display: block; 
     position: fixed;top: 0;left: 0;background: rgba(255, 255, 255, 0.5);">
@@ -41,7 +41,8 @@ class SimpleDialogComponent {
     root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
   }
 
-  static showFullScreenAlert(String message, {backgroundColor = '#de589d'}) {
+  static void showFullScreenAlert(String message,
+      {backgroundColor = '#de589d'}) {
     var template = ''' 
     <div style="width: 100%;height: 100%;display: block; 
         position: fixed;top: 0;left: 0;background: rgba(255, 255, 255, 0.5);">
@@ -58,7 +59,7 @@ class SimpleDialogComponent {
     root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
   }
 
-  static showAlert(String message,
+  static void showAlert(String message,
       {String subMessage,
       String title = 'Alerta',
       String detailLabel = 'Detalhe',
@@ -87,7 +88,8 @@ class SimpleDialogComponent {
     root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
     if (subMessage != null) {
       var btnEle = html.DivElement();
-      btnEle.attributes['style'] = "padding-top:15px;padding-bottom:5px;cursor: pointer;";
+      btnEle.attributes['style'] =
+          'padding-top:15px;padding-bottom:5px;cursor: pointer;';
       var t =
           '<label class="text-muted" style="cursor: pointer;">$detailLabel  </label> <a class="list-icons-item dropdown-toggle" data-toggle="dropdown" ></a>';
       btnEle.setInnerHtml(t, treeSanitizer: html.NodeTreeSanitizer.trusted);
@@ -99,10 +101,23 @@ class SimpleDialogComponent {
 
       btnEle.onClick.listen((e) {
         var el = e.target as html.HtmlElement;
-        if (el?.closest('.modal-body')?.querySelector('.modal-detail')?.style?.display == 'none') {
-          el?.closest('.modal-body')?.querySelector('.modal-detail')?.style?.display = 'block';
+        if (el
+                ?.closest('.modal-body')
+                ?.querySelector('.modal-detail')
+                ?.style
+                ?.display ==
+            'none') {
+          el
+              ?.closest('.modal-body')
+              ?.querySelector('.modal-detail')
+              ?.style
+              ?.display = 'block';
         } else {
-          el?.closest('.modal-body')?.querySelector('.modal-detail')?.style?.display = 'none';
+          el
+              ?.closest('.modal-body')
+              ?.querySelector('.modal-detail')
+              ?.style
+              ?.display = 'none';
         }
       });
 
@@ -115,11 +130,11 @@ class SimpleDialogComponent {
     });
   }
 
-  static showConfirm(String message,
-      {String title = "Confirmar",
-      String cancelButtonText = "Cancelar",
+  static void showConfirm(String message,
+      {String title = 'Confirmar',
+      String cancelButtonText = 'Cancelar',
       Function cancelAction,
-      String confirmButtonText = "Sim",
+      String confirmButtonText = 'Sim',
       Function confirmAction,
       DialogColor dialogColor = DialogColor.WARNING}) {
     var template = ''' 
@@ -141,7 +156,7 @@ class SimpleDialogComponent {
     </div>
     <div class="modal-backdrop fade show"></div>
     ''';
-    html.DivElement root = html.DivElement();
+    var root = html.DivElement();
     html.document.querySelector('body').append(root);
     root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
     root.querySelector('button.BtnCancel').onClick.listen((e) {

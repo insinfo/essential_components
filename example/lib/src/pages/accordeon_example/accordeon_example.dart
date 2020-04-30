@@ -4,19 +4,17 @@ import 'package:example/src/services/person_service.dart';
 import 'package:example/src/utils/highlighting_js.dart';
 
 @Component(
-  selector: 'accordeon-example',
-  styleUrls: ['accordeon_example.css'],
-  templateUrl: 'accordeon_example.html',
-  directives: [
-    coreDirectives,
-    esDynamicTabsDirectives,
-    EsAccordionPanelComponent
-  ],
-  exports: [],
-  providers: [ClassProvider(PersonService)]
-)
+    selector: 'accordeon-example',
+    styleUrls: ['accordeon_example.css'],
+    templateUrl: 'accordeon_example.html',
+    directives: [
+      coreDirectives,
+      esDynamicTabsDirectives,
+      EsAccordionPanelComponent
+    ],
+    exports: [],
+    providers: [ClassProvider(PersonService)])
 class AccordeonComponent implements OnInit {
-
   String codeHtml = '''
 <es-accordion-panel heading="Título do acordeon">
   <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus dignissimos site.</p>
@@ -40,8 +38,6 @@ import 'package:example/src/services/person_service.dart';
 class AccordeonComponent { }
   ''';
 
-
-
   AccordeonComponent();
 
   @override
@@ -49,5 +45,4 @@ class AccordeonComponent { }
     codeHtml = highlightingHtml(codeHtml);
     codeComponent = highlightingHtml(codeComponent);
   }
-
 }

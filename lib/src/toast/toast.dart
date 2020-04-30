@@ -47,7 +47,8 @@ class EssentialToastComponent implements OnInit {
     }
   }
 
-  void showToast(String message, {ToastType type = ToastType.normal, String colorOverride}) {
+  void showToast(String message,
+      {ToastType type = ToastType.normal, String colorOverride}) {
     this.message = message;
     var color = _colorForType(type);
 

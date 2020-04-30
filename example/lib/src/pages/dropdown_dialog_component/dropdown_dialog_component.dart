@@ -6,29 +6,27 @@ import 'package:essential_rest/essential_rest.dart';
 import 'package:example/src/utils/highlighting_js.dart';
 
 @Component(
-  selector: 'dropdown-dialog-component',
-  styleUrls: ['dropdown_dialog_component.css'],
-  templateUrl: 'dropdown_dialog_component.html',
-  directives: [
-    coreDirectives,
-    esDynamicTabsDirectives,
-    EsRadioButtonDirective,
-    bsDropdownDirectives,
-    EssentialDropdownDialogComponent
-  ],
-  exports: [],
-  providers: [ClassProvider(PersonService)]
-)
+    selector: 'dropdown-dialog-component',
+    styleUrls: ['dropdown_dialog_component.css'],
+    templateUrl: 'dropdown_dialog_component.html',
+    directives: [
+      coreDirectives,
+      esDynamicTabsDirectives,
+      EsRadioButtonDirective,
+      bsDropdownDirectives,
+      EssentialDropdownDialogComponent
+    ],
+    exports: [],
+    providers: [ClassProvider(PersonService)])
 class DropdownDialogComponent implements OnInit {
-
   @Input('btnRadio')
   EsRadioButtonDirective btnRadio;
 
   @ViewChild('dropdownDialog')
-  EssentialDropdownDialogComponent dropdownDialog; 
+  EssentialDropdownDialogComponent dropdownDialog;
 
   RList<Person> persons;
-  PersonService _service;
+  final PersonService _service;
 
   DropdownDialogComponent(this._service);
 
@@ -67,7 +65,6 @@ class DropdownDialogComponent implements OnInit {
   }
   ''';
 
-
   String htmlCode = '''
   <es-dropdown-dialog label="Add Item" (change)="onSelect(\$event)" #dropdownDialog
       [data]="persons" (dataRequest)="onRequest(\$event)" [title]="'Title Dropdown'"
@@ -75,17 +72,15 @@ class DropdownDialogComponent implements OnInit {
   </es-dropdown-dialog>'
   ''';
 
-
-  onSelect(dynamic event) {
+  void onSelect(dynamic event) {
     //print(event);
   }
 
-  onRequest(dynamic event) {
+  void onRequest(dynamic event) {
     //print(event);
   }
 
-  addItem(dynamic event) {
+  void addItem(dynamic event) {
     //print(event);
   }
-
 }

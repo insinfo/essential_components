@@ -6,9 +6,7 @@ import 'package:angular_forms/angular_forms.dart';
 
 import '../../utils/highlighting_js.dart';
 
-import 'package:highlight/highlight.dart';
 import 'package:essential_rest/essential_rest.dart';
-
 
 @Component(
     selector: 'datatable-component',
@@ -20,11 +18,10 @@ import 'package:essential_rest/essential_rest.dart';
       esDynamicTabsDirectives,
       EssentialDataTableComponent,
       TextValidator
-      ],
+    ],
     exports: [],
     providers: [ClassProvider(PersonService)])
 class DataTableComponent implements OnInit {
-
   String value;
   @ViewChild('dataTable')
   EssentialDataTableComponent dataTable;
@@ -103,7 +100,7 @@ class DataTableComponent implements OnInit {
         }
   ''';
 
-  PersonService _personService;
+  final PersonService _personService;
 
   RList<Person> persons;
   Person person;
@@ -120,10 +117,9 @@ class DataTableComponent implements OnInit {
     codeHtml = highlightingHtml(codeHtml);
     codeService = highlightingDart(codeService);
     codeComponent = highlightingDart(codeComponent);
-    
   }
 
-  findAll() {
+  void findAll() {
     _personService.findAll().then((RestResponseGeneric resp) {
       if (resp.statusCode == 200) {
         persons = resp.dataTypedList;
@@ -131,9 +127,9 @@ class DataTableComponent implements OnInit {
     });
   }
 
-  save() {
+  void save() {
     print('save: ${value}');
   }
 
-  onRequestData(DataTableFilter filters) {}
+  void onRequestData(DataTableFilter filters) {}
 }

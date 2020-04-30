@@ -6,41 +6,43 @@ import '../../../helpers.dart';
 
 //<worksheet mc:Ignorable="x14ac xr xr2 xr3"
 class Worksheet {
-  String tagName = "worksheet";
+  String tagName = 'worksheet';
   Cols cols;
   SheetData sheetData;
-  String ignorable = "x14ac xr xr2 xr3";
+  String ignorable = 'x14ac xr xr2 xr3';
 
   Worksheet() {
     cols = Cols();
     sheetData = SheetData();
   }
 
-  addConlSettings(Col col) {
+  void addConlSettings(Col col) {
     cols?.cols?.add(col);
   }
 
-  addRow(Row row) {
+  void addRow(Row row) {
     sheetData?.rows?.add(row);
   }
 
   Map<String, String> namespaces = {
-    "http://schemas.openxmlformats.org/spreadsheetml/2006/main": "",
-    "http://schemas.openxmlformats.org/markup-compatibility/2006": "mc",
-    "urn:schemas-microsoft-com:mac:vml": "mv",
-    "http://schemas.microsoft.com/office/mac/excel/2008/main": "mx",
-    "http://schemas.openxmlformats.org/officeDocument/2006/relationships": "r",
-    "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main": "x14",
-    "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac": "x14ac",
-    "http://schemas.microsoft.com/office/excel/2006/main": "xm",
+    'http://schemas.openxmlformats.org/spreadsheetml/2006/main': '',
+    'http://schemas.openxmlformats.org/markup-compatibility/2006': 'mc',
+    'urn:schemas-microsoft-com:mac:vml': 'mv',
+    'http://schemas.microsoft.com/office/mac/excel/2008/main': 'mx',
+    'http://schemas.openxmlformats.org/officeDocument/2006/relationships': 'r',
+    'http://schemas.microsoft.com/office/spreadsheetml/2009/9/main': 'x14',
+    'http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac': 'x14ac',
+    'http://schemas.microsoft.com/office/excel/2006/main': 'xm',
   };
 
-  toStringXml() {
+  String toStringXml() {
     var builder = xml.XmlBuilder();
-    builder.processing('xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
+    builder.processing(
+        'xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
     //Worksheet
     builder.element(tagName,
-        namespace: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", namespaces: namespaces,
+        namespace: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main',
+        namespaces: namespaces,
         /*attributes: {"mc:Ignorable": ignorable},*/ nest: () {
       sheetData?.createXmlElement(builder);
       //builder.element('calcPr');
@@ -57,14 +59,14 @@ class Worksheet {
 }
 
 class SheetData {
-  String tagName = "sheetData";
+  String tagName = 'sheetData';
   List<Row> rows;
 
   SheetData() {
-    rows = List<Row>();
+    rows = <Row>[];
   }
 
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element(tagName, nest: () {
       rows?.forEach((child) {
         child?.createXmlElement(builder);
@@ -75,7 +77,7 @@ class SheetData {
 
 //<row r="2" s="3" customFormat="1">
 class Row {
-  String tagName = "row";
+  String tagName = 'row';
   List<Cell> cells;
   int s; //s="3"
   int customFormat;
@@ -85,32 +87,33 @@ class Row {
   int colIndex = 0;
 
   Row(this.rowIndex) {
-    cells = List<Cell>();
+    cells = <Cell>[];
   }
 
   Row.getNew() {
-    cells = List<Cell>();
-    this.rowIndex++;
+    cells = <Cell>[];
+    rowIndex++;
   }
 
-  addCellText(String text, {int cellIndex, int styleId}) {
+  void addCellText(String text, {int cellIndex, int styleId}) {
     var cindex = colIndex;
     if (cellIndex != null) {
       cindex = cellIndex;
     }
-    var col = Cell(Helpers.getInstance().cellName(cindex, rowIndex), inlineStr: InlineStr(text),styleId: styleId);
+    var col = Cell(Helpers.getInstance().cellName(cindex, rowIndex),
+        inlineStr: InlineStr(text), styleId: styleId);
     //col.s = '4';
     addCell(col);
     colIndex++;
   }
 
-  addCell(Cell col) {
+  void addCell(Cell col) {
     cells.add(col);
     colIndex++;
   }
 
   Map<String, String> get attributes {
-    Map<String, String> attribs = Map<String, String>();
+    var attribs = <String, String>{};
 
     attribs['r'] = rowIndex?.toString();
 
@@ -129,7 +132,7 @@ class Row {
     return attribs;
   }
 
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element(tagName, attributes: attributes, nest: () {
       cells.forEach((child) {
         child.createXmlElement(builder);
@@ -139,12 +142,12 @@ class Row {
 }
 
 class InlineStr {
-  String tagName = "is";
+  String tagName = 'is';
   String text;
 
   InlineStr(this.text);
 
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element(tagName, nest: () {
       builder.element('t', nest: () {
         builder.text(text);
@@ -157,11 +160,11 @@ class InlineStr {
 
 ///cell
 class Cell {
-  String tagName = "c";
+  String tagName = 'c';
   InlineStr inlineStr;
   String cellName; //A1
   int style;
-  String type = "inlineStr";
+  String type = 'inlineStr';
   String value;
 
   Cell(this.cellName, {String type, InlineStr inlineStr, int styleId}) {
@@ -172,12 +175,12 @@ class Cell {
       this.inlineStr = inlineStr;
     }
     if (styleId != null) {
-      this.style = styleId;
+      style = styleId;
     }
   }
 
   Map<String, String> get attributes {
-    Map<String, String> attribs = Map<String, String>();
+    var attribs = <String, String>{};
 
     attribs['r'] = cellName.toString();
     if (type != null) {
@@ -193,7 +196,7 @@ class Cell {
     return attribs;
   }
 
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element(tagName, attributes: attributes, nest: () {
       inlineStr?.createXmlElement(builder);
     });
@@ -203,7 +206,7 @@ class Cell {
 //esta class serve para definir configurações globais de uma coluna
 //<col min="1" max="1" width="18" bestFit="1" customWidth="1" />
 class Col {
-  String tagName = "col";
+  String tagName = 'col';
   int min = 1;
   int max = 1;
   int width = 18;
@@ -212,7 +215,7 @@ class Col {
   int style;
 
   Map<String, String> get attributes {
-    Map<String, String> attribs = Map<String, String>();
+    var attribs = <String, String>{};
     if (min != null) {
       attribs['min'] = min.toString();
     }
@@ -231,16 +234,16 @@ class Col {
     return attribs;
   }
 
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element(tagName, attributes: attributes);
   }
 }
 
 //esta class é uma lista de Col a class que defini confirações
 class Cols {
-  String tagName = "cols";
+  String tagName = 'cols';
   List<Col> cols;
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element(tagName, nest: () {
       cols?.forEach((child) {
         child?.createXmlElement(builder);

@@ -8,7 +8,6 @@ import 'package:angular_forms/angular_forms.dart';
 import '../data_table/data_table.dart';
 import '../data_table/datatable_render_interface.dart';
 
-
 import '../data_table/data_table_filter.dart';
 import '../modal/modal.dart';
 
@@ -21,14 +20,19 @@ import 'package:essential_rest/essential_rest.dart';
   styleUrls: [
     'select_dialog.css',
   ],
-  directives: [formDirectives, coreDirectives, 
-  EssentialDataTableComponent, EssentialModalComponent],
+  directives: [
+    formDirectives,
+    coreDirectives,
+    EssentialDataTableComponent,
+    EssentialModalComponent
+  ],
 )
-class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
+class EssentialSelectDialogComponent
+    implements ControlValueAccessor, AfterViewInit, OnDestroy {
   @ViewChild('inputEl')
   InputElement inputEl;
 
-   @ViewChild('modal')
+  @ViewChild('modal')
   EssentialModalComponent modal;
 
   final NgControl ngControl;
@@ -123,13 +127,14 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   }
 
   //contrutor
-  EssentialSelectDialogComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
+  EssentialSelectDialogComponent(
+      @Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
     // _changeDetector = changeDetector;
     // Replace the provider from above with this.
-    if (this.ngControl != null) {
+    if (ngControl != null) {
       // Setting the value accessor directly (instead of using
       // the providers) to avoid running into a circular import.
-      this.ngControl.valueAccessor = this;
+      ngControl.valueAccessor = this;
 
       if (ngControl?.control != null) {
         //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
@@ -143,12 +148,12 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
     }
   }
 
-  openDialog() {  
-    modal.openDialog();   
+  void openDialog() {
+    modal.openDialog();
   }
 
-  closeDialog() {   
-    modal.closeDialog();   
+  void closeDialog() {
+    modal.closeDialog();
   }
 
   void inputFocusAction(event) {
@@ -204,7 +209,8 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   }
 
   //função a ser chamada para notificar e modificar o modelo vinculado pelo ngmodel
-  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {
+  ChangeFunction<dynamic> onChangeControlValueAccessor =
+      (dynamic _, {String rawValue}) {
     print('onChangeControlValueAccessor $_');
   };
 

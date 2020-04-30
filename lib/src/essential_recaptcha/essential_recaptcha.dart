@@ -20,13 +20,14 @@ import 'package:dart_browser_loader/dart_browser_loader.dart' show loadScript;
 import 'package:dart_browser_loader/src/utils.dart' show waitLoad;
 
 @JS('grecaptcha.render')
-external num _render(HtmlElement container, EssentialRecaptchaParameters parameters);
+external num _render(
+    HtmlElement container, EssentialRecaptchaParameters parameters);
 
 @JS('grecaptcha.reset')
 external void _reset(num id);
 
 @JS('grecaptcha.getResponse')
-external _getResponse(num id); // ignore: unused_element
+external dynamic _getResponse(num id); // ignore: unused_element
 
 @JS()
 @anonymous
@@ -61,10 +62,11 @@ class EssentialRecaptchaParameters {
   styleUrls: ['essential_recaptcha.css'],
   template: 'sdfsdfsdf sdfs dsf',
 )
-class EssentialRecaptcha extends ValueAccessor implements AfterViewInit, OnDestroy {
+class EssentialRecaptcha extends ValueAccessor
+    implements AfterViewInit, OnDestroy {
   final _onExpireCtrl = StreamController<Null>();
-  NgModel _ngModel;
-  HtmlElement _ref;
+  final NgModel _ngModel;
+  final HtmlElement _ref;
   num _id;
   bool _autoRender = true;
   bool _isRender = false;
@@ -136,7 +138,7 @@ class EssentialRecaptcha extends ValueAccessor implements AfterViewInit, OnDestr
   @override
   void ngAfterViewInit() {
     if (!_isRender) {
-      _isRender = true;      
+      _isRender = true;
       if (_autoRender != false) {
         render();
       }
@@ -144,13 +146,14 @@ class EssentialRecaptcha extends ValueAccessor implements AfterViewInit, OnDestr
   }
 
   final _verifiedStreamController = StreamController<String>();
-  
+
   @Output('verify')
   Stream<String> get onVerified => _verifiedStreamController.stream;
 
   final _verifiedSuccessStreamController = StreamController<bool>();
   @Output()
-  Stream<bool> get onVerifiedSuccessfully => _verifiedSuccessStreamController.stream;
+  Stream<bool> get onVerifiedSuccessfully =>
+      _verifiedSuccessStreamController.stream;
 
   final _verifiedErrorStreamController = StreamController<String>();
   @Output()
@@ -259,7 +262,7 @@ typedef FutureOr<T> _VoidCallback<T>();
 Element _script;
 
 FutureOr<T> _safeApiCall<T>(_VoidCallback<T> call) async {
-  var sc = await loadScript('https://www.google.com/recaptcha/api.js?render=explicit',
+  await loadScript('https://www.google.com/recaptcha/api.js?render=explicit',
       isAsync: true, isDefer: true, id: 'grecaptcha-jssdk');
 
   if (_script == null) {
@@ -267,7 +270,9 @@ FutureOr<T> _safeApiCall<T>(_VoidCallback<T> call) async {
     // ignore: prefer_iterable_wheretype
     _script = scripts.where((s) => s is ScriptElement).firstWhere(
         //isaque corrigi o bug era a URL errada
-        (s) => (s as ScriptElement).src.startsWith('https://www.gstatic.com/recaptcha/'),
+        (s) => (s as ScriptElement)
+            .src
+            .startsWith('https://www.gstatic.com/recaptcha/'),
         orElse: () => null);
     if (_script == null) return null;
   }

@@ -1,14 +1,11 @@
 import 'package:angular/angular.dart';
-import 'package:angular_forms/angular_forms.dart';
+
 import 'date_picker.dart';
-import 'dart:html';
-import 'package:intl/intl.dart';
-import '../core/helper.dart';
 
 /// Creates an [EsYearPickerComponent], this will be the view showed in the [NgEsDatePicker] when user clicks
 /// year header button
 @Component(
-    selector: "es-year-picker",
+    selector: 'es-year-picker',
     templateUrl: 'year_picker.html',
     directives: [coreDirectives],
     providers: [EsDatePickerComponent])
@@ -26,23 +23,31 @@ class EsYearPickerComponent {
   String monthTitle;
 
   /// rows of the years that will appears in the year-picker
-  List<List<DisplayedDate>> rows = List<List<DisplayedDate>>();
+  List<List<DisplayedDate>> rows = <List<DisplayedDate>>[];
 
   /// gets the value of the starting year of the viewed group
-  int getStartingYear(num year) => ((year - 1) ~/ datePicker.yearRange) * datePicker.yearRange + 1;
+  int getStartingYear(num year) =>
+      ((year - 1) ~/ datePicker.yearRange) * datePicker.yearRange + 1;
 
-  Map<String, bool> selectColor(DisplayedDate dt) => {'btn-primary': dt.selected, 'btn-light': !dt.selected, 'active': dt.current, 'disabled': dt.disabled};
+  Map<String, bool> selectColor(DisplayedDate dt) => {
+        'btn-primary': dt.selected,
+        'btn-light': !dt.selected,
+        'active': dt.current,
+        'disabled': dt.disabled
+      };
   bool isCurrentRowSelected(DisplayedDate dt) => dt.current && !dt.selected;
 
-  refreshViewHandler() {
-    List<DisplayedDate> years = List(datePicker.yearRange);
+  void refreshViewHandler() {
+    var years = List<DisplayedDate>(datePicker.yearRange);
     DateTime date;
-    DateTime initDate = datePicker.initDate;
-    for (var i = 0, start = getStartingYear(initDate.year); i < datePicker.yearRange; i++) {
+    var initDate = datePicker.initDate;
+    for (var i = 0, start = getStartingYear(initDate.year);
+        i < datePicker.yearRange;
+        i++) {
       date = DateTime(start + i, 0, 1);
       years[i] = datePicker.createDateObject(date, datePicker.formatYear);
     }
-    datePicker.dateFilter(initDate, datePicker.formatDay); 
+    datePicker.dateFilter(initDate, datePicker.formatDay);
     monthTitle = datePicker.dateFilter(initDate, datePicker.formatMonth);
     rows = datePicker.split(years, 5);
   }

@@ -4,21 +4,17 @@ import 'package:example/app_component.dart';
 import 'package:example/src/utils/highlighting_js.dart';
 
 @Component(
-  selector: 'notification-component',
-  styleUrls: ['notification_component.css'],
-  templateUrl: 'notification_component.html',
-  directives: [
-    coreDirectives,
-    esDynamicTabsDirectives,
-    EssentialModalComponent,
-  ],
-  exports: [],
-  providers: [
-  ]
-)
-class NotificationComponent implements OnInit{
-
-
+    selector: 'notification-component',
+    styleUrls: ['notification_component.css'],
+    templateUrl: 'notification_component.html',
+    directives: [
+      coreDirectives,
+      esDynamicTabsDirectives,
+      EssentialModalComponent,
+    ],
+    exports: [],
+    providers: [])
+class NotificationComponent implements OnInit {
   String codeHtml = '''
  <es-notification-outlet [service]='notificationService'></es-notification-outlet>
 ''';
@@ -35,7 +31,7 @@ class NotificationComponent implements OnInit{
 
   NotificationComponent();
 
-  execute() {
+  void execute() {
     AppComponent.notificationService.add('success', 'Teste', 'Test');
   }
 
@@ -45,5 +41,4 @@ class NotificationComponent implements OnInit{
     codeHtml = highlightingHtml(appComponent);
     codeHtml = highlightingHtml(codeDart);
   }
-
 }

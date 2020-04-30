@@ -18,7 +18,7 @@ class FaIcon implements OnInit {
     classes['fa-$_name'] = true;
   }
 
-  get name {
+  String get name {
     return _name;
   }
 

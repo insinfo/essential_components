@@ -2,36 +2,37 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:angular/meta.dart';
+
 import 'package:angular_forms/angular_forms.dart';
-
-import '../data_table/data_table.dart';
-import '../data_table/datatable_render_interface.dart';
-
-
-import '../data_table/data_table_filter.dart';
-import '../modal/modal.dart';
 
 import '../interface_has_ui_display_name.dart';
 
 import '../core/replacement_accents.dart';
 
 import '../core/style_type.dart';
+import 'simple_select_option.dart';
 
 @Component(
-  selector: 'es-simple-select',
-  //changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'simple_select.html',
-  styleUrls: [
-    'simple_select.css',
-  ],
-  directives: [formDirectives, coreDirectives],
-  exports: [
-    StyleType
-  ]
-)
+    selector: 'es-simple-select',
+    //changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: 'simple_select.html',
+    styleUrls: [
+      'simple_select.css',
+    ],
+    directives: [
+      formDirectives,
+      coreDirectives
+    ],
+    exports: [
+      StyleType
+    ])
 class EssentialSimpleSelectComponent
-    implements ControlValueAccessor, AfterViewInit, AfterContentInit, OnDestroy, AfterChanges {
+    implements
+        ControlValueAccessor,
+        AfterViewInit,
+        AfterContentInit,
+        OnDestroy,
+        AfterChanges {
   @ViewChild('inputEl')
   ButtonElement inputEl;
 
@@ -97,7 +98,7 @@ class EssentialSimpleSelectComponent
       default:
         bg = 'bg-default';
     }
-    return { bg: color != null };
+    return {bg: color != null};
   }
 
   @Input()
@@ -138,7 +139,7 @@ class EssentialSimpleSelectComponent
   @Input('disabledSelect')
   bool disabledSelect = false;
 
-  get displaytype {
+  String get displaytype {
     return _displaytype;
   }
 
@@ -157,19 +158,20 @@ class EssentialSimpleSelectComponent
     _inputText = value;
   }
 
-  get inputText {
+  String get inputText {
     return _inputText;
   }
 
   //contrutor
-  EssentialSimpleSelectComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
+  EssentialSimpleSelectComponent(
+      @Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
     color = StyleType.DEFAULT;
     // _changeDetector = changeDetector;
     // Replace the provider from above with this.
-    if (this.ngControl != null) {
+    if (ngControl != null) {
       // Setting the value accessor directly (instead of using
       // the providers) to avoid running into a circular import.
-      this.ngControl.valueAccessor = this;
+      ngControl.valueAccessor = this;
 
       if (ngControl?.control != null) {
         //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
@@ -186,7 +188,8 @@ class EssentialSimpleSelectComponent
       }
     }
     //evento global de click
-    streamSubscriptionBodyOnCLick = window.document.querySelector('body').onClick.listen(handleBodyOnCLick);
+    streamSubscriptionBodyOnCLick =
+        window.document.querySelector('body').onClick.listen(handleBodyOnCLick);
   }
 
   //evento global de click
@@ -209,7 +212,7 @@ class EssentialSimpleSelectComponent
   }
 
   ///este metodo é chamado quando clica em uma opção do select
-  dropdownOnSelect(Event event, dynamic option, [String displayText]) {
+  void dropdownOnSelect(Event event, dynamic option, [String displayText]) {
     event.stopPropagation();
     itemSelected = option;
     //
@@ -220,7 +223,8 @@ class EssentialSimpleSelectComponent
     }
 
     //aciona o NgModel bind
-    onChangeControlValueAccessor(itemSelected, rawValue: itemSelected.toString());
+    onChangeControlValueAccessor(itemSelected,
+        rawValue: itemSelected.toString());
 
     ///aciona o evento change
     _changeController.add(itemSelected);
@@ -229,7 +233,9 @@ class EssentialSimpleSelectComponent
   }
 
 // **************** INICIO FUNÇÔES DO NGMODEL ControlValueAccessor *********************
+  @override
   void writeValue(value) {}
+  @override
   void onDisabledChanged(bool isDisabled) {}
   TouchFunction onTouchedControlValueAccessor = () {};
   /*@HostListener('blur')
@@ -238,16 +244,19 @@ class EssentialSimpleSelectComponent
     onTouched();
   }*/
   /// Set the function to be called when the control receives a touch event.
+  @override
   void registerOnTouched(TouchFunction fn) {
     onTouchedControlValueAccessor = fn;
   }
 
   //função a ser chamada para notificar e modificar o modelo vinculado pelo ngmodel
-  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {
-    print("onChangeControlValueAccessor $_");
+  ChangeFunction<dynamic> onChangeControlValueAccessor =
+      (dynamic _, {String rawValue}) {
+    print('onChangeControlValueAccessor $_');
   };
 
   /// Set the function to be called when the control receives a change event.
+  @override
   void registerOnChange(ChangeFunction<dynamic> fn) {
     onChangeControlValueAccessor = fn;
   }
@@ -272,7 +281,7 @@ class EssentialSimpleSelectComponent
     //print("$_options");
   }
 
-  getDisplayName(dynamic val) {
+  String getDisplayName(dynamic val) {
     if (val is String) {
       return val;
     } else if (val is num) {
@@ -295,8 +304,8 @@ class EssentialSimpleSelectComponent
     inputEl = null;
   }
 
-  showDropdown(Event e) {
-    HtmlElement target = e.target;
+  void showDropdown(Event e) {
+    // var target = e.target as HtmlElement;
     //var rect = target.getBoundingClientRect();
     //print("${rect.top} ${rect.right} ${rect.bottom}, ${rect.left}");
     //var parent = getScrollParent(target, false);
@@ -312,8 +321,11 @@ class EssentialSimpleSelectComponent
   }
 
   //fecha todos os selects menos o que for passado por parametro
-  closeAllSelect([butThisOne]) {
-    dropdownMenu?.closest('body')?.querySelectorAll('div.dropdown-menu')?.forEach((ele) {
+  void closeAllSelect([butThisOne]) {
+    dropdownMenu
+        ?.closest('body')
+        ?.querySelectorAll('div.dropdown-menu')
+        ?.forEach((ele) {
       if (butThisOne == ele) {
         //print('igual');
       } else {
@@ -322,29 +334,32 @@ class EssentialSimpleSelectComponent
     });
   }
 
-  offset(el) {
+  Map<String, dynamic> offset(el) {
     var rect = el.getBoundingClientRect(),
         /*scrollLeft = window.pageXOffset != null || document.documentElement.scrollLeft != null,
         scrollTop = window.pageYOffset != null || document.documentElement.scrollTop != null;*/
         scrollLeft = window.pageXOffset,
         scrollTop = window.pageYOffset;
-    return {"top": rect.top + scrollTop, "left": rect.left + scrollLeft};
+    return {'top': rect.top + scrollTop, 'left': rect.left + scrollLeft};
   }
 
   //melhorar esta função para ter garantia de pegar o pai que tem rolagem
   HtmlElement getScrollParent(HtmlElement element, bool includeHidden) {
     var style = element.getComputedStyle();
-    var excludeStaticParent = style.position == "absolute";
-    var overflowRegex = includeHidden ? RegExp("(auto|scroll|hidden)") : RegExp("(auto|scroll)");
+    var excludeStaticParent = style.position == 'absolute';
+    var overflowRegex = includeHidden
+        ? RegExp('(auto|scroll|hidden)')
+        : RegExp('(auto|scroll)');
 
-    if (style.position == "fixed") return document.body;
+    if (style.position == 'fixed') return document.body;
     for (var pare = element; (pare.parent != null);) {
       pare = pare.parent;
       style = pare.getComputedStyle();
-      if (excludeStaticParent && style.position == "static") {
+      if (excludeStaticParent && style.position == 'static') {
         continue;
       }
-      if (overflowRegex.hasMatch(style.overflow + style.overflowY + style.overflowX)) return pare;
+      if (overflowRegex.hasMatch(
+          style.overflow + style.overflowY + style.overflowX)) return pare;
     }
 
     return document.body;
@@ -352,7 +367,7 @@ class EssentialSimpleSelectComponent
 
   void setDefaultOptionText() {
     inputText = _buttonText;
-    for (var item in this.childrenSimpleSelectOptions) {
+    for (var item in childrenSimpleSelectOptions) {
       if (item.value == null) {
         inputText = item.text;
         break;
@@ -362,7 +377,7 @@ class EssentialSimpleSelectComponent
 
   bool isDropdownOpen = false;
   //exibe ou esconde o Dropdown
-  toogleDrop() {
+  void toogleDrop() {
     if (dropdownMenu != null) {
       if (dropdownMenu.classes.contains('show')) {
         dropdownMenu.classes.remove('show');
@@ -402,31 +417,31 @@ class EssentialSimpleSelectComponent
   }
 
   //evento de click no input de busca do select
-  handleOnClickSearchbox(e) {
+  void handleOnClickSearchbox(e) {
     e.stopPropagation();
   }
 
   //evento para filtrar as lista
   String _currentSearchString;
-  handleOnInputSearchbox(e) {
+  void handleOnInputSearchbox(e) {
     _currentSearchString = removeAccents(inputsearch?.value?.toLowerCase());
     filterOptionList();
   }
 
-  filterOptionList() {
+  void filterOptionList() {
     if (_currentSearchString.isNotEmpty) {
       //filtra as tags options inside select <es-simple-select-option>
       childrenSimpleSelectOptions.forEach((item) {
-        String value = removeAccents(item.text);
-        item.hidden = true;       
+        var value = removeAccents(item.text);
+        item.hidden = true;
         if (value.toLowerCase().contains(_currentSearchString)) {
-          item.hidden = false;         
+          item.hidden = false;
         }
       });
-       //filtra as options do atributo options [options]=""
-      var listaFiltrada = List<dynamic>();
+      //filtra as options do atributo options [options]=""
+      var listaFiltrada = <dynamic>[];
       for (var item in _optionsBkp) {
-        String value = removeAccents(getDisplayName(item));
+        var value = removeAccents(getDisplayName(item));
         if (value.toLowerCase().contains(_currentSearchString)) {
           listaFiltrada.add(item);
         }
@@ -444,69 +459,4 @@ class EssentialSimpleSelectComponent
 abstract class ISimpleSelectRender {
   String getDisplayName();
   //String getValue();
-}
-
-///options do select <es-simple-select-option>
-@Component(
-  selector: 'es-simple-select-option',
-  templateUrl: 'simple_select_option.html',
-  styleUrls: ['simple_select_option.css'],
-  directives: [coreDirectives],
-  //styleUrls: ['accordion.css']
-)
-class EsSimpleSelectOptionComponent implements OnInit {
-  EsSimpleSelectOptionComponent();
-  EssentialSimpleSelectComponent parent;
-  //TemplateRef headingTemplate;
-
-  @ViewChild('item')
-  HtmlElement item;
-
-  bool hidden = false;
-
-  dynamic _disable;
-  String _styleClass = 'dropdown-item';
-
-  @Input()
-  set styleClass(String className) {
-    _styleClass = className;
-  }
-
-  get styleClass {
-    return _styleClass;
-  } 
-
-  @Input()
-  set disable (dynamic ds) {
-    _styleClass = 'dropdown-item disable';
-    print('isdiable ${ds}');
-  }
-
-  get text {
-    return item?.firstChild?.text;
-  }
-
-  set text(String inputText) {
-    item?.text = inputText;
-  }
-
-  get innerHtml {
-    return item?.firstChild?.text;
-  }
-
-  set innerHtml(String inputText) {
-    item?.innerHtml = innerHtml;
-  }
-
-  @Input()
-  dynamic value;
-
-  handleOnClick(Event e) {
-    e.stopPropagation();
-    parent.dropdownOnSelect(e, value, item?.firstChild?.text);
-  }
-
-  /// initialize the default values of the attributes
-  @override
-  ngOnInit() {}
 }

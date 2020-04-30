@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
-import 'package:angular_components/angular_components.dart';
 
 import '../model/multi_select_tree_model.dart';
 import '../service/multi_select_tree_service.dart';
@@ -11,7 +8,10 @@ import '../service/multi_select_tree_service.dart';
   selector: 'tree-node',
   styleUrls: ['multi_select_tree_node.css'],
   templateUrl: 'multi_select_tree_node.html',
-  directives: [coreDirectives, TreeNodeComponent, MaterialCheckboxComponent],
+  directives: [
+    coreDirectives,
+    TreeNodeComponent,
+  ],
 )
 class TreeNodeComponent {
   final TreeService _treeService;
@@ -30,17 +30,20 @@ class TreeNodeComponent {
     n.showChildren = !n.showChildren;
   }
 
-  void handleIndeterminate(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isIndeterminateState) {
+  void handleIndeterminate(MultiSelectTreeNode n, MultiSelectTreeNode parent,
+      bool isIndeterminateState) {
     n.isIndeterminate = isIndeterminateState;
     updateParentIndeterminate(parent, isIndeterminateState);
   }
 
-  void updateParentIndeterminate(MultiSelectTreeNode node, bool isIndeterminate) {
+  void updateParentIndeterminate(
+      MultiSelectTreeNode node, bool isIndeterminate) {
     if (node == null) return;
     node.isIndeterminate = isIndeterminate;
   }
 
-  void selectNode(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
+  void selectNode(
+      MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
     n.isSelected = isChecked;
     __updateChildren(n, isChecked);
     __updateParent(n, parent, isChecked);
@@ -57,7 +60,8 @@ class TreeNodeComponent {
     }
   }
 
-  void __updateParent(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
+  void __updateParent(
+      MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
     if (parent != null) {
       // ignore: omit_local_variable_types
       List<MultiSelectTreeNode> siblings = parent.getChildren();
@@ -95,5 +99,4 @@ class TreeNodeComponent {
 
     _treeService.streamController.add(selectedNodes);
   }
-
 }

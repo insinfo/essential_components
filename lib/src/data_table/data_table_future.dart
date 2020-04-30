@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:intl/intl.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 
@@ -10,7 +9,6 @@ import 'package:essential_rest/essential_rest.dart';
 import 'data_table_filter.dart';
 
 //utils
-import 'data_table_utils.dart';
 
 @Component(
   selector: 'es-data-table',
@@ -25,13 +23,13 @@ import 'data_table_utils.dart';
 )
 //A Material Design Data table component for AngularDart
 class EssentialDataTableComponent {
-  @ViewChild("tableElement") //HtmlElement
+  @ViewChild('tableElement') //HtmlElement
   TableElement tableElement;
 
-  @ViewChild("itemsPerPageElement")
+  @ViewChild('itemsPerPageElement')
   SelectElement itemsPerPageElement;
 
-  @ViewChild("inputSearchElement")
+  @ViewChild('inputSearchElement')
   InputElement inputSearchElement;
 
   @Input()
@@ -76,9 +74,9 @@ class EssentialDataTableComponent {
 
   List<String> get theads {
     if (_data != null && _data.isNotEmpty) {
-      DataTableRow columnsTitles = _data[0].getRowDefinition();
-      List<String> listtheads = List<String>();
-      for (DataTableColumn col in columnsTitles.getSets()) {
+      var columnsTitles = _data[0].getRowDefinition();
+      var listtheads = <String>[];
+      for (var col in columnsTitles.getSets()) {
         listtheads.add(col.title);
       }
       return listtheads;
@@ -87,14 +85,13 @@ class EssentialDataTableComponent {
   }
 
   int _currentPage = 1;
-  int _btnQuantity = 5;
 
   final _rowClickRequest = StreamController<IDataTableRender>();
 
   @Output()
   Stream<IDataTableRender> get rowClick => _rowClickRequest.stream;
 
-  onRowClick(IDataTableRender item) {
+  void onRowClick(IDataTableRender item) {
     _rowClickRequest.add(item);
   }
 
@@ -103,7 +100,7 @@ class EssentialDataTableComponent {
   @Output()
   Stream<DataTableFilter> get searchRequest => _searchRequest.stream;
 
-  onSearch() {
+  void onSearch() {
     dataTableFilter.searchString = inputSearchElement.value;
     _searchRequest.add(dataTableFilter);
     onRequestData();
@@ -114,8 +111,8 @@ class EssentialDataTableComponent {
   @Output()
   Stream<DataTableFilter> get limitChange => _limitChangeRequest.stream;
 
-  onLimitChange() {
-    this._currentPage = 1;
+  void onLimitChange() {
+    _currentPage = 1;
     dataTableFilter.limit = int.tryParse(itemsPerPageElement.value);
     _limitChangeRequest.add(dataTableFilter);
     onRequestData();
@@ -126,13 +123,13 @@ class EssentialDataTableComponent {
   @Output()
   Stream<DataTableFilter> get dataRequest => _dataRequest.stream;
 
-  onRequestData() {
-    var currentPage = this._currentPage == 1 ? 0 : this._currentPage - 1;
+  void onRequestData() {
+    var currentPage = _currentPage == 1 ? 0 : _currentPage - 1;
     dataTableFilter.offset = currentPage * dataTableFilter.limit;
     _dataRequest.add(dataTableFilter);
   }
 
-  reload() {
+  void reload() {
     dataTableFilter.clear();
     onRequestData();
   }

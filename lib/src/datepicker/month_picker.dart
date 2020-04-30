@@ -1,14 +1,11 @@
 import 'package:angular/angular.dart';
-import 'package:angular_forms/angular_forms.dart';
+
 import 'date_picker.dart';
-import 'dart:html';
-import 'package:intl/intl.dart';
-import '../core/helper.dart';
 
 /// Creates a [EsMonthPickerComponent], this will be the view showed in the [NgEsDatePicker] when user clicks
 /// month header button
 @Component(
-    selector: "es-month-picker",
+    selector: 'es-month-picker',
     templateUrl: 'month_picker.html',
     directives: [coreDirectives],
     providers: [EsDatePickerComponent])
@@ -23,7 +20,7 @@ class EsMonthPickerComponent {
   String dayTitle;
 
   /// rows that will be displayed in the month view
-  List<List<DisplayedDate>> rows = List<List<DisplayedDate>>();
+  List<List<DisplayedDate>> rows = <List<DisplayedDate>>[];
 
   /// provides the maximum mode
   String maxMode = 'year';
@@ -31,15 +28,20 @@ class EsMonthPickerComponent {
   bool get isDataPickerMaxMode => datePicker.datePickerMode == maxMode;
   bool isCurrentRowSelected(DisplayedDate dt) => dt.current && !dt.selected;
 
-  Map<String, bool> selectColor(DisplayedDate dt) => {'btn-primary': dt.selected, 'btn-light': !dt.selected, 'active': dt.current, 'disabled': dt.disabled};
+  Map<String, bool> selectColor(DisplayedDate dt) => {
+        'btn-primary': dt.selected,
+        'btn-light': !dt.selected,
+        'active': dt.current,
+        'disabled': dt.disabled
+      };
 
   void refreshViewHandler() {
-    List<DisplayedDate> months = List(12);
-    DateTime initDate = datePicker.initDate;
+    var months = List<DisplayedDate>(12);
+    var initDate = datePicker.initDate;
     num year = initDate.year;
     DateTime date;
     for (var i = 0; i < 12; i++) {
-      date = DateTime(year, i + 1, 1);     
+      date = DateTime(year, i + 1, 1);
       months[i] = datePicker.createDateObject(date, datePicker.formatMonth);
       //print("refreshViewHandler ${months[i].label}");
     }

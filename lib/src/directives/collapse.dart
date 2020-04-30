@@ -10,7 +10,7 @@ import 'dart:async';
 /// or [bootstrap 4](http://v4-alpha.getbootstrap.com/components/collapse/)
 ///
 /// [demo](http://dart-league.github.io/ng_bootstrap/#collapse)
-/// 
+///
 @Directive(selector: '[esCollapse]')
 class EssentialCollapseDirective {
   /// Constructs an collapsible component
@@ -58,7 +58,8 @@ class EssentialCollapseDirective {
   bool _esCollapse = false;
 
   /// sets and fires the collapsed state of the component
-  @Input() set esCollapse(bool value) {
+  @Input()
+  set esCollapse(bool value) {
     _esCollapse = value ?? false;
     _esCollapseChangeController.add(_esCollapse);
   }
@@ -68,8 +69,8 @@ class EssentialCollapseDirective {
   final _esCollapseChangeController = StreamController<bool>.broadcast();
 
   /// Emits the Collapse state of the component
-  @Output() Stream<bool> get esCollapseChange =>
-      _esCollapseChangeController.stream;
+  @Output()
+  Stream<bool> get esCollapseChange => _esCollapseChangeController.stream;
 
   final _collapsingChangeController = StreamController<bool>.broadcast();
 
@@ -78,15 +79,15 @@ class EssentialCollapseDirective {
   Timer hideTimer;
 
   /// Emits the collapsing state of the component
-  @Output() Stream<bool> get collapsingChange =>
-      _collapsingChangeController.stream;
+  @Output()
+  Stream<bool> get collapsingChange => _collapsingChangeController.stream;
 
-  _hide() {
+  void _hide() {
     expanded = false;
     height = _scrollHeight;
     collapsing = true;
     showTimer?.cancel();
-     Timer(const Duration(milliseconds: 5), () {
+    Timer(const Duration(milliseconds: 5), () {
       height = '0';
       hideTimer = Timer(const Duration(milliseconds: 40), () {
         collapsing = false;
@@ -96,7 +97,7 @@ class EssentialCollapseDirective {
     });
   }
 
-  _show() {
+  void _show() {
     collapsed = false;
     height = '0';
     collapsing = true;

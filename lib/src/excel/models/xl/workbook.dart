@@ -3,28 +3,28 @@ import 'package:xml/xml.dart' as xml;
 import 'dart:convert';
 
 class Workbook {
-  String tagName = "workbook";
+  String tagName = 'workbook';
   Sheets sheets;
   String calcPr;
   Map<String, String> namespaces = {
-    "http://schemas.openxmlformats.org/spreadsheetml/2006/main": "",
-    "http://schemas.openxmlformats.org/officeDocument/2006/relationships": "r",
+    'http://schemas.openxmlformats.org/spreadsheetml/2006/main': '',
+    'http://schemas.openxmlformats.org/officeDocument/2006/relationships': 'r',
   };
 
-  addSheet(Sheet sheet) {
-    if (sheets == null) {
-      sheets = Sheets();
-    }
+  void addSheet(Sheet sheet) {
+    sheets ??= Sheets();
     sheet?.sheetId = sheets.sheets.length + 1;
     sheets.addSheet(sheet);
   }
 
-  toStringXml() {
+  String toStringXml() {
     var builder = xml.XmlBuilder();
-    builder.processing('xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
+    builder.processing(
+        'xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
     //workbook
     builder.element(tagName,
-        namespace: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", namespaces: namespaces, nest: () {
+        namespace: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main',
+        namespaces: namespaces, nest: () {
       sheets?.createXmlElement(builder);
       builder.element('calcPr');
     });
@@ -44,19 +44,17 @@ class Sheets {
   List<Sheet> sheets;
 
   Sheets() {
-    sheets = List<Sheet>();
+    sheets = <Sheet>[];
   }
 
-  addSheet(Sheet sheet) {
-    if (sheets == null) {
-      sheets = List<Sheet>();
-    }
-    sheet?.relationId = sheet?.relationId == null ? 'rId${sheets.length + 1}' : sheet?.relationId;
+  void addSheet(Sheet sheet) {
+    sheets ??= <Sheet>[];
+    sheet?.relationId = sheet?.relationId ?? 'rId${sheets.length + 1}';
     sheet?.sheetId = sheets.length + 1;
     sheets.add(sheet);
   }
 
-  createXmlElement(xml.XmlBuilder builder) {
+  void createXmlElement(xml.XmlBuilder builder) {
     builder.element(tagName, nest: () {
       sheets?.forEach((child) {
         child?.createXmlElement(builder);
@@ -72,14 +70,18 @@ class Sheet {
   int sheetId = 1;
   String relationId = 'rId3';
 
-  Sheet(String nome, int relatId, {String state}) {
-    this.state = state != null ? state : 'visible';
-    this.name = nome != null ? nome : 'Sheet 2';
-    this.relationId = relatId != null ? 'rId$relatId' : 'rId3';
+  Sheet(String name, int relationId, {String state}) {
+    this.state = state ?? 'visible';
+    this.name = name ?? 'Sheet 2';
+    this.relationId = relationId != null ? 'rId$relationId' : 'rId3';
   }
 
-  createXmlElement(xml.XmlBuilder builder) {
-    builder.element(tagName,
-        attributes: {"state": state, "name": name, "sheetId": this.sheetId.toString(), "r:id": this.relationId});
+  void createXmlElement(xml.XmlBuilder builder) {
+    builder.element(tagName, attributes: {
+      'state': state,
+      'name': name,
+      'sheetId': sheetId.toString(),
+      'r:id': relationId,
+    });
   }
 }

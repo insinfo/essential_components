@@ -19,8 +19,7 @@ Feed parse(String feedString, {bool strict = false}) {
   try {
     var document = xml.parse(feedString);
 
-    var channelElement =
-        document.rootElement.findElements('channel').single;
+    var channelElement = document.rootElement.findElements('channel').single;
 
     var feed = Feed.fromXml(channelElement, strict);
 

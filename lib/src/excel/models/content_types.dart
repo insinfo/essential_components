@@ -1,12 +1,9 @@
 //[Content_Types].xml
-import 'package:xml/xml.dart' as xml;
+
 import 'dart:convert';
 
-import '../helpers.dart';
-
-
 class ContentTypes {
-  toStringXml() {
+  String toStringXml() {
     var contentTypes = '''<?xml version="1.0" standalone="yes"?>
 <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
     <Default ContentType="application/xml" Extension="xml" />

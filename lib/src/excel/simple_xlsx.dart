@@ -1,26 +1,18 @@
-import 'dart:convert';
-
 import 'package:archive/archive.dart';
-//import 'package:archive/archive_io.dart';
 import 'dart:html';
 
 //models
-import './models/doc_props/app.dart';
-import './models/doc_props/core.dart';
-import './models/rels/relationship.dart';
 import './models/rels/relationships.dart';
-import './models/xl/theme/theme.dart';
-import './models/xl/shared_string.dart';
 import './models/xl/workbook.dart';
 import './models/xl/worksheets/worksheet.dart';
 import './models/xl/style_sheet.dart';
 import './models/content_types.dart';
 
 class SimpleXLSX {
-  List<List<String>> data = List<List<String>>();
+  List<List<String>> data = <List<String>>[];
   String _sheetName = 'Sheet 1';
 
-  SimpleXLSX() {}
+  SimpleXLSX();
 
   set sheetName(sheetName) {
     if (sheetName != null) {
@@ -99,18 +91,25 @@ class SimpleXLSX {
     var styleSheetBytes = styleSheet.toFileBytes();
 
     var archive = Archive();
-    archive.addFile(ArchiveFile('_rels/.rels', rootRelsBytes.length, rootRelsBytes));
-    archive.addFile(ArchiveFile('[Content_Types].xml', contentTypesBytes.length, contentTypesBytes));
-    archive.addFile(ArchiveFile('xl/_rels/workbook.xml.rels', xlRelsBytes.length, xlRelsBytes));
-    archive.addFile(ArchiveFile('xl/worksheets/sheet1.xml', worksheetBytes.length, worksheetBytes));
-    archive.addFile(ArchiveFile('xl/workbook.xml', workbookBytes.length, workbookBytes));
-    archive.addFile(ArchiveFile('xl/styles.xml', styleSheetBytes.length, styleSheetBytes));
+    archive.addFile(
+        ArchiveFile('_rels/.rels', rootRelsBytes.length, rootRelsBytes));
+    archive.addFile(ArchiveFile(
+        '[Content_Types].xml', contentTypesBytes.length, contentTypesBytes));
+    archive.addFile(ArchiveFile(
+        'xl/_rels/workbook.xml.rels', xlRelsBytes.length, xlRelsBytes));
+    archive.addFile(ArchiveFile(
+        'xl/worksheets/sheet1.xml', worksheetBytes.length, worksheetBytes));
+    archive.addFile(
+        ArchiveFile('xl/workbook.xml', workbookBytes.length, workbookBytes));
+    archive.addFile(
+        ArchiveFile('xl/styles.xml', styleSheetBytes.length, styleSheetBytes));
     // ignore: omit_local_variable_types
     List<int> encodedzipdata = ZipEncoder().encode(archive);
 
     //application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
     //'application/zip'
-    var blob = Blob([encodedzipdata], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    var blob = Blob([encodedzipdata],
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     var downloadUrl = Url.createObjectUrlFromBlob(blob);
 
     AnchorElement(href: downloadUrl)

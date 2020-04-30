@@ -13,22 +13,27 @@ class FeedImage {
     try {
       url = node.findElements('url').single.text;
     } catch (e) {
-      throw new ArgumentError('Image missing mandatory url element');
+      throw ArgumentError('Image missing mandatory url element');
     }
 
     // Optional fields:
     String width;
     try {
       width = node.findElements('width').single.text;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
 
     String height;
     try {
       height = node.findElements('height').single.text;
-    } catch (e) {}
-    return new FeedImage(url, width: width, height: height);
+    } catch (e) {
+      print(e);
+    }
+    return FeedImage(url, width: width, height: height);
   }
 
+  @override
   String toString() {
     return '''
       url: $url

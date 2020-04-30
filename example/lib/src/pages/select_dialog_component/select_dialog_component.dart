@@ -22,7 +22,7 @@ class SelectDialogComponent implements OnInit {
   Person person = Person();
   RList<Person> persons = RList<Person>();
 
-  PersonService _service;
+  final PersonService _service;
   SelectDialogComponent(this._service);
 
   @override
@@ -32,7 +32,7 @@ class SelectDialogComponent implements OnInit {
     findAll();
   }
 
-  findAll() {
+  void findAll() {
     _service.findAll().then((RestResponseGeneric resp) {
       if (resp.statusCode == 200) {
         persons = resp.dataTypedList;
@@ -64,6 +64,4 @@ class SelectDialogComponent implements OnInit {
   String htmlCode = '''
   <es-select-dialog [data]="persons" [(ngModel)]="person"></es-select-dialog>
   ''';
-
-
 }

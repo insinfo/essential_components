@@ -1,5 +1,5 @@
 import 'dart:html';
-import "package:angular/angular.dart";
+import 'package:angular/angular.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -15,15 +15,15 @@ import 'year_picker.dart';
 
 import '../core/helper.dart';
 
-const String FORMAT_DAY = "dd";
-const String FORMAT_MONTH = "MMMM";
-const String FORMAT_YEAR = "yyyy";
-const String FORMAT_DAY_HEADER = "E";
-const String FORMAT_DAY_TITLE = "MMMM yyyy";
-const String FORMAT_MONTH_TITLE = "MMMM";
-const String DATEPICKER_MODE = "day";
-const String MIN_MODE = "day";
-const String MAX_MODE = "year";
+const String FORMAT_DAY = 'dd';
+const String FORMAT_MONTH = 'MMMM';
+const String FORMAT_YEAR = 'yyyy';
+const String FORMAT_DAY_HEADER = 'E';
+const String FORMAT_DAY_TITLE = 'MMMM yyyy';
+const String FORMAT_MONTH_TITLE = 'MMMM';
+const String DATEPICKER_MODE = 'day';
+const String MIN_MODE = 'day';
+const String MAX_MODE = 'year';
 const bool SHOW_WEEKS = false;
 const num STARTING_DAY = 0;
 const num YEAR_RANGE = 20;
@@ -37,19 +37,25 @@ const bool SHORTCUT_PROPAGATION = false;
 /// Base specifications: [jquery-ui](https://api.jqueryui.com/datepicker/)
 ///
 /// [demo](http://dart-league.github.io/ng_bootstrap/#datepicker)
-@Component(selector: "es-date-picker", templateUrl: 'date_picker.html', visibility: Visibility.local, directives: [
-  EsDayPickerComponent,
-  EsMonthPickerComponent,
-  EsYearPickerComponent,
-  coreDirectives,
-  formDirectives
-], providers: [
-  ExistingProvider.forToken(
-    ngValueAccessor,
-    EsDatePickerComponent,
-  )
-])
-class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterViewInit, AfterContentInit {
+@Component(
+    selector: 'es-date-picker',
+    templateUrl: 'date_picker.html',
+    visibility: Visibility.local,
+    directives: [
+      EsDayPickerComponent,
+      EsMonthPickerComponent,
+      EsYearPickerComponent,
+      coreDirectives,
+      formDirectives
+    ],
+    providers: [
+      ExistingProvider.forToken(
+        ngValueAccessor,
+        EsDatePickerComponent,
+      )
+    ])
+class EsDatePickerComponent extends EsDatePickerBase
+    implements OnInit, AfterViewInit, AfterContentInit {
   /// Constructs a [NgEsDatePicker] component injecting [NgModel], [Renderer], and [HtmlElement]
   EsDatePickerComponent(HtmlElement elementRef) : super(elementRef);
 
@@ -57,17 +63,17 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
   DateTime value;
 
   /// provides the number of steps needed to change from other views to day view
-  Map get stepDay => {"months": 1};
+  Map get stepDay => {'months': 1};
 
   /// provides the number of steps needed to change from other views to month view
-  Map get stepMonth => {"year": 1};
+  Map get stepMonth => {'year': 1};
 
   /// provides the number of steps needed to change from other views to year view
-  Map get stepYear => {"years": yearRange};
+  Map get stepYear => {'years': yearRange};
 
   /// provides the modes that can take the date-picker
   @Input()
-  List<String> modes = ["day", "month", "year"];
+  List<String> modes = ['day', 'month', 'year'];
 
   @Input()
   String locale = 'pt_BR'; //en_US
@@ -87,7 +93,8 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
 
   // todo: add formatter value to DateTime object
   /// initializes attributes
-  ngOnInit() {
+  @override
+  void ngOnInit() {
     esDayPickerComponent.datePicker = this;
     esMonthPickerComponent.datePicker = this;
     esYearPickerComponent.datePicker = this;
@@ -98,9 +105,9 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
     formatDayHeader = or(formatDayHeader, FORMAT_DAY_HEADER);
     formatDayTitle = or(formatDayTitle, FORMAT_DAY_TITLE);
     formatMonthTitle = or(formatMonthTitle, FORMAT_MONTH_TITLE);
-   
+
     showWeeks = or(showWeeks, SHOW_WEEKS);
-      
+
     startingDay = or(startingDay, STARTING_DAY);
     yearRange = or(yearRange, YEAR_RANGE);
     shortcutPropagation = or(shortcutPropagation, SHORTCUT_PROPAGATION);
@@ -116,7 +123,8 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
   void ngAfterViewInit() {}
 
   /// writes value from the view
-  writeValue(dynamic value) async {
+  @override
+  void writeValue(dynamic value) async {
     if (value != null) {
       if (value is String) {
         try {
@@ -140,27 +148,29 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
   num compare(DateTime date1, DateTime date2) {
     if (date2 == null) return null;
 
-    if (datePickerMode == "day") {
-      return DateTime(date1.year, date1.month, date1.day).compareTo(DateTime(date2.year, date2.month, date2.day));
+    if (datePickerMode == 'day') {
+      return DateTime(date1.year, date1.month, date1.day)
+          .compareTo(DateTime(date2.year, date2.month, date2.day));
     }
-    if (datePickerMode == "month") {
-      return DateTime(date1.year, date1.month).compareTo(DateTime(date2.year, date2.month));
+    if (datePickerMode == 'month') {
+      return DateTime(date1.year, date1.month)
+          .compareTo(DateTime(date2.year, date2.month));
     }
-    if (datePickerMode == "year") {
+    if (datePickerMode == 'year') {
       return DateTime(date1.year).compareTo(DateTime(date2.year));
     }
     return null;
   }
 
   /// performs the view refresh
-  refreshView() {
-    if (datePickerMode == "day") {
+  void refreshView() {
+    if (datePickerMode == 'day') {
       esDayPickerComponent.refreshViewHandler();
     }
-    if (datePickerMode == "month") {
+    if (datePickerMode == 'month') {
       esMonthPickerComponent.refreshViewHandler();
     }
-    if (datePickerMode == "year") {
+    if (datePickerMode == 'year') {
       esYearPickerComponent.refreshViewHandler();
     }
   }
@@ -173,22 +183,28 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
   }
 
   ///  checks if date map is active
-  bool isActive(DisplayedDate dateObject) => compare(dateObject.date, value) == 0;
+  bool isActive(DisplayedDate dateObject) =>
+      compare(dateObject.date, value) == 0;
 
   /// Creates a date map containing date, label, selected, disabled and current values
   DisplayedDate createDateObject(DateTime date, String format) {
-    return DisplayedDate(date, dateFilter(date, format), compare(date, value) == 0, isDisabled(date),
+    return DisplayedDate(
+        date,
+        dateFilter(date, format),
+        compare(date, value) == 0,
+        isDisabled(date),
         compare(date, DateTime.now()) == 0);
   }
 
   // todo: implement dateDisabled attribute
   /// returns `true` if [date] is before [minDate] or after [maxDate]
   bool isDisabled(DateTime date) =>
-      minDate != null && compare(date, minDate) < 0 || maxDate != null && compare(date, maxDate) > 0;
+      minDate != null && compare(date, minDate) < 0 ||
+      maxDate != null && compare(date, maxDate) > 0;
 
   /// splits the [arr] into a list of array of size [size]
   List<List<DisplayedDate>> split(List arr, num size) {
-    List<List<DisplayedDate>> arrays = List();
+    var arrays = <List<DisplayedDate>>[];
     for (var i = 0; arr.length > i * size; i++) {
       arrays.add(arr.getRange(i * size, i * size + size).toList());
     }
@@ -196,7 +212,7 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
   }
 
   /// fired when user clicks one of the date buttons
-  select(DateTime date) {
+  void select(DateTime date) {
     if (datePickerMode == minMode) {
       writeValue(DateTime(date.year, date.month, date.day));
     } else {
@@ -209,15 +225,17 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
   }
 
   /// selects the current day date
-  selectToday() => select(DateTime.now());
+  void selectToday() => select(DateTime.now());
 
   /// changes the view values in dependence of the [direction]
   ///
   /// this is fired when users clicks on arrow buttons
-  move(num direction) {
-    var expectedStep = datePickerMode == "day"
+  void move(num direction) {
+    var expectedStep = datePickerMode == 'day'
         ? stepDay
-        : datePickerMode == "month" ? stepMonth : datePickerMode == "year" ? stepYear : null;
+        : datePickerMode == 'month'
+            ? stepMonth
+            : datePickerMode == 'year' ? stepYear : null;
 
     if (expectedStep != null) {
       var year = initDate.year + direction * (expectedStep['years'] ?? 0);
@@ -229,9 +247,10 @@ class EsDatePickerComponent extends EsDatePickerBase implements OnInit, AfterVie
   /// toggles the view mode in dependence of the [direction]
   ///
   /// this is fired when users clicks on day, month, or year header buttons
-  toggleMode([num direction]) {
+  void toggleMode([num direction]) {
     direction ??= 1;
-    if ((datePickerMode == maxMode && direction == 1) || (datePickerMode == minMode && direction == -1)) {
+    if ((datePickerMode == maxMode && direction == 1) ||
+        (datePickerMode == minMode && direction == -1)) {
       return;
     }
     datePickerMode = modes[modes.indexOf(datePickerMode) + direction];
@@ -320,8 +339,9 @@ abstract class EsDatePickerBase extends Object
 
   @override
   void registerOnChange(ChangeFunction<DateTime> fn) {
-    this.onChange = (DateTime value, {String rawValue}) {
-      fn(value == '' ? DateTime.now() : value);
+    onChange = (DateTime value, {String rawValue}) {
+      var v = value ?? DateTime.now();
+      fn(v);
     };
   }
 
@@ -335,7 +355,8 @@ abstract class EsDatePickerBase extends Object
 }
 
 class DisplayedDate {
-  DisplayedDate(this.date, this.label, this.selected, this.disabled, this.current);
+  DisplayedDate(
+      this.date, this.label, this.selected, this.disabled, this.current);
 
   final DateTime date;
   final String label;

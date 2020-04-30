@@ -49,12 +49,12 @@ void upload(e) async {
 
   @override
   void ngOnInit() {
-
     codeFileUploadingExample = highlightingDart(codeFileUploadingExample);
   }
 
   void upload(e) async {
-    var fileInput = html.querySelector('body #fileInput') as html.FileUploadInputElement;
+    var fileInput =
+        html.querySelector('body #fileInput') as html.FileUploadInputElement;
     print('upload $fileInput');
     if (fileInput != null && fileInput.files.isNotEmpty) {
       var rest = RestClientGeneric();
