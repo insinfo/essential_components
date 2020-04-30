@@ -19,27 +19,18 @@ dependencies:
     ...
 ```
 
-3\. Add css stylesheet link to `index.html`:
+3\. Add css stylesheet link on `theme.scss`:
 
 ```html
 <head>
-    ...
-     <!-- Global stylesheets-->
-  <link href="packages/essential_components/css/icomoon.css" rel="stylesheet"
-    type="text/css">
-  <link href="packages/essential_components/css/bootstrap.min.css" rel="stylesheet"
-    type="text/css">
-  <link href="packages/essential_components/css/bootstrap_limitless.min.css"
-    rel="stylesheet" type="text/css">
-  <link href="packages/essential_components/css/layout.min.css" rel="stylesheet"
-    type="text/css">
-  <link href="packages/essential_components/css/components.min.css" rel="stylesheet"
-    type="text/css">
-  <link href="packages/essential_components/css/colors.min.css" rel="stylesheet"
-    type="text/css">
-  <link href="packages/essential_components/css/fix.css" rel="stylesheet" type="text/css">
-  <!--/global stylesheets -->
-    ...
+  @import "package:bootstrap_sass/scss/bootstrap";
+  @import 'package:essential_components/scss/icomoon.scss';
+  @import 'package:essential_components/scss/bootstrap.scss';
+  @import 'package:essential_components/scss/bootstrap_limitless.scss';
+  @import 'package:essential_components/scss/layout.scss';
+  @import 'package:essential_components/scss/components.scss';
+  @import 'package:essential_components/scss/colors.scss';
+  @import 'package:essential_components/scss/fix.scss';
 </head>
 ```
 

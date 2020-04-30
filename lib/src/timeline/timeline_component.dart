@@ -52,8 +52,8 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
   StreamSubscription bodyOnClickSubscription;
 
   void bodyOnClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
+   // e.preventDefault();//isso causa problemas em todos os eventos de click
+    //e.stopPropagation();
     if (isDropDownOpen) {
       dropdown.classes.remove('show');
       isDropDownOpen = false;
