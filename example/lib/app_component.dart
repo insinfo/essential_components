@@ -23,9 +23,10 @@ import 'package:example/src/routes.dart';
       EssentialNotificationService,
       EssentialNotificationComponent
     ],
-    exports: [RoutePaths,Routes])
+    exports: [RoutePaths, Routes])
 class AppComponent {
-  static EssentialNotificationService notificationService = EssentialNotificationService();
+  static EssentialNotificationService notificationService =
+      EssentialNotificationService();
 
   AppComponent();
 }

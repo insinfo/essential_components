@@ -76,7 +76,8 @@ Future<void> findAll({String action}) async {
   }
 
   void upload(e) async {
-    var fileInput = html.querySelector('body #fileInput') as html.FileUploadInputElement;
+    var fileInput =
+        html.querySelector('body #fileInput') as html.FileUploadInputElement;
     print('upload $fileInput');
     if (fileInput != null && fileInput.files.isNotEmpty) {
       var rest = RestClientGeneric();
@@ -98,7 +99,8 @@ Future<void> findAll({String action}) async {
       var rest = RestClientGeneric();
       var dataToSend = {'action': action};
       var resp = await rest.raw('http://google.com', 'GET',
-          headers: {'authorization': 'Bearer You Token'}, body: jsonEncode(dataToSend));
+          headers: {'authorization': 'Bearer You Token'},
+          body: jsonEncode(dataToSend));
       print(resp.data);
     } catch (e) {
       print('findAll({String action}) ' + e.toString());

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 
+import 'package:essential_xlsx/essential_xlsx.dart';
 import 'package:intl/intl.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -11,8 +12,6 @@ import 'data_table_filter.dart';
 
 //utils
 import 'data_table_utils.dart';
-
-import '../excel/simple_xlsx.dart';
 
 @Component(
   selector: 'es-data-table',

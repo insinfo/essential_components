@@ -83,9 +83,6 @@ export 'src/button/radio.dart';
 // toggle button Directive
 export 'src/button/toggle.dart';
 
-// excel export API
-export 'src/excel/simple_xlsx.dart';
-
 // image component
 export 'src/image/image.dart';
 

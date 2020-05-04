@@ -52,8 +52,9 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
   StreamSubscription bodyOnClickSubscription;
 
   void bodyOnClick(e) {
-   // e.preventDefault();//isso causa problemas em todos os eventos de click
+    // e.preventDefault();//isso causa problemas em todos os eventos de click
     //e.stopPropagation();
+    //  corrigir bug que atrapalha outros components
     if (isDropDownOpen) {
       dropdown.classes.remove('show');
       isDropDownOpen = false;
@@ -79,14 +80,13 @@ class EssentialTimelineComponent implements OnDestroy, OnInit {
   @override
   void ngOnInit() {
     //print('ngOnInit');
-    // TODO : corrigir bug que atrapalha outros components
-   /* bodyOnClickSubscription =
-        html.document.onClick.listen(bodyOnClick);*/
+
+    bodyOnClickSubscription = html.document.onClick.listen(bodyOnClick);
   }
 
   @override
   void ngOnDestroy() {
-  //  print('ngOnDestroy');
+    //  print('ngOnDestroy');
     bodyOnClickSubscription?.cancel();
     bodyOnClickSubscription = null;
   }

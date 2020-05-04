@@ -138,7 +138,7 @@ class EssentialSimpleSelectComponent
 
   bool _disabledSelect = false;
   @Input('disabledSelect')
-  set disabledSelect (bool value) {
+  set disabledSelect(bool value) {
     _disabledSelect = value;
     print('EssentialSimpleSelectComponent ${disabledSelect}');
   }
@@ -146,8 +146,6 @@ class EssentialSimpleSelectComponent
   bool get disabledSelect {
     return _disabledSelect;
   }
-  
-
 
   String get displaytype {
     return _displaytype;
@@ -173,8 +171,8 @@ class EssentialSimpleSelectComponent
   }
 
   //contrutor
-  EssentialSimpleSelectComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
-    
+  EssentialSimpleSelectComponent(
+      @Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
     color = StyleType.DEFAULT;
     // _changeDetector = changeDetector;
     // Replace the provider from above with this.

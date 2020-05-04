@@ -42,7 +42,7 @@ import '../recaptcha_example/recaptcha_example.dart';
       ToastExComponent,
       RecaptchaExample
     ],
-    exports: [])
+    exports: [Routes, RoutePaths])
 class ContentComponent implements OnInit {
   ContentComponent();
 
