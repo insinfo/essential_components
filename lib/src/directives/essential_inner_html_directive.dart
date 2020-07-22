@@ -5,7 +5,7 @@ import 'package:angular/core.dart';
 
 import 'dart:html' as html;
 
-@Directive(selector: '[esinnerhtml]')
+@Directive(selector: '[esinnerhtml]') //esinnerhtml
 class EssentialInnerHTMLDirective implements AfterContentInit {
   @Input('esinnerhtml')
   String content = 'l';
@@ -16,8 +16,7 @@ class EssentialInnerHTMLDirective implements AfterContentInit {
 
   @override
   void ngAfterContentInit() {
-    html.HtmlElement element = _el;
-    element.setInnerHtml(content,
-        treeSanitizer: html.NodeTreeSanitizer.trusted);
+    //html.TableCellElement element = _el;
+    _el.setInnerHtml(content, treeSanitizer: html.NodeTreeSanitizer.trusted);
   }
 }

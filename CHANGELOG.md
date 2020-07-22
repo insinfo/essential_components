@@ -156,3 +156,7 @@ and fix issues
 # 1.1.0
 
 - fix documentation and overall bugs
+
+# 1.2.3
+
+- refactory of EssentialDataTableComponent and add news features 

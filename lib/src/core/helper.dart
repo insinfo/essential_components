@@ -15,9 +15,7 @@ import 'dart:html';
 /// var value = or(null, 1);
 /// var value = or(null, () => 1);
 /// ```
-dynamic or(value, defaultValue) => falsey(value)
-    ? defaultValue is Function ? defaultValue() : defaultValue
-    : value;
+dynamic or(value, defaultValue) => falsey(value) ? defaultValue is Function ? defaultValue() : defaultValue : value;
 
 /// Return true if `value` is "falsey":
 /// ```dart
@@ -31,12 +29,7 @@ dynamic or(value, defaultValue) => falsey(value)
 ///     }
 /// }
 /// ```
-bool falsey(value) =>
-    value == null ||
-    value == false ||
-    value == '' ||
-    value == 0 ||
-    value == double.nan;
+bool falsey(value) => value == null || value == false || value == '' || value == 0 || value == double.nan;
 
 /// Return true if `value` is "truthy":
 /// ```dart
@@ -99,20 +92,14 @@ class Helper {
       return false;
     }
 
-    var sanitizedCPF = cpf
-        .replaceAll(RegExp(r'\.|-'), '')
-        .split('')
-        .map((String digit) => int.parse(digit))
-        .toList();
+    var sanitizedCPF = cpf.replaceAll(RegExp(r'\.|-'), '').split('').map((String digit) => int.parse(digit)).toList();
 
     if (blacklistedCPF(sanitizedCPF.join())) {
       return false;
     }
 
-    var result = sanitizedCPF[9] ==
-            gerarDigitoVerificador(sanitizedCPF.getRange(0, 9).toList()) &&
-        sanitizedCPF[10] ==
-            gerarDigitoVerificador(sanitizedCPF.getRange(0, 10).toList());
+    var result = sanitizedCPF[9] == gerarDigitoVerificador(sanitizedCPF.getRange(0, 9).toList()) &&
+        sanitizedCPF[10] == gerarDigitoVerificador(sanitizedCPF.getRange(0, 10).toList());
 
     return result;
   }
@@ -170,8 +157,7 @@ class Helper {
   }
 
   static Future<File> resizeImageAsync(File file, int maxWidth, int maxHeight,
-      [EsImgResizeType type = EsImgResizeType.fitWidthHeight,
-      percentage = 0]) async {
+      [EsImgResizeType type = EsImgResizeType.fitWidthHeight, percentage = 0]) async {
     final fileName = file.name;
     var reader = FileReader();
     reader.readAsDataUrl(file);
@@ -187,8 +173,8 @@ class Helper {
 
     switch (type) {
       case EsImgResizeType.percentage:
-        newSize = EsSize((originalSize.width * percentage / 100).round(),
-            (originalSize.height * percentage / 100).round());
+        newSize =
+            EsSize((originalSize.width * percentage / 100).round(), (originalSize.height * percentage / 100).round());
         break;
       case EsImgResizeType.fitWidth:
         newSize = fitIntoDimension(originalSize, EsSize(maxWidth, 0));
@@ -213,14 +199,12 @@ class Helper {
 
     var blob = await ctx.canvas.toBlob('image/jpeg', 0.7);
 
-    var out = File([blob], fileName,
-        {'type': 'image/jpeg', 'lastModified': DateTime.now()});
+    var out = File([blob], fileName, {'type': 'image/jpeg', 'lastModified': DateTime.now()});
     return out;
   }
 
   static void resizeImage(File file, int maxWidth, int maxHeight, Function func,
-      [EsImgResizeType type = EsImgResizeType.fitWidthHeight,
-      percentage = 0]) async {
+      [EsImgResizeType type = EsImgResizeType.fitWidthHeight, percentage = 0]) async {
     final fileName = file.name;
     var reader = FileReader();
 
@@ -233,8 +217,8 @@ class Helper {
 
         switch (type) {
           case EsImgResizeType.percentage:
-            newSize = EsSize((originalSize.width * percentage / 100).round(),
-                (originalSize.height * percentage / 100).round());
+            newSize = EsSize(
+                (originalSize.width * percentage / 100).round(), (originalSize.height * percentage / 100).round());
             break;
           case EsImgResizeType.fitWidth:
             newSize = fitIntoDimension(originalSize, EsSize(maxWidth, 0));
@@ -265,8 +249,7 @@ class Helper {
         var ctx = canvas.context2D;
         ctx.drawImageScaled(img, 0, 0, newSize.width, newSize.height);
         ctx.canvas.toBlob('image/jpeg', 0.7).then((blob) {
-          var out = File([blob], fileName,
-              {'type': 'image/jpeg', 'lastModified': DateTime.now()});
+          var out = File([blob], fileName, {'type': 'image/jpeg', 'lastModified': DateTime.now()});
           func(out);
         });
       });
@@ -274,8 +257,7 @@ class Helper {
     reader.readAsDataUrl(file);
   }
 
-  static EsSize fitIntoDimension(EsSize originalSize, EsSize targetSize,
-      [bool round = true]) {
+  static EsSize fitIntoDimension(EsSize originalSize, EsSize targetSize, [bool round = true]) {
     var width, height;
     if (targetSize.width > 0 && targetSize.height > 0) {
       width = targetSize.width;
@@ -325,20 +307,9 @@ class Helper {
     {'base': 'AU', 'letters': '\uA736'},
     {'base': 'AV', 'letters': '\uA738\uA73A'},
     {'base': 'AY', 'letters': '\uA73C'},
-    {
-      'base': 'B',
-      'letters': '\u0042\u24B7\uFF22\u1E02\u1E04\u1E06\u0243\u0182\u0181'
-    },
-    {
-      'base': 'C',
-      'letters':
-          '\u0043\u24B8\uFF23\u0106\u0108\u010A\u010C\u00C7\u1E08\u0187\u023B\uA73E'
-    },
-    {
-      'base': 'D',
-      'letters':
-          '\u0044\u24B9\uFF24\u1E0A\u010E\u1E0C\u1E10\u1E12\u1E0E\u0110\u018B\u018A\u0189\uA779'
-    },
+    {'base': 'B', 'letters': '\u0042\u24B7\uFF22\u1E02\u1E04\u1E06\u0243\u0182\u0181'},
+    {'base': 'C', 'letters': '\u0043\u24B8\uFF23\u0106\u0108\u010A\u010C\u00C7\u1E08\u0187\u023B\uA73E'},
+    {'base': 'D', 'letters': '\u0044\u24B9\uFF24\u1E0A\u010E\u1E0C\u1E10\u1E12\u1E0E\u0110\u018B\u018A\u0189\uA779'},
     {'base': 'DZ', 'letters': '\u01F1\u01C4'},
     {'base': 'Dz', 'letters': '\u01F2\u01C5'},
     {
@@ -349,25 +320,16 @@ class Helper {
     {'base': 'F', 'letters': '\u0046\u24BB\uFF26\u1E1E\u0191\uA77B'},
     {
       'base': 'G',
-      'letters':
-          '\u0047\u24BC\uFF27\u01F4\u011C\u1E20\u011E\u0120\u01E6\u0122\u01E4\u0193\uA7A0\uA77D\uA77E'
+      'letters': '\u0047\u24BC\uFF27\u01F4\u011C\u1E20\u011E\u0120\u01E6\u0122\u01E4\u0193\uA7A0\uA77D\uA77E'
     },
-    {
-      'base': 'H',
-      'letters':
-          '\u0048\u24BD\uFF28\u0124\u1E22\u1E26\u021E\u1E24\u1E28\u1E2A\u0126\u2C67\u2C75\uA78D'
-    },
+    {'base': 'H', 'letters': '\u0048\u24BD\uFF28\u0124\u1E22\u1E26\u021E\u1E24\u1E28\u1E2A\u0126\u2C67\u2C75\uA78D'},
     {
       'base': 'I',
       'letters':
           '\u0049\u24BE\uFF29\u00CC\u00CD\u00CE\u0128\u012A\u012C\u0130\u00CF\u1E2E\u1EC8\u01CF\u0208\u020A\u1ECA\u012E\u1E2C\u0197'
     },
     {'base': 'J', 'letters': '\u004A\u24BF\uFF2A\u0134\u0248'},
-    {
-      'base': 'K',
-      'letters':
-          '\u004B\u24C0\uFF2B\u1E30\u01E8\u1E32\u0136\u1E34\u0198\u2C69\uA740\uA742\uA744\uA7A2'
-    },
+    {'base': 'K', 'letters': '\u004B\u24C0\uFF2B\u1E30\u01E8\u1E32\u0136\u1E34\u0198\u2C69\uA740\uA742\uA744\uA7A2'},
     {
       'base': 'L',
       'letters':
@@ -375,14 +337,10 @@ class Helper {
     },
     {'base': 'LJ', 'letters': '\u01C7'},
     {'base': 'Lj', 'letters': '\u01C8'},
-    {
-      'base': 'M',
-      'letters': '\u004D\u24C2\uFF2D\u1E3E\u1E40\u1E42\u2C6E\u019C'
-    },
+    {'base': 'M', 'letters': '\u004D\u24C2\uFF2D\u1E3E\u1E40\u1E42\u2C6E\u019C'},
     {
       'base': 'N',
-      'letters':
-          '\u004E\u24C3\uFF2E\u01F8\u0143\u00D1\u1E44\u0147\u1E46\u0145\u1E4A\u1E48\u0220\u019D\uA790\uA7A4'
+      'letters': '\u004E\u24C3\uFF2E\u01F8\u0143\u00D1\u1E44\u0147\u1E46\u0145\u1E4A\u1E48\u0220\u019D\uA790\uA7A4'
     },
     {'base': 'NJ', 'letters': '\u01CA'},
     {'base': 'Nj', 'letters': '\u01CB'},
@@ -396,10 +354,7 @@ class Helper {
     {'base': 'OU', 'letters': '\u0222'},
     {'base': 'OE', 'letters': '\u008C\u0152'},
     {'base': 'oe', 'letters': '\u009C\u0153'},
-    {
-      'base': 'P',
-      'letters': '\u0050\u24C5\uFF30\u1E54\u1E56\u01A4\u2C63\uA750\uA752\uA754'
-    },
+    {'base': 'P', 'letters': '\u0050\u24C5\uFF30\u1E54\u1E56\u01A4\u2C63\uA750\uA752\uA754'},
     {'base': 'Q', 'letters': '\u0051\u24C6\uFF31\uA756\uA758\u024A'},
     {
       'base': 'R',
@@ -413,8 +368,7 @@ class Helper {
     },
     {
       'base': 'T',
-      'letters':
-          '\u0054\u24C9\uFF34\u1E6A\u0164\u1E6C\u021A\u0162\u1E70\u1E6E\u0166\u01AC\u01AE\u023E\uA786'
+      'letters': '\u0054\u24C9\uFF34\u1E6A\u0164\u1E6C\u021A\u0162\u1E70\u1E6E\u0166\u01AC\u01AE\u023E\uA786'
     },
     {'base': 'TZ', 'letters': '\uA728'},
     {
@@ -422,26 +376,15 @@ class Helper {
       'letters':
           '\u0055\u24CA\uFF35\u00D9\u00DA\u00DB\u0168\u1E78\u016A\u1E7A\u016C\u00DC\u01DB\u01D7\u01D5\u01D9\u1EE6\u016E\u0170\u01D3\u0214\u0216\u01AF\u1EEA\u1EE8\u1EEE\u1EEC\u1EF0\u1EE4\u1E72\u0172\u1E76\u1E74\u0244'
     },
-    {
-      'base': 'V',
-      'letters': '\u0056\u24CB\uFF36\u1E7C\u1E7E\u01B2\uA75E\u0245'
-    },
+    {'base': 'V', 'letters': '\u0056\u24CB\uFF36\u1E7C\u1E7E\u01B2\uA75E\u0245'},
     {'base': 'VY', 'letters': '\uA760'},
-    {
-      'base': 'W',
-      'letters': '\u0057\u24CC\uFF37\u1E80\u1E82\u0174\u1E86\u1E84\u1E88\u2C72'
-    },
+    {'base': 'W', 'letters': '\u0057\u24CC\uFF37\u1E80\u1E82\u0174\u1E86\u1E84\u1E88\u2C72'},
     {'base': 'X', 'letters': '\u0058\u24CD\uFF38\u1E8A\u1E8C'},
     {
       'base': 'Y',
-      'letters':
-          '\u0059\u24CE\uFF39\u1EF2\u00DD\u0176\u1EF8\u0232\u1E8E\u0178\u1EF6\u1EF4\u01B3\u024E\u1EFE'
+      'letters': '\u0059\u24CE\uFF39\u1EF2\u00DD\u0176\u1EF8\u0232\u1E8E\u0178\u1EF6\u1EF4\u01B3\u024E\u1EFE'
     },
-    {
-      'base': 'Z',
-      'letters':
-          '\u005A\u24CF\uFF3A\u0179\u1E90\u017B\u017D\u1E92\u1E94\u01B5\u0224\u2C7F\u2C6B\uA762'
-    },
+    {'base': 'Z', 'letters': '\u005A\u24CF\uFF3A\u0179\u1E90\u017B\u017D\u1E92\u1E94\u01B5\u0224\u2C7F\u2C6B\uA762'},
     {
       'base': 'a',
       'letters':
@@ -453,20 +396,9 @@ class Helper {
     {'base': 'au', 'letters': '\uA737'},
     {'base': 'av', 'letters': '\uA739\uA73B'},
     {'base': 'ay', 'letters': '\uA73D'},
-    {
-      'base': 'b',
-      'letters': '\u0062\u24D1\uFF42\u1E03\u1E05\u1E07\u0180\u0183\u0253'
-    },
-    {
-      'base': 'c',
-      'letters':
-          '\u0063\u24D2\uFF43\u0107\u0109\u010B\u010D\u00E7\u1E09\u0188\u023C\uA73F\u2184'
-    },
-    {
-      'base': 'd',
-      'letters':
-          '\u0064\u24D3\uFF44\u1E0B\u010F\u1E0D\u1E11\u1E13\u1E0F\u0111\u018C\u0256\u0257\uA77A'
-    },
+    {'base': 'b', 'letters': '\u0062\u24D1\uFF42\u1E03\u1E05\u1E07\u0180\u0183\u0253'},
+    {'base': 'c', 'letters': '\u0063\u24D2\uFF43\u0107\u0109\u010B\u010D\u00E7\u1E09\u0188\u023C\uA73F\u2184'},
+    {'base': 'd', 'letters': '\u0064\u24D3\uFF44\u1E0B\u010F\u1E0D\u1E11\u1E13\u1E0F\u0111\u018C\u0256\u0257\uA77A'},
     {'base': 'dz', 'letters': '\u01F3\u01C6'},
     {
       'base': 'e',
@@ -476,13 +408,11 @@ class Helper {
     {'base': 'f', 'letters': '\u0066\u24D5\uFF46\u1E1F\u0192\uA77C'},
     {
       'base': 'g',
-      'letters':
-          '\u0067\u24D6\uFF47\u01F5\u011D\u1E21\u011F\u0121\u01E7\u0123\u01E5\u0260\uA7A1\u1D79\uA77F'
+      'letters': '\u0067\u24D6\uFF47\u01F5\u011D\u1E21\u011F\u0121\u01E7\u0123\u01E5\u0260\uA7A1\u1D79\uA77F'
     },
     {
       'base': 'h',
-      'letters':
-          '\u0068\u24D7\uFF48\u0125\u1E23\u1E27\u021F\u1E25\u1E29\u1E2B\u1E96\u0127\u2C68\u2C76\u0265'
+      'letters': '\u0068\u24D7\uFF48\u0125\u1E23\u1E27\u021F\u1E25\u1E29\u1E2B\u1E96\u0127\u2C68\u2C76\u0265'
     },
     {'base': 'hv', 'letters': '\u0195'},
     {
@@ -491,21 +421,14 @@ class Helper {
           '\u0069\u24D8\uFF49\u00EC\u00ED\u00EE\u0129\u012B\u012D\u00EF\u1E2F\u1EC9\u01D0\u0209\u020B\u1ECB\u012F\u1E2D\u0268\u0131'
     },
     {'base': 'j', 'letters': '\u006A\u24D9\uFF4A\u0135\u01F0\u0249'},
-    {
-      'base': 'k',
-      'letters':
-          '\u006B\u24DA\uFF4B\u1E31\u01E9\u1E33\u0137\u1E35\u0199\u2C6A\uA741\uA743\uA745\uA7A3'
-    },
+    {'base': 'k', 'letters': '\u006B\u24DA\uFF4B\u1E31\u01E9\u1E33\u0137\u1E35\u0199\u2C6A\uA741\uA743\uA745\uA7A3'},
     {
       'base': 'l',
       'letters':
           '\u006C\u24DB\uFF4C\u0140\u013A\u013E\u1E37\u1E39\u013C\u1E3D\u1E3B\u017F\u0142\u019A\u026B\u2C61\uA749\uA781\uA747'
     },
     {'base': 'lj', 'letters': '\u01C9'},
-    {
-      'base': 'm',
-      'letters': '\u006D\u24DC\uFF4D\u1E3F\u1E41\u1E43\u0271\u026F'
-    },
+    {'base': 'm', 'letters': '\u006D\u24DC\uFF4D\u1E3F\u1E41\u1E43\u0271\u026F'},
     {
       'base': 'n',
       'letters':
@@ -520,10 +443,7 @@ class Helper {
     {'base': 'oi', 'letters': '\u01A3'},
     {'base': 'ou', 'letters': '\u0223'},
     {'base': 'oo', 'letters': '\uA74F'},
-    {
-      'base': 'p',
-      'letters': '\u0070\u24DF\uFF50\u1E55\u1E57\u01A5\u1D7D\uA751\uA753\uA755'
-    },
+    {'base': 'p', 'letters': '\u0070\u24DF\uFF50\u1E55\u1E57\u01A5\u1D7D\uA751\uA753\uA755'},
     {'base': 'q', 'letters': '\u0071\u24E0\uFF51\u024B\uA757\uA759'},
     {
       'base': 'r',
@@ -537,8 +457,7 @@ class Helper {
     },
     {
       'base': 't',
-      'letters':
-          '\u0074\u24E3\uFF54\u1E6B\u1E97\u0165\u1E6D\u021B\u0163\u1E71\u1E6F\u0167\u01AD\u0288\u2C66\uA787'
+      'letters': '\u0074\u24E3\uFF54\u1E6B\u1E97\u0165\u1E6D\u021B\u0163\u1E71\u1E6F\u0167\u01AD\u0288\u2C66\uA787'
     },
     {'base': 'tz', 'letters': '\uA729'},
     {
@@ -546,27 +465,15 @@ class Helper {
       'letters':
           '\u0075\u24E4\uFF55\u00F9\u00FA\u00FB\u0169\u1E79\u016B\u1E7B\u016D\u00FC\u01DC\u01D8\u01D6\u01DA\u1EE7\u016F\u0171\u01D4\u0215\u0217\u01B0\u1EEB\u1EE9\u1EEF\u1EED\u1EF1\u1EE5\u1E73\u0173\u1E77\u1E75\u0289'
     },
-    {
-      'base': 'v',
-      'letters': '\u0076\u24E5\uFF56\u1E7D\u1E7F\u028B\uA75F\u028C'
-    },
+    {'base': 'v', 'letters': '\u0076\u24E5\uFF56\u1E7D\u1E7F\u028B\uA75F\u028C'},
     {'base': 'vy', 'letters': '\uA761'},
-    {
-      'base': 'w',
-      'letters':
-          '\u0077\u24E6\uFF57\u1E81\u1E83\u0175\u1E87\u1E85\u1E98\u1E89\u2C73'
-    },
+    {'base': 'w', 'letters': '\u0077\u24E6\uFF57\u1E81\u1E83\u0175\u1E87\u1E85\u1E98\u1E89\u2C73'},
     {'base': 'x', 'letters': '\u0078\u24E7\uFF58\u1E8B\u1E8D'},
     {
       'base': 'y',
-      'letters':
-          '\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF'
+      'letters': '\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF'
     },
-    {
-      'base': 'z',
-      'letters':
-          '\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763'
-    }
+    {'base': 'z', 'letters': '\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763'}
   ];
   static final diacriticsMap = {};
   static final diacriticsRegExp = RegExp('[^\u0000-\u007E]', multiLine: true);
@@ -582,8 +489,7 @@ class Helper {
     }
     // "what?" version ... http://jsperf.com/diacritics/12
     return str.replaceAllMapped(diacriticsRegExp, (a) {
-      return diacriticsMap[a.group(0)] =
-          diacriticsMap[a.group(0)] ?? a.group(0);
+      return diacriticsMap[a.group(0)] = diacriticsMap[a.group(0)] ?? a.group(0);
     });
   }
 }

@@ -76,7 +76,7 @@ class EssentialDataTableComponent {
     if (_data != null && _data.isNotEmpty) {
       var columnsTitles = _data[0].getRowDefinition();
       var listtheads = <String>[];
-      for (var col in columnsTitles.getSets()) {
+      for (var col in columnsTitles.colsSets) {
         listtheads.add(col.title);
       }
       return listtheads;

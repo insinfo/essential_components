@@ -17,29 +17,20 @@ class DataTableRow {
     colsSets.add(colSet);
   }
 
-  List<DataTableColumn> getSets() {
+  /* List<DataTableColumn> getSets() {
     return colsSets;
   }
 
-  List<DataTableColumn> getCollsForDisplay() {
+ List<DataTableColumn> getCollsForDisplay() {
     return colsSets.where((i) => i.visible).toList();
   }
 
   List<DataTableColumn> getCollsForExport() {
     return colsSets.where((i) => i.export).toList();
-  }
+  }*/
 }
 
-enum DataTableColumnType {
-  img,
-  text,
-  date,
-  dateTime,
-  boolLabel,
-  brasilCurrency,
-  badge,
-  link
-}
+enum DataTableColumnType { img, text, date, dateTime, boolLabel, brasilCurrency, badge, link }
 
 //primaryDisplayValue é o Valor de exibição principal
 //a ser exibido quando não for possivel exibir mais de uma coluna
@@ -57,7 +48,13 @@ class DataTableColumn {
   Function customRender;
   String badgeColor;
   bool visible;
+  bool visibleForPrint;
   bool export;
+
+  void toogleVisibility() {
+    visible = !visible;
+  }
+
   DataTableColumn(
       {this.key,
       this.value,
@@ -71,6 +68,7 @@ class DataTableColumn {
       this.badgeColor,
       this.primaryDisplayValue = false,
       this.visible = true,
+      this.visibleForPrint = true,
       this.export = true});
 }
 

@@ -9,6 +9,11 @@ class DataTableFilter {
   DataTableFilter({this.limit = 10, this.offset = 0, this.searchString});
 
   void clear() {
+    limit = 10;
+    offset = 0;
+    searchString = null;
+    orderBy = null;
+    orderDir = null;
     stringParams.clear();
   }
 
