@@ -4,7 +4,7 @@
         <div class="dataTables_filter2" *ngIf="showFilter">
             <label>
                 <span>{{searchInputLabel}}</span>
-                <input #inputSearchElement type="search" class="" placeholder="Digite para buscar...">
+                <input #inputSearchElement (keypress)="handleSearchInputKeypress($event)" type="search" class="" placeholder="Digite para buscar...">
                 <button type="button" (click)="onSearch()"></button>
             </label>
         </div>
@@ -101,7 +101,7 @@ icon-database-refresh -->
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of data">
+                <tr *ngFor="let row of data" (click)="onRowClick(row)">
                     <td *ngIf="showCheckBoxToSelectRow" class="datatable-first-col">
                         <label class="form-check-label">
                             <div class="uniform-checker">
@@ -140,9 +140,9 @@ icon-database-refresh -->
             {{totalRecordsLabel}}<span [innerHTML]="' '+totalRecords.toString()"></span>
         </div>
         <div #paginateDiv class="dataTables_paginate paging_simple_numbers">
-            <a #paginatePrevBtn class="paginate_button previous disabled">←</a>
+            <a #paginatePrevBtn (click)="prevPage($event)" class="paginate_button previous disabled">←</a>
             <span #paginateContainer></span>
-            <a #paginateNextBtn class="paginate_button next">→</a>
+            <a #paginateNextBtn (click)="nextPage($event)" class="paginate_button next">→</a>
         </div>
     </div>
 

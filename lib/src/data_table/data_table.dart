@@ -190,9 +190,17 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   @override
   void ngOnInit() {}
 
+  void handleSearchInputKeypress(e) {
+    //e.preventDefault();
+    e.stopPropagation();
+    if (e.keyCode == KeyCode.ENTER) {
+      onSearch();
+    }
+  }
+
   @override
   void ngAfterViewInit() {
-    if (showActionsHeader) {
+    /*if (showActionsHeader) {
       inputSearchElement?.onKeyPress?.listen((KeyboardEvent e) {
         //e.preventDefault();
         e.stopPropagation();
@@ -204,7 +212,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     if (showActionsFooter) {
       paginatePrevBtn?.onClick?.listen(prevPage);
       paginateNextBtn?.onClick?.listen(nextPage);
-    }
+    }*/
   }
 
   @override
@@ -547,13 +555,13 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
       }
 
       if (currentPage == 1) {
-        paginatePrevBtn.classes.remove('disabled');
-        paginatePrevBtn.classes.add('disabled');
+        paginatePrevBtn?.classes?.remove('disabled');
+        paginatePrevBtn?.classes?.add('disabled');
       }
 
       if (currentPage == totalPages) {
-        paginateNextBtn.classes.remove('disabled');
-        paginateNextBtn.classes.add('disabled');
+        paginateNextBtn?.classes?.remove('disabled');
+        paginateNextBtn?.classes?.add('disabled');
       }
 
       var idx = 0;
@@ -584,7 +592,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
               }
             };
             link.onClick.listen(liten);
-            self.paginateContainer.append(link);
+            self.paginateContainer?.append(link);
             idx++;
           }
           break;

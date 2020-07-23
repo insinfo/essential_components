@@ -1,6 +1,6 @@
 class DataTableFilter {
-  int limit;
-  int offset;
+  int limit = 10;
+  int offset = 0;
   String searchString;
   String orderBy;
   String orderDir;
