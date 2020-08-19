@@ -20,21 +20,14 @@ import 'package:essential_rest/essential_rest.dart';
   styleUrls: [
     'select_dialog.css',
   ],
-  directives: [
-    formDirectives,
-    coreDirectives,
-    EssentialDataTableComponent,
-    EssentialModalComponent
-  ],
+  directives: [formDirectives, coreDirectives, EssentialDataTableComponent, EssentialModalComponent],
 )
-class EssentialSelectDialogComponent
-    implements ControlValueAccessor, AfterViewInit, OnDestroy {
+class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
   @ViewChild('inputEl')
   InputElement inputEl;
 
   @ViewChild('modal')
   EssentialModalComponent modal;
-
   final NgControl ngControl;
   /* ChangeDetectorRef _changeDetector;
   String _hintText;
@@ -42,17 +35,22 @@ class EssentialSelectDialogComponent
   set hintText(value) {
     _hintText = value;
   }*/
-
+  @Input('showDialog')
   bool showDialog = false;
+
+  @Input('showHeader')
+  bool showHeader = false;
+
+  @Input('titleHeader')
+  String titleHeader = '';
 
   bool _required = false;
   bool get required => _required;
   bool focused = false;
-
   bool _disabled = false;
   bool get disabled => _disabled;
 
-  @Input()
+  @Input('disabled')
   set disabled(bool disabled) {
     _disabled = disabled;
   }
@@ -63,7 +61,7 @@ class EssentialSelectDialogComponent
   @Input()
   int maxCount;
 
-  @Input()
+  @Input('required')
   set required(bool required) {
     var prev = _required;
     _required = required;
@@ -112,7 +110,7 @@ class EssentialSelectDialogComponent
   int get inputTabIndex => disabled ? -1 : 0;
 
   String _inputText = 'Selecione';
-
+  @Input('inputText')
   set inputText(String value) {
     _inputText = value;
     updateInputTextLength();
@@ -126,9 +124,14 @@ class EssentialSelectDialogComponent
     return _inputText;
   }
 
+  String _inputStyle = '';
+  @Input('inputStyle')
+  set inputStyle(String value) => _inputStyle = value;
+
+  String get inputStyle => _inputStyle;
+
   //contrutor
-  EssentialSelectDialogComponent(
-      @Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
+  EssentialSelectDialogComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
     // _changeDetector = changeDetector;
     // Replace the provider from above with this.
     if (ngControl != null) {
@@ -149,11 +152,13 @@ class EssentialSelectDialogComponent
   }
 
   void openDialog() {
-    modal.openDialog();
+    // modal.openDialog();
+    showDialog = true;
   }
 
   void closeDialog() {
-    modal.closeDialog();
+    //modal.closeDialog();
+    showDialog = false;
   }
 
   void inputFocusAction(event) {
@@ -209,9 +214,8 @@ class EssentialSelectDialogComponent
   }
 
   //função a ser chamada para notificar e modificar o modelo vinculado pelo ngmodel
-  ChangeFunction<dynamic> onChangeControlValueAccessor =
-      (dynamic _, {String rawValue}) {
-    print('onChangeControlValueAccessor $_');
+  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {
+    //print('onChangeControlValueAccessor $_');
   };
 
   /// Set the function to be called when the control receives a change event.

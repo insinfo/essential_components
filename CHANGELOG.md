@@ -160,3 +160,7 @@ and fix issues
 # 1.2.3
 
 - refactory of EssentialDataTableComponent and add news features 
+
+# 1.2.3
+
+- add news properties to EssentialSelectDialogComponent as showDialog, showHeader, titleHeader
