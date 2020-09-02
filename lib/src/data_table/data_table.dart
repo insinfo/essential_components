@@ -162,24 +162,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   PaginationType paginationType = PaginationType.carousel;
   List<PaginationItem> paginationItems = <PaginationItem>[];
 
-  EssentialDataTableComponent(this.sanitizer) {
-    //dataRequest isLoading
-    /* dataRequest.listen((onData){
-      print(onData);
-    });*/
-  }
-
-  //StreamSubscription _prevBtnStreamSub;
-  //StreamSubscription _nextBtnStreamSub;
-
-  /*final NodeValidatorBuilder _htmlValidator = NodeValidatorBuilder.common()
-    ..allowHtml5()
-    ..allowImages()
-    ..allowInlineStyles()
-    ..allowTextElements()
-    ..allowSvg()
-    ..allowElement('a', attributes: ['href'])
-    ..allowElement('img', attributes: ['src']);*/
+  EssentialDataTableComponent(this.sanitizer) {}
 
   final DomSanitizationService sanitizer;
   //sanitiza o HTML da celula
@@ -199,21 +182,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   }
 
   @override
-  void ngAfterViewInit() {
-    /*if (showActionsHeader) {
-      inputSearchElement?.onKeyPress?.listen((KeyboardEvent e) {
-        //e.preventDefault();
-        e.stopPropagation();
-        if (e.keyCode == KeyCode.ENTER) {
-          onSearch();
-        }
-      });
-    }
-    if (showActionsFooter) {
-      paginatePrevBtn?.onClick?.listen(prevPage);
-      paginateNextBtn?.onClick?.listen(nextPage);
-    }*/
-  }
+  void ngAfterViewInit() {}
 
   @override
   void ngAfterChanges() {
@@ -271,153 +240,6 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
       });
     });
   }
-
-  /*void draw() {
-    try {
-      //clear tbody if not get data
-      if (_data == null || _data.isEmpty) {
-        var tbody = tableElement.querySelector('tbody');
-        if (tbody != null) {
-          tbody.innerHtml = '';
-        } else {
-          var tBody = tableElement.createTBody();
-          tBody.innerHtml = '';
-        }
-
-        isNoContent = true;
-        divNoContent.style.display = 'block';
-        //print(divNoContent);
-        //print(isNoContent);
-      }
-
-      if (_data != null) {
-        error = false;
-        isNoContent = false;
-        divNoContent.style.display = 'none';
-        if (_data.isNotEmpty) {
-          TableSectionElement tBody;
-          if (tableElement.querySelector('tbody') == null) {
-            tableElement.innerHtml = '';
-            tBody = tableElement.createTBody();
-          } else {
-            tableElement.querySelector('tbody').innerHtml = '';
-            tBody = tableElement.querySelector('tbody');
-          }
-
-          // Element tableHead =//
-          tableElement.createTHead();
-          var tableHeaderRow = tableElement.tHead.insertRow(-1);
-          //show checkbox on tableHead to select all rows
-          if (_showCheckBoxToSelectRow) {
-            var th = Element.tag('th');
-            th.style.setProperty('text-align', 'left');
-            th.attributes['class'] = 'datatable-first-col';
-            var label = Element.tag('label');
-            label.classes.add('pure-material-checkbox');
-            var input = CheckboxInputElement();
-            //input.type = "checkbox";
-            input.onClick.listen(onSelectAll);
-            var span = Element.tag('span');
-            label.append(input);
-            label.append(span);
-            th.append(label);
-            tableHeaderRow.insertAdjacentElement('beforeend', th);
-          }
-
-          //render colunas de titulo
-          var columns = _data[0].getRowDefinition();
-          for (var col in columns.colsSets) {
-            //    if (col.visible) {
-            var th = Element.tag('th');
-            th.style.setProperty('text-align', 'left');
-            th.attributes['class'] = 'dataTableSorting';
-            th.text = col.title;
-            //ordenação
-            th.onClick.listen((e) {
-              if (enableOrdering == true) {
-                tableElement.querySelectorAll('th:not(.datatable-first-col)').forEach((el) {
-                  el.attributes['class'] = 'dataTableSorting';
-                });
-
-                if (_orderDir == 'asc') {
-                  _orderDir = 'desc';
-                  th.attributes['class'] = 'dataTableSorting dataTableSortingDesc';
-                } else if (_orderDir == 'desc') {
-                  _orderDir = 'asc';
-                  th.attributes['class'] = 'dataTableSorting dataTableSortingAsc';
-                }
-
-                dataTableFilter.orderBy = col.key;
-                dataTableFilter.orderDir = _orderDir;
-                onRequestData();
-              }
-            });
-
-            // tableHeaderRow.insertAdjacentElement('beforeend', th);
-            //}
-          }
-
-          //render linhas
-          for (final item in _data) {
-            var tableRow = tBody.insertRow(-1);
-            //show checkbox to select single row
-            if (_showCheckBoxToSelectRow) {
-              var tdcb = Element.tag('td');
-              tdcb.style.setProperty('text-align', 'left');
-              tdcb.attributes['class'] = 'datatable-first-col';
-              var label = Element.tag('label');
-              label.onClick.listen((e) {
-                e.stopPropagation();
-              });
-              label.classes.add('pure-material-checkbox');
-              var input = CheckboxInputElement();
-              //input.type = "checkbox";
-              input.attributes['cbSelect'] = 'true';
-              input.onClick.listen((MouseEvent event) {
-                onSelect(event, item);
-              });
-              var span = Element.tag('span');
-              span.onClick.listen((e) {
-                e.stopPropagation();
-              });
-              label.append(input);
-              label.append(span);
-              tdcb.append(label);
-              tableRow.insertAdjacentElement('beforeend', tdcb);
-            }
-
-            tableRow.onClick.listen((event) {
-              onRowClick(item);
-            });
-
-            //draw columns
-            var colData = item.getRowDefinition();
-            for (var colSet in colData.colsSets) {
-              print('draw $colSet');
-              // if (colSet.visible) {
-              var tdContent = '';
-              var td = Element.tag('td');
-              tableRow.insertAdjacentElement('beforeend', td);
-              tdContent = formatCell(colSet, cellElement: td);
-              td.style.setProperty('text-align', 'left');
-              if (colSet.textColor != null) {
-                td.style.setProperty('color', colSet.textColor);
-              }
-              if (colSet.backgroundColor != null) {
-                td.style.setProperty('background', colSet.backgroundColor);
-              }
-              td.setInnerHtml(tdContent, treeSanitizer: NodeTreeSanitizer.trusted);
-              //}
-            }
-          }
-        }
-      }
-    } catch (exception, stackTrace) {
-      print('DataTable@draw() exception: $exception');
-      print('DataTable@draw() stackTrace: $stackTrace');
-    }
-    isLoading = false;
-  }*/
 
   String removeAllHtmlTags(String htmlText) {
     var exp = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);

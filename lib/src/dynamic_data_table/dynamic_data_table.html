@@ -1,0 +1,32 @@
+<div>
+    <div class="dataTables_wrapper no-footer">
+        <div class="datatable-header2 flex-justify flex-wrap" *ngIf="showActionsHeader">
+
+        </div>
+    </div>
+    <div class="datatable-scroll">
+        <table *ngIf="data?.isNotEmpty == true" class="table datatable-basic dataTable no-footer">
+            <thead *ngIf="showTableHeader">
+                <tr>
+                    <th *ngFor="let columnHeader of columnHeaders" title="{{columnHeader.title}}">
+                        <span *ngIf="enableLimitColumnTitles" >
+                          {{columnHeader.title | truncate:limitColumnTitleCount}} 
+                        </span>
+                        <span *ngIf="!enableLimitColumnTitles" [innerText]="columnHeader.title">                        
+                        </span>                      
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of columnRows" >
+                    <td *ngFor="let col of row.colsSets" [class.hide]="!col.visible">
+                        {{col.value}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="datatable-footer" *ngIf="showActionsFooter">
+
+    </div>
+</div>

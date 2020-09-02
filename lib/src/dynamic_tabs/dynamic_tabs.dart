@@ -1,19 +1,14 @@
+import 'dart:async';
+
 import 'package:angular/angular.dart';
 
 import 'dynamic_tab_directive.dart';
 import 'dynamic_tab_header_directive.dart';
 
 /// Directives needed to create a tab-set
-const esDynamicTabsDirectives = [
-  EsTabxDirective,
-  BsTabxHeaderDirective,
-  EsTabsxComponents
-];
+const esDynamicTabsDirectives = [EsTabxDirective, BsTabxHeaderDirective, EsTabsxComponents];
 
-@Component(
-    selector: 'es-tabsx',
-    templateUrl: 'dynamic_tabs.html',
-    directives: [coreDirectives])
+@Component(selector: 'es-tabsx', templateUrl: 'dynamic_tabs.html', directives: [coreDirectives])
 class EsTabsxComponents implements OnInit, AfterContentInit {
   /// if `true` tabs will be placed vertically
   bool get vertical => placement == 'left' || placement == 'right';
@@ -39,15 +34,10 @@ class EsTabsxComponents implements OnInit, AfterContentInit {
   @Input()
   String type;
 
-  Map get navTypeMap => {
-        'flex-column': vertical,
-        'nav-justified': justified,
-        'nav-tabs': type == 'tabs',
-        'nav-pills': type == 'pills'
-      };
+  Map get navTypeMap =>
+      {'flex-column': vertical, 'nav-justified': justified, 'nav-tabs': type == 'tabs', 'nav-pills': type == 'pills'};
 
-  Map tabTypeMap(EsTabxDirective tab) =>
-      {'active': tab.active, 'disabled': tab.disabled};
+  Map tabTypeMap(EsTabxDirective tab) => {'active': tab.active, 'disabled': tab.disabled};
 
   /// List of sub tabs
   @ContentChildren(EsTabxDirective)
@@ -60,9 +50,22 @@ class EsTabsxComponents implements OnInit, AfterContentInit {
     placement ??= 'top';
   }
 
+  final _selectCtrl = StreamController<EsTabxDirective>.broadcast();
+
+  /// emits the selected element change
+  @Output()
+  Stream<EsTabxDirective> get select => _selectCtrl.stream;
+
   @override
   void ngAfterContentInit() {
     activateTab(tabs.firstWhere((tab) => tab.active, orElse: () => tabs[0]));
+
+    //selected element change
+    tabs.forEach((t) {
+      t.select.listen((event) {
+        _selectCtrl.add(event);
+      });
+    });
   }
 
   /// adds a new tab at the end

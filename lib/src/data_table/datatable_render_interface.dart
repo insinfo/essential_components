@@ -16,18 +16,6 @@ class DataTableRow {
   void addSet(DataTableColumn colSet) {
     colsSets.add(colSet);
   }
-
-  /* List<DataTableColumn> getSets() {
-    return colsSets;
-  }
-
- List<DataTableColumn> getCollsForDisplay() {
-    return colsSets.where((i) => i.visible).toList();
-  }
-
-  List<DataTableColumn> getCollsForExport() {
-    return colsSets.where((i) => i.export).toList();
-  }*/
 }
 
 enum DataTableColumnType { img, text, date, dateTime, boolLabel, brasilCurrency, badge, link }

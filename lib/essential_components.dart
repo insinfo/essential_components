@@ -5,6 +5,9 @@ export 'src/data_table/data_table.dart';
 export 'src/data_table/data_table_filter.dart';
 export 'src/data_table/datatable_render_interface.dart';
 
+//EsDynamicDataTableComponent
+export 'src/dynamic_data_table/dynamic_data_table.dart';
+
 //md toast
 export 'src/toast/toast.dart';
 
