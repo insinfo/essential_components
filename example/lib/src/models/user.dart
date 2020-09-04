@@ -34,7 +34,7 @@ class User implements IDataTableRender {
         key: 'name',
         value: name,
         title: 'Name',
-        customRender: (html.TableCellElement cellElement) {
+        customRender: (html.TableCellElement cellElement, val) {
           if (name == 'Leanne Graham') {
             cellElement?.closest('tr')?.style?.background = '#e8fbee"';
             return '''<span style="font-size: .8125rem;
@@ -45,8 +45,7 @@ class User implements IDataTableRender {
           return name;
         }));
 
-    settings.addSet(DataTableColumn(
-        key: 'username', value: username, title: 'username', limit: 20));
+    settings.addSet(DataTableColumn(key: 'username', value: username, title: 'username', limit: 20));
     return settings;
   }
 }
