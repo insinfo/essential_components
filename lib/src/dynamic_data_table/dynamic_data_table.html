@@ -1,32 +1,141 @@
 <div>
     <div class="dataTables_wrapper no-footer">
         <div class="datatable-header2 flex-justify flex-wrap" *ngIf="showActionsHeader">
+            <div class="dataTables_filter2" *ngIf="showFilter">
+                <label>
+                    <span>{{searchInputLabel}}</span>
+                    <input #inputSearchElement (keypress)="handleSearchInputKeypress($event)" type="search" class=""
+                        placeholder="Digite para buscar...">
+                    <button type="button" (click)="onSearch()"></button>
+                </label>
+            </div>
+            <div class="flex" *ngIf="showItemsLimit">
+                <div class="dataTable-actions">
+                    <a (click)="toXLSX()" title="{{exportButtonTitle}}" class="list-icons-item mr-2">
+                        <i class="icon-file-excel  "></i>
+                    </a>
 
+                    <a *ngIf="showResetButtom" (click)="reset()" title="{{resetButtonTitle}}"
+                        class="list-icons-item mr-2">
+                        <i class="icon-eraser2  "></i>
+                    </a>
+
+                    <a (click)="reload()" title="{{reloadButtonTitle}}" class="list-icons-item mr-2">
+                        <i class="icon-reload-alt  "></i>
+                    </a>
+
+                    <div class="list-icons">
+                        <div class="dropdown " title="{{columnVisibilityButtonTitle}}">
+                            <!--col.visible = !col.visible  icon-reset 
+icon-database-refresh -->
+                            <a (click)="toogleMenu(dropdown1)" class="list-icons-item dropdown-toggle caret-0"
+                                data-toggle="dropdown" aria-expanded="false">
+                                <i class="icon-menu7"></i>
+                            </a>
+                            <div #dropdown1 class="dropdown-menu dropdown-menu-right " x-placement="bottom-end"
+                                style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-164px, 19px, 0px);max-height:300px;overflow-y: auto;">
+                                <!-- <div
+                                class="dropdown-header font-weight-semibold py-0 text-muted text-uppercase font-size-xs line-height-xs mt-1">
+                                Colunas
+                            </div>
+                            <div class="dropdown-divider opacity-75"></div>-->
+                                <div *ngFor="let col of columnHeaders" class="dropdown-item form-check">
+                                    <label class="form-check-label">
+                                        <div class="uniform-checker">
+                                            <span class="checked" [class.checked]="col.visible">
+                                                <input (click)="changeVisibilityOfCol(col)" type="checkbox"
+                                                    class="form-input-styled" data-fouc="">
+                                            </span>
+                                        </div>
+                                        {{ col.title }}
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dataTables-length">
+                        <label>
+                            <span>{{itensPerPageInputLabel}}</span>
+                            <select #itemsPerPageElement (change)="onLimitChange()" name="" class="">
+                                <option value="1">1</option>
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="500">500</option>
+                                <option value="1000">1000</option>
+                                <option value="4000">4000</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="datatable-scroll">
-        <table *ngIf="data?.isNotEmpty == true" class="table datatable-basic dataTable no-footer">
-            <thead *ngIf="showTableHeader">
+        <!-- LOADING 
+        <div class="slider" *ngIf="isLoading">
+            <div class="line"></div>
+            <div class="subline inc"></div>
+            <div class="subline dec"></div>
+        </div>-->
+        <table #tableElement *ngIf="data?.isNotEmpty == true" class="table datatable-basic dataTable no-footer">
+            <thead *ngIf="columnHeaders != null && showTableHeader">
                 <tr>
-                    <th *ngFor="let columnHeader of columnHeaders" title="{{columnHeader.title}}">
-                        <span *ngIf="enableLimitColumnTitles" >
-                          {{columnHeader.title | truncate:limitColumnTitleCount}} 
+                    <th *ngIf="showCheckBoxToSelectRow" class="datatable-first-col">
+                        <label class="form-check-label">
+                            <div class="uniform-checker">
+                                <span class="" [class.checked]="maincheckbox.checked">
+                                    <input #maincheckbox (click)="onSelectAll($event)" class="form-input-styled "
+                                        data-fouc="" type="checkbox">
+                                </span>
+                            </div>
+                        </label>
+                    </th>
+                    <th *ngFor="let columnHeader of columnHeaders" title="{{columnHeader.title}}" #th1
+                        (click)="onOrder(columnHeader,th1)" [attr.data-key]="columnHeader.key" class="dataTableSorting"
+                        [class.hide]="!columnHeader.visible"
+                        [class.dataTableSortingDesc]="dataTableFilter.orderDir == 'desc' && th1.getAttribute('data-key') == dataTableFilter.orderBy"
+                        [class.dataTableSortingAsc]="dataTableFilter.orderDir == 'asc' && th1.getAttribute('data-key') == dataTableFilter.orderBy">
+                        <span *ngIf="enableLimitColumnTitles">
+                            {{columnHeader.title | truncate:limitColumnTitleCount}}
                         </span>
-                        <span *ngIf="!enableLimitColumnTitles" [innerText]="columnHeader.title">                        
-                        </span>                      
+                        <span *ngIf="!enableLimitColumnTitles" [innerText]="columnHeader.title">
+                        </span>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of columnRows" >
-                    <td *ngFor="let col of row.colsSets" [class.hide]="!col.visible">
-                        {{col.value}}
+                <tr *ngFor="let row of columnRows" (click)="onRowClick(row)">
+                    <td *ngIf="showCheckBoxToSelectRow" class="datatable-first-col">
+                        <label class="form-check-label">
+                            <div class="uniform-checker">
+                                <span class="" [class.checked]="selectcheckbox.checked">
+                                    <input #selectcheckbox (click)="onSelect($event, row)" cbSelect="true" class="form-input-styled "
+                                        data-fouc="" type="checkbox">
+                                </span>
+                            </div>
+                        </label>
+                    </td>
+                    <td #td *ngFor="let col of row.colsSets" 
+                    [class.hide]="!col.visible"
+                        [innerHTML]="getHtmlOfCell(col,td)">
+
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="datatable-footer" *ngIf="showActionsFooter">
-
+        <div class="dataTables_info" role="status" aria-live="polite">
+            {{totalRecordsLabel}}<span [innerHTML]="' '+totalRecords.toString()"></span>
+        </div>
+        <div #paginateDiv class="dataTables_paginate paging_simple_numbers">
+            <a #paginatePrevBtn (click)="prevPage($event)" class="paginate_button previous disabled">←</a>
+            <span #paginateContainer></span>
+            <a #paginateNextBtn (click)="nextPage($event)" class="paginate_button next">→</a>
+        </div>
     </div>
 </div>

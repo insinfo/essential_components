@@ -1,0 +1,1 @@
+enum PaginationType { carousel, cube }

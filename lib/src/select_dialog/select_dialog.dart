@@ -4,11 +4,11 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:essential_components/src/core/interfaces/datatable_render_interface.dart';
+import 'package:essential_components/src/core/models/data_table_filter.dart';
 
 import '../data_table/data_table.dart';
-import '../data_table/datatable_render_interface.dart';
 
-import '../data_table/data_table_filter.dart';
 import '../modal/modal.dart';
 
 import 'package:essential_rest/essential_rest.dart';

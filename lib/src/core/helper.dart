@@ -44,6 +44,11 @@ bool falsey(value) => value == null || value == false || value == '' || value ==
 bool truthy(value) => !falsey(value);
 
 class Helper {
+  static String removeAllHtmlTags(String htmlText) {
+    var exp = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);
+    return htmlText.replaceAll(exp, '');
+  }
+
   static String truncate(String value, int truncateAt) {
     if (value == null) {
       return value;

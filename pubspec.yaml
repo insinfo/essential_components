@@ -8,7 +8,7 @@ authors:
   - Thiago Cunha <thiagosantoscunha@outlook.com>
 
 environment:
-  sdk: '>=2.4.0 <3.0.0'
+  sdk: '>=2.8.1 <3.0.0'
 
 dependencies:
   angular: '>=5.3.0 <6.2.0'

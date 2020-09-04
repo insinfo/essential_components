@@ -3,18 +3,21 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:angular/security.dart';
-//import 'package:angular_components/angular_components.dart';
+
 import 'package:angular_forms/angular_forms.dart';
-import 'package:angular_router/angular_router.dart';
+
+import 'package:essential_components/src/core/enums/pagination_type.dart';
+import 'package:essential_components/src/core/helper.dart';
+import 'package:essential_components/src/core/interfaces/datatable_render_interface.dart';
+import 'package:essential_components/src/core/models/data_table_filter.dart';
+import 'package:essential_components/src/core/models/pagination_item.dart';
 
 import 'package:essential_xlsx/essential_xlsx.dart';
 import 'package:intl/intl.dart';
 
-import 'datatable_render_interface.dart';
 import 'package:essential_rest/essential_rest.dart';
-import 'data_table_filter.dart';
+
 import '../directives/essential_inner_html_directive.dart';
-import 'pagination_item.dart';
 
 //utils
 import 'data_table_utils.dart';
@@ -61,7 +64,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   HtmlElement paginateNextBtn;
 
   String _orderDir = 'asc';
-  bool _isTitlesRendered = false;
+  //bool _isTitlesRendered = false;
 
   @Input()
   bool error = false;
@@ -162,7 +165,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   PaginationType paginationType = PaginationType.carousel;
   List<PaginationItem> paginationItems = <PaginationItem>[];
 
-  EssentialDataTableComponent(this.sanitizer) {}
+  EssentialDataTableComponent(this.sanitizer);
 
   final DomSanitizationService sanitizer;
   //sanitiza o HTML da celula
@@ -239,11 +242,6 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
         }
       });
     });
-  }
-
-  String removeAllHtmlTags(String htmlText) {
-    var exp = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);
-    return htmlText.replaceAll(exp, '');
   }
 
   String formatCell(DataTableColumn dataTableColumn,
@@ -341,11 +339,11 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
           tdContent = str;
       }
     } else {
-      tdContent = dataTableColumn.customRender(cellElement);
+      tdContent = dataTableColumn.customRender(cellElement, tdContent);
     }
 
     if (stripHtml) {
-      tdContent = removeAllHtmlTags(tdContent);
+      tdContent = Helper.removeAllHtmlTags(tdContent);
     }
 
     tdContent = tdContent == 'null' ? '-' : tdContent;
@@ -583,5 +581,3 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     }
   }
 }
-
-enum PaginationType { carousel, cube }

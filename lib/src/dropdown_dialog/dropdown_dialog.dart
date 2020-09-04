@@ -4,12 +4,13 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 import 'package:angular_forms/angular_forms.dart';
+import 'package:essential_components/src/core/interfaces/datatable_render_interface.dart';
+import 'package:essential_components/src/core/models/data_table_filter.dart';
 
 import '../data_table/data_table.dart';
-import '../data_table/datatable_render_interface.dart';
+
 import 'package:essential_rest/essential_rest.dart';
 
-import '../data_table/data_table_filter.dart';
 import '../modal/modal.dart';
 
 @Component(
@@ -19,15 +20,9 @@ import '../modal/modal.dart';
   styleUrls: [
     'dropdown_dialog.css',
   ],
-  directives: [
-    formDirectives,
-    coreDirectives,
-    EssentialDataTableComponent,
-    EssentialModalComponent
-  ],
+  directives: [formDirectives, coreDirectives, EssentialDataTableComponent, EssentialModalComponent],
 )
-class EssentialDropdownDialogComponent
-    implements ControlValueAccessor, AfterViewInit, OnDestroy {
+class EssentialDropdownDialogComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
   @ViewChild('buttonEl')
   ButtonElement buttonEl;
 
@@ -61,8 +56,7 @@ class EssentialDropdownDialogComponent
   @Input()
   int maxCount;
 
-  final _changeController =
-      StreamController<RList<IDataTableRender>>.broadcast(sync: true);
+  final _changeController = StreamController<RList<IDataTableRender>>.broadcast(sync: true);
 
   /// Publishes events when a change event is fired. (On enter, or on blur.)
   @Output('change')
@@ -75,8 +69,7 @@ class EssentialDropdownDialogComponent
   String type = 'button';
 
   //contrutor
-  EssentialDropdownDialogComponent(
-      @Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
+  EssentialDropdownDialogComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
     // Replace the provider from above with this.
     if (ngControl != null) {
       // Setting the value accessor directly (instead of using

@@ -2,8 +2,8 @@ library essential_components;
 
 //Data Table
 export 'src/data_table/data_table.dart';
-export 'src/data_table/data_table_filter.dart';
-export 'src/data_table/datatable_render_interface.dart';
+export 'src/core/models/data_table_filter.dart';
+export 'src/core/interfaces/datatable_render_interface.dart';
 
 //EsDynamicDataTableComponent
 export 'src/dynamic_data_table/dynamic_data_table.dart';

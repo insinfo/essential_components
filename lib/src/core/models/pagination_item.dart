@@ -1,4 +1,4 @@
-enum PaginationButtonType { prev, next, page }
+import 'package:essential_components/src/core/enums/pagination_button_type.dart';
 
 class PaginationItem {
   Function(dynamic) action;

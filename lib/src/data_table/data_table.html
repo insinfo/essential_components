@@ -112,7 +112,8 @@ icon-database-refresh -->
                             </div>
                         </label>
                     </td>
-                    <td #td *ngFor="let col of row.getRowDefinition().colsSets" [innerHTML]="getHtmlOfCell(col,td)"
+                    <td #td *ngFor="let col of row.getRowDefinition().colsSets"
+                     [innerHTML]="getHtmlOfCell(col,td)"
                         [class.hide]="!col.visible">
                     </td>
                 </tr>

@@ -164,3 +164,7 @@ and fix issues
 # 1.2.4
 
 - add news properties to EssentialSelectDialogComponent as showDialog, showHeader, titleHeader
+
+# 1.2.5
+
+- add new component EsDynamicDataTableComponent as DataTable to render List<Map<String,dynamic>>
