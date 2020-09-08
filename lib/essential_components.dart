@@ -1,5 +1,8 @@
 library essential_components;
 
+//string_extensions
+export 'src/core/string_extensions.dart';
+
 //Data Table
 export 'src/data_table/data_table.dart';
 export 'src/core/models/data_table_filter.dart';

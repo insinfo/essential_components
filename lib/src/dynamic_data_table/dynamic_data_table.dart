@@ -14,6 +14,7 @@ import 'package:essential_components/src/directives/essential_inner_html_directi
 
 import 'package:essential_components/src/pipes/truncate_pipe.dart';
 import 'package:essential_rest/essential_rest.dart';
+import 'package:essential_xlsx/essential_xlsx.dart';
 import 'package:intl/intl.dart';
 import '../core/string_extensions.dart';
 
@@ -163,6 +164,11 @@ class EsDynamicDataTableComponent implements AfterChanges, AfterViewInit {
   @Input()
   String columnVisibilityButtonTitle = 'Visibilidade de colunas';
 
+  @Input()
+  String Function(String) customTitleFormat = (String t) {
+    return t?.capitalizeFirstOfEach;
+  };
+
   final RList<DataTableRow> _data = RList<DataTableRow>();
   RList<IDataTableRender> selectedItems = RList<IDataTableRender>();
 
@@ -186,15 +192,14 @@ class EsDynamicDataTableComponent implements AfterChanges, AfterViewInit {
   }
 
   Future<void> toXLSX() async {
-    /*if (_data != null) {
+    if (_data != null) {
       if (_data.isNotEmpty) {
         var simplexlsx = SimpleXLSX();
         simplexlsx.sheetName = 'sheet';
 
         //adiciona os dados
         var idx = 0;
-        _data.forEach((item) {
-          var col = item.getRowDefinition();
+        _data.forEach((col) {
           if (idx == 0) {
             var collsForExport = col.colsSets.where((i) => i.export).toList();
             //adiciona os titulos
@@ -214,18 +219,18 @@ class EsDynamicDataTableComponent implements AfterChanges, AfterViewInit {
 
         simplexlsx.build();
       }
-    }*/
+    }
   }
 
   void changeVisibilityOfCol(DataTableColumn col) {
-    /*var visible = !col.visible;
+    var visible = !col.visible;
     _data.forEach((row) {
-      row.getRowDefinition().colsSets.forEach((column) {
+      row.colsSets.forEach((column) {
         if (column.title == col.title) {
           column.visible = visible;
         }
       });
-    });*/
+    });
   }
 
   int numPages() {
@@ -371,7 +376,7 @@ class EsDynamicDataTableComponent implements AfterChanges, AfterViewInit {
               key: k,
               value: value,
               visible: visible ?? true,
-              title: k.capitalizeFirstOfEach,
+              title: customTitleFormat(k),
             );
 
             tableHeaders?.forEach((c) {
@@ -539,6 +544,7 @@ class EsDynamicDataTableComponent implements AfterChanges, AfterViewInit {
 
   void onSearch() {
     dataTableFilter.searchString = inputSearchElement.value;
+
     _searchRequest.add(dataTableFilter);
     onRequestData();
   }

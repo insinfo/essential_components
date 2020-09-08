@@ -168,3 +168,7 @@ and fix issues
 # 1.2.5
 
 - add new component EsDynamicDataTableComponent as DataTable to render List<Map<String,dynamic>>
+
+# 1.2.6
+
+- fix bugs on EsDynamicDataTableComponent
