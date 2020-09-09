@@ -4,9 +4,11 @@
         <div class="dataTables_filter2" *ngIf="showFilter">
             <label>
                 <span>{{searchInputLabel}}</span>
-                <input #inputSearchElement (keypress)="handleSearchInputKeypress($event)" type="search" class="" placeholder="Digite para buscar...">
-                <button type="button" (click)="onSearch()"></button>
             </label>
+            <input #inputSearchElement (keypress)="handleSearchInputKeypress($event)" type="search" class=""
+                placeholder="Digite para buscar...">
+            <button type="button" (click)="onSearch()"></button>
+
         </div>
         <div class="flex" *ngIf="showItemsLimit">
             <div class="dataTable-actions">
@@ -18,7 +20,7 @@
                     <i class="icon-eraser2  "></i>
                 </a>
 
-                <a  (click)="reload()" title="{{reloadButtonTitle}}" class="list-icons-item mr-2">
+                <a (click)="reload()" title="{{reloadButtonTitle}}" class="list-icons-item mr-2">
                     <i class="icon-reload-alt  "></i>
                 </a>
 
@@ -55,18 +57,19 @@ icon-database-refresh -->
                 <div class="dataTables-length">
                     <label>
                         <span>{{itensPerPageInputLabel}}</span>
-                        <select #itemsPerPageElement (change)="onLimitChange()" name="" class="">
-                            <option value="1">1</option>
-                            <option value="5">5</option>
-                            <option value="10" selected>10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value="500">500</option>
-                            <option value="1000">1000</option>
-                            <option value="4000">4000</option>
-                        </select>
                     </label>
+                    <select #itemsPerPageElement (change)="onLimitChange()" name="" class="">
+                        <option value="1">1</option>
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                        <option value="4000">4000</option>
+                    </select>
+
                 </div>
             </div>
         </div>
@@ -112,8 +115,7 @@ icon-database-refresh -->
                             </div>
                         </label>
                     </td>
-                    <td #td *ngFor="let col of row.getRowDefinition().colsSets"
-                     [innerHTML]="getHtmlOfCell(col,td)"
+                    <td #td *ngFor="let col of row.getRowDefinition().colsSets" [innerHTML]="getHtmlOfCell(col,td)"
                         [class.hide]="!col.visible">
                     </td>
                 </tr>

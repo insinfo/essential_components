@@ -185,7 +185,9 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   }
 
   @override
-  void ngAfterViewInit() {}
+  void ngAfterViewInit() {
+    drawPagination();
+  }
 
   @override
   void ngAfterChanges() {
