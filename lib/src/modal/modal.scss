@@ -1,4 +1,4 @@
-.modal-dialog {
+/*.modal-dialog {
   cursor: default;
 }
 
@@ -13,9 +13,7 @@
 .modal-backdrop.show {
   opacity: 0.15;
 }
-/*.modal-backdrop.fade {
-  opacity: 0;
-}*/
+
 
 .modal-backdrop {
   position: fixed;
@@ -40,7 +38,7 @@
   outline: 0;
   overflow: auto;
   cursor: pointer;
-  /*pointer-events: none;*/
+  
 }
 
 .fade {
@@ -101,5 +99,10 @@
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   //padding: 1.25rem;
+  padding: 0;
+}
+*/
+
+.modal-body { 
   padding: 0;
 }

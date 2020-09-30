@@ -172,3 +172,10 @@ and fix issues
 # 1.2.6
 
 - fix bugs on EsDynamicDataTableComponent
+
+# 1.3.7
+
+- implementation of news features on Essential Modal Component, size attribute and headerColor attribute and fix bugs
+```html
+<es-modal [showheader]="true" [size]="EssentialModalSize.largeSize" [headerColor]="EssentialModalHeaderColor.success">
+``` 

@@ -16,13 +16,9 @@ class TextMaskDirective {
   set textMask(Map<String, dynamic> val) {
     _textMask = val;
     if (_textMask != null) {
-      mask =
-          _textMask.containsKey('mask') ? _textMask['mask'] : 'xxx.xxx.xxx-xx';
-      maxLength = _textMask.containsKey('maxLength')
-          ? int.tryParse(_textMask['mask'].toString())
-          : mask?.length;
+      mask = _textMask.containsKey('mask') ? _textMask['mask'] : 'xxx.xxx.xxx-xx';
+      maxLength = _textMask.containsKey('maxLength') ? int.tryParse(_textMask['mask'].toString()) : mask?.length;
     }
-    print('TextMaskDirective set textMask$_textMask');
   }
 
   String mask = 'xxx.xxx.xxx-xx';
@@ -35,17 +31,14 @@ class TextMaskDirective {
 
   TextMaskDirective(this._el) {
     if (_textMask != null) {
-      mask =
-          _textMask.containsKey('mask') ? _textMask['mask'] : 'xxx.xxx.xxx-xx';
-      maxLength = _textMask.containsKey('maxLength')
-          ? int.tryParse(_textMask['mask'].toString())
-          : mask?.length;
+      mask = _textMask.containsKey('mask') ? _textMask['mask'] : 'xxx.xxx.xxx-xx';
+      maxLength = _textMask.containsKey('maxLength') ? int.tryParse(_textMask['mask'].toString()) : mask?.length;
     }
     lastTextSize = 0;
     inputElement = _el;
     inputElement.onInput.listen((e) {
       _onChange();
-      print(_textMask);
+      //print(_textMask);
     });
   }
 
@@ -58,8 +51,7 @@ class TextMaskDirective {
         if (text.length < lastTextSize) {
           if (mask[text.length] != escapeCharacter) {
             //inputElement.focus();
-            inputElement.setSelectionRange(
-                inputElement.value.length, inputElement.value.length);
+            inputElement.setSelectionRange(inputElement.value.length, inputElement.value.length);
             inputElement.select();
           }
         } else {
@@ -68,8 +60,7 @@ class TextMaskDirective {
             var position = text.length;
             position = position <= 0 ? 1 : position;
             if (position < mask.length - 1) {
-              if ((mask[position - 1] != escapeCharacter) &&
-                  (text[position - 1] != mask[position - 1])) {
+              if ((mask[position - 1] != escapeCharacter) && (text[position - 1] != mask[position - 1])) {
                 inputElement.value = _buildText(text);
               }
               if (mask[position] != escapeCharacter) {
@@ -79,8 +70,7 @@ class TextMaskDirective {
           }
 
           if (inputElement.selectionStart < inputElement.value.length) {
-            inputElement.setSelectionRange(
-                inputElement.value.length, inputElement.value.length);
+            inputElement.setSelectionRange(inputElement.value.length, inputElement.value.length);
             inputElement.select();
           }
         }
@@ -102,25 +92,4 @@ class TextMaskDirective {
     result += text[text.length - 1];
     return result;
   }
-
-  /*void _selectText(int start, int end) {
-    //inputElement.setSelectionRange(start, end);
-    if (window.getSelection != null) {
-      var selection = window.getSelection();
-      var range = document.createRange();
-      range.selectNodeContents(inputElement);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    } else {
-      print('Could not select text in node: Unsupported browser.');
-    }
-  }*/
-
-  /* bool _isNumeric(String s) {
-    if (s == null) {
-      return false;
-    }
-    // ignore: deprecated_member_use
-    return double.parse(s, (e) => null) != null;
-  }*/
 }

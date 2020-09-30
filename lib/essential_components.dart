@@ -94,3 +94,6 @@ export 'src/image/image.dart';
 
 // essential_recaptcha component
 export 'src/essential_recaptcha/essential_recaptcha.dart';
+
+//slide_loading
+export 'src/slide_loading/slide_loading.dart';

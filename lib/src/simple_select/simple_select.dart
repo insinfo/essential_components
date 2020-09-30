@@ -14,25 +14,11 @@ import 'simple_select_option.dart';
 
 @Component(
     selector: 'es-simple-select',
-    //changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: 'simple_select.html',
-    styleUrls: [
-      'simple_select.css',
-    ],
-    directives: [
-      formDirectives,
-      coreDirectives
-    ],
-    exports: [
-      StyleType
-    ])
-class EssentialSimpleSelectComponent
-    implements
-        ControlValueAccessor,
-        AfterViewInit,
-        AfterContentInit,
-        OnDestroy,
-        AfterChanges {
+    styleUrls: ['simple_select.css'],
+    directives: [formDirectives, coreDirectives],
+    exports: [StyleType])
+class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
   @ViewChild('inputEl')
   ButtonElement inputEl;
 
@@ -140,7 +126,6 @@ class EssentialSimpleSelectComponent
   @Input('disabledSelect')
   set disabledSelect(bool value) {
     _disabledSelect = value;
-    print('EssentialSimpleSelectComponent ${disabledSelect}');
   }
 
   bool get disabledSelect {
@@ -171,8 +156,7 @@ class EssentialSimpleSelectComponent
   }
 
   //contrutor
-  EssentialSimpleSelectComponent(
-      @Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
+  EssentialSimpleSelectComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
     color = StyleType.DEFAULT;
     // _changeDetector = changeDetector;
     // Replace the provider from above with this.
@@ -196,8 +180,7 @@ class EssentialSimpleSelectComponent
       }
     }
     //evento global de click
-    streamSubscriptionBodyOnCLick =
-        window.document.querySelector('body').onClick.listen(handleBodyOnCLick);
+    streamSubscriptionBodyOnCLick = window.document.querySelector('body').onClick.listen(handleBodyOnCLick);
   }
 
   //evento global de click
@@ -231,8 +214,7 @@ class EssentialSimpleSelectComponent
     }
 
     //aciona o NgModel bind
-    onChangeControlValueAccessor(itemSelected,
-        rawValue: itemSelected.toString());
+    onChangeControlValueAccessor(itemSelected, rawValue: itemSelected.toString());
 
     ///aciona o evento change
     _changeController.add(itemSelected);
@@ -246,11 +228,7 @@ class EssentialSimpleSelectComponent
   @override
   void onDisabledChanged(bool isDisabled) {}
   TouchFunction onTouchedControlValueAccessor = () {};
-  /*@HostListener('blur')
-  void touchHandler() {  
-    print("touchHandler"); 
-    onTouched();
-  }*/
+
   /// Set the function to be called when the control receives a touch event.
   @override
   void registerOnTouched(TouchFunction fn) {
@@ -258,9 +236,8 @@ class EssentialSimpleSelectComponent
   }
 
   //função a ser chamada para notificar e modificar o modelo vinculado pelo ngmodel
-  ChangeFunction<dynamic> onChangeControlValueAccessor =
-      (dynamic _, {String rawValue}) {
-    print('onChangeControlValueAccessor $_');
+  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {
+    //print('onChangeControlValueAccessor $_');
   };
 
   /// Set the function to be called when the control receives a change event.
@@ -272,22 +249,6 @@ class EssentialSimpleSelectComponent
   //**************** /FIM FUNÇÔES DO NGMODEL ControlValueAccessor ****************
 
   StreamSubscription ssControlValueChanges;
-
-  @override
-  void ngAfterViewInit() {
-    /* if (ngControl?.control != null) {
-      //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
-      ssControlValueChanges = ngControl.control.valueChanges.listen((value) {
-        print("ngControl.control.valueChanges $value");
-
-        //_changeDetector.markForCheck();
-      });
-    }*/
-  }
-  @override
-  void ngAfterChanges() {
-    //print("$_options");
-  }
 
   String getDisplayName(dynamic val) {
     if (val is String) {
@@ -313,30 +274,15 @@ class EssentialSimpleSelectComponent
   }
 
   void showDropdown(Event e) {
-    // var target = e.target as HtmlElement;
-    //var rect = target.getBoundingClientRect();
-    //print("${rect.top} ${rect.right} ${rect.bottom}, ${rect.left}");
-    //var parent = getScrollParent(target, false);
-    //print(parent.scrollTop);
-    // var p = (rect.top + parent.scrollTop) - 145;
-    //String position = "${p}px";
-    //print(position);
-    // dropdownMenu.style.top = position;
     e.stopPropagation();
-    //var dropdownmenu = target.nextElementSibling;
     closeAllSelect(dropdownMenu);
     toogleDrop();
   }
 
   //fecha todos os selects menos o que for passado por parametro
   void closeAllSelect([butThisOne]) {
-    dropdownMenu
-        ?.closest('body')
-        ?.querySelectorAll('div.dropdown-menu')
-        ?.forEach((ele) {
-      if (butThisOne == ele) {
-        //print('igual');
-      } else {
+    dropdownMenu?.closest('body')?.querySelectorAll('div.es-simple-select')?.forEach((ele) {
+      if (butThisOne != ele) {
         ele.classes.remove('show');
       }
     });
@@ -355,9 +301,7 @@ class EssentialSimpleSelectComponent
   HtmlElement getScrollParent(HtmlElement element, bool includeHidden) {
     var style = element.getComputedStyle();
     var excludeStaticParent = style.position == 'absolute';
-    var overflowRegex = includeHidden
-        ? RegExp('(auto|scroll|hidden)')
-        : RegExp('(auto|scroll)');
+    var overflowRegex = includeHidden ? RegExp('(auto|scroll|hidden)') : RegExp('(auto|scroll)');
 
     if (style.position == 'fixed') return document.body;
     for (var pare = element; (pare.parent != null);) {
@@ -366,8 +310,7 @@ class EssentialSimpleSelectComponent
       if (excludeStaticParent && style.position == 'static') {
         continue;
       }
-      if (overflowRegex.hasMatch(
-          style.overflow + style.overflowY + style.overflowX)) return pare;
+      if (overflowRegex.hasMatch(style.overflow + style.overflowY + style.overflowX)) return pare;
     }
 
     return document.body;

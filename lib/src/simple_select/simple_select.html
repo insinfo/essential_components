@@ -26,7 +26,7 @@
     [ngClass]="bgColor"
     
         data-toggle="dropdown" aria-expanded="false">{{inputText}}</a>
-    <div #dropdownMenu class="dropdown-menu open" style="max-height: 241px; overflow: hidden; min-height: 125px;">
+    <div #dropdownMenu class="es-simple-select dropdown-menu open" style="max-height: 241px; overflow: hidden; min-height: 125px;">
         <div class="bs-searchbox" *ngIf="showsearch">
             <input (click)="handleOnClickSearchbox($event)" #inputsearch (input)="handleOnInputSearchbox($event)"
                 type="text" class="form-control" autocomplete="off" [disabled]="disabledSelect">
