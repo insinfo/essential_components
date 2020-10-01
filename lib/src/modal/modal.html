@@ -1,8 +1,9 @@
 <div class="modal-backdrop fade show" (click)="closeDialog();" [hidden]="!showDialog"></div>
-<div class="modal fade show" tabindex="-1"   style="overflow: auto;padding-right: 17px; pointer-events: none;" [style.display]="showDialog ? 'block' : 'none'">
-    <div class="modal-dialog {{sizeClass}}">
+<div class="modal fade show" tabindex="-1" style="overflow: auto;padding-right: 17px; pointer-events: none;"
+    [style.display]="showDialog ? 'block' : 'none'">
+    <div class="modal-dialog {{sizeClass }}">
         <div class="modal-content">
-            <div *ngIf="showheader" class="modal-header {{sizeHeaderColorClass}}">
+            <div *ngIf="showheader" class="modal-header {{headerColorClass}}">
                 <h6 class="modal-title">{{title}}</h6>
                 <button (click)="closeDialog();" type="button" class="close" data-dismiss="modal">×</button>
             </div>
