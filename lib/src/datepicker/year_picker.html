@@ -5,27 +5,27 @@
       <div class="row">
         <button type="button"
                 class="btn btn-light btn-sm col-1"
-                (click)="$event.stopPropagation(); datePicker.move(-1)"
+                (click)="move($event,-1)"
                 tabindex="-1">
           <i class="fa fa-chevron-left"></i>
         </button>
         <button role="heading"
                 type="button"
                 class="btn btn-light btn-sm col-3"
-                (click)="$event.stopPropagation(); datePicker.toggleMode(-2)"
+                (click)="toggleMode($event,-2)"
                 tabindex="-1">
           <strong>{{dayTitle}}</strong>
         </button>
         <button role="heading"
                 type="button"
                 class="btn btn-light btn-sm col-7"
-                (click)="$event.stopPropagation(); datePicker.toggleMode(-1)"
+                (click)="toggleMode($event,-1)"
                 tabindex="-1">
           <strong>{{monthTitle}}</strong>
         </button>
         <button type="button"
                 class="btn btn-light btn-sm col-1"
-                (click)="$event.stopPropagation(); datePicker.move(1)"
+                (click)="move($event,1)"
                 tabindex="-1">
           <i class="fa fa-chevron-right"></i>
         </button>
@@ -41,7 +41,7 @@
               class="btn"
               [ngClass]="selectColor(dt)"
               [disabled]="dt.disabled"
-              (click)="$event.stopPropagation(); datePicker.select(dt.date)" tabindex="-1">
+              (click)="select($event,dt.date)" tabindex="-1">
         <span [class.font-weight-bold]="isCurrentRowSelected(dt)">{{dt.label}}</span>
       </button>
 

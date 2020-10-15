@@ -10,6 +10,19 @@ import 'date_picker.dart';
     directives: [coreDirectives],
     providers: [EsDatePickerComponent])
 class EsMonthPickerComponent {
+  void toggleMode(e, [num dir]) {
+    e.stopPropagation();
+    datePicker.toggleMode(dir);
+  }
+
+  void select(e, date) {
+    e.stopPropagation();
+    datePicker.select(date);
+  }
+
+  @Input()
+  String locale = 'pt_BR'; //en_US
+
   /// parent [EsDatePickerInnerComponent]
   EsDatePickerComponent datePicker;
 
@@ -28,12 +41,8 @@ class EsMonthPickerComponent {
   bool get isDataPickerMaxMode => datePicker.datePickerMode == maxMode;
   bool isCurrentRowSelected(DisplayedDate dt) => dt.current && !dt.selected;
 
-  Map<String, bool> selectColor(DisplayedDate dt) => {
-        'btn-primary': dt.selected,
-        'btn-light': !dt.selected,
-        'active': dt.current,
-        'disabled': dt.disabled
-      };
+  Map<String, bool> selectColor(DisplayedDate dt) =>
+      {'btn-primary': dt.selected, 'btn-light': !dt.selected, 'active': dt.current, 'disabled': dt.disabled};
 
   void refreshViewHandler() {
     var months = List<DisplayedDate>(12);

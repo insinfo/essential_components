@@ -13,6 +13,22 @@ class EsYearPickerComponent {
   /// container of the date-picker
   EsDatePickerComponent datePicker;
 
+  //$event.stopPropagation(); datePicker.move(1)
+  void move(event, [num dir]) {
+    event.stopPropagation();
+    datePicker.move(dir);
+  }
+
+  void toggleMode(event, [num dir]) {
+    event.stopPropagation();
+    datePicker.toggleMode(dir);
+  }
+
+  void select(event, date) {
+    event.stopPropagation();
+    datePicker.select(date);
+  }
+
   @Input()
   String locale = 'pt_BR';
 
@@ -26,24 +42,17 @@ class EsYearPickerComponent {
   List<List<DisplayedDate>> rows = <List<DisplayedDate>>[];
 
   /// gets the value of the starting year of the viewed group
-  int getStartingYear(num year) =>
-      ((year - 1) ~/ datePicker.yearRange) * datePicker.yearRange + 1;
+  int getStartingYear(num year) => ((year - 1) ~/ datePicker.yearRange) * datePicker.yearRange + 1;
 
-  Map<String, bool> selectColor(DisplayedDate dt) => {
-        'btn-primary': dt.selected,
-        'btn-light': !dt.selected,
-        'active': dt.current,
-        'disabled': dt.disabled
-      };
+  Map<String, bool> selectColor(DisplayedDate dt) =>
+      {'btn-primary': dt.selected, 'btn-light': !dt.selected, 'active': dt.current, 'disabled': dt.disabled};
   bool isCurrentRowSelected(DisplayedDate dt) => dt.current && !dt.selected;
 
   void refreshViewHandler() {
     var years = List<DisplayedDate>(datePicker.yearRange);
     DateTime date;
     var initDate = datePicker.initDate;
-    for (var i = 0, start = getStartingYear(initDate.year);
-        i < datePicker.yearRange;
-        i++) {
+    for (var i = 0, start = getStartingYear(initDate.year); i < datePicker.yearRange; i++) {
       date = DateTime(start + i, 0, 1);
       years[i] = datePicker.createDateObject(date, datePicker.formatYear);
     }

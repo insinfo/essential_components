@@ -5,7 +5,7 @@
 <div *ngIf="displaytype == 'select'" class="inputIconSelect">
 </div>
 
-<a *ngIf="displaytype == 'button'" class="btn bg-indigo-400 dropdown-toggle " (click)="showDropdown($event);"
+<a *ngIf="displaytype == 'button'" class="btn bg-indigo-400 dropdown-toggle " (click)="showDropdown($event)"
     data-toggle="dropdown" aria-expanded="false">{{inputText}}</a>
 
 <div #dropdownMenu class="dropdown-menu" *ngIf="options != null">
@@ -18,11 +18,15 @@
 </div>
 -->
 <div class="btn-group bootstrap-select select open">
-    <button *ngIf="displaytype == 'select'" #inputEl type="button" class="btn2 dropdown-toggle btn-default"
-        (click)="showDropdown($event);" (focus)="inputFocusAction" [disabled]="disabledSelect">
+    <button 
+    [disabled]="disabledSelect" 
+    (click)="showDropdown($event)" 
+    (focus)="inputFocusAction"
+    *ngIf="displaytype == 'select'" #inputEl type="button" class="btn2 dropdown-toggle btn-default"
+         >
         <span class="filter-option ellipsis">{{inputText}}</span>
     </button>
-<a *ngIf="displaytype == 'button'" class="{{ styleClass }}" (click)="showDropdown($event);"
+<a *ngIf="displaytype == 'button'" class="{{ styleClass }}" (click)="showDropdown($event)"
     [ngClass]="bgColor"
     
         data-toggle="dropdown" aria-expanded="false">{{inputText}}</a>

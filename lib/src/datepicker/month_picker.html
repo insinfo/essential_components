@@ -5,7 +5,7 @@
       <div class="row">
         <button type="button"
                 class="btn btn-light btn-sm col-4"
-                (click)="$event.stopPropagation(); datePicker.toggleMode(-1)"
+                (click)="toggleMode($event, -1)"
                 [disabled]="isDataPickerMaxMode"
                 [class.disable]="isDataPickerMaxMode"
                 tabindex="-1">
@@ -13,7 +13,7 @@
         </button>
         <button type="button"
                 class="btn btn-light btn-sm col-8"
-                (click)="$event.stopPropagation(); datePicker.toggleMode()"
+                (click)="toggleMode($event)"
                 [disabled]="isDataPickerMaxMode"
                 [class.disabled]="isDataPickerMaxMode"
                 tabindex="-1">
@@ -30,7 +30,7 @@
               class="btn col"
               [ngClass]="selectColor(dt)"
               [disabled]="dt.disabled"
-              (click)="$event.stopPropagation(); datePicker.select(dt.date)"
+              (click)="select($event,dt.date)"
               tabindex="-1">
         <span [class.font-weight-bold]="isCurrentRowSelected(dt)">{{dt.label}}</span>
       </button>
