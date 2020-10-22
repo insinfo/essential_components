@@ -1,0 +1,16 @@
+<input #inputEl [type]="type" (change)="handleChange($event, inputEl)" [ngModel]="inputText"
+    (input)="inputKeypress(inputEl.value, inputEl.validity.valid, inputEl.validationMessage)" [tabindex]="inputTabIndex"
+    (focus)="inputFocusAction" (click)="openDialog()" readonly class="form-control" [style]="inputStyle">
+
+
+<es-modal #modal [showDialog]="showDialog" (close)="showDialog = false" [showheader]="showHeader" [title]="titleHeader">
+    <!--<es-data-table #dataTable [data]="data" (rowClick)="onRowClick($event)" [showCheckboxSelect]="false"
+        (dataRequest)="onRequestData($event)">
+    </es-data-table>-->
+    <div class="card-body">
+        <es-simple-treeview [imperativeMode]="true" [isMultiSelectable]="false"
+            (selectOne)="onTreeviewSelectNode($event)" [data]="data"></es-simple-treeview>
+    </div>
+
+
+</es-modal>

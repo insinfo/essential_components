@@ -15,7 +15,11 @@ import 'dart:html';
 /// var value = or(null, 1);
 /// var value = or(null, () => 1);
 /// ```
-dynamic or(value, defaultValue) => falsey(value) ? defaultValue is Function ? defaultValue() : defaultValue : value;
+dynamic or(value, defaultValue) => falsey(value)
+    ? defaultValue is Function
+        ? defaultValue()
+        : defaultValue
+    : value;
 
 /// Return true if `value` is "falsey":
 /// ```dart
@@ -44,6 +48,58 @@ bool falsey(value) => value == null || value == false || value == '' || value ==
 bool truthy(value) => !falsey(value);
 
 class Helper {
+  static String removerAcentos(String s) {
+    if (s == null) {
+      return s;
+    }
+    var map = <String, String>{
+      'â': 'a',
+      'Â': 'A',
+      'à': 'a',
+      'À': 'A',
+      'á': 'a',
+      'Á': 'A',
+      'ã': 'a',
+      'Ã': 'A',
+      'ê': 'e',
+      'Ê': 'E',
+      'è': 'e',
+      'È': 'E',
+      'é': 'e',
+      'É': 'E',
+      'î': 'i',
+      'Î': 'I',
+      'ì': 'i',
+      'Ì': 'I',
+      'í': 'i',
+      'Í': 'I',
+      'õ': 'o',
+      'Õ': 'O',
+      'ô': 'o',
+      'Ô': 'O',
+      'ò': 'o',
+      'Ò': 'O',
+      'ó': 'o',
+      'Ó': 'O',
+      'ü': 'u',
+      'Ü': 'U',
+      'û': 'u',
+      'Û': 'U',
+      'ú': 'u',
+      'Ú': 'U',
+      'ù': 'u',
+      'Ù': 'U',
+      'ç': 'c',
+      'Ç': 'C'
+    };
+    var result = s;
+    map.forEach((key, value) {
+      result = result.replaceAll(key, value);
+    });
+
+    return result;
+  }
+
   static String removeAllHtmlTags(String htmlText) {
     var exp = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);
     return htmlText.replaceAll(exp, '');

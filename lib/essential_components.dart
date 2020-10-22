@@ -97,3 +97,10 @@ export 'src/essential_recaptcha/essential_recaptcha.dart';
 
 //slide_loading
 export 'src/slide_loading/slide_loading.dart';
+
+//simple_treeview
+export 'src/simple_treeview/models/tree_view_base.dart';
+export 'src/simple_treeview/es_simple_treeview.dart';
+
+//select_tree_dialog
+export 'src/select_tree_dialog/select_tree_dialog.dart';

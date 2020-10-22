@@ -12826,6 +12826,7 @@ pre {
   }
 }
 
+
 .fancytree-container {
   list-style: none;
   white-space: nowrap;
@@ -12917,12 +12918,12 @@ img.fancytree-icon {
 
 .fancytree-loading .fancytree-expander:after, .fancytree-statusnode-wait .fancytree-icon:after {
   content: "\ed6c";
-  transition: all ease-in-out 0.15s;
+  //transition: all ease-in-out 0.15s;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
   .fancytree-loading .fancytree-expander:after, .fancytree-statusnode-wait .fancytree-icon:after {
-    transition: none;
+    //transition: none;
   }
 }
 
@@ -13053,7 +13054,7 @@ img.fancytree-icon {
   display: inline-block;
   cursor: pointer;
   border-radius: 0.1875rem;
-  transition: all ease-in-out 0.15s;
+  //transition: all ease-in-out 0.15s;
 
   > input {
     border: 0;
@@ -13065,7 +13066,7 @@ img.fancytree-icon {
 
 @media screen and (prefers-reduced-motion: reduce) {
   .fancytree-title {
-    transition: none;
+   // transition: none;
   }
 }
 
@@ -13121,7 +13122,7 @@ img.fancytree-icon {
   }
 
   tbody tr {
-    transition: all ease-in-out 0.15s;
+   // transition: all ease-in-out 0.15s;
 
     td:first-child {
       text-align: center;
@@ -13131,7 +13132,7 @@ img.fancytree-icon {
       background-color: transparent;
       color: inherit !important;
       padding: 0;
-      transition: none;
+     // transition: none;
     }
 
     &.fancytree-active, &.fancytree-focused {
@@ -13156,23 +13157,23 @@ img.fancytree-icon {
 
 @media screen and (prefers-reduced-motion: reduce) {
   .fancytree-ext-table tbody tr {
-    transition: none;
+   // transition: none;
   }
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
   .fancytree-ext-table tbody tr .fancytree-title {
-    transition: none;
+   // transition: none;
   }
 }
 
 .fancytree-treefocus .fancytree-ext-table tbody tr.fancytree-selected .fancytree-title {
-  transition: color ease-in-out 0.15s;
+ // transition: color ease-in-out 0.15s;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
   .fancytree-treefocus .fancytree-ext-table tbody tr.fancytree-selected .fancytree-title {
-    transition: none;
+    //@include: none;
   }
 }
 
@@ -13199,6 +13200,7 @@ img.fancytree-icon {
   -webkit-animation: rotation 1s linear infinite;
   animation: rotation 1s linear infinite;
 }
+
 
 .btn-ladda {
   transition: all cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s;

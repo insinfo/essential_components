@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="form-group form-group-feedback form-group-feedback-right">
+                <input #inputsearch 
+                (keydown.enter)="searchKeydownEnter(inputsearch)" 
+                autocomplete="new-password" type="text"
+                    class="form-control " placeholder="{{searchPlaceholder}}">
+                <div class="form-control-feedback ">
+                    <i class="text-muted icon-search4"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm" >
+            <div class="btn-toolbar ">
+                <div class="btn-group ">
+                    <button [hidden]="!isMultiSelectable" 
+                    (click)="selectAllToogleAction()" type="button" class="btn btn-flat legitRipple" >
+                        <i 
+                        [class.icon-checkbox-checked]="isSelectAll"
+                        [class.icon-checkbox-unchecked]="!isSelectAll"
+                        ></i>
+                    </button>
+                    <button (click)="expandAllToogleAction()" type="button" class="btn btn-flat legitRipple" >
+                        <i class="icon-menu-open2"
+                        [class.icon-menu-open2]="isExpandAll"
+                        [class.icon-menu-close]="!isExpandAll"
+                        ></i>
+                    </button>
+                    
+                    <button [hidden]="!isMultiSelectable"  
+                    (click)="unselectAllAction()" type="button" class="btn btn-flat legitRipple"
+                        title="Remover seleção">
+                        <i class="icon-diff-removed"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div #treeContainer class="tree-checkbox  ">
+    <ul *ngIf="imperativeMode == false" class="ui-fancytree fancytree-container fancytree-plain">
+        <template #recursiveList let-list>
+            <li *ngFor="let item of list; let i = index">
+                <span [hidden]="item.treeViewNodeFilter == false" [class.fancytree-node]="true"
+                    [class.fancytree-selected]="item.treeViewNodeIsSelected"
+                    [class.fancytree-has-children]="item.treeViewNodes.isNotEmpty "
+                     [class.fancytree-folder]="false"
+                    [class.fancytree-exp-c]="item.treeViewNodes.isNotEmpty "
+                    [class.fancytree-exp-n]="item.treeViewNodes.isNotEmpty == false"
+                    [class.fancytree-ico-ef]="item.treeViewNodeIsCollapse==false"
+                    [class.fancytree-ico-cf]="item.treeViewNodeIsCollapse==true">
+                    <span (click)="item.treeViewNodeIsCollapse=!item.treeViewNodeIsCollapse" role="button"
+                        class="fancytree-expander"></span>
+
+                    <span role="checkbox" class="fancytree-checkbox" [hidden]="!isMultiSelectable"
+                        (click)="multiSelectHandle(item)"></span>
+                    <span role="presentation" class="fancytree-icon"></span>
+                    <span class="fancytree-title"
+                        [class.bg-success]="item.treeViewNodeIsSelected && isMultiSelectable==false"
+                        (click)="oneSelectHandle(item)">{{item.treeViewNodeLabel}}</span>
+                </span>
+                <ul *ngIf="item.treeViewNodes?.isNotEmpty == true"
+                    [style.display]="item.treeViewNodeIsCollapse==false  ? 'block': 'none'" role="group">
+                    <template [ngTemplateOutlet]="recursiveList" [ngTemplateOutletValue]="item.treeViewNodes">
+                    </template>
+                </ul>
+            </li>
+        </template>
+        <template [ngTemplateOutlet]="recursiveList" [ngTemplateOutletValue]="list"></template>
+    </ul>
+</div>

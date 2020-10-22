@@ -1,0 +1,375 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Fancytree
+*
+*  Styles for fancytree_all.min.js - tree plugin for jQuery
+*
+* ---------------------------------------------------------------------------- */
+/*.fancytree-container {
+  list-style: none;
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  position: relative;
+}
+.fancytree-container:focus {
+  outline: 0;
+}
+.fancytree-container ul {
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0;
+}
+.ui-fancytree-disabled .fancytree-container {
+  opacity: 0.6;
+}
+
+.ui-fancytree-disabled .fancytree-container,
+.ui-fancytree-disabled .fancytree-title,
+.ui-fancytree-disabled .fancytree-expander {
+  cursor: default;
+}
+
+.ui-fancytree-disabled .fancytree-treefocus .fancytree-selected .fancytree-title {
+  background-color: #eee;
+  color: #333;
+}
+
+.fancytree-expander:after,
+.fancytree-icon:after,
+.fancytree-checkbox:after,
+.fancytree-drag-helper-img:after,
+.fancytree-drop-before:after,
+.fancytree-drop-after:after,
+.fancytree-loading .fancytree-expander:after,
+.fancytree-statusnode-wait .fancytree-icon:after {
+  font-family: "icomoon";
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fancytree-icon,
+.fancytree-custom-icon,
+.fancytree-expander {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 0.5rem;
+  margin-top: 0.37502rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.fancytree-checkbox {
+  vertical-align: top;
+  margin-top: 0.25002rem;
+  margin-left: 0.5rem;
+}
+
+img.fancytree-icon {
+  border: 0;
+}
+
+.fancytree-expander {
+  cursor: pointer;
+}
+.fancytree-exp-c .fancytree-expander:after {
+  content: "\e9c7";
+}
+.fancytree-exp-cl .fancytree-expander:after {
+  content: "\e9c7";
+}
+.fancytree-exp-cd .fancytree-expander:after,
+.fancytree-exp-cdl .fancytree-expander:after {
+  content: "\e9c7";
+}
+.fancytree-exp-e .fancytree-expander:after,
+.fancytree-exp-ed .fancytree-expander:after {
+  content: "\e9c5";
+}
+.fancytree-exp-el .fancytree-expander:after,
+.fancytree-exp-edl .fancytree-expander:after {
+  content: "\e9c5";
+}
+
+.fancytree-statusnode-error .fancytree-icon:after {
+  content: "\ed63";
+}
+
+.fancytree-loading .fancytree-expander,
+.fancytree-statusnode-wait .fancytree-icon {
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
+  text-align: center;
+  width: 1rem;
+  height: 1rem;
+}
+.fancytree-loading .fancytree-expander:after,
+.fancytree-statusnode-wait .fancytree-icon:after {
+  content: "\ed6c";
+  
+}
+@media screen and (prefers-reduced-motion: reduce) {
+  .fancytree-loading .fancytree-expander:after,
+  .fancytree-statusnode-wait .fancytree-icon:after {
+  
+  }
+}
+
+.fancytree-ico-c .fancytree-icon:after,
+.fancytree-ico-e .fancytree-icon:after {
+  content: "\ea1a";
+}
+
+.fancytree-has-children.fancytree-ico-c .fancytree-icon:after {
+  content: "\ea0f";
+}
+
+.fancytree-has-children.fancytree-ico-e .fancytree-icon:after {
+  content: "\ea11";
+}
+
+.fancytree-ico-cf .fancytree-icon:after,
+.fancytree-ico-ef .fancytree-icon:after {
+  content: "\ea3d";
+}
+
+.fancytree-has-children.fancytree-ico-cf .fancytree-icon:after {
+  content: "\ea41";
+}
+
+.fancytree-has-children.fancytree-ico-ef .fancytree-icon:after {
+  content: "\ea43";
+}
+
+.fancytree-checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 0.125rem solid #455a64;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  border-radius: 0.125rem;
+}
+.fancytree-checkbox:after {
+  content: "";
+  position: absolute;
+}
+.fancytree-partsel .fancytree-checkbox:after,
+.fancytree-radio .fancytree-selected .fancytree-checkbox:after {
+  content: "";
+  top: 0.1875rem;
+  left: 0.1875rem;
+  border: 0.3125rem solid;
+  border-color: inherit;
+  width: 0;
+  height: 0;
+}
+.fancytree-selected .fancytree-checkbox:after {
+  content: "\e600";
+  border: 0;
+  top: 0rem;
+  left: 0rem;
+}
+.fancytree-radio .fancytree-checkbox,
+.fancytree-radio .fancytree-checkbox:after {
+  border-radius: 50%;
+}
+
+.fancytree-drag-helper .fancytree-title {
+  padding-right: 2rem;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.fancytree-drag-helper-img:after {
+  position: absolute;
+  top: 50%;
+  margin-top: -0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+}
+
+.fancytree-drop-accept .fancytree-drag-helper-img:after {
+  content: "\ee73";
+  color: #4caf50;
+}
+
+.fancytree-drop-reject .fancytree-drag-helper-img:after {
+  content: "\ed63";
+  color: #f44336;
+}
+
+#fancytree-drop-marker.fancytree-drop-before,
+#fancytree-drop-marker.fancytree-drop-after {
+  width: 15rem;
+  border-top: 1px solid #999;
+  position: absolute !important;
+}
+
+.fancytree-drag-source {
+  opacity: 0.5;
+}
+
+.fancytree-drop-target.fancytree-drop-accept a {
+  background-color: #2196f3 !important;
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.fancytree-node {
+  display: inherit;
+  width: 100%;
+  position: relative;
+  margin-bottom: 1px;
+}
+
+.fancytree-title {
+  border: 0;
+  padding: 0.25rem 0.5rem;
+  margin-left: 0.625rem;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 0.1875rem;
+ 
+}
+@media screen and (prefers-reduced-motion: reduce) {
+  .fancytree-title {
+   
+  }
+}
+.fancytree-title > input {
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background-color: transparent;
+}
+.fancytree-selected .fancytree-title,
+.fancytree-active .fancytree-title {
+  background-color: #eee;
+  color: #333;
+}
+.fancytree-treefocus .fancytree-selected .fancytree-title {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+.sidebar:not(.sidebar-light) .fancytree-selected .fancytree-title,
+.sidebar:not(.sidebar-light) .fancytree-active .fancytree-title {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.sidebar:not(.sidebar-light) .fancytree-treefocus .fancytree-selected .fancytree-title {
+  background-color: #fff;
+  color: #333;
+}
+
+.fancytree-ext-table .fancytree-node {
+  display: inline-block;
+  width: auto;
+  margin: 0;
+}
+
+.fancytree-ext-table .fancytree-title {
+  display: inline;
+}
+
+.fancytree-ext-table.fancytree-container {
+  white-space: normal;
+}
+
+.fancytree-ext-table .fancytree-expander,
+.fancytree-ext-table .fancytree-icon,
+.fancytree-ext-table .fancytree-custom-icon {
+  margin-top: 0.09375rem;
+}
+
+.fancytree-ext-table .fancytree-checkbox {
+  margin: 0 auto;
+  float: none;
+}
+
+.fancytree-ext-table .uniform-checker {
+  display: block;
+  margin: 0 auto;
+}
+
+.fancytree-ext-table tbody tr {
+ 
+}
+@media screen and (prefers-reduced-motion: reduce) {
+  .fancytree-ext-table tbody tr {
+  
+  }
+}
+.fancytree-ext-table tbody tr td:first-child {
+  text-align: center;
+}
+.fancytree-ext-table tbody tr .fancytree-title {
+  background-color: transparent;
+  color: inherit !important;
+  padding: 0;
+ 
+}
+@media screen and (prefers-reduced-motion: reduce) {
+  .fancytree-ext-table tbody tr .fancytree-title {
+    
+  }
+}
+.fancytree-ext-table tbody tr.fancytree-focused,
+.fancytree-ext-table tbody tr.fancytree-active {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+.fancytree-ext-table tbody tr.fancytree-selected {
+  background-color: #2196f3;
+  color: #fff;
+}
+.fancytree-ext-table tbody tr.fancytree-selected .fancytree-checkbox,
+.fancytree-ext-table tbody tr.fancytree-selected .uniform-checker span {
+  color: #fff;
+  border-color: #fff;
+}
+.fancytree-ext-table tbody tr.fancytree-selected .fancytree-title {
+  background-color: transparent;
+}
+.fancytree-treefocus .fancytree-ext-table tbody tr.fancytree-selected .fancytree-title {
+
+}
+@media screen and (prefers-reduced-motion: reduce) {
+  .fancytree-treefocus .fancytree-ext-table tbody tr.fancytree-selected .fancytree-title {
+    
+  }
+}
+
+.fancytree-ext-childcounter .fancytree-childcounter {
+  position: absolute;
+  right: 0;
+  top: 0.25rem;
+  color: #999;
+}
+
+.fancytree-helper-hidden {
+  display: none;
+}
+
+.fancytree-helper-indeterminate-cb {
+  color: #777;
+}
+
+.fancytree-helper-disabled {
+  color: #333;
+}
+
+.fancytree-helper-spin {
+  //-webkit-animation: rotation 1s linear infinite;
+  //animation: rotation 1s linear infinite;
+}*/
