@@ -6,12 +6,7 @@ import 'package:example/src/utils/highlighting_js.dart';
     selector: 'dynamic-tabs-component',
     styleUrls: ['dynamic_tabs_component.css'],
     templateUrl: 'dynamic_tabs_component.html',
-    directives: [
-      coreDirectives,
-      esDynamicTabsDirectives,
-      EsRadioButtonDirective,
-      bsDropdownDirectives
-    ],
+    directives: [coreDirectives, esDynamicTabsDirectives, EsRadioButtonDirective, esDropdownDirectives],
     exports: [],
     providers: [])
 class DynamicTabsComponent implements OnInit {

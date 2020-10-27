@@ -34,10 +34,10 @@ class EsTabsxComponents implements OnInit, AfterContentInit {
   @Input()
   String type;
 
-  Map get navTypeMap =>
-      {'flex-column': vertical, 'nav-justified': justified, 'nav-tabs': type == 'tabs', 'nav-pills': type == 'pills'};
+  /*Map get navTypeMap =>
+      {'flex-column': vertical, 'nav-justified': justified, 'nav-tabs': type == 'tabs', 'nav-pills': type == 'pills'};*/
 
-  Map tabTypeMap(EsTabxDirective tab) => {'active': tab.active, 'disabled': tab.disabled};
+  //Map tabTypeMap(EsTabxDirective tab) => {'active': tab.active, 'disabled': tab.disabled};
 
   /// List of sub tabs
   @ContentChildren(EsTabxDirective)

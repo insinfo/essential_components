@@ -1,6 +1,8 @@
-<ul class="nav nav-tabs-highlight" [ngClass]="navTypeMap" (click)="$event.preventDefault()">
-    <li *ngFor="let tab of tabs" class="nav-item" [ngClass]="tabTypeMap(tab)">
-        <a href class="nav-link" [ngClass]="tabTypeMap(tab)" (click)="activateTab(tab)">
+<ul class="nav nav-tabs-highlight" [class.flex-column]="vertical" [class.nav-justified]="justified"
+    [class.nav-tabs]="type == 'tabs'" [class.nav-pills]="type == 'pills'" (click)="$event.preventDefault()">
+  
+    <li *ngFor="let tab of tabs" class="nav-item" [class.active]="tab.active" [class.disabled]="tab.disabled">
+        <a href class="nav-link" [class.active]="tab.active" [class.disabled]="tab.disabled" (click)="activateTab(tab)">
             {{tab.header}}
             <template [ngTemplateOutlet]="tab.headerTemplate?.templateRef"></template>
         </a>

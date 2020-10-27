@@ -13,7 +13,7 @@ import 'package:example/src/utils/highlighting_js.dart';
       coreDirectives,
       esDynamicTabsDirectives,
       EsRadioButtonDirective,
-      bsDropdownDirectives,
+      esDropdownDirectives,
       EssentialDropdownDialogComponent
     ],
     exports: [],
