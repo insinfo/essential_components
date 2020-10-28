@@ -173,7 +173,6 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   //@HostListener('change', ['\$event.target.value'])
   @visibleForTemplate
   void handleChange(Event event, InputElement element) {
-    //print('handleChange: ${element.value}');
     inputChange(
       element.value,
       element.validity.valid,
@@ -250,12 +249,14 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   //**************** DataTable Area ****************
   IDataTableRender itemSelected;
   void onRowClick(IDataTableRender selected) {
+    // print('select dialog onRowClick');
+    closeDialog();
+
     itemSelected = selected;
     _changeController.add(itemSelected);
     //seta o ngModel
     onChangeControlValueAccessor(itemSelected, rawValue: '');
 
-    closeDialog();
     fillInputFromIDataTableRender(selected);
   }
 
@@ -271,6 +272,12 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
       });
     }
   }
+
+  @Input()
+  int defaultItemsPerPage = 10;
+
+  @Input()
+  bool disabledBackdropClick = true;
 
   Future<void> onRequestData(DataTableFilter dataTableFilter) async {
     _dataRequest.add(dataTableFilter);

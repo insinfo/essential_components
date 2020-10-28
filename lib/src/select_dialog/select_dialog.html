@@ -11,11 +11,13 @@
     >
 
 
-<es-modal #modal [showDialog]="showDialog" (close)="showDialog = false" 
+<es-modal #modal [disabledBackdropClick]="disabledBackdropClick"
+ [showDialog]="showDialog" (close)="showDialog = false" 
 [showheader]="showHeader" 
 [title]="titleHeader"
 >
-    <es-data-table #dataTable [data]="data" (rowClick)="onRowClick($event)" [showCheckboxSelect]="false"
+    <es-data-table #dataTable [defaultItemsPerPage]="defaultItemsPerPage" [data]="data" 
+    (rowClick)="onRowClick($event)" [showCheckboxSelect]="false"
         (dataRequest)="onRequestData($event)">
     </es-data-table>
 </es-modal>

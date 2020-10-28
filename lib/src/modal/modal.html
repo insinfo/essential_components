@@ -1,6 +1,6 @@
-<div class="modal-backdrop fade show" (click)="closeDialog()" [hidden]="!showDialog"></div>
-<div class="modal fade show" tabindex="-1" style="overflow: auto;padding-right: 17px; pointer-events: none;"
-    [style.display]="showDialog ? 'block' : 'none'">
+<div class="modal-backdrop fade show" (click)="closeDialog()" [hidden]="inputShowDialog == false"></div>
+<div #currentModal class="essentialModal modal fade show" [attr.data-status]="inputShowDialog" tabindex="-1" [hidden]="inputShowDialog == false"
+    [style.pointer-events]="disabledBackdropClick == true ">
     <div class="modal-dialog {{sizeClass }}">
         <div class="modal-content">
             <div *ngIf="showheader" class="modal-header {{headerColorClass}}">

@@ -3,19 +3,20 @@ import 'dart:html' as html;
 import 'package:essential_components/src/core/hash.dart';
 
 class DataTableRow {
-  static DataTableRow instance;
+  //static DataTableRow instance;
+  dynamic itemInstance;
   List<DataTableColumn> colsSets;
   DataTableRow() {
     colsSets = <DataTableColumn>[];
   }
 
-  static DataTableRow getInstance() {
+  /*static DataTableRow getInstance() {
     if (instance == null) {
       return DataTableRow();
     } else {
       return instance;
     }
-  }
+  }*/
 
   void addSet(DataTableColumn colSet) {
     colsSets.add(colSet);

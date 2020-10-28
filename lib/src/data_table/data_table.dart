@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:html';
+import 'dart:html' as html;
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:angular/security.dart';
@@ -25,9 +25,7 @@ import 'data_table_utils.dart';
 @Component(
   selector: 'es-data-table',
   templateUrl: 'data_table.html',
-  styleUrls: [
-    'data_table.css',
-  ],
+  styleUrls: ['data_table.css'],
   pipes: [commonPipes],
   directives: [
     formDirectives,
@@ -38,30 +36,37 @@ import 'data_table_utils.dart';
 //A Material Design Data table component for AngularDart
 class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit {
   @ViewChild('tableElement') //HtmlElement
-  TableElement tableElement;
+  html.TableElement tableElement;
 
   @ViewChild('divNoContent')
-  DivElement divNoContent;
+  html.DivElement divNoContent;
 
+  @ViewChild('tbody')
+  html.HtmlElement tbody;
+
+  @Input()
   DataTableFilter dataTableFilter = DataTableFilter();
 
+  @Input()
+  set defaultItemsPerPage(int v) => dataTableFilter?.limit = v;
+
   @ViewChild('inputSearchElement')
-  InputElement inputSearchElement;
+  html.InputElement inputSearchElement;
 
   @ViewChild('itemsPerPageElement')
-  SelectElement itemsPerPageElement;
+  html.SelectElement itemsPerPageElement;
 
   @ViewChild('paginateContainer')
-  HtmlElement paginateContainer;
+  html.HtmlElement paginateContainer;
 
   @ViewChild('paginateDiv')
-  HtmlElement paginateDiv;
+  html.HtmlElement paginateDiv;
 
   @ViewChild('paginatePrevBtn')
-  HtmlElement paginatePrevBtn;
+  html.HtmlElement paginatePrevBtn;
 
   @ViewChild('paginateNextBtn')
-  HtmlElement paginateNextBtn;
+  html.HtmlElement paginateNextBtn;
 
   String _orderDir = 'asc';
   //bool _isTitlesRendered = false;
@@ -120,9 +125,6 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     return showCheckBoxToSelectRow;
   }
 
-  RList<IDataTableRender> _data;
-  RList<IDataTableRender> selectedItems = RList<IDataTableRender>();
-
   @Input()
   String itensPerPageInputLabel = 'Exibir:';
 
@@ -144,21 +146,46 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   @Input()
   String columnVisibilityButtonTitle = 'Visibilidade de colunas';
 
+  List<DataTableRow> innerData = <DataTableRow>[];
+  //RList<IDataTableRender> inputData;
+  RList<IDataTableRender> selectedItems = RList<IDataTableRender>();
+
   @Input()
   set data(RList<IDataTableRender> data) {
-    _data = data;
+    totalRecords = data.totalRecords;
+    innerData = toDataTableRow(data);
   }
 
-  RList<IDataTableRender> get data {
-    return _data;
+  List<DataTableRow> toDataTableRow(RList<IDataTableRender> input) {
+    var r = innerData = <DataTableRow>[];
+    if (input != null) {
+      input.forEach((element) {
+        var row = element.getRowDefinition();
+        row.itemInstance = element;
+        innerData.add(row);
+      });
+    }
+    return r;
   }
 
-  int get totalRecords {
-    if (_data != null) {
-      return _data.totalRecords;
+  RList<IDataTableRender> toIDataTableRender(List<DataTableRow> input) {
+    var r = RList<IDataTableRender>();
+    if (input != null) {
+      input.forEach((element) {
+        innerData.add(element.itemInstance);
+      });
+    }
+    return r;
+  }
+
+  int totalRecords = 0;
+
+  /* int get totalRecords {
+    if (innerData != null) {
+      return inputData.totalRecords;
     }
     return 0;
-  }
+  }*/
 
   int _currentPage = 1;
   final int _btnQuantity = 5;
@@ -169,7 +196,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
 
   final DomSanitizationService sanitizer;
   //sanitiza o HTML da celula
-  SafeHtml getHtmlOfCell(DataTableColumn dataTableColumn, TableCellElement cellElement) {
+  SafeHtml getHtmlOfCell(DataTableColumn dataTableColumn, html.TableCellElement cellElement) {
     return sanitizer.bypassSecurityTrustHtml(formatCell(dataTableColumn, cellElement: cellElement));
   }
 
@@ -179,7 +206,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   void handleSearchInputKeypress(e) {
     //e.preventDefault();
     e.stopPropagation();
-    if (e.keyCode == KeyCode.ENTER) {
+    if (e.keyCode == html.KeyCode.ENTER) {
       onSearch();
     }
   }
@@ -196,15 +223,14 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   }
 
   Future<void> toXLSX() async {
-    if (_data != null) {
-      if (_data.isNotEmpty) {
+    if (innerData != null) {
+      if (innerData.isNotEmpty) {
         var simplexlsx = SimpleXLSX();
         simplexlsx.sheetName = 'sheet';
 
         //adiciona os dados
         var idx = 0;
-        _data.forEach((item) {
-          var col = item.getRowDefinition();
+        innerData.forEach((col) {
           if (idx == 0) {
             var collsForExport = col.colsSets.where((i) => i.export).toList();
             //adiciona os titulos
@@ -228,8 +254,8 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   }
 
   List<DataTableColumn> get columnTitles {
-    if (_data != null && _data.isNotEmpty) {
-      var columnsTitles = _data[0].getRowDefinition();
+    if (innerData != null && innerData.isNotEmpty) {
+      var columnsTitles = innerData[0];
       return columnsTitles.colsSets;
     }
     return null;
@@ -237,8 +263,8 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
 
   void changeVisibilityOfCol(DataTableColumn col) {
     var visible = !col.visible;
-    _data.forEach((row) {
-      row.getRowDefinition().colsSets.forEach((column) {
+    innerData.forEach((row) {
+      row.colsSets.forEach((column) {
         if (column.title == col.title) {
           column.visible = visible;
         }
@@ -247,7 +273,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   }
 
   String formatCell(DataTableColumn dataTableColumn,
-      {bool disableLimit = false, bool stripHtml = false, TableCellElement cellElement}) {
+      {bool disableLimit = false, bool stripHtml = false, html.TableCellElement cellElement}) {
     var tdContent = '';
     if (dataTableColumn.customRender == null) {
       switch (dataTableColumn.type) {
@@ -324,7 +350,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
             if (stripHtml) {
               tdContent = src;
             } else {
-              var img = ImageElement();
+              var img = html.ImageElement();
               img.src = src;
               img.height = 40;
               tdContent = img.outerHtml;
@@ -400,7 +426,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
             idx = loopEnd - btnQuantity;
           }
           while (idx < loopEnd) {
-            var link = Element.tag('a');
+            var link = html.Element.tag('a');
             link.classes.add('paginate_button');
             if (idx == currentPage) {
               link.classes.add('current');
@@ -425,7 +451,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
           while (idx < loopEnd) {
             idx++;
             if (idx <= totalPages) {
-              var link = Element.tag('a');
+              var link = html.Element.tag('a');
               link.classes.add('paginate_button');
               if (idx == currentPage) {
                 link.classes.add('current');
@@ -447,7 +473,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     }
   }
 
-  void prevPage(Event event) {
+  void prevPage(html.Event event) {
     if (_currentPage == 0) {
       return;
     }
@@ -457,7 +483,7 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     }
   }
 
-  void nextPage(Event event) {
+  void nextPage(html.Event event) {
     if (_currentPage == numPages()) {
       return;
     }
@@ -480,8 +506,8 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   @Output()
   Stream<IDataTableRender> get rowClick => _rowClickRequest.stream;
 
-  void onRowClick(IDataTableRender item) {
-    _rowClickRequest.add(item);
+  void onRowClick(DataTableRow item) {
+    _rowClickRequest.add(item.itemInstance);
   }
 
   final _searchRequest = StreamController<DataTableFilter>();
@@ -536,26 +562,26 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
     //event.target.parent.classes.toggle('checked');
     var cbs = tableElement.querySelectorAll('input[cbselect=true]');
     if (event.target.checked) {
-      for (CheckboxInputElement item in cbs) {
+      for (html.CheckboxInputElement item in cbs) {
         item.checked = true;
       }
       selectedItems.clear();
-      selectedItems.addAll(_data);
+      selectedItems.addAll(toIDataTableRender(innerData));
     } else {
       selectedItems.clear();
-      for (CheckboxInputElement item in cbs) {
+      for (html.CheckboxInputElement item in cbs) {
         item.checked = false;
       }
     }
   }
 
   //quando selecionar um item
-  void onSelect(MouseEvent event, IDataTableRender item) {
+  void onSelect(html.MouseEvent event, DataTableRow item) {
     event.stopPropagation();
-    CheckboxInputElement cb = event.target;
+    html.CheckboxInputElement cb = event.target;
     if (cb.checked) {
       if (selectedItems.contains(item) == false) {
-        selectedItems.add(item);
+        selectedItems.add(item.itemInstance);
       }
     } else {
       if (selectedItems.contains(item)) {
@@ -565,11 +591,11 @@ class EssentialDataTableComponent implements OnInit, AfterChanges, AfterViewInit
   }
 
   //abre ou fecha menu do dataTable
-  void toogleMenu(HtmlElement element) {
+  void toogleMenu(html.HtmlElement element) {
     element.style.display = element.style.display != 'block' ? 'block' : 'none';
   }
 
-  void onOrder(DataTableColumn dataTableColumn, TableCellElement cellHeader) {
+  void onOrder(DataTableColumn dataTableColumn, html.TableCellElement cellHeader) {
     if (enableOrdering == true) {
       if (_orderDir == 'asc') {
         _orderDir = 'desc';

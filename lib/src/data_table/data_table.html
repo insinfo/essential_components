@@ -58,10 +58,10 @@ icon-database-refresh -->
                     <label>
                         <span>{{itensPerPageInputLabel}}</span>
                     </label>
-                    <select #itemsPerPageElement (change)="onLimitChange()" name="" class="">
+                    <select #itemsPerPageElement (change)="onLimitChange()" >
                         <option value="1">1</option>
                         <option value="5">5</option>
-                        <option value="10" selected>10</option>
+                        <option selected value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
                         <option value="100">100</option>
@@ -81,8 +81,8 @@ icon-database-refresh -->
             <div class="line"></div>
             <div class="subline inc"></div>
             <div class="subline dec"></div>
-        </div>-->
-        <table *ngIf="data != null && data.isNotEmpty" #tableElement class="table datatable-basic dataTable no-footer"
+        </div>*ngIf="innerData.isNotEmpty"-->
+        <table  #tableElement class="table datatable-basic dataTable no-footer"
             role="grid">
             <thead *ngIf="columnTitles != null && showTableHeader">
                 <tr>
@@ -103,8 +103,9 @@ icon-database-refresh -->
                         {{title.title}}</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr *ngFor="let row of data" (click)="onRowClick(row)">
+            <tbody #tbody>
+                <!---->
+                <tr *ngFor="let row of innerData" (click)="onRowClick(row)">
                     <td *ngIf="showCheckBoxToSelectRow" class="datatable-first-col">
                         <label class="form-check-label">
                             <div class="uniform-checker">
@@ -115,7 +116,8 @@ icon-database-refresh -->
                             </div>
                         </label>
                     </td>
-                    <td #td *ngFor="let col of row.getRowDefinition().colsSets" [innerHTML]="getHtmlOfCell(col,td)"
+                    <!--[innerHTML]="getHtmlOfCell(col,td)"-->
+                    <td #td *ngFor="let col of row.colsSets" [esinnerhtml]="col.value"
                         [class.hide]="!col.visible">
                     </td>
                 </tr>
