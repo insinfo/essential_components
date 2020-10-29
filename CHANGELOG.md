@@ -179,3 +179,6 @@ and fix issues
 ```html
 <es-modal [showheader]="true" [size]="EssentialModalSize.largeSize" [headerColor]="EssentialModalHeaderColor.success">
 ``` 
+# 1.7.13
+
+- fix bugs of dataTable that caused redraw
