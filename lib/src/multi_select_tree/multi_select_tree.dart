@@ -15,7 +15,7 @@ import 'multi_select_tree_node/multi_select_tree_node.dart';
     providers: [TreeService])
 class MultiSelectTreeComponent implements OnInit, OnDestroy {
   final TreeService _treeService;
-  MultiSelectTreeComponent(this._treeService) {}
+  MultiSelectTreeComponent(this._treeService);
 
   // ignore: prefer_collection_literals
   List<MultiSelectTreeNode> rootNodeList = List<MultiSelectTreeNode>();
