@@ -36,7 +36,6 @@ class EsSimpleSelectOptionComponent {
   @Input()
   set disable(dynamic ds) {
     _styleClass = 'dropdown-item disable';
-    // print('isdiable ${ds}');
   }
 
   String get text {

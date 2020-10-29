@@ -7,9 +7,7 @@ import 'toggle.dart';
 import 'menu.dart';
 
 class AutoClose {
-  static const ALWAYS = 'always',
-      DISABLED = 'disabled',
-      OUTSIDE_CLICK = 'outsideClick';
+  static const ALWAYS = 'always', DISABLED = 'disabled', OUTSIDE_CLICK = 'outsideClick';
 }
 
 @Directive(selector: 'es-dropdown, .dropdown')
@@ -57,7 +55,6 @@ class EsDropdownDirective implements OnDestroy, OnInit, AfterContentInit {
   /// if `true` the dropdown will be visible
   @Input()
   set isOpen(value) {
-    //print('EsDropdownDirective@set isOpen $value');
     _isOpen = value ?? false;
 
     if (isOpen) {
@@ -145,9 +142,7 @@ class EsDropdownDirective implements OnDestroy, OnInit, AfterContentInit {
       isOpen = false;
       return;
     }
-    if (keyboardNav &&
-        isOpen &&
-        (event.which == html.KeyCode.UP || event.which == html.KeyCode.DOWN)) {
+    if (keyboardNav && isOpen && (event.which == html.KeyCode.UP || event.which == html.KeyCode.DOWN)) {
       event.preventDefault();
       event.stopPropagation();
       focusDropdownEntry(event.which);
@@ -155,7 +150,6 @@ class EsDropdownDirective implements OnDestroy, OnInit, AfterContentInit {
   }
 
   void _handleClick(e) {
-    // print('EsDropdownDirective@handleClick $e');
     if (isOpen) {
       isOpen = false;
     }
@@ -164,7 +158,6 @@ class EsDropdownDirective implements OnDestroy, OnInit, AfterContentInit {
   //init events
   @override
   void ngOnInit() {
-    // print('EsDropdownDirective@ngOnInit');
     _closeDropdownStSub = html.window.onClick.listen(_handleClick);
     _keybindFilterStSub = html.window.onKeyDown.listen(_handleKeyDown);
   }
@@ -172,7 +165,6 @@ class EsDropdownDirective implements OnDestroy, OnInit, AfterContentInit {
   /// removes the dropdown from the DOM
   @override
   void ngOnDestroy() {
-    //print('EsDropdownDirective@ngOnDestroy');
     if (dropdownAppendToBody && truthy(menuEl)) {
       menuEl.remove();
     }

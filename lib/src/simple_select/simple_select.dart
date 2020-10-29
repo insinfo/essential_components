@@ -236,9 +236,7 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterConte
   }
 
   //função a ser chamada para notificar e modificar o modelo vinculado pelo ngmodel
-  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {
-    //print('onChangeControlValueAccessor $_');
-  };
+  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {};
 
   /// Set the function to be called when the control receives a change event.
   @override

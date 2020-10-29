@@ -175,7 +175,6 @@ class EssentialSelectTreeDialogComponent implements ControlValueAccessor, AfterV
   //@HostListener('change', ['\$event.target.value'])
   @visibleForTemplate
   void handleChange(Event event, InputElement element) {
-    //print('handleChange: ${element.value}');
     inputChange(
       element.value,
       element.validity.valid,
@@ -193,7 +192,7 @@ class EssentialSelectTreeDialogComponent implements ControlValueAccessor, AfterV
   void inputKeypress(newValue, valid, validationMessage) {
     inputText = newValue;
     _keypressController.add(newValue);
-    //print('inputKeypress: ${inputText}');
+
     //onChangeControlValueAccessor((newValue == '' ? null : newValue), rawValue: newValue);
   }
 
@@ -206,7 +205,7 @@ class EssentialSelectTreeDialogComponent implements ControlValueAccessor, AfterV
   TouchFunction onTouchedControlValueAccessor = () {};
   /*@HostListener('blur')
   void touchHandler() {  
-    print('touchHandler'); 
+
     onTouched();
   }*/
   /// Set the function to be called when the control receives a touch event.
@@ -216,9 +215,7 @@ class EssentialSelectTreeDialogComponent implements ControlValueAccessor, AfterV
   }
 
   //função a ser chamada para notificar e modificar o modelo vinculado pelo ngmodel
-  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {
-    //print('onChangeControlValueAccessor $_');
-  };
+  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {};
 
   /// Set the function to be called when the control receives a change event.
   @override
@@ -235,7 +232,7 @@ class EssentialSelectTreeDialogComponent implements ControlValueAccessor, AfterV
     /* if (ngControl?.control != null) {
       //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
       ssControlValueChanges = ngControl.control.valueChanges.listen((value) {
-        print('ngControl.control.valueChanges $value');
+      
 
         //_changeDetector.markForCheck();
       });

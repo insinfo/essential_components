@@ -38,7 +38,6 @@ class TextMaskDirective {
     inputElement = _el;
     inputElement.onInput.listen((e) {
       _onChange();
-      //print(_textMask);
     });
   }
 

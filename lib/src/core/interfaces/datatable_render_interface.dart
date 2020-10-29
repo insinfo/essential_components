@@ -23,7 +23,7 @@ class DataTableRow {
   }
 }
 
-enum DataTableColumnType { img, text, date, dateTime, boolLabel, brasilCurrency, badge, link }
+enum DataTableColumnType { img, text, date, dateTime, boolLabel, brasilCurrency, badge, link, html }
 
 //primaryDisplayValue é o Valor de exibição principal
 //a ser exibido quando não for possivel exibir mais de uma coluna
@@ -43,6 +43,7 @@ class DataTableColumn {
   bool visible;
   bool visibleForPrint;
   bool export;
+  html.TableCellElement tdElement;
 
   void fillFromDataTableColumn(DataTableColumn col, {ignoreValue = true}) {
     key = col.key;

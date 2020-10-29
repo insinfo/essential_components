@@ -52,7 +52,6 @@ class EsMonthPickerComponent {
     for (var i = 0; i < 12; i++) {
       date = DateTime(year, i + 1, 1);
       months[i] = datePicker.createDateObject(date, datePicker.formatMonth);
-      //print("refreshViewHandler ${months[i].label}");
     }
     dayTitle = datePicker.dateFilter(initDate, datePicker.formatDay);
     yearTitle = datePicker.dateFilter(initDate, datePicker.formatYear);

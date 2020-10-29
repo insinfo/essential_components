@@ -20,8 +20,7 @@ import 'package:dart_browser_loader/dart_browser_loader.dart' show loadScript;
 import 'package:dart_browser_loader/src/utils.dart' show waitLoad;
 
 @JS('grecaptcha.render')
-external num _render(
-    HtmlElement container, EssentialRecaptchaParameters parameters);
+external num _render(HtmlElement container, EssentialRecaptchaParameters parameters);
 
 @JS('grecaptcha.reset')
 external void _reset(num id);
@@ -62,8 +61,7 @@ class EssentialRecaptchaParameters {
   styleUrls: ['essential_recaptcha.css'],
   template: 'sdfsdfsdf sdfs dsf',
 )
-class EssentialRecaptcha extends ValueAccessor
-    implements AfterViewInit, OnDestroy {
+class EssentialRecaptcha extends ValueAccessor implements AfterViewInit, OnDestroy {
   final _onExpireCtrl = StreamController<Null>();
   final NgModel _ngModel;
   final HtmlElement _ref;
@@ -119,12 +117,12 @@ class EssentialRecaptcha extends ValueAccessor
   void _callbackResponse(response) {
     writeValue(response);
     _verifiedStreamController.add(response);
-    //print('EssentialRecaptcha@_callbackResponse $response');
+
     String _token = response;
     if (_token.contains('verify')) {
       _token = _token.substring(7);
     }
-    // print(_token);
+
     if (siteverify) {
       verifyToken(_token);
     }
@@ -152,8 +150,7 @@ class EssentialRecaptcha extends ValueAccessor
 
   final _verifiedSuccessStreamController = StreamController<bool>();
   @Output()
-  Stream<bool> get onVerifiedSuccessfully =>
-      _verifiedSuccessStreamController.stream;
+  Stream<bool> get onVerifiedSuccessfully => _verifiedSuccessStreamController.stream;
 
   final _verifiedErrorStreamController = StreamController<String>();
   @Output()
@@ -166,9 +163,6 @@ class EssentialRecaptcha extends ValueAccessor
         'secret': secretKey,
         'response': token,
       });
-
-      // print('Response status: ${response.statusCode}');
-      // print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         dynamic json = jsonDecode(response.body);
@@ -270,9 +264,7 @@ FutureOr<T> _safeApiCall<T>(_VoidCallback<T> call) async {
     // ignore: prefer_iterable_wheretype
     _script = scripts.where((s) => s is ScriptElement).firstWhere(
         //isaque corrigi o bug era a URL errada
-        (s) => (s as ScriptElement)
-            .src
-            .startsWith('https://www.gstatic.com/recaptcha/'),
+        (s) => (s as ScriptElement).src.startsWith('https://www.gstatic.com/recaptcha/'),
         orElse: () => null);
     if (_script == null) return null;
   }

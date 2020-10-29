@@ -64,12 +64,10 @@ class EssentialImageComponent {
   }
 
   void onLoad() {
-    //print('EssentialImageComponent@onLoad $loading url: $url');
     loading = false;
   }
 
   void onError() {
-    //print('EssentialImageComponent@onError $loading url: $url');
     loading = false;
   }
 }

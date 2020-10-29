@@ -29,7 +29,6 @@ class TextValidator implements Validator {
 
   TextValidator(Element el) {
     _el = el;
-    print('TextValidator ${_el}');
   }
 
   /* bool _isNodeCreated(DivElement div) {
@@ -59,8 +58,7 @@ class TextValidator implements Validator {
 
   void _hasInvalidLength() {
     if (_value.length < minLength || _value.length > maxLength) {
-      _addFeedbackValidationWithMessageError(
-          'O valor precisa ter entre ${minLength} à ${maxLength} caracteres.');
+      _addFeedbackValidationWithMessageError('O valor precisa ter entre ${minLength} à ${maxLength} caracteres.');
     } else {
       _node.remove();
     }
@@ -69,7 +67,7 @@ class TextValidator implements Validator {
   @override
   Map<String, dynamic> validate(AbstractControl control) {
     _divPai = _el.parent as DivElement;
-    print('div ${_divPai}');
+
     if (control != null) {
       _value = control.value.toString();
       if (_hasSelectorValidationEl()) {

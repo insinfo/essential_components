@@ -105,7 +105,7 @@ icon-database-refresh -->
             </thead>
             <tbody #tbody>
                 <!---->
-                <tr *ngFor="let row of innerData" (click)="onRowClick(row)">
+                <tr *ngFor="let row of innerData;let i = index" (click)="onRowClick(row)">
                     <td *ngIf="showCheckBoxToSelectRow" class="datatable-first-col">
                         <label class="form-check-label">
                             <div class="uniform-checker">
@@ -117,7 +117,7 @@ icon-database-refresh -->
                         </label>
                     </td>
                     <!--[innerHTML]="getHtmlOfCell(col,td)"-->
-                    <td #td *ngFor="let col of row.colsSets" [esinnerhtml]="col.value"
+                    <td #td *ngFor="let col of row.colsSets" [esdtinnerhtml]="col" [tdElement]="td"
                         [class.hide]="!col.visible">
                     </td>
                 </tr>

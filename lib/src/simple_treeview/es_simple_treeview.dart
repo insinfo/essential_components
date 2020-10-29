@@ -55,7 +55,6 @@ class EssentialSimpleTreeViewComponent implements OnInit, AfterChanges {
 
   void search2(String _search_query, List<EssentialTreeViewNode> json_tree, [EssentialTreeViewNode parent]) {
     var search_query = Helper.removerAcentos(_search_query).toLowerCase();
-    //print('_search_query $_search_query');
 
     for (var i = 0; i < json_tree.length; i++) {
       var menu_item = json_tree[i];
@@ -67,7 +66,7 @@ class EssentialSimpleTreeViewComponent implements OnInit, AfterChanges {
       } else {
         menu_item.treeViewNodeFilter = true;
       }
-      // print('hasChilds ${menu_item.hasChilds(menu_item)}');
+
       if (menu_item.hasChilds(menu_item)) {
         search2(search_query, menu_item.treeViewNodes, menu_item);
       } else {
@@ -75,7 +74,6 @@ class EssentialSimpleTreeViewComponent implements OnInit, AfterChanges {
         var item_endp = menu_item;
 
         while (item_endp.parent != null) {
-          // print('while item_endp.parent ${item_endp.parent}');
           if (item_endp.treeViewNodeFilter == false) {
             if (item_endp.finded(search_query, item_endp)) {
               item_endp.treeViewNodeFilter = true;

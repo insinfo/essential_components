@@ -190,7 +190,7 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   void inputKeypress(newValue, valid, validationMessage) {
     inputText = newValue;
     _keypressController.add(newValue);
-    //print('inputKeypress: ${inputText}');
+
     //onChangeControlValueAccessor((newValue == '' ? null : newValue), rawValue: newValue);
   }
 
@@ -203,7 +203,7 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   TouchFunction onTouchedControlValueAccessor = () {};
   /*@HostListener('blur')
   void touchHandler() {  
-    print('touchHandler'); 
+
     onTouched();
   }*/
   /// Set the function to be called when the control receives a touch event.
@@ -213,9 +213,7 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   }
 
   //função a ser chamada para notificar e modificar o modelo vinculado pelo ngmodel
-  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {
-    //print('onChangeControlValueAccessor $_');
-  };
+  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {};
 
   /// Set the function to be called when the control receives a change event.
   @override
@@ -232,7 +230,7 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
     /* if (ngControl?.control != null) {
       //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
       ssControlValueChanges = ngControl.control.valueChanges.listen((value) {
-        print('ngControl.control.valueChanges $value');
+   
 
         //_changeDetector.markForCheck();
       });
@@ -249,7 +247,6 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   //**************** DataTable Area ****************
   IDataTableRender itemSelected;
   void onRowClick(IDataTableRender selected) {
-    // print('select dialog onRowClick');
     closeDialog();
 
     itemSelected = selected;
