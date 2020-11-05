@@ -19,13 +19,11 @@ import 'package:decimal/decimal.dart';
 class DecimalValueAccessor implements ControlValueAccessor {
   final InputElement _element;
 
-  DecimalValueAccessor(HtmlElement element)
-      : _element = element as InputElement;
+  DecimalValueAccessor(HtmlElement element) : _element = element as InputElement;
 
   @HostListener('change', ['\$event.target.value'])
   @HostListener('input', ['\$event.target.value'])
   void handleChange(String value) {
-    print('About to parse decimal');
     Decimal dec;
     try {
       dec = Decimal.parse(value);
@@ -33,7 +31,7 @@ class DecimalValueAccessor implements ControlValueAccessor {
       // mark feild as invalid
       return;
     }
-    print('Got $dec with type ${dec.runtimeType}');
+
     onChange((value == '' ? null : dec), rawValue: value);
   }
 
