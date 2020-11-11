@@ -32,7 +32,7 @@ class EssentialNotificationService {
     EsNotificationColor type = EsNotificationColor.info,
     String title = '',
     String icon,
-    num durationSeconds = 150,
+    num durationSeconds = 3,
   }) {
     var toast = Toast(_esNotificationColorToString(type), title, message, icon, durationSeconds);
     toasts.insert(0, toast);
