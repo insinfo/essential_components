@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:angular/angular.dart';
 
-enum EsNotificationColor { success, info, warning, danger }
+enum EsNotificationColor { success, info, warning, danger, primary, pink }
 
 /// A service that manages toasts that should be displayed.
 @Injectable()
@@ -15,15 +15,19 @@ class EssentialNotificationService {
   }
   String _esNotificationColorToString(EsNotificationColor type) {
     if (type == EsNotificationColor.success) {
-      return 'check';
+      return 'success';
     } else if (type == EsNotificationColor.info) {
       return 'info';
     } else if (type == EsNotificationColor.warning) {
-      return 'exclamation';
+      return 'warning';
     } else if (type == EsNotificationColor.danger) {
-      return 'times';
+      return 'danger';
+    } else if (type == EsNotificationColor.primary) {
+      return 'primary';
+    } else if (type == EsNotificationColor.pink) {
+      return 'pink';
     } else {
-      return 'bullhorn';
+      return 'primary';
     }
   }
 
