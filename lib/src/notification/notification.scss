@@ -31,8 +31,10 @@ div{
 }
 
 :host {
+  
+
   display: block;
-  z-index: 100;
+  z-index: 3000;
   position: fixed;
   top: 1em;
   right: 1em;
@@ -42,13 +44,23 @@ div{
   overflow: hidden;
   pointer-events: none;
 
+  .notificationBtnExit{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    padding-right: 7px;
+    padding-top: 1px;
+    font-style: normal;
+    cursor: pointer;
+    font-size: 14px;
+  }
   div.toast {
     position: absolute;
     left: 0;
     right: 0;
     height: 100px;
     pointer-events: auto;
-
     display: flex;
     align-items: center;
     overflow: hidden;

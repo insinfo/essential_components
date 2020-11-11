@@ -4,12 +4,9 @@ import '../fontawesome/fontawesome.dart';
 import 'notification_services.dart';
 
 /// Top navigation component.
-@Component(
-    selector: 'es-notification-outlet',
-    templateUrl: 'notification.html',
-    styleUrls: [
-      'notification.css',
-    ],
+@Component(selector: 'es-notification-outlet', templateUrl: 'notification.html', styleUrls: [
+  'notification.css',
+],
     /* styles: [
       ''' 
         @keyframes toast-fade-in {
@@ -40,5 +37,9 @@ class EssentialNotificationComponent {
   /// Produce a CSS style for the `top` property.
   String styleTop(int i) {
     return (i * 110).toString() + 'px';
+  }
+
+  void closeToast(Toast toast) {
+    service.toasts.remove(toast);
   }
 }

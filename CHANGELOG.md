@@ -186,3 +186,7 @@ and fix issues
 # 1.8.14
 
 - fix bugs of EssentialSelectDialogComponent
+
+# 1.9.15
+
+- improvement of the Essential Notification Component, now you have a new "notify" method to get toats with less parameters and also has a button to close the toast

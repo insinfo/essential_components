@@ -11,7 +11,9 @@
         <span class='title' *ngIf='toast.title != null'>{{toast.title}}</span>
         <span class='message' *ngIf='toast.message != null'>{{toast.message}}</span>
     </div>
+    <i class="notificationBtnExit" (click)="closeToast(toast)">x</i>
 </div>
+
 
 <!--
 <div *ngFor='let toast of service?.toasts; let toastIndex=index' id="jGrowl" class="top-right jGrowl">

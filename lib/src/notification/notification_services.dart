@@ -1,6 +1,7 @@
 import 'dart:async';
-
 import 'package:angular/angular.dart';
+
+enum EsNotificationColor { success, info, warning, danger }
 
 /// A service that manages toasts that should be displayed.
 @Injectable()
@@ -12,10 +13,41 @@ class EssentialNotificationService {
   EssentialNotificationService() {
     toasts = [];
   }
+  String _esNotificationColorToString(EsNotificationColor type) {
+    if (type == EsNotificationColor.success) {
+      return 'check';
+    } else if (type == EsNotificationColor.info) {
+      return 'info';
+    } else if (type == EsNotificationColor.warning) {
+      return 'exclamation';
+    } else if (type == EsNotificationColor.danger) {
+      return 'times';
+    } else {
+      return 'bullhorn';
+    }
+  }
+
+  void notify(
+    String message, {
+    EsNotificationColor type = EsNotificationColor.info,
+    String title = '',
+    String icon,
+    num durationSeconds = 150,
+  }) {
+    var toast = Toast(_esNotificationColorToString(type), title, message, icon, durationSeconds);
+    toasts.insert(0, toast);
+    var milliseconds = (1000 * toast.durationSeconds + 300).round();
+    // How to get size of each toast?
+    Timer(Duration(milliseconds: milliseconds), () {
+      toast.toBeDeleted = true;
+      Timer(Duration(milliseconds: 300), () {
+        toasts.remove(toast);
+      });
+    });
+  }
 
   /// Display a toast.
-  void add(String type, String title, String message,
-      {String icon, num durationSeconds}) {
+  void add(String type, String title, String message, {String icon, num durationSeconds}) {
     var toast = Toast(type, title, message, icon, durationSeconds);
     toasts.insert(0, toast);
     var milliseconds = (1000 * toast.durationSeconds + 300).round();
