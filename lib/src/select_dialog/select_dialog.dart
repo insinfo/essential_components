@@ -26,6 +26,11 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   @ViewChild('inputEl')
   InputElement inputEl;
 
+  void setFocus() {
+    inputEl.focus();
+    print('setFocus $inputText');
+  }
+
   @ViewChild('modal')
   EssentialModalComponent modal;
   final NgControl ngControl;
@@ -44,8 +49,6 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   @Input('titleHeader')
   String titleHeader = '';
 
-  bool _required = false;
-  bool get required => _required;
   bool focused = false;
   bool _disabled = false;
   bool get disabled => _disabled;
@@ -56,21 +59,31 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   }
 
   @Input()
-  String label;
+  String title;
 
-  @Input()
-  int maxCount;
+  bool _inputRequired = false;
+  bool get inputRequired => _inputRequired;
 
-  @Input('required')
-  set required(bool required) {
-    var prev = _required;
-    _required = required;
-    if (prev != _required && ngControl != null) {
+  @Input('inputRequired')
+  set inputRequired(bool v) {
+    var prev = _inputRequired;
+    _inputRequired = v;
+    if (_inputRequired) {
+      inputEl.attributes['required'] = v.toString();
+    } else {
+      inputEl.attributes.remove('required');
+    }
+
+    //print('inputRequired $_inputRequired');
+    if (prev != _inputRequired && ngControl != null) {
       // Required value changed and we are using a control. Force revalidation
       // on the control.
       ngControl.control.updateValueAndValidity();
     }
   }
+
+  @Input('placeholder')
+  String placeholder = 'Select';
 
   int _inputTextLength = 0;
   int get inputTextLength => _inputTextLength;
@@ -107,9 +120,13 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   /// {'text', 'email', 'password', 'url', 'number', 'tel', 'search'}
   String type = 'text';
 
-  int get inputTabIndex => disabled ? -1 : 0;
+  int tabIndex = 0;
+  @Input('inputTabIndex')
+  set inputTabIndex(int v) => tabIndex = v;
+  int get inputTabIndex => disabled ? -1 : tabIndex;
 
-  String _inputText = 'Selecione';
+  String _inputText;
+
   @Input('inputText')
   set inputText(String value) {
     _inputText = value;
@@ -142,9 +159,9 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
       if (ngControl?.control != null) {
         //este ouvinte de evento é chamado todo vez que o modelo vinculado pelo ngModel muda
         ssControlValueChanges = ngControl.control.valueChanges.listen((value) {
-          if (value != null) {
-            fillInputFromIDataTableRender(value);
-          }
+          //if (value != null) {
+          fillInputFromIDataTableRender(value);
+          //}
           //_changeDetector.markForCheck();
         });
       }
@@ -190,7 +207,6 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
   void inputKeypress(newValue, valid, validationMessage) {
     inputText = newValue;
     _keypressController.add(newValue);
-
     //onChangeControlValueAccessor((newValue == '' ? null : newValue), rawValue: newValue);
   }
 
@@ -261,12 +277,16 @@ class EssentialSelectDialogComponent implements ControlValueAccessor, AfterViewI
     if (selected != null) {
       // ignore: omit_local_variable_types
       List<DataTableColumn> cols = selected.getRowDefinition()?.colsSets;
-      cols.forEach((DataTableColumn element) {
-        if (element != null && element.primaryDisplayValue) {
-          inputText = element.value;
-          return;
+      if (cols != null) {
+        for (var element in cols) {
+          if (element != null && element.primaryDisplayValue) {
+            inputText = element.value;
+            break;
+          }
         }
-      });
+      }
+    } else {
+      inputText = null;
     }
   }
 

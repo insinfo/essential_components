@@ -2,11 +2,14 @@
  [type]="type"
  (change)="handleChange($event, inputEl)"
  [ngModel]="inputText"
+ [placeholder]="placeholder"
     (input)="inputKeypress(inputEl.value, inputEl.validity.valid, inputEl.validationMessage)"
     [tabindex]="inputTabIndex"
+    readonly
     (focus)="inputFocusAction"
      (click)="openDialog()" 
-     readonly class="form-control"
+      class="form-control"
+     [title]="title"
      [style]="inputStyle"
     >
 

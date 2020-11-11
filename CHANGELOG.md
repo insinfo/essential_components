@@ -182,3 +182,7 @@ and fix issues
 # 1.7.13
 
 - fix bugs of dataTable that caused redraw
+
+# 1.8.14
+
+- fix bugs of EssentialSelectDialogComponent

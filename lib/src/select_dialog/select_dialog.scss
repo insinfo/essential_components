@@ -16,3 +16,14 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   cursor: pointer;
 }
+
+.form-control:focus {
+  outline: 0px;
+  box-shadow: transparent 0px 0px 0px 0px, rgb(0, 150, 136) 0px 1px 0px;
+
+  border-bottom: 1px solid #009688;
+}
+
+/*.form-control:not(.border-bottom-1):not(.border-bottom-2):not(.border-bottom-3):focus {
+    border-color: #009688;
+}*/

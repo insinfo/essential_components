@@ -41,8 +41,7 @@ class SimpleDialogComponent {
     root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
   }
 
-  static void showFullScreenAlert(String message,
-      {backgroundColor = '#de589d'}) {
+  static void showFullScreenAlert(String message, {backgroundColor = '#de589d'}) {
     var template = ''' 
     <div style="width: 100%;height: 100%;display: block; 
         position: fixed;top: 0;left: 0;background: rgba(255, 255, 255, 0.5);">
@@ -59,11 +58,14 @@ class SimpleDialogComponent {
     root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
   }
 
-  static void showAlert(String message,
-      {String subMessage,
-      String title = 'Alerta',
-      String detailLabel = 'Detalhe',
-      DialogColor dialogColor = DialogColor.PRIMARY}) {
+  static void showAlert(
+    String message, {
+    String subMessage,
+    String title = 'Alerta',
+    String detailLabel = 'Detalhe',
+    DialogColor dialogColor = DialogColor.PRIMARY,
+    Function okAction,
+  }) {
     var template = ''' 
       <div class="bootbox modal fade bootbox-alert show" tabindex="-1" role="dialog" style="padding-right: 17px; display: block;">
         <div class="modal-dialog">
@@ -88,8 +90,7 @@ class SimpleDialogComponent {
     root.setInnerHtml(template, treeSanitizer: html.NodeTreeSanitizer.trusted);
     if (subMessage != null) {
       var btnEle = html.DivElement();
-      btnEle.attributes['style'] =
-          'padding-top:15px;padding-bottom:5px;cursor: pointer;';
+      btnEle.attributes['style'] = 'padding-top:15px;padding-bottom:5px;cursor: pointer;';
       var t =
           '<label class="text-muted" style="cursor: pointer;">$detailLabel  </label> <a class="list-icons-item dropdown-toggle" data-toggle="dropdown" ></a>';
       btnEle.setInnerHtml(t, treeSanitizer: html.NodeTreeSanitizer.trusted);
@@ -101,23 +102,10 @@ class SimpleDialogComponent {
 
       btnEle.onClick.listen((e) {
         var el = e.target as html.HtmlElement;
-        if (el
-                ?.closest('.modal-body')
-                ?.querySelector('.modal-detail')
-                ?.style
-                ?.display ==
-            'none') {
-          el
-              ?.closest('.modal-body')
-              ?.querySelector('.modal-detail')
-              ?.style
-              ?.display = 'block';
+        if (el?.closest('.modal-body')?.querySelector('.modal-detail')?.style?.display == 'none') {
+          el?.closest('.modal-body')?.querySelector('.modal-detail')?.style?.display = 'block';
         } else {
-          el
-              ?.closest('.modal-body')
-              ?.querySelector('.modal-detail')
-              ?.style
-              ?.display = 'none';
+          el?.closest('.modal-body')?.querySelector('.modal-detail')?.style?.display = 'none';
         }
       });
 
@@ -126,6 +114,9 @@ class SimpleDialogComponent {
       container.text = subMessage;
     }
     root.querySelector('button.BtnOk').onClick.listen((e) {
+      if (okAction != null) {
+        okAction();
+      }
       root.remove();
     });
   }
