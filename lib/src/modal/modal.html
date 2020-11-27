@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div *ngIf="showheader" class="modal-header {{headerColorClass}}">
                 <h6 class="modal-title">{{title}}</h6>
-                <button (click)="closeDialog()" type="button" class="close" data-dismiss="modal">×</button>
+                <button *ngIf="showHeaderCloseBtn" (click)="closeDialog()" type="button" class="close" data-dismiss="modal">×</button>
             </div>
             <div class="modal-body">
                 <ng-content></ng-content>

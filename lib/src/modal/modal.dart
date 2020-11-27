@@ -143,6 +143,12 @@ class EssentialModalComponent {
   @Input()
   bool showheader = false;
 
+  @Input()
+  bool showHeaderCloseBtn = true;
+
+  @Input()
+  bool blockCloseAction = false;
+
   bool inputShowDialog = false;
 
   //
@@ -187,7 +193,10 @@ class EssentialModalComponent {
   }
 
   void closeDialog() {
-    showDialog = false;
+    if (!blockCloseAction) {
+      showDialog = false;
+    }
+
     _closeRequest.add(showDialog);
   }
 }
