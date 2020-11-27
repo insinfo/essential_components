@@ -190,3 +190,7 @@ and fix issues
 # 1.9.15
 
 - improvement of the Essential Notification Component, now you have a new "notify" method to get toats with less parameters and also has a button to close the toast
+
+# 1.9.18
+
+- add showHeaderCloseBtn and blockCloseAction to EssentialModalComponent
