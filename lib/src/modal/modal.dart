@@ -180,9 +180,7 @@ class EssentialModalComponent {
           for (var idx = 0; idx < modais.length - 1; idx++) {
             var modal = modais[idx];
 
-            // if (modal != currentModal) {
             if (modais.last != modal) {
-              html.window.console.log(modal);
               var oldClass =
                   modal.classes.join(' ').replaceAll('modal', 'modal-back');
               modal.attributes['class'] = oldClass;
