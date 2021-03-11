@@ -18,7 +18,8 @@ import 'simple_select_option.dart';
     styleUrls: ['simple_select.css'],
     directives: [formDirectives, coreDirectives],
     exports: [StyleType])
-class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
+class EssentialSimpleSelectComponent
+    implements ControlValueAccessor, AfterContentInit, OnDestroy {
   @ViewChild('inputEl')
   ButtonElement inputEl;
 
@@ -156,7 +157,8 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterConte
   }
 
   //contrutor
-  EssentialSimpleSelectComponent(@Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
+  EssentialSimpleSelectComponent(
+      @Self() @Optional() this.ngControl, ChangeDetectorRef changeDetector) {
     color = StyleType.DEFAULT;
     // _changeDetector = changeDetector;
     // Replace the provider from above with this.
@@ -180,7 +182,8 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterConte
       }
     }
     //evento global de click
-    streamSubscriptionBodyOnCLick = window.document.querySelector('body').onClick.listen(handleBodyOnCLick);
+    streamSubscriptionBodyOnCLick =
+        window.document.querySelector('body').onClick.listen(handleBodyOnCLick);
   }
 
   //evento global de click
@@ -214,7 +217,8 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterConte
     }
 
     //aciona o NgModel bind
-    onChangeControlValueAccessor(itemSelected, rawValue: itemSelected.toString());
+    onChangeControlValueAccessor(itemSelected,
+        rawValue: itemSelected.toString());
 
     ///aciona o evento change
     _changeController.add(itemSelected);
@@ -236,7 +240,8 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterConte
   }
 
   //função a ser chamada para notificar e modificar o modelo vinculado pelo ngmodel
-  ChangeFunction<dynamic> onChangeControlValueAccessor = (dynamic _, {String rawValue}) {};
+  ChangeFunction<dynamic> onChangeControlValueAccessor =
+      (dynamic _, {String rawValue}) {};
 
   /// Set the function to be called when the control receives a change event.
   @override
@@ -272,14 +277,19 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterConte
   }
 
   void showDropdown(Event e) {
-    e.stopPropagation();
-    closeAllSelect(dropdownMenu);
-    toogleDrop();
+    if (disabledSelect == false) {
+      e.stopPropagation();
+      closeAllSelect(dropdownMenu);
+      toogleDrop();
+    }
   }
 
   //fecha todos os selects menos o que for passado por parametro
   void closeAllSelect([butThisOne]) {
-    dropdownMenu?.closest('body')?.querySelectorAll('div.es-simple-select')?.forEach((ele) {
+    dropdownMenu
+        ?.closest('body')
+        ?.querySelectorAll('div.es-simple-select')
+        ?.forEach((ele) {
       if (butThisOne != ele) {
         ele.classes.remove('show');
       }
@@ -299,7 +309,9 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterConte
   HtmlElement getScrollParent(HtmlElement element, bool includeHidden) {
     var style = element.getComputedStyle();
     var excludeStaticParent = style.position == 'absolute';
-    var overflowRegex = includeHidden ? RegExp('(auto|scroll|hidden)') : RegExp('(auto|scroll)');
+    var overflowRegex = includeHidden
+        ? RegExp('(auto|scroll|hidden)')
+        : RegExp('(auto|scroll)');
 
     if (style.position == 'fixed') return document.body;
     for (var pare = element; (pare.parent != null);) {
@@ -308,7 +320,8 @@ class EssentialSimpleSelectComponent implements ControlValueAccessor, AfterConte
       if (excludeStaticParent && style.position == 'static') {
         continue;
       }
-      if (overflowRegex.hasMatch(style.overflow + style.overflowY + style.overflowX)) return pare;
+      if (overflowRegex.hasMatch(
+          style.overflow + style.overflowY + style.overflowX)) return pare;
     }
 
     return document.body;

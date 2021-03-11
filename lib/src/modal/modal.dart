@@ -5,7 +5,13 @@ import 'package:angular_router/angular_router.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'dart:html' as html;
 
-enum EssentialModalSize { miniSize, smallSize, defaultSize, largeSize, fullSize }
+enum EssentialModalSize {
+  miniSize,
+  smallSize,
+  defaultSize,
+  largeSize,
+  fullSize
+}
 
 /*extension EssentialModalSizeExtension on EssentialModalSize {
   String get asCssClass {
@@ -32,7 +38,15 @@ enum EssentialModalSize { miniSize, smallSize, defaultSize, largeSize, fullSize 
   String asString() => toString().split('.').last;
 }*/
 
-enum EssentialModalHeaderColor { primary, danger, success, info, brown, teal, none }
+enum EssentialModalHeaderColor {
+  primary,
+  danger,
+  success,
+  info,
+  brown,
+  teal,
+  none
+}
 
 /*extension EssentialModalHeaderColorExtension on EssentialModalHeaderColor {
   String get asCssClass {
@@ -71,7 +85,8 @@ enum EssentialModalHeaderColor { primary, danger, success, info, brown, teal, no
     directives: [coreDirectives, formDirectives, routerDirectives])
 class EssentialModalComponent {
   @Input('headerColor')
-  EssentialModalHeaderColor modalHeaderColor = EssentialModalHeaderColor.primary;
+  EssentialModalHeaderColor modalHeaderColor =
+      EssentialModalHeaderColor.primary;
 
   String get headerColorClass {
     return _enumModalHeaderColorToCssClass(modalHeaderColor);
@@ -155,27 +170,34 @@ class EssentialModalComponent {
 
   @Input('showDialog')
   set showDialog(bool v) {
-    var modais = html.document.body.querySelectorAll('.essentialModal');
-    if (v) {
-      html.document.body.classes.add('modal-open');
-      if (modais.length > 1) {
-        for (var idx = 0; idx < modais.length - 1; idx++) {
-          var modal = modais[idx];
+    inputShowDialog = v;
+    Future.delayed(Duration(milliseconds: 200), () {
+      var modais = html.document.body
+          .querySelectorAll('.essentialModal:not([hidden=""])');
+      if (v == true) {
+        html.document.body.classes.add('modal-open');
+        if (modais.length > 1) {
+          for (var idx = 0; idx < modais.length - 1; idx++) {
+            var modal = modais[idx];
 
-          if (modal != currentModal) {
-            var oldClass = modal.classes.join(' ').replaceAll('modal', 'modal-back');
-            modal.attributes['class'] = oldClass;
+            // if (modal != currentModal) {
+            if (modais.last != modal) {
+              html.window.console.log(modal);
+              var oldClass =
+                  modal.classes.join(' ').replaceAll('modal', 'modal-back');
+              modal.attributes['class'] = oldClass;
+            }
           }
         }
+      } else {
+        for (var idx = 0; idx < modais.length; idx++) {
+          var modal = modais[idx];
+          var oldClass =
+              modal.classes.join(' ').replaceAll('modal-back', 'modal');
+          modal.attributes['class'] = oldClass;
+        }
       }
-    } else {
-      for (var idx = 0; idx < modais.length; idx++) {
-        var modal = modais[idx];
-        var oldClass = modal.classes.join(' ').replaceAll('modal-back', 'modal');
-        modal.attributes['class'] = oldClass;
-      }
-    }
-    inputShowDialog = v;
+    });
   }
 
   bool get showDialog => inputShowDialog;
