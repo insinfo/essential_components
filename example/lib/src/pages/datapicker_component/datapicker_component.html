@@ -2,10 +2,11 @@
     <div class="card-body">
         <div class="mb-4">
             <h1>EsDatePickerPopupComponent</h1>
-            <p>The datepicker allows users to enter a date either through text input, or by choosing a date from the calendar. It is
-            made up of several components and directives that work together.</p>
+            <p>The datepicker allows users to enter a date either through text input, or by choosing a date from the
+                calendar. It is
+                made up of several components and directives that work together. <br>OBS: Do not pass null date for datepicker</p>
         </div>
-        
+
         <es-tabsx #tabs1>
             <es-tabx header="Example">
                 <div class="row">
@@ -13,8 +14,9 @@
                         <div class="card card-body">
                             <div class="form-group">
                                 <label>Date</label>
-                                <es-date-picker-popup currentText="Hoje" clearText="Limpar" closeText="Fechar" [(ngModel)]="date"
-                                    [format]="'dd/MM/yyyy'" [localeRender]="'pt_BR'" (change)="reloadData($event)">
+                                <es-date-picker-popup currentText="Hoje" clearText="Limpar" closeText="Fechar"
+                                    [(ngModel)]="date" [format]="'dd/MM/yyyy'" [localeRender]="'pt_BR'"
+                                    (change)="reloadData($event)">
                                 </es-date-picker-popup>
                             </div>
                         </div>
@@ -24,22 +26,17 @@
             <es-tabx header="View">
                 <div class="row">
                     <div class="col-12">
-                        <pre class="language-html code-toolbar"><code class=" language-html">{{ codeHtml }}</code><div class="toolbar"><div class="toolbar-item"><span>html</span></div></div></pre>
+                        <pre class="language-markup line-numbers"><code class="language-markup line-numbers" [innerHtml]="codeHtml"></code></pre>
                     </div>
                 </div>
             </es-tabx>
             <es-tabx header="Component">
                 <div class="row">
                     <div class="col-12">
-                        <pre
-                            class="language-html code-toolbar"><code class=" language-html">{{ codeComponent }}</code><div class="toolbar"><div class="toolbar-item"><span>html</span></div></div></pre>
+                        <pre class="language-markup line-numbers"><code class="language-markup line-numbers" [innerHtml]="codeDart"></code></pre>
                     </div>
                 </div>
             </es-tabx>
         </es-tabsx>
     </div>
 </div>
-
-
-
-

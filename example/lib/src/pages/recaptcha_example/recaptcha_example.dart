@@ -1,4 +1,5 @@
 import 'package:angular/angular.dart';
+import 'package:angular_forms/angular_forms.dart';
 import 'package:essential_components/essential_components.dart';
 import 'package:example/src/utils/highlighting_js.dart';
 
@@ -9,6 +10,7 @@ import '../../utils/highlighting_js.dart';
   styleUrls: ['recaptcha_example.css'],
   templateUrl: 'recaptcha_example.html',
   directives: [
+    formDirectives,
     coreDirectives,
     esDynamicTabsDirectives,
     EssentialRecaptcha,

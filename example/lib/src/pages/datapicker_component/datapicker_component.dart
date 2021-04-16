@@ -31,34 +31,39 @@ class DataPickerComponent implements OnInit {
   DateTime date = DateTime.now();
 
   String codeHtml = '''
-<es-accordion-panel heading="Título do acordeon">
-  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus dignissimos site.</p>
-</es-accordion-panel>''';
-  String codeComponent = '''
-import 'package:angular/angular.dart';
-import 'package:essential_components/essential_components.dart';
-import 'package:example/src/services/person_service.dart';
 
+ <es-date-picker-popup [(ngModel)]="date" currentText="Today" clearText="Clear" closeText="Close"
+            [format]="'dd/MM/yyyy'" [localeRender]="'pt_BR'">
+        </es-date-picker-popup>
+
+''';
+  
+  var codeDart = '''
 @Component(
-  selector: 'accordeon-component',
-  styleUrls: ['accordeon_component.css'],
-  templateUrl: 'accordeon_component.html',
-  directives: [
-    coreDirectives,
-    EsAccordionPanelComponent
-  ],
-  exports: [],
-  providers: [ClassProvider(PersonService)]
-)
-class AccordeonComponent { }
-  ''';
+    selector: 'datapicker-example',
+    styleUrls: ['datapicker_example.css'],
+    templateUrl: 'datapicker_example.html',
+    directives: [
+      formDirectives,
+      coreDirectives,     
+      EsDatePickerPopupComponent,
+      EsDatePickerComponent
+    ],
+   )
+class DataPickerComponent {
+var date = DateTime.now();
 
+
+}
+
+
+  ''';
   DataPickerComponent();
 
   @override
   void ngOnInit() {
     codeHtml = highlightingHtml(codeHtml);
-    codeComponent = highlightingHtml(codeComponent);
+    codeDart = highlightingDart(codeDart);
   }
 
   void reloadData(dynamic event) {

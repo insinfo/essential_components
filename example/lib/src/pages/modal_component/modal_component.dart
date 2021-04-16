@@ -37,4 +37,8 @@ bool show = false;
     codeHtml = highlightingHtml(codeHtml);
     codeDart = highlightingHtml(codeDart);
   }
+
+  void showModal() {
+    show = !show;
+  }
 }
