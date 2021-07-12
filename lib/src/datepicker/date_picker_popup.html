@@ -1,6 +1,7 @@
 <label *ngIf="label != null">{{label}}</label>
-<es-dropdown [(isOpen)]="isOpen" class="d-block">
-  <es-dropdown-toggle class="input-group">
+<!--[(isOpen)]="isOpen"-->
+<es-dropdown   class="d-block">
+  <es-dropdown-toggle #c="esdropdowntoggle"  class="input-group">
     <input type="text" class="form-control" style="cursor: pointer;"
      (change)="valueChanged($event.target.value)"
       [value]="ngModel.viewModel | date: format" readonly>
@@ -27,7 +28,7 @@
           {{clearText}}
         </button>
      
-      <button type="button" class="btn btn-sm" (click)="isOpen=false">{{closeText}}</button>
+      <button type="button" class="btn btn-sm" (click)="c?.close()">{{closeText}}</button>
     </div>
   </es-dropdown-menu>
 </es-dropdown>

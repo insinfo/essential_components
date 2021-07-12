@@ -59,7 +59,7 @@ class EsDatePickerPopupComponent extends EsDatePickerBase {
   String closeText = 'Close';
 
   /// if `true` the dropdown-menu will be open, and the date-picker visible
-  bool isOpen;
+  //bool isOpen;
 
   /// format pattern used to show the input value
   ///
