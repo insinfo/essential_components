@@ -18,7 +18,7 @@ class MultiSelectTreeComponent implements OnInit, OnDestroy {
   MultiSelectTreeComponent(this._treeService);
 
   // ignore: prefer_collection_literals
-  List<MultiSelectTreeNode> rootNodeList = List<MultiSelectTreeNode>();
+  List<MultiSelectTreeNode> rootNodeList = <MultiSelectTreeNode>[];
   StreamController<List<MultiSelectTreeNode>> propagateController = StreamController<List<MultiSelectTreeNode>>();
 
   @Input('data')

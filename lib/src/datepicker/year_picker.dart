@@ -49,7 +49,7 @@ class EsYearPickerComponent {
   bool isCurrentRowSelected(DisplayedDate dt) => dt.current && !dt.selected;
 
   void refreshViewHandler() {
-    var years = List<DisplayedDate>(datePicker.yearRange);
+    var years = List<DisplayedDate>.filled(datePicker.yearRange, null);
     DateTime date;
     var initDate = datePicker.initDate;
     for (var i = 0, start = getStartingYear(initDate.year); i < datePicker.yearRange; i++) {

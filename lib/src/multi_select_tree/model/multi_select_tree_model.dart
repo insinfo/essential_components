@@ -7,11 +7,10 @@ class MultiSelectTreeNode {
   bool showOtherProperties;
   List<MultiSelectTreeNode> children;
 
-  MultiSelectTreeNode(
-      String name, bool otherProperties, List<dynamic> children) {
+  MultiSelectTreeNode(String name, bool otherProperties, List<dynamic> children) {
     this.name = name;
-    // ignore: prefer_collection_literals
-    this.children = List<MultiSelectTreeNode>();
+
+    this.children = <MultiSelectTreeNode>[];
     showChildren = false;
     isRoot = false;
     isSelected = false;
@@ -20,8 +19,7 @@ class MultiSelectTreeNode {
     if (children != null) {
       for (var node in children) {
         // ignore: omit_local_variable_types
-        MultiSelectTreeNode t = MultiSelectTreeNode(
-            node.name, node.showOtherProperties, node.children);
+        MultiSelectTreeNode t = MultiSelectTreeNode(node.name, node.showOtherProperties, node.children);
         this.children.add(t);
       }
     }

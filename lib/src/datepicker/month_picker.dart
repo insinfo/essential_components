@@ -45,7 +45,7 @@ class EsMonthPickerComponent {
       {'btn-primary': dt.selected, 'btn-light': !dt.selected, 'active': dt.current, 'disabled': dt.disabled};
 
   void refreshViewHandler() {
-    var months = List<DisplayedDate>(12);
+    var months = List<DisplayedDate>.filled(12, null);
     var initDate = datePicker.initDate;
     num year = initDate.year;
     DateTime date;

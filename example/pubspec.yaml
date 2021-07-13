@@ -9,6 +9,8 @@ authors:
 environment:
   sdk: '>=2.4.0 <3.0.0'
 
+publish_to: none
+
 dependencies:
   angular: ^6.0.0-alpha+1
   #angular_components: ^0.14.0-alpha+1

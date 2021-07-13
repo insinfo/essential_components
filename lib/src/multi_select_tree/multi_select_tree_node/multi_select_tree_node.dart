@@ -18,7 +18,7 @@ class TreeNodeComponent {
   TreeNodeComponent(this._treeService);
 
   // ignore: prefer_collection_literals
-  List<MultiSelectTreeNode> selectedNodes = List<MultiSelectTreeNode>();
+  List<MultiSelectTreeNode> selectedNodes = <MultiSelectTreeNode>[];
 
   @Input('node')
   MultiSelectTreeNode node;
@@ -30,20 +30,17 @@ class TreeNodeComponent {
     n.showChildren = !n.showChildren;
   }
 
-  void handleIndeterminate(MultiSelectTreeNode n, MultiSelectTreeNode parent,
-      bool isIndeterminateState) {
+  void handleIndeterminate(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isIndeterminateState) {
     n.isIndeterminate = isIndeterminateState;
     updateParentIndeterminate(parent, isIndeterminateState);
   }
 
-  void updateParentIndeterminate(
-      MultiSelectTreeNode node, bool isIndeterminate) {
+  void updateParentIndeterminate(MultiSelectTreeNode node, bool isIndeterminate) {
     if (node == null) return;
     node.isIndeterminate = isIndeterminate;
   }
 
-  void selectNode(
-      MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
+  void selectNode(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
     n.isSelected = isChecked;
     __updateChildren(n, isChecked);
     __updateParent(n, parent, isChecked);
@@ -60,8 +57,7 @@ class TreeNodeComponent {
     }
   }
 
-  void __updateParent(
-      MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
+  void __updateParent(MultiSelectTreeNode n, MultiSelectTreeNode parent, bool isChecked) {
     if (parent != null) {
       // ignore: omit_local_variable_types
       List<MultiSelectTreeNode> siblings = parent.getChildren();

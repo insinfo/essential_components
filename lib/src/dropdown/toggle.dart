@@ -1,14 +1,10 @@
-import 'dart:async';
-
 import 'package:angular/angular.dart';
 import 'dart:html';
 import 'dropdown.dart';
 
 /// Creates a component that will toggle the state of a dropdown-menu,
 /// in other words when clicked will open or close the dropdown-menu
-@Directive(
-    selector: 'es-dropdown-toggle, .dropdown-toggle',
-    exportAs: 'esdropdowntoggle')
+@Directive(selector: 'es-dropdown-toggle, .dropdown-toggle', exportAs: 'esdropdowntoggle')
 class EsDropdownToggleDirective {
   EsDropdownDirective dropdown;
 
@@ -40,9 +36,7 @@ class EsDropdownToggleDirective {
     document.querySelectorAll('es-dropdown.show')?.forEach((e) {
       if (elementRef.parent != e) {
         e.classes.remove('show');
-        e
-            .querySelector('es-dropdown-toggle')
-            ?.setAttribute('aria-expanded', 'false');
+        e.querySelector('es-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
       }
     });
 
