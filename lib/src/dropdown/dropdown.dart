@@ -7,10 +7,12 @@ import 'toggle.dart';
 import 'menu.dart';
 
 class AutoClose {
-  static const ALWAYS = 'always', DISABLED = 'disabled', OUTSIDE_CLICK = 'outsideClick';
+  static const ALWAYS = 'always',
+      DISABLED = 'disabled',
+      OUTSIDE_CLICK = 'outsideClick';
 }
 
-@Directive(selector: 'es-dropdown, .dropdown')
+@Directive(selector: 'es-dropdown, .dropdown',exportAs: 'esdropdown')
 class EsDropdownDirective implements OnDestroy, OnInit, AfterContentInit {
   html.HtmlElement elementRef;
 
@@ -43,27 +45,33 @@ class EsDropdownDirective implements OnDestroy, OnInit, AfterContentInit {
   html.HtmlElement menuEl;
 
   /// if `true` dropdown will be opened
-  bool _isOpen = false;
+  // bool _isOpen = false;
 
   /// if `true` dropdown will be opened
-  @HostBinding('class.show')
-  bool get isOpen => _isOpen;
+  // @HostBinding('class.show')
+  //bool get isOpen => elementRef.classes.contains('show');
 
   StreamSubscription _closeDropdownStSub;
   StreamSubscription _keybindFilterStSub;
 
   /// if `true` the dropdown will be visible
-  @Input()
+  /*@Input()
   set isOpen(value) {
-    _isOpen = value ?? false;
+    // _isOpen = value ?? false;
 
-    if (isOpen) {
+    if (value == true) {
+      open();
+    } else {
+      close();
+    }
+
+    /*if (isOpen) {
       _focusToggleElement();
     } else {
       selectedOption = null;
     }
-    _isOpenChangeCtrl.add(_isOpen);
-  }
+    _isOpenChangeCtrl.add(_isOpen);*/
+  }*/
 
   final _isOpenChangeCtrl = StreamController<bool>.broadcast();
 
@@ -89,8 +97,22 @@ class EsDropdownDirective implements OnDestroy, OnInit, AfterContentInit {
   }
 
   /// toggles the visibility of the dropdown-menu
-  bool toggle([bool open]) {
-    return isOpen = open ?? !isOpen;
+  /*bool toggle([bool open]) {
+    //return isOpen = open ?? !isOpen;
+  }*/
+
+  void close() {
+    elementRef.classes.remove('show');
+      elementRef.querySelector('es-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+    _focusToggleElement();
+    _isOpenChangeCtrl.add(false);
+  }
+
+  void open() {
+    elementRef.classes.add('show');
+    elementRef.querySelector('es-dropdown-toggle')?.setAttribute('aria-expanded', 'true');
+    selectedOption = null;
+    _isOpenChangeCtrl.add(true);
   }
 
   /// focus the specified entry of dropdown in dependence of the [keyCode]
@@ -139,10 +161,13 @@ class EsDropdownDirective implements OnDestroy, OnInit, AfterContentInit {
   void _handleKeyDown(html.KeyboardEvent event) {
     if (event.which == html.KeyCode.ESC) {
       _focusToggleElement();
-      isOpen = false;
+      //isOpen = false;
+      close();
       return;
     }
-    if (keyboardNav && isOpen && (event.which == html.KeyCode.UP || event.which == html.KeyCode.DOWN)) {
+    if (keyboardNav &&
+        elementRef.classes.contains('show') &&
+        (event.which == html.KeyCode.UP || event.which == html.KeyCode.DOWN)) {
       event.preventDefault();
       event.stopPropagation();
       focusDropdownEntry(event.which);
@@ -150,8 +175,9 @@ class EsDropdownDirective implements OnDestroy, OnInit, AfterContentInit {
   }
 
   void _handleClick(e) {
-    if (isOpen) {
-      isOpen = false;
+    if (elementRef.classes.contains('show')) {
+      //isOpen = false;
+      close();
     }
   }
 
