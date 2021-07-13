@@ -194,3 +194,7 @@ and fix issues
 # 1.9.18
 
 - add showHeaderCloseBtn and blockCloseAction to EssentialModalComponent
+
+# 1.9.23
+
+- fix bugs on DatePiker
